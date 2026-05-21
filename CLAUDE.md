@@ -3,77 +3,78 @@
 This file is the primary briefing for Claude Code sessions working on this project.
 Read it fully before taking any action. It supersedes any assumptions from training data.
 
-\---
+---
 
 ## What this project is
 
-A multilingual lexicon analysis system that estimates some entity's domain expertise from
+A multilingual lexicon analysis system that estimates an author's domain expertise from
 their text. The core hypothesis: the ratio of common vocabulary to domain-specific
-terminology in someone's writing is a proxy for their knowledge level (as a first approximation).
+terminology in a piece of writing is a proxy for the author's knowledge level.
 
-Possible further developments: detect the concepts relationships (in text) and compare them to the 
+A second hypothesis for future development: the structure of concept relationships in a
+text — compared against a normalised "concept map" for a given knowledge domain — can
+reveal gaps or misconceptions in the author's understanding, going beyond vocabulary
+counting to knowledge-graph-level analysis.
 
-normalized "concept map" of a specific knowledge area to detect (the entity knowledge) discrepancies.
+### Planned applications (in rough priority order)
 
-The system has several parts:
+1. **Expertise routing** — analyse questions submitted to a chatbot and adapt or route
+   responses based on the user's apparent proficiency level
+2. **Domain lexicon construction** — build specialist vocabulary databases for multiple
+   knowledge domains (side effect: refinement and validation of Tier 1–3 common lexicons)
+3. **Proficiency evaluation** — estimate the expertise level of any input text author,
+   including automated evaluation of exam or assignment answers against a domain model
+4. **World model (Tier 1–3)** — a self-consistent knowledge graph of concepts and
+   relations accessible to general adult speakers; language- and geography-aware
+5. **Domain knowledge graph (Tier 4)** — a specialist knowledge graph per domain,
+   encoding how Tier 4 concepts relate to each other and to the common lexicon
+6. **Cross-domain consistency** — a unified world model spanning multiple Tier 4 domains,
+   tracking concept relationships and resolving conflicts across jurisdictions and fields
+   (long-term research direction; considered a prerequisite step toward AGI-level reasoning)
 
-* A **common lexicon** (Tiers 1–3): words and concepts known by most adult speakers
-* A **domain lexicon** (Tier 4): specialist terminology, multi-word expressions (MWEs),
-abbreviations, and named entities introduced in specific domain documents,
-* **Missing part**: data structure for named entities for Tiers 1-3 users (might depend on language, on geography, on historical period).
+### Known gaps to address
 
-Several tool development applications expected:
+- Named entity handling for Tier 1–3 users is not yet designed. Named entities
+  (people, places, organisations, events) are language-, geography-, and
+  historically-dependent and do not fit cleanly into the current tier model.
+  This requires a separate design decision before Tier 3 is built.
 
-&#x20;- creation of the domain lexicons for several (multiple) domains of knowledge (side effect -> refinement of Tier 1-3 lexicons);
-
-&#x20;- creation of the "world models" (self-consistent knowledge graphs) for Tier 1-3 users;
-
-&#x20;- creation of specific "domain knowledge" (knowledge graph) for specific Tier 4 vocabulary users;
-
-&#x20;- evaluation of proficiency level or the author of some input text (e.g. estimation of some chatbot answer to a user question);
-
-The first practical application is analysing questions asked to a chatbot, to route
-or adapt responses based on the user's apparent expertise level.
-
-Ultimate application: evaluation whether some input text matches the domain knowledge (e.g. evaluation of student's exam answer).
-
-Future applications: consistent "world model" reflecting object/entity relations in multiple Tier 4 domains (pre-requisite to AGI).
-
-\---
+---
 
 ## Repository layout
 
 ```
-esperanto-lexicon/          ← this repo (code)
-├── CLAUDE.md               ← you are here
+esperanto-lexicon/               ← this repo (code)
+├── CLAUDE.md                    ← you are here
+├── AGENTS.md                    ← pointer to CLAUDE.md for other agents
 ├── README.md
 ├── LICENSING.md
 ├── requirements.txt
 ├── .gitignore
 ├── src/
-│   ├── lexicon/            ← Tier 1–3 common lexicon code and schema
-│   ├── extractor/          ← Tier 4 domain MWE extraction pipeline
-│   └── analyzer/           ← text analysis and expertise estimation
+│   ├── lexicon/                 ← Tier 1–3 common lexicon code and schema
+│   ├── extractor/               ← Tier 4 domain MWE extraction pipeline
+│   └── analyzer/                ← text analysis and expertise estimation
 ├── data/
-│   ├── lexicon\_db/         ← lexicon.db lives here (not committed, regenerated)
-│   └── domain\_db/          ← per-domain SQLite files (not committed)
+│   ├── lexicon_db/              ← lexicon.db lives here (not committed, regenerated)
+│   └── domain_db/               ← per-domain SQLite files (not committed)
 ├── tests/
-└── docs/                   ← architecture notes, decision log
+└── docs/                        ← architecture notes, decision log
 ```
 
 ```
-esperanto-lexicon-corpus/   ← separate repo (data)
-├── tax\_law/
-│   ├── lt.txt              ← Lithuanian original
-│   ├── en.txt              ← English translation
-│   └── eo.txt              ← Esperanto translation (future)
-└── <other\_domains>/
+esperanto-lexicon-corpus/        ← separate repo (data)
+├── tax_law/
+│   ├── lt.txt                   ← Lithuanian original
+│   ├── en.txt                   ← English translation
+│   └── eo.txt                   ← Esperanto translation (future)
+└── <other_domains>/
 ```
 
-Database files (`\*.db`) are gitignored. The code that creates and populates them is
+Database files (`*.db`) are gitignored. The code that creates and populates them is
 in the repo; databases are regenerated locally by running the migration/build scripts.
 
-\---
+---
 
 ## Language architecture (critical — read carefully)
 
@@ -84,32 +85,36 @@ Every concept in the system has an Esperanto root as its identity. Other languag
 extensions that map onto Esperanto-keyed entries.
 
 Rationale: Esperanto's systematically constructed roots provide a normalised
-cross-linguistic foundation. \~92% of the existing common vocabulary already has
+cross-linguistic foundation. ~92% of the existing common vocabulary already has
 Esperanto mappings.
 
 Fallback hierarchy for entries without an Esperanto equivalent yet:
-`eo → en → source\_language`
+`eo → en → source_language`
 
-Mark entries without Esperanto coverage as `eo\_status: 'pending'`, never omit them.
+Mark entries without Esperanto coverage as `eo_status: 'pending'`, never omit them.
 
 Language pack codes used throughout: `'eo'` (Esperanto), `'en'` (English),
 `'lt'` (Lithuanian). Add others as needed using ISO 639-1 codes.
 
-\---
+Language packs are optional and independently deployable. A real-world application
+in Lithuanian does not require the English pack to be present — it links directly
+from Esperanto roots to Lithuanian forms.
+
+---
 
 ## Tier model
 
-|Tier|Audience|CEFR|Approx. size|Notes|
-|-|-|-|-|-|
-|1|Child (\~age 5)|A1|\~1,080 words|Dolch list + Oxford 3000 A1|
-|2|Adolescent (\~10)|A2–B2|\~2,713 words|Oxford 3000 remainder|
-|3|Adult (general)|C1+|TBD|Generic MWEs ("as a result of")|
-|4|Domain expert|—|Per domain|See below|
+| Tier | Audience         | CEFR | Approx. size | Notes                           |
+|------|-----------------|------|--------------|-------------------------------|
+| 1    | Child (~age 5)   | A1   | ~1,080 words | Dolch list + Oxford 3000 A1    |
+| 2    | Adolescent (~10) | A2–B2| ~2,713 words | Oxford 3000 remainder          |
+| 3    | Adult (general)  | C1+  | TBD          | Generic MWEs; named entities pending design |
+| 4    | Domain expert    | —    | Per domain   | See Tier 4 section below       |
 
 Tiers 1 and 2 are populated in `lexicon.db` (v1). Tier 3 is not yet built.
-Tier 4 lives in per-domain SQLite files under `data/domain\_db/`.
+Tier 4 lives in per-domain SQLite files under `data/domain_db/`.
 
-\---
+---
 
 ## Tier 4 — the "living language" model
 
@@ -119,24 +124,24 @@ Tier 4 entries are **not static**. They follow a lifecycle:
 emerging → established → crystallized → promoted
 ```
 
-* `emerging`: term appears in one or few documents; not yet widely recognised
-* `established`: term is consistently used across multiple documents in the domain
-* `crystallized`: term has a stable, agreed definition within the domain
-* `promoted`: term has migrated into general use (Tier 3 or lower); e.g. "WiFi"
+- `emerging`: term appears in one or few documents; not yet widely recognised
+- `established`: term is consistently used across multiple documents in the domain
+- `crystallized`: term has a stable, agreed definition within the domain
+- `promoted`: term has migrated into general use (Tier 3 or lower); e.g. "WiFi"
 
 Each Tier 4 entry tracks:
 
-* Where it was first seen (`first\_seen\_source`, `first\_seen\_date`)
-* All subsequent occurrences (`seen\_in` — list of source refs and dates)
-* Its current lifecycle status and tier
-* Promotion history (if it has moved tiers)
-* Conflicts: the same MWE can have different meanings across domains or jurisdictions;
-these are recorded explicitly, never silently merged
+- Where it was first seen (`first_seen_source`, `first_seen_date`)
+- All subsequent occurrences (`seen_in` — list of source refs and dates)
+- Its current lifecycle status and tier
+- Promotion history (if it has moved tiers)
+- Conflicts: the same MWE can mean different things across domains or jurisdictions;
+  these are recorded explicitly with `mwe_conflict` entries, never silently merged
 
 A term is a candidate for promotion when it appears frequently across unrelated
 documents and its meaning has stabilised. Promotion requires human review.
 
-\---
+---
 
 ## Database schema (v2 — target)
 
@@ -144,37 +149,37 @@ documents and its meaning has stabilised. Promotion requires human review.
 
 ```
 concept
-  id, eo\_root, eo\_word, eo\_pos, eo\_prefix, eo\_suffix, eo\_status
-  wordnet\_synset, wordnet\_definition, hypernym\_chain, immediate\_hypernym
+  id, eo_root, eo_word, eo_pos, eo_prefix, eo_suffix, eo_status
+  wordnet_synset, wordnet_definition, hypernym_chain, immediate_hypernym
 
-concept\_lang
-  concept\_id, lang, word, pos, cefr\_level, tier, source
+concept_lang
+  concept_id, lang, word, pos, cefr_level, tier, source
 
-inflected\_forms
-  inflected\_word, lemma, lang, form\_description, tier
+inflected_forms
+  inflected_word, lemma, lang, form_description, tier
 ```
 
-### Domain lexicon: `data/domain\_db/<domain>.db`
+### Domain lexicon: `data/domain_db/<domain>.db`
 
 ```
 mwe
-  id, eo\_canonical, status, first\_seen\_source, first\_seen\_date,
-  current\_tier, domain, jurisdiction
+  id, eo_canonical, status, first_seen_source, first_seen_date,
+  current_tier, domain, jurisdiction
 
-mwe\_lang
-  mwe\_id, lang, phrase, definition, source\_ref, pos\_pattern
+mwe_lang
+  mwe_id, lang, phrase, definition, source_ref, pos_pattern
 
-mwe\_occurrence
-  mwe\_id, source\_doc, date, context\_snippet
+mwe_occurrence
+  mwe_id, source_doc, date, context_snippet
 
-mwe\_conflict
-  mwe\_id\_a, mwe\_id\_b, conflict\_description, resolution\_status
+mwe_conflict
+  mwe_id_a, mwe_id_b, conflict_description, resolution_status
 ```
 
 The v1 `lexicon.db` (English-primary, single flat table) is the migration source.
-Migration script: `src/lexicon/migrate\_v1\_to\_v2.py`.
+Migration script: `src/lexicon/migrate_v1_to_v2.py`.
 
-\---
+---
 
 ## Extraction pipeline (Tier 4)
 
@@ -184,18 +189,18 @@ and writes/updates a domain DB. It does not depend on the chatbot or analyzer.
 Stages:
 
 1. **Definition parser** — regex + spaCy to extract `Term – definition` patterns
-(e.g. Article 2 of a legal act). Output: `article2\_terms.jsonl`
+   (e.g. Article 2 of a legal act). Output: `article2_terms.jsonl`
 2. **Statistical MWE detector** — noun-chunk + bigram/trigram collocation
-(PMI, log-likelihood) over full text, filtered against common lexicon.
-Output: `mwe\_candidates.jsonl`
+   (PMI, log-likelihood) over full text, filtered against common lexicon.
+   Output: `mwe_candidates.jsonl`
 3. **Human review** — CLI or simple UI to classify candidates as Tier 3, Tier 4,
-or reject
+   or reject
 4. **Domain DB writer** — commits reviewed entries to the domain SQLite file
 
 Input format: `corpus/<domain>/<lang>.txt` — one clean plain-text file per language.
 NLP engine: **spaCy** primary; Stanza as fallback for Lithuanian.
 
-\---
+---
 
 ## Collaboration model
 
@@ -210,58 +215,61 @@ This project is developed by a small research team (multiple humans + Claude Cod
 
 **What Claude Code may do autonomously:**
 
-* Read any file in the repository
-* Write and edit code files
-* Run tests (`pytest`)
-* Run migration/build scripts against local DB files
-* Commit to a working branch and open a PR
+- Read any file in the repository
+- Write and edit code files
+- Run tests (`pytest`)
+- Run migration/build scripts against local DB files
+- Commit to a working branch and open a PR
 
 **What Claude Code must not do without explicit human instruction:**
 
-* Merge a PR
-* Delete or rename database files
-* Change the tier of any existing lexicon entry
-* Modify `CLAUDE.md` or `AGENTS.md` without being asked
+- Merge a PR
+- Delete or rename database files
+- Change the tier of any existing lexicon entry
+- Modify `CLAUDE.md` or `AGENTS.md` without being asked
 
-\---
+---
 
 ## Conventions
 
 **Python:**
 
-* Python 3.10+
-* Black formatting (line length 88)
-* Type hints on all function signatures
-* Docstrings on all public functions
-* Tests in `tests/` mirroring `src/` structure
+- Python 3.10+
+- Black formatting (line length 88)
+- Type hints on all function signatures
+- Docstrings on all public functions
+- Tests in `tests/` mirroring `src/` structure
 
 **SQL / SQLite:**
 
-* Schema definitions in `src/lexicon/schema.py` (single source of truth)
-* All queries use parameterised statements (never f-string SQL)
-* Migrations are versioned scripts, never destructive in-place edits
+- Schema definitions in `src/lexicon/schema.py` (single source of truth)
+- All queries use parameterised statements (never f-string SQL)
+- Migrations are versioned scripts, never destructive in-place edits
 
 **Commits:**
 
-* Conventional commit format: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`
-* One logical change per commit
-* Never commit `.db` files
+- Conventional commit format: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`
+- One logical change per commit
+- Never commit `.db` files
 
 **Languages in code:**
 
-* Code, comments, docstrings, and commit messages: English
-* Variable/function names reflecting domain concepts may use Esperanto roots
-where they match the schema (e.g. `eo\_root`, `concept\_lang`)
+- Code, comments, docstrings, and commit messages: English
+- Variable/function names reflecting domain concepts may use Esperanto roots
+  where they match the schema (e.g. `eo_root`, `concept_lang`)
 
-\---
+---
 
 ## Current state (update this section after each work session)
 
-* \[x] v1 `lexicon.db` exists: 3,793 entries, Tiers 1–2, English-primary, \~92% Esperanto coverage
-* \[x] Directory structure and repos created
-* \[ ] `migrate\_v1\_to\_v2.py` — not yet written
-* \[ ] v2 schema — not yet implemented
-* \[ ] Tier 3 — not yet built
-* \[ ] Extractor pipeline — not yet written
-* \[ ] First domain corpus (Lithuanian tax law) — not yet added to corpus repo
-
+- [x] v1 `lexicon.db` exists: 3,793 entries, Tiers 1–2, English-primary, ~92% Esperanto coverage
+- [x] Directory structure and repos created
+- [x] `CLAUDE.md` and `AGENTS.md` committed
+- [x] `src/lexicon/schema.py` — v2 schema definition, committed
+- [x] `src/lexicon/enrich_esperanto.py` — auto-enrichment of 314 pending entries, committed
+- [x] `src/lexicon/migrate_v1_to_v2.py` — committed
+- [ ] v2 `lexicon.db` — not yet generated
+- [ ] Tier 3 — not yet designed or built
+- [ ] Named entity handling — design decision pending
+- [ ] Extractor pipeline — not yet written
+- [ ] First domain corpus (Lithuanian tax law) — not yet added to corpus repo
