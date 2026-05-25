@@ -49,6 +49,26 @@ def _lookup_mwe_lang(
     return (row[0], row[1] or "") if row else None
 
 
+def _lookup_mwe_lang_same_def(
+    conn: sqlite3.Connection, phrase_normalized: str, lang: str, definition_raw: str
+) -> int | None:
+    """Return mwe_id only when phrase AND definition both match an existing row.
+
+    Used in STEP 1 deduplication to avoid merging two different concepts that
+    happen to share the same translated phrase (e.g. two LT terms with identical
+    EO translations).
+    """
+    row = conn.execute(
+        "SELECT mwe_id, definition_raw FROM mwe_lang WHERE phrase_normalized = ? AND lang = ?",
+        (phrase_normalized, lang),
+    ).fetchone()
+    if row is None:
+        return None
+    if _normalize_definition(row[1] or "") != _normalize_definition(definition_raw):
+        return None  # Same phrase, different concept — do not merge
+    return row[0]
+
+
 def _count_distinct_sources(conn: sqlite3.Connection, mwe_id: int) -> int:
     row = conn.execute(
         "SELECT COUNT(DISTINCT source_doc) FROM mwe_occurrence WHERE mwe_id = ?",
@@ -141,13 +161,16 @@ def process_group(
     """
     today = _today()
 
-    # STEP 1 — deduplication: find an existing mwe via any lang in the group
+    # STEP 1 — deduplication: find an existing mwe via any lang in the group.
+    # Require phrase AND definition to match so that two different concepts sharing
+    # the same translated phrase are not incorrectly merged.
     existing_mwe_id: int | None = None
     for rec in records:
         phrase_normalized = rec.get("term_normalized") or rec["term_raw"].lower()
-        found = _lookup_mwe_lang(conn, phrase_normalized, rec["lang"])
-        if found is not None:
-            existing_mwe_id = found[0]
+        definition_raw = rec.get("definition_raw") or ""
+        found_id = _lookup_mwe_lang_same_def(conn, phrase_normalized, rec["lang"], definition_raw)
+        if found_id is not None:
+            existing_mwe_id = found_id
             break
 
     # STEP 2 — NOT FOUND: create one mwe row and one mwe_lang + mwe_occurrence per language
@@ -156,14 +179,39 @@ def process_group(
             conn, records[0].get("source_file") or "", today, domain, jurisdiction
         )
         lang_counts: dict[str, int] = {}
+        conflicts = 0
         for rec in records:
+            phrase_normalized = rec.get("term_normalized") or rec["term_raw"].lower()
+            definition_raw = rec.get("definition_raw") or ""
             _insert_mwe_lang(conn, mwe_id, rec)
             _insert_occurrence(conn, mwe_id, rec, today)
             lang_counts[rec["lang"]] = lang_counts.get(rec["lang"], 0) + 1
 
-        phrases_str = " | ".join(r["term_raw"] for r in records)
+            # Detect same phrase + different definition in an already-existing mwe
+            for existing_mwe_id_other, existing_def in conn.execute(
+                "SELECT mwe_id, definition_raw FROM mwe_lang"
+                " WHERE phrase_normalized=? AND lang=? AND mwe_id!=?",
+                (phrase_normalized, rec["lang"], mwe_id),
+            ):
+                if _normalize_definition(existing_def or "") != _normalize_definition(definition_raw):
+                    detail = f"A: {(existing_def or '')[:100]} | B: {definition_raw[:100]}"
+                    conn.execute(
+                        """
+                        INSERT INTO mwe_conflict
+                            (mwe_id_a, mwe_id_b, conflict_type, divergence_detail,
+                             resolution_status, detected_date)
+                        VALUES (?, ?, 'text_divergence', ?, 'open', ?)
+                        """,
+                        (existing_mwe_id_other, mwe_id, detail, today),
+                    )
+                    print(f"CONFLICT: {rec['term_raw']} ({rec['lang']}) — text divergence recorded")
+                    conflicts += 1
+
+        _LANG_ORDER = {"lt": 0, "eo": 1, "en": 2}
+        ordered = sorted(records, key=lambda r: _LANG_ORDER.get(r["lang"], 99))
+        phrases_str = " | ".join(r["term_raw"] for r in ordered)
         print(f"NEW [clause {cross_lang_num}]: {phrases_str}")
-        return {"new_concepts": 1, "lang_counts": lang_counts, "merged": 0, "conflicts": 0}
+        return {"new_concepts": 1, "lang_counts": lang_counts, "merged": 0, "conflicts": conflicts}
 
     # STEP 3 — FOUND: apply per-language merge / conflict logic against the existing mwe
     mwe_id = existing_mwe_id

@@ -262,14 +262,16 @@ This project is developed by a small research team (multiple humans + Claude Cod
 
 ## Current state (update this section after each work session)
 
-- [x] v1 `lexicon.db` exists: 3,793 entries, Tiers 1–2, English-primary, ~92% Esperanto coverage
-- [x] Directory structure and repos created
-- [x] `CLAUDE.md` and `AGENTS.md` committed
-- [x] `src/lexicon/schema.py` — v2 schema definition, committed
-- [x] `src/lexicon/enrich_esperanto.py` — auto-enrichment of 314 pending entries, committed
-- [x] `src/lexicon/migrate_v1_to_v2.py` — committed
-- [ ] v2 `lexicon.db` — not yet generated
-- [ ] Tier 3 — not yet designed or built
-- [ ] Named entity handling — design decision pending
-- [ ] Extractor pipeline — not yet written
-- [ ] First domain corpus (Lithuanian tax law) — not yet added to corpus repo
+
+- [x] src/ingestion/docx_to_corpus.py — docx to clean text ingestion
+- [x] src/extractor/extract_definitions.py — Article 2 definition parser (** markers, em-dash only)
+- [x] src/extractor/review_cli.py — bilingual review CLI
+- [x] src/extractor/domain_db_writer.py — domain DB writer; dedup requires phrase+definition match; cross-phrase collision (e.g. shared EO translation) creates new mwe + conflict record
+- [x] src/extractor/statistical_mwe_detector.py — PMI/log-likelihood; splits into --output (MWE) and --output-ne (NE candidates)
+- [x] src/analyzer/coverage_report.py — greedy MWE matching; expertise signal ratio T4/(T1+T2)
+- [x] First domain corpus GPMI — 38 concepts × 3 langs (lt+eo+en) = 114 mwe_lang rows in gpmi_lt_tax.db
+- [x] Clean ingestion from docx — 637 LT amendments stripped, tables handled
+- [ ] Statistical candidates review — pending human review
+- [ ] First coverage report run — sentences not yet tested end-to-end with spaCy
+- [ ] Named entity layer — design deferred
+- [ ] Tier 3 — not yet designed

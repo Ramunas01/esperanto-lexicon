@@ -90,26 +90,42 @@ def _load_nlp(lang: str):
         sys.exit(1)
 
 
-def tokenise(lines: list[str], nlp, lang: str) -> list[list[str]]:
-    """Tokenise *lines* with spaCy and return sentences as lists of lowercased tokens.
+def tokenise(
+    lines: list[str], nlp, lang: str
+) -> tuple[list[list[str]], set[str], set[str]]:
+    """Tokenise *lines* with spaCy.
 
-    Filters out stop words, punctuation, numbers, and non-alphabetic tokens.
-    Never crosses sentence boundaries (uses spaCy sentence segmentation).
+    Returns:
+        sentences      — sentence-segmented lists of lowercased content tokens
+        propn_words    — lowercased words tagged PROPN by spaCy
+        cap_words      — lowercased words that appear capitalised mid-sentence
+                         (sentence-initial capitals are excluded to avoid false positives)
     """
     text = "\n".join(lines)
     doc = nlp(text)
     sentences: list[list[str]] = []
+    propn_words: set[str] = set()
+    cap_words: set[str] = set()
+
     for sent in doc.sents:
-        tokens = [
-            tok.text.lower()
-            for tok in sent
-            if tok.is_alpha
-            and not tok.is_stop
-            and tok.pos_ not in ("PUNCT", "SPACE", "NUM", "SYM")
-        ]
+        tokens: list[str] = []
+        sent_toks = list(sent)
+        for i, tok in enumerate(sent_toks):
+            if not tok.is_alpha:
+                continue
+            if tok.is_stop or tok.pos_ in ("PUNCT", "SPACE", "NUM", "SYM"):
+                continue
+            lower = tok.text.lower()
+            tokens.append(lower)
+            if tok.pos_ == "PROPN":
+                propn_words.add(lower)
+            # Mid-sentence capital: skip the very first token of the sentence
+            if i > 0 and tok.text[0].isupper():
+                cap_words.add(lower)
         if tokens:
             sentences.append(tokens)
-    return sentences
+
+    return sentences, propn_words, cap_words
 
 
 # ---------------------------------------------------------------------------
@@ -346,6 +362,51 @@ def apply_filters(
 
 
 # ---------------------------------------------------------------------------
+# Step 4b — Named-entity candidate classification
+# ---------------------------------------------------------------------------
+
+# Lithuanian genitive endings typical of country/place-name adjectives
+_NE_GEO_RE = re.compile(r"\b\w+(?:ijos|ietišk)\b", re.IGNORECASE)
+
+# Organisation-type words (stem-based to cover inflected forms)
+_NE_ORG_RE = re.compile(r"\b(?:organizacij|asociacij|grupė|fondas)\b", re.IGNORECASE)
+
+# Person-indicator words
+_NE_PERSON_RE = re.compile(r"\b(?:vardas|pavardė|asmens)\b", re.IGNORECASE)
+
+
+def ne_type(
+    phrase: str,
+    words: list[str],
+    propn_words: set[str],
+    cap_words: set[str],
+) -> str | None:
+    """Return NE type suggestion if the candidate looks like a named entity, else None.
+
+    Detection fires on any of:
+      1. spaCy tagged a component word as PROPN
+      2. A component word appears capitalised mid-sentence in the corpus
+      3. The phrase matches a known NE pattern (geographical, organisation, person)
+    """
+    has_propn = any(w in propn_words for w in words)
+    has_cap = any(w in cap_words for w in words)
+    has_geo = bool(_NE_GEO_RE.search(phrase))
+    has_org = bool(_NE_ORG_RE.search(phrase))
+    has_person = bool(_NE_PERSON_RE.search(phrase))
+
+    if not (has_propn or has_cap or has_geo or has_org or has_person):
+        return None
+
+    if has_geo:
+        return "geographical"
+    if has_org:
+        return "organisation"
+    if has_person:
+        return "person"
+    return "unknown"
+
+
+# ---------------------------------------------------------------------------
 # Step 5 — main pipeline and CLI
 # ---------------------------------------------------------------------------
 
@@ -356,6 +417,7 @@ def run(
     lexicon_db: Path,
     domain_db: Path | None,
     output_path: Path,
+    output_ne_path: Path | None,
     top_n: int,
     min_freq: int,
     min_pmi: float,
@@ -365,7 +427,7 @@ def run(
     lines = load_lines(input_path)
     nlp = _load_nlp(lang)
     print(f"Tokenising {input_path.name} ({lang}) …")
-    sentences = tokenise(lines, nlp, lang)
+    sentences, propn_words, cap_words = tokenise(lines, nlp, lang)
 
     # Step 2 — count
     uni, bi, tri = count_ngrams(sentences)
@@ -385,11 +447,28 @@ def run(
     after_domain.sort(key=lambda c: (-c["pmi"], -c["frequency"]))
     top_candidates = after_domain[:top_n]
 
+    # Step 4b — split into MWE and NE candidates
+    mwe_candidates: list[dict] = []
+    ne_candidates: list[dict] = []
+    for cand in top_candidates:
+        words = cand["phrase"].split()
+        ne_t = ne_type(cand["phrase"], words, propn_words, cap_words)
+        if ne_t is not None:
+            ne_candidates.append({**cand, "ne_type_suggestion": ne_t})
+        else:
+            mwe_candidates.append(cand)
+
     # Step 5 — write
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8") as fh:
-        for rec in top_candidates:
+        for rec in mwe_candidates:
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+    if output_ne_path is not None:
+        output_ne_path.parent.mkdir(parents=True, exist_ok=True)
+        with output_ne_path.open("w", encoding="utf-8") as fh:
+            for rec in ne_candidates:
+                fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
     print(f"\nTokens analysed    : {N}")
     print(f"Unique unigrams    : {len(uni)}")
@@ -397,7 +476,10 @@ def run(
     print(f"Trigram candidates : {trigram_before}  (before filter)")
     print(f"After lexicon filter   : {len(after_lexicon)} remaining")
     print(f"After domain filter    : {len(after_domain)} remaining")
-    print(f"Written to output      : {len(top_candidates)} (top-{top_n} by PMI)")
+    print(f"MWE candidates written : {len(mwe_candidates)}")
+    print(f"NE candidates written  : {len(ne_candidates)}")
+    if output_ne_path is not None:
+        print(f"  (ne output: {output_ne_path})")
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -412,7 +494,11 @@ def main(argv: list[str] | None = None) -> None:
         "--domain-db", dest="domain_db", type=Path, default=None,
         help="Path to domain .db (optional; skips domain filter if absent)",
     )
-    parser.add_argument("--output", required=True, type=Path, help="Output .jsonl path")
+    parser.add_argument("--output", required=True, type=Path, help="Output .jsonl path for MWE candidates")
+    parser.add_argument(
+        "--output-ne", dest="output_ne", type=Path, default=None,
+        help="Output .jsonl path for named-entity candidates (optional)",
+    )
     parser.add_argument("--top-n", dest="top_n", type=int, default=200,
                         help="Number of top candidates to write (default 200)")
     parser.add_argument("--min-freq", dest="min_freq", type=int, default=3,
@@ -427,6 +513,7 @@ def main(argv: list[str] | None = None) -> None:
         lexicon_db=args.lexicon,
         domain_db=args.domain_db,
         output_path=args.output,
+        output_ne_path=args.output_ne,
         top_n=args.top_n,
         min_freq=args.min_freq,
         min_pmi=args.min_pmi,
