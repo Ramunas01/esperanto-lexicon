@@ -1,0 +1,2 @@
+spacy>=3.7
+# python3 -m spacy download lt_core_news_sm

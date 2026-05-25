@@ -298,7 +298,7 @@ def extract_definitions(
                 results.append(rec)
 
     for i in range(start, end):
-        stripped = lines[i].rstrip("\n").strip()
+        stripped = lines[i].rstrip("\n").strip().replace("**", "")
 
         if _should_skip(stripped):
             continue
