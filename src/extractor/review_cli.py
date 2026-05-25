@@ -67,7 +67,22 @@ def _pending_idxs(records: list[dict], lang: str) -> list[int]:
 
 
 # ---------------------------------------------------------------------------
-# Single-language display and review
+# Format detection
+# ---------------------------------------------------------------------------
+
+
+def _detect_format(records: list[dict]) -> str:
+    """Return 'statistical' or 'definition' based on the first record's keys.
+
+    Statistical records have a 'phrase' key; definition records have 'term_raw'.
+    """
+    if records and "phrase" in records[0]:
+        return "statistical"
+    return "definition"
+
+
+# ---------------------------------------------------------------------------
+# Single-language display (definition format)
 # ---------------------------------------------------------------------------
 
 
@@ -89,9 +104,44 @@ def _display_single(rec: dict, position: int, total: int) -> None:
     print("  " + "─" * 61)
 
 
+# ---------------------------------------------------------------------------
+# Single-language display (statistical format)
+# ---------------------------------------------------------------------------
+
+
+def _display_statistical(rec: dict, position: int, total: int) -> None:
+    lang = rec.get("lang", "?")
+    method = rec.get("extraction_method", "?")
+    phrase = rec.get("phrase", "?")
+    freq = rec.get("frequency", "?")
+    pmi = rec.get("pmi")
+    ngram = rec.get("ngram_size", "?")
+    novel: list[str] = rec.get("novel_components") or []
+    common: list[str] = rec.get("common_components") or []
+
+    pmi_str = f"{pmi:.2f}" if isinstance(pmi, (int, float)) else "?"
+    novel_str = ", ".join(novel) if novel else "(none)"
+    common_str = ", ".join(common) if common else "(none)"
+
+    print()
+    print("  " + "─" * 61)
+    print(f"  [{position} of {total}]  {lang}  |  {method}")
+    print(f"  {'PHRASE:':<10}{phrase}")
+    print(f"  {'FREQ:':<10}{freq}   PMI: {pmi_str}   [{ngram}-gram]")
+    print(f"  {'NOVEL:':<10}{novel_str}")
+    print(f"  {'COMMON:':<10}{common_str}")
+    print("  " + "─" * 61)
+
+
 def review(input_path: Path, lang: str) -> None:
-    """Run the interactive review loop for a single language."""
+    """Run the interactive review loop for a single language.
+
+    Auto-detects record format: definition records show TERM/DEF/TYPE/ABBREV;
+    statistical records show PHRASE/FREQ/PMI/NOVEL/COMMON.
+    """
     records = _load_records(input_path)
+    fmt = _detect_format(records)
+    display_fn = _display_statistical if fmt == "statistical" else _display_single
     pending = _pending_idxs(records, lang)
 
     if not pending:
@@ -105,7 +155,7 @@ def review(input_path: Path, lang: str) -> None:
 
     for pos, rec_idx in enumerate(pending, start=1):
         rec = records[rec_idx]
-        _display_single(rec, pos, total)
+        display_fn(rec, pos, total)
         print("  [a] approve   [r] reject   [s] skip   [q] quit  > ", end="", flush=True)
 
         key = _read_key()
@@ -350,7 +400,20 @@ def main(argv: list[str] | None = None) -> None:
     if len(args.lang) == 1:
         review(args.input, args.lang[0])
     else:
-        review_two(args.input, args.lang)
+        # Two-language mode: definition records are grouped by cross_lang_num and
+        # reviewed side by side.  Statistical records have no cross-language groups,
+        # so each language is reviewed sequentially in single-lang mode.
+        records = _load_records(args.input)
+        fmt = _detect_format(records)
+        if fmt == "statistical":
+            print(
+                "  (statistical format: no cross-language groups — "
+                "reviewing each language separately)"
+            )
+            for lang in args.lang:
+                review(args.input, lang)
+        else:
+            review_two(args.input, args.lang)
 
 
 if __name__ == "__main__":
