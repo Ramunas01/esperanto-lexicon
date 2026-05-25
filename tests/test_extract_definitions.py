@@ -180,6 +180,31 @@ def test_amendment_lines_not_in_terms(lt_defs: list[dict]) -> None:
             )
 
 
+def test_eo_no_nro_in_term_raw(eo_defs: list[dict]) -> None:
+    """No EO term_raw should contain an Esperanto law-number marker."""
+    for rec in eo_defs:
+        assert "N-ro" not in rec["term_raw"], (
+            f"Amendment marker 'N-ro' leaked into term_raw: {rec['term_raw']!r}"
+        )
+
+
+def test_eo_no_tar_in_term_raw(eo_defs: list[dict]) -> None:
+    """No EO term_raw should contain a TAR reference."""
+    for rec in eo_defs:
+        assert "TAR" not in rec["term_raw"], (
+            f"Amendment marker 'TAR' leaked into term_raw: {rec['term_raw']!r}"
+        )
+
+
+def test_eo_no_publikigita_in_definition(eo_defs: list[dict]) -> None:
+    """No EO definition_raw should start with 'publikigita' (amendment publication text)."""
+    for rec in eo_defs:
+        assert not rec["definition_raw"].lower().startswith("publikigita"), (
+            f"Amendment text leaked into definition_raw for clause {rec['clause_num']!r}: "
+            f"{rec['definition_raw'][:60]!r}"
+        )
+
+
 def test_amendment_numbers_not_terms(lt_by_clause: dict[str, dict]) -> None:
     """Clause numbers like 16, 35, 39 (no separator) must not appear."""
     for excluded in ("16", "35", "39"):

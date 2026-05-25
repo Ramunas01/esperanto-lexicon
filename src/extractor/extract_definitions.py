@@ -34,10 +34,20 @@ _ARTICLE_HEADER_RES: dict[str, re.Pattern[str]] = {
 }
 
 # Lines signalling an amendment block or legal metadata — do not extract.
+# Prefix patterns matched at the start of the stripped line.
+# N-ro is the Esperanto equivalent of Lithuanian Nr. (law reference numbers).
 _SKIP_LINE_RE = re.compile(
-    r"^(?:Nr\.|Straipsnio|Papildyta|Ŝanĝoj|Aldonita|TAR pastaba|Noto pri)",
+    r"^(?:Nr\.|Straipsnio|Papildyta|Ŝanĝoj|Aldonita|TAR pastaba|Noto pri|N-ro)",
     re.IGNORECASE,
 )
+
+# Mid-line content patterns that also signal amendment markers.
+_SKIP_CONTENT_RE = re.compile(r"publikigita en la TAR", re.IGNORECASE)
+
+
+def _should_skip(line: str) -> bool:
+    """True when a line is a legal amendment marker or metadata that must not be extracted."""
+    return bool(_SKIP_LINE_RE.match(line)) or bool(_SKIP_CONTENT_RE.search(line))
 
 # Sub-item lines such as "1) ...", "2) ..."
 _SUBITEM_RE = re.compile(r"^\d+\)\s")
@@ -229,7 +239,7 @@ def _parse_clause(
         s = line.strip()
         if not s:
             continue
-        if _SKIP_LINE_RE.match(s):
+        if _should_skip(s):
             continue
         extra.append(s)
 
@@ -290,7 +300,7 @@ def extract_definitions(
     for i in range(start, end):
         stripped = lines[i].rstrip("\n").strip()
 
-        if _SKIP_LINE_RE.match(stripped):
+        if _should_skip(stripped):
             continue
 
         m = _CLAUSE_RE.match(stripped)
