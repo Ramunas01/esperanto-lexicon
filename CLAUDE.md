@@ -253,18 +253,16 @@ Workaround: Phase 2 prefix matching in `src/analyzer/coverage_report.py`.
 Proper fix: integrate Stanza `lt` model for better lemmatisation.
 Tracked in: GitHub issue (to be created)
 
-### Lithuanian common lexicon absent
+### Lithuanian common lexicon coverage
 
-The `concept_lang` table in `lexicon_v2.db` currently contains only English
-(`lang='en'`) entries — 3,793 words. No Lithuanian entries exist yet.
-Lithuanian tokens therefore cannot match TIER1 or TIER2 via the primary lookup.
+`src/lexicon/build_lt_lexicon.py` has been run against `lexicon_v2.db` and
+inserted **896 LT entries** via EN→LT translation pairs. LT Tier 1/2 lookup now
+works without `--fallback-lang`. Coverage: 896 of 3,793 EN concepts mapped;
+remainder have no known LT equivalent yet.
 
-Workaround: `--fallback-lang en` flag in `coverage_report.py`. Matched tokens
-are marked `TIER1~` / `TIER2~` (via fallback) and the report header carries a
-warning. Accuracy is approximate since English lemmas are used as proxy.
-
-Proper fix: add a Lithuanian word list to `concept_lang` (manual curation or
-import from an existing resource such as the Lithuanian wordnet or frequency list).
+Known gap: proper Lithuanian wordnet or frequency-list import would extend
+coverage further. `--fallback-lang en` remains available as a stopgap for
+languages with no primary entries.
 
 ---
 
@@ -311,7 +309,10 @@ import from an existing resource such as the Lithuanian wordnet or frequency lis
 - [x] First domain corpus GPMI — 38 concepts × 3 langs (lt+eo+en) = 114 mwe_lang rows in gpmi_lt_tax.db
 - [x] Clean ingestion from docx — 637 LT amendments stripped, tables handled
 - [x] First coverage report run — three test sentences validated with spaCy (see Known limitations)
+- [x] src/lexicon/build_lt_lexicon.py — 896 LT entries inserted into lexicon_v2.db; LT T1/T2 matching working without --fallback-lang
+- [x] src/analyzer/conflict_report.py — single-DB and cross-DB conflict report; 25 tests passing
+- [x] src/ingestion/ingest_document.py — pipeline wrapper (Pass 1: extract; Pass 2: commit)
+- [x] docs/adding_new_domain.md — step-by-step guide for onboarding a new domain
 - [ ] Statistical candidates review — pending human review
-- [ ] Lithuanian Tier 1/2 lexicon — only EN entries exist; --fallback-lang en is stopgap
 - [ ] Named entity layer — design deferred
 - [ ] Tier 3 — not yet designed
