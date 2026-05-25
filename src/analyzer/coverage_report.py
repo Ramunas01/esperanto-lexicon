@@ -46,6 +46,7 @@ class TokenResult:
     lemma: str              # base form (empty for multi-word TIER4)
     category: str           # TIER1 | TIER2 | TIER4 | UNKNOWN | SKIP
     n_tokens: int = 1       # source tokens consumed
+    via_fallback: bool = False  # True when matched via fallback_lang, not primary lang
 
 
 # ---------------------------------------------------------------------------
@@ -87,24 +88,51 @@ def load_mwe_phrases(domain_db: Path | None, lang: str) -> set[str]:
 # Core classification (pure — no spaCy dependency)
 # ---------------------------------------------------------------------------
 
+# KNOWN LIMITATION: lt_core_news_sm lemmatisation quality
+# The Lithuanian spaCy model mislemmatises some adjective inflections
+# (e.g. "individualia" → "individualias" instead of "individuali").
+# This means inflected MWE tokens may not match stored base forms via
+# the exact-lemma path.
+#
+# Workaround: Phase 2 prefix matching (below) catches cases where the
+# inflected text form starts with the stored base form (e.g.
+# "individualia".startswith("individuali") → True), and the remaining
+# words match exactly. This covers the most common Lithuanian adjective
+# inflection patterns.
+#
+# Proper fix: integrate Stanza lt model for better lemmatisation.
+# See CLAUDE.md § Known limitations.
+
 
 def classify_tokens(
     tokens: list[SimpleToken],
     mwe_phrases: set[str],
     tier1_words: set[str],
     tier2_words: set[str],
+    *,
+    fallback_tier1: set[str] | None = None,
+    fallback_tier2: set[str] | None = None,
 ) -> list[TokenResult]:
     """Greedily classify *tokens*, longest MWE match wins.
 
     Algorithm:
       For each position i:
         If the token is a skip token → SKIP, advance 1.
-        Else try windows of 3, 2, 1 non-skip tokens:
-          - Build phrase from lowercased text and from lemmas
-          - If either form is in mwe_phrases → TIER4, advance window_size
-        Else check lemma / text against tier1/tier2 sets.
+        Phase 1 — exact MWE match (text or lemma form, windows 3→2→1).
+        Phase 2 — prefix partial match for inflected first tokens (multi-word only).
+        Else check lemma/text against tier1/tier2 sets.
+          If no primary match and fallback sets provided, try those.
         Else → UNKNOWN.
     """
+    # Build prefix index: first_word → [phrase, …] for all multi-word phrases.
+    # Used in Phase 2 to catch inflected first tokens whose text starts with
+    # the stored base form (e.g. "individualia".startswith("individuali")).
+    mwe_prefix_index: dict[str, list[str]] = {}
+    for phrase in mwe_phrases:
+        words = phrase.split()
+        if len(words) >= 2:
+            mwe_prefix_index.setdefault(words[0], []).append(phrase)
+
     results: list[TokenResult] = []
     n = len(tokens)
     i = 0
@@ -118,6 +146,8 @@ def classify_tokens(
             continue
 
         matched = False
+
+        # Phase 1: exact MWE match — try windows 3 → 2 → 1
         for window_size in (3, 2, 1):
             if i + window_size > n:
                 continue
@@ -135,15 +165,70 @@ def classify_tokens(
                 matched = True
                 break
 
+        # Phase 2: prefix partial match for inflected first tokens (multi-word only).
+        # Applies when the first token's text (or lemma) starts with — but is not
+        # equal to — a stored phrase's first word, suggesting inflection.
+        if not matched and mwe_prefix_index:
+            for window_size in (3, 2, 1):
+                if i + window_size > n or matched:
+                    continue
+                window = tokens[i : i + window_size]
+                if any(t.is_skip for t in window):
+                    continue
+
+                first_text = window[0].text.lower()
+                first_lemma = window[0].lemma.lower()
+
+                for candidate_first, phrases in mwe_prefix_index.items():
+                    if matched:
+                        break
+                    # The window's first token is an inflected form of candidate_first
+                    # when it starts with (but differs from) the stored base.
+                    is_inflected_text = (
+                        first_text.startswith(candidate_first)
+                        and first_text != candidate_first
+                    )
+                    is_inflected_lemma = (
+                        first_lemma.startswith(candidate_first)
+                        and first_lemma != candidate_first
+                    )
+                    if not (is_inflected_text or is_inflected_lemma):
+                        continue
+
+                    for phrase in phrases:
+                        phrase_words = phrase.split()
+                        if len(phrase_words) != window_size:
+                            continue
+                        rest_ok = all(
+                            window[j].text.lower() == phrase_words[j]
+                            or window[j].lemma.lower() == phrase_words[j]
+                            for j in range(1, window_size)
+                        )
+                        if rest_ok:
+                            display = " ".join(t.text for t in window)
+                            results.append(TokenResult(display, "", "TIER4", window_size))
+                            i += window_size
+                            matched = True
+                            break
+
+                if matched:
+                    break
+
         if matched:
             continue
 
+        # TIER1 / TIER2 lookup — primary lang, then optional fallback lang
         text_lower = tok.text.lower()
         lemma_lower = tok.lemma.lower()
+
         if text_lower in tier1_words or lemma_lower in tier1_words:
             results.append(TokenResult(tok.text, tok.lemma, "TIER1"))
         elif text_lower in tier2_words or lemma_lower in tier2_words:
             results.append(TokenResult(tok.text, tok.lemma, "TIER2"))
+        elif fallback_tier1 and (text_lower in fallback_tier1 or lemma_lower in fallback_tier1):
+            results.append(TokenResult(tok.text, tok.lemma, "TIER1", via_fallback=True))
+        elif fallback_tier2 and (text_lower in fallback_tier2 or lemma_lower in fallback_tier2):
+            results.append(TokenResult(tok.text, tok.lemma, "TIER2", via_fallback=True))
         else:
             results.append(TokenResult(tok.text, tok.lemma, "UNKNOWN"))
 
@@ -171,11 +256,22 @@ def compute_summary(results: list[TokenResult]) -> dict:
 
     common = (counts["TIER1"] + counts["TIER2"]) / total if total > 0 else 0.0
     domain = counts["TIER4"] / total if total > 0 else 0.0
-    ratio = domain / common if common > 0 else 0.0
 
-    if ratio < 0.05:
+    # Preferred signal: ratio = T4 / (T1+T2) — measures domain density relative to known
+    # common words. Falls back to domain_pct directly when no common words are identified
+    # (e.g. primary lexicon absent), so the interpretation remains meaningful.
+    if common > 0:
+        ratio = domain / common
+        ratio_basis = "t4_vs_common"
+    else:
+        ratio = 0.0
+        ratio_basis = "t4_vs_total"
+
+    # Interpretation thresholds apply to ratio when common > 0, else to domain_pct.
+    signal = ratio if ratio_basis == "t4_vs_common" else domain
+    if signal < 0.05:
         interpretation = "general audience"
-    elif ratio < 0.20:
+    elif signal < 0.20:
         interpretation = "mixed audience"
     else:
         interpretation = "specialist"
@@ -187,6 +283,7 @@ def compute_summary(results: list[TokenResult]) -> dict:
             "common_pct": round(common, 4),
             "domain_pct": round(domain, 4),
             "ratio": round(ratio, 4),
+            "ratio_basis": ratio_basis,
             "interpretation": interpretation,
         },
     }
@@ -207,10 +304,18 @@ def format_text_report(
     domain: str,
     results: list[TokenResult],
     summary: dict,
+    *,
+    fallback_lang: str | None = None,
 ) -> str:
     lines: list[str] = []
     sep = "═" * 52
     lines += [sep, "COVERAGE REPORT", sep]
+    if fallback_lang:
+        lines.append(
+            f"! {lang} not in common lexicon — "
+            f"using {fallback_lang} as Tier 1/2 fallback (approximate)"
+        )
+        lines.append(sep)
     lines.append(f'Input  : {input_repr[:72]}')
     lines.append(f"Lang   : {lang}   Domain: {domain}")
     lines.append(sep)
@@ -220,8 +325,13 @@ def format_text_report(
     for r in results:
         if r.category == "SKIP":
             continue
-        suffix = f"  ({r.category})"
-        lines.append(f"  {r.text:<30} {r.category:<8}{suffix}")
+        if r.via_fallback and fallback_lang:
+            cat_label = f"{r.category}~"
+            suffix = f"  ({r.category} via {fallback_lang})"
+        else:
+            cat_label = r.category
+            suffix = f"  ({r.category})"
+        lines.append(f"  {r.text:<30} {cat_label:<8}{suffix}")
 
     lines.append("")
     lines.append("Summary:")
@@ -238,7 +348,10 @@ def format_text_report(
     lines.append("Expertise signal:")
     lines.append(f"  Common (T1+T2) : {_pct(es['common_pct'])}")
     lines.append(f"  Domain (T4)    : {_pct(es['domain_pct'])}")
-    lines.append(f"  Ratio T4/common: {es['ratio']:.2f}")
+    if es.get("ratio_basis") == "t4_vs_total":
+        lines.append(f"  Domain% (approx): {_pct(es['domain_pct'])}  [no common words — using domain% directly]")
+    else:
+        lines.append(f"  Ratio T4/common: {es['ratio']:.2f}")
     lines.append("")
     lines.append("  Interpretation:")
     lines.append("    < 0.05  — general audience text")
@@ -255,13 +368,28 @@ def format_json_report(
     domain: str,
     results: list[TokenResult],
     summary: dict,
+    *,
+    fallback_lang: str | None = None,
 ) -> str:
+    warnings: list[str] = []
+    if fallback_lang:
+        warnings.append(
+            f"{lang} not in common lexicon — "
+            f"using {fallback_lang} as Tier 1/2 fallback (approximate)"
+        )
     payload = {
         "input": input_repr,
         "lang": lang,
         "domain": domain,
+        "warnings": warnings,
         "tokens": [
-            {"text": r.text, "lemma": r.lemma, "category": r.category, "n_tokens": r.n_tokens}
+            {
+                "text": r.text,
+                "lemma": r.lemma,
+                "category": r.category,
+                "n_tokens": r.n_tokens,
+                "via_fallback": r.via_fallback,
+            }
             for r in results
         ],
         "summary": summary,
@@ -315,22 +443,36 @@ def analyse(
     lexicon_db: Path,
     domain_db: Path | None,
     output_format: str,
+    fallback_lang: str | None = None,
 ) -> str:
     """Run the full coverage analysis and return the formatted report string."""
     tier1, tier2 = load_tier_words(lexicon_db, lang)
     mwe_phrases = load_mwe_phrases(domain_db, lang)
 
+    fb_tier1: set[str] = set()
+    fb_tier2: set[str] = set()
+    if fallback_lang:
+        fb_tier1, fb_tier2 = load_tier_words(lexicon_db, fallback_lang)
+
     nlp = _load_nlp(lang)
     tokens = spacy_tokenise(text, nlp)
-    results = classify_tokens(tokens, mwe_phrases, tier1, tier2)
+    results = classify_tokens(
+        tokens, mwe_phrases, tier1, tier2,
+        fallback_tier1=fb_tier1 if fallback_lang else None,
+        fallback_tier2=fb_tier2 if fallback_lang else None,
+    )
     summary = compute_summary(results)
 
     domain_label = domain_db.stem if domain_db else "none"
     input_repr = text[:120] + ("…" if len(text) > 120 else "")
 
     if output_format == "json":
-        return format_json_report(input_repr, lang, domain_label, results, summary)
-    return format_text_report(input_repr, lang, domain_label, results, summary)
+        return format_json_report(
+            input_repr, lang, domain_label, results, summary, fallback_lang=fallback_lang
+        )
+    return format_text_report(
+        input_repr, lang, domain_label, results, summary, fallback_lang=fallback_lang
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -353,6 +495,10 @@ def main(argv: list[str] | None = None) -> None:
         "--output-format", dest="output_format", choices=["text", "json"], default="text",
         help="Output format (default: text)",
     )
+    parser.add_argument(
+        "--fallback-lang", dest="fallback_lang", default=None,
+        help="Fallback language for Tier 1/2 lookup when primary lang has no common lexicon entries",
+    )
     args = parser.parse_args(argv)
 
     # --input may be a file path or a literal string
@@ -368,6 +514,7 @@ def main(argv: list[str] | None = None) -> None:
         lexicon_db=args.lexicon,
         domain_db=args.domain_db,
         output_format=args.output_format,
+        fallback_lang=args.fallback_lang,
     )
     print(report)
 

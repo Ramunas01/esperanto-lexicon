@@ -230,6 +230,44 @@ This project is developed by a small research team (multiple humans + Claude Cod
 
 ---
 
+## Known limitations
+
+### Lithuanian lemmatisation (lt_core_news_sm)
+
+The spaCy `lt_core_news_sm` model mislemmatises some adjective inflections,
+causing MWE lookup misses in the coverage report. Confirmed example:
+
+```
+"individualia" → spaCy lemma: "individualias"   (wrong)
+expected base form: "individuali"
+```
+
+The stored `phrase_normalized` for clause 7 is `"individuali veikla"`. Neither
+the inflected text form `"individualia veikla"` nor the wrong lemma form
+`"individualias veikla"` matches exactly. A **prefix partial-match fallback**
+(Phase 2 in `classify_tokens`) compensates: it detects that `"individualia"`
+starts with `"individuali"` and the remaining word `"veikla"` matches, and
+classifies the bigram as TIER4.
+
+Workaround: Phase 2 prefix matching in `src/analyzer/coverage_report.py`.
+Proper fix: integrate Stanza `lt` model for better lemmatisation.
+Tracked in: GitHub issue (to be created)
+
+### Lithuanian common lexicon absent
+
+The `concept_lang` table in `lexicon_v2.db` currently contains only English
+(`lang='en'`) entries — 3,793 words. No Lithuanian entries exist yet.
+Lithuanian tokens therefore cannot match TIER1 or TIER2 via the primary lookup.
+
+Workaround: `--fallback-lang en` flag in `coverage_report.py`. Matched tokens
+are marked `TIER1~` / `TIER2~` (via fallback) and the report header carries a
+warning. Accuracy is approximate since English lemmas are used as proxy.
+
+Proper fix: add a Lithuanian word list to `concept_lang` (manual curation or
+import from an existing resource such as the Lithuanian wordnet or frequency list).
+
+---
+
 ## Conventions
 
 **Python:**
@@ -268,10 +306,12 @@ This project is developed by a small research team (multiple humans + Claude Cod
 - [x] src/extractor/review_cli.py — bilingual review CLI
 - [x] src/extractor/domain_db_writer.py — domain DB writer; dedup requires phrase+definition match; cross-phrase collision (e.g. shared EO translation) creates new mwe + conflict record
 - [x] src/extractor/statistical_mwe_detector.py — PMI/log-likelihood; splits into --output (MWE) and --output-ne (NE candidates)
-- [x] src/analyzer/coverage_report.py — greedy MWE matching; expertise signal ratio T4/(T1+T2)
+- [x] src/analyzer/coverage_report.py — greedy MWE matching; expertise signal ratio T4/(T1+T2); --fallback-lang; prefix partial-match for inflected LT adjectives
+- [x] src/extractor/bulk_approve.py — bulk-approve .jsonl records by language
 - [x] First domain corpus GPMI — 38 concepts × 3 langs (lt+eo+en) = 114 mwe_lang rows in gpmi_lt_tax.db
 - [x] Clean ingestion from docx — 637 LT amendments stripped, tables handled
+- [x] First coverage report run — three test sentences validated with spaCy (see Known limitations)
 - [ ] Statistical candidates review — pending human review
-- [ ] First coverage report run — sentences not yet tested end-to-end with spaCy
+- [ ] Lithuanian Tier 1/2 lexicon — only EN entries exist; --fallback-lang en is stopgap
 - [ ] Named entity layer — design deferred
 - [ ] Tier 3 — not yet designed

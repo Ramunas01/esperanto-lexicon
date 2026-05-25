@@ -103,17 +103,20 @@ def _clause_ref(rec: dict) -> str | None:
 def _insert_mwe_lang(
     conn: sqlite3.Connection, mwe_id: int, rec: dict
 ) -> None:
+    phrase_normalized = rec.get("term_normalized") or rec["term_raw"].lower()
+    phrase_base = phrase_normalized.split()[0] if phrase_normalized else ""
     conn.execute(
         """
         INSERT INTO mwe_lang
-            (mwe_id, lang, phrase, phrase_normalized, definition_raw, abbrev)
-        VALUES (?, ?, ?, ?, ?, ?)
+            (mwe_id, lang, phrase, phrase_normalized, phrase_base, definition_raw, abbrev)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
         """,
         (
             mwe_id,
             rec["lang"],
             rec["term_raw"],
-            rec.get("term_normalized") or rec["term_raw"].lower(),
+            phrase_normalized,
+            phrase_base,
             rec.get("definition_raw") or "",
             rec.get("abbrev"),
         ),

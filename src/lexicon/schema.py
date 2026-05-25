@@ -71,6 +71,7 @@ def create_domain_schema(conn: sqlite3.Connection) -> None:
             lang                TEXT NOT NULL,
             phrase              TEXT NOT NULL,
             phrase_normalized   TEXT NOT NULL,
+            phrase_base         TEXT,
             definition_raw      TEXT,
             pos_pattern         TEXT,
             abbrev              TEXT,
