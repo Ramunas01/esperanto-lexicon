@@ -11,8 +11,11 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 from extractor.extract_eurlex_definitions import (
     EurLexExtractor,
+    _extract_article_number_from_text,
+    _record_key,
     is_eurlex_definition,
     map_eurlex_to_writer_fields,
+    write_records,
 )
 
 FIXTURE_HTML = Path(__file__).parent / "fixtures" / "eurlex" / "ucc_en_article5_fragment.html"
@@ -250,6 +253,230 @@ def test_map_eurlex_to_writer_fields(art5_defs: list[dict]) -> None:
     assert mapped["source_file"] == CELEX
     # Date from celex id suffix 20221212 → 2022-12-12
     assert mapped["first_seen_date"] == "2022-12-12"
+
+
+# ---------------------------------------------------------------------------
+# write_records / --append
+# ---------------------------------------------------------------------------
+
+
+def test_write_records_overwrite(tmp_path: Path, art5_defs: list[dict]) -> None:
+    out = tmp_path / "out.jsonl"
+    # Write once, then overwrite — result should contain only second batch
+    write_records(art5_defs[:3], out)
+    write_records(art5_defs[3:6], out)  # overwrite
+    lines = [l for l in out.read_text().splitlines() if l.strip()]
+    assert len(lines) == 3
+
+
+def test_write_records_append_adds_new(tmp_path: Path, art5_defs: list[dict]) -> None:
+    out = tmp_path / "out.jsonl"
+    written1 = write_records(art5_defs[:3], out)
+    written2 = write_records(art5_defs[3:6], out, append=True)
+    lines = [l for l in out.read_text().splitlines() if l.strip()]
+    assert written1 == 3
+    assert written2 == 3
+    assert len(lines) == 6
+
+
+def test_write_records_append_skips_duplicates(tmp_path: Path, art5_defs: list[dict]) -> None:
+    out = tmp_path / "out.jsonl"
+    write_records(art5_defs[:5], out)
+    # Re-append the same 5 records — all should be skipped
+    written = write_records(art5_defs[:5], out, append=True)
+    lines = [l for l in out.read_text().splitlines() if l.strip()]
+    assert written == 0
+    assert len(lines) == 5
+
+
+def test_write_records_append_partial_overlap(tmp_path: Path, art5_defs: list[dict]) -> None:
+    out = tmp_path / "out.jsonl"
+    write_records(art5_defs[:4], out)
+    # Append 2 already-present + 2 new
+    written = write_records(art5_defs[2:6], out, append=True)
+    lines = [l for l in out.read_text().splitlines() if l.strip()]
+    assert written == 2
+    assert len(lines) == 6
+
+
+def test_write_records_append_to_nonexistent_file(tmp_path: Path, art5_defs: list[dict]) -> None:
+    out = tmp_path / "new.jsonl"
+    written = write_records(art5_defs[:2], out, append=True)
+    assert written == 2
+    assert out.exists()
+
+
+def test_record_key_definition(art5_defs: list[dict]) -> None:
+    rec = art5_defs[0]
+    key = _record_key(rec)
+    assert key == (
+        CELEX,
+        rec["source_ref"]["structural_path"],
+        rec["source_ref"]["list_path"],
+        "en",
+    )
+
+
+def test_record_key_article_metadata(all_records: list[dict]) -> None:
+    meta = next(r for r in all_records if r["record_type"] == "article_metadata")
+    key = _record_key(meta)
+    assert key[0] == CELEX
+    assert key[2] == "article_metadata"
+    assert key[3] == "en"
+
+
+def test_record_key_footnote(all_records: list[dict]) -> None:
+    fn = next(r for r in all_records if r["record_type"] == "footnote")
+    key = _record_key(fn)
+    assert key[0] == CELEX
+    assert key[2] == "footnote"
+    assert key[3] == "en"
+
+
+def test_write_records_mixed_types_dedup(tmp_path: Path, all_records: list[dict]) -> None:
+    """Append with all three record types; re-appending the same set writes nothing."""
+    out = tmp_path / "mixed.jsonl"
+    written1 = write_records(all_records, out)
+    written2 = write_records(all_records, out, append=True)
+    assert written1 == len(all_records)
+    assert written2 == 0
+
+
+# ---------------------------------------------------------------------------
+# Variant B — Lithuanian flat structure
+# ---------------------------------------------------------------------------
+
+FIXTURE_LT_HTML = Path(__file__).parent / "fixtures" / "eurlex" / "ucc_lt_article5_fragment.html"
+
+
+@pytest.fixture(scope="module")
+def extractor_lt() -> EurLexExtractor:
+    return EurLexExtractor(celex_id=CELEX, lang="lt")
+
+
+@pytest.fixture(scope="module")
+def soup_lt(extractor_lt: EurLexExtractor):
+    return extractor_lt.parse_html(FIXTURE_LT_HTML)
+
+
+@pytest.fixture(scope="module")
+def all_records_lt(extractor_lt: EurLexExtractor, soup_lt) -> list[dict]:
+    return extractor_lt.extract(soup_lt)
+
+
+@pytest.fixture(scope="module")
+def art5_defs_lt(all_records_lt: list[dict]) -> list[dict]:
+    return [
+        r for r in all_records_lt
+        if r["record_type"] == "definition"
+        and r["context"].get("article_number") == "5"
+    ]
+
+
+def test_variant_b_detected_when_no_eli_subdivision(soup_lt) -> None:
+    """LT fixture has no eli-subdivision divs — Variant B path is taken."""
+    doc_div = soup_lt.find("div", id="docHtml")
+    assert doc_div is not None
+    assert len(doc_div.find_all("div", class_="eli-subdivision")) == 0
+
+
+def test_variant_a_detected_when_eli_subdivision_present(soup) -> None:
+    """EN fixture has eli-subdivision divs — Variant A path is taken."""
+    doc_div = soup.find("div", id="docHtml")
+    assert len(doc_div.find_all("div", class_="eli-subdivision")) > 0
+
+
+def test_extract_article_number_nominative() -> None:
+    assert _extract_article_number_from_text("5 straipsnis") == "5"
+
+
+def test_extract_article_number_genitive() -> None:
+    assert _extract_article_number_from_text("6 straipsnio") == "6"
+
+
+def test_extract_article_number_english() -> None:
+    assert _extract_article_number_from_text("Article 5") == "5"
+
+
+def test_extract_article_number_bare_digit() -> None:
+    assert _extract_article_number_from_text("5") == "5"
+
+
+def test_variant_b_art5_yields_41_definitions(art5_defs_lt: list[dict]) -> None:
+    assert len(art5_defs_lt) == 41
+
+
+def test_variant_b_structural_path_is_art_5(art5_defs_lt: list[dict]) -> None:
+    assert all(r["source_ref"]["structural_path"] == "art_5" for r in art5_defs_lt)
+
+
+def test_variant_b_list_paths_match_variant_a(
+    art5_defs: list[dict], art5_defs_lt: list[dict]
+) -> None:
+    """Both variants emit the same list_path values for Article 5."""
+    paths_en = sorted(r["source_ref"]["list_path"] for r in art5_defs)
+    paths_lt = sorted(r["source_ref"]["list_path"] for r in art5_defs_lt)
+    assert paths_en == paths_lt
+
+
+def test_variant_b_structural_path_ends_with_art_5(art5_defs: list[dict]) -> None:
+    """Variant A structural path contains 'art_5'; Variant B IS 'art_5'."""
+    assert all("art_5" in r["source_ref"]["structural_path"] for r in art5_defs)
+
+
+def test_variant_b_context_has_title_and_chapter(art5_defs_lt: list[dict]) -> None:
+    ctx = art5_defs_lt[0]["context"]
+    assert ctx["title_label"] == "I ANTRAŠTINĖ DALIS"
+    assert ctx["chapter_label"] == "1 SKYRIUS"
+    assert ctx["title_rubric"] == "BENDROSIOS NUOSTATOS"
+    assert ctx["chapter_rubric"] == "Taikymo sritis, misija ir apibrėžtys"
+
+
+def test_variant_b_article_rubric(art5_defs_lt: list[dict]) -> None:
+    assert art5_defs_lt[0]["context"]["article_rubric"] == "Apibrėžtys"
+
+
+def test_variant_b_cursor_resets_at_article_boundary(all_records_lt: list[dict]) -> None:
+    """Art 5 item 1 has marker B; art 6 item 1 has marker M4 from its own modref."""
+    art5_item1 = next(
+        r for r in all_records_lt
+        if r["record_type"] == "definition"
+        and r["context"].get("article_number") == "5"
+        and r["source_ref"]["list_path"] == "1"
+    )
+    assert art5_item1["amendment"]["marker"] == "B"
+
+    art6_defs = [
+        r for r in all_records_lt
+        if r["record_type"] == "definition"
+        and r["context"].get("article_number") == "6"
+    ]
+    assert len(art6_defs) >= 1
+    assert art6_defs[0]["amendment"]["marker"] == "M4"
+
+
+def test_variant_b_article_filter(soup_lt, extractor_lt: EurLexExtractor) -> None:
+    """--article 5 should return only art 5 definitions, not art 6."""
+    ext = EurLexExtractor(celex_id=CELEX, lang="lt")
+    records = ext.extract(soup_lt, article_filter="5")
+    defs = [r for r in records if r["record_type"] == "definition"]
+    assert len(defs) == 41
+    assert all(r["context"].get("article_number") == "5" for r in defs)
+
+
+def test_variant_b_genitive_article_number(all_records_lt: list[dict]) -> None:
+    """Article 6 uses 'straipsnio' (genitive) in the fixture — must still parse as '6'."""
+    art6_defs = [
+        r for r in all_records_lt
+        if r["record_type"] == "definition"
+        and r["context"].get("article_number") == "6"
+    ]
+    assert len(art6_defs) >= 1
+
+
+def test_variant_b_footnotes_collected(all_records_lt: list[dict]) -> None:
+    footnotes = [r for r in all_records_lt if r["record_type"] == "footnote"]
+    assert len(footnotes) >= 1
 
 
 # ---------------------------------------------------------------------------

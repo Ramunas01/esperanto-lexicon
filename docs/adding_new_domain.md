@@ -94,6 +94,21 @@ python3 src/ingestion/ingest_document.py \
 Note: `extract_eurlex_definitions.py` handles EUR-Lex HTML directly and produces
 `definitions.jsonl` without an intermediate corpus text step.
 
+**Layout auto-detection**: The extractor calls `detect_layout()` internally:
+- `divlayout` — EUR-Lex English and most languages with `eli-subdivision` wrappers
+- `tablelayout` — Lithuanian and some other translations: flat article siblings with
+  `<table><tr><td class="dlist-term">...</td><td class="dlist-definition">...</td></tr></table>`
+  rows and en-dash–separated term/definition text
+
+No `--layout` flag is needed; the right path is selected automatically.
+If you see `0 definitions found` for a language that uses tables (check the raw HTML),
+run `detect_layout` directly to confirm detection:
+```python
+from extractor.extract_eurlex_definitions import EurLexExtractor, detect_layout
+ext = EurLexExtractor("...", "lt")
+print(detect_layout(ext.parse_html(Path("path/to/lt.html"))))
+```
+
 ---
 
 ## Manual review in detail

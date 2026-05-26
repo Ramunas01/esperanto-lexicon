@@ -48,11 +48,20 @@ FOOTNOTE_REF_PATTERN = re.compile(r"\s*\(\s*\d+\s*\)")
 
 TRIANGLE_PATTERN = re.compile(r"[▼▲]([A-Z]\d*|[A-Z])")
 
+# Corrigendum markers: ►C2 / ▶M4 (open) and ◄ / ◀ (close)
+CORRIGENDUM_RE = re.compile(r"[►▶][A-Z]\d*\s*|\s*[◄◀]")
+
 # Matches the article id attribute, e.g. art_5 or art_5a
 ART_ID_PATTERN = re.compile(r"^art_\w+$")
 
 # Celex date suffix e.g. "02013R0952-20221212" → "2022-12-12"
 CELEX_DATE_PATTERN = re.compile(r"-(\d{4})(\d{2})(\d{2})$")
+
+# Article number from title text: "5 straipsnis", "5 straipsnio", "Article 5"
+ART_NUM_TEXT_PATTERN = re.compile(
+    r"(\d+)\s*(?:straipsnis|straipsnio|article)?",
+    re.IGNORECASE,
+)
 
 
 def _parse_celex_date(celex_id: str) -> str | None:
@@ -61,6 +70,39 @@ def _parse_celex_date(celex_id: str) -> str | None:
     if m:
         return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
     return None
+
+
+def _extract_article_number_from_text(text: str) -> str | None:
+    """Extract article number from a localized title string.
+
+    Handles '5 straipsnis', '5 straipsnio' (Lithuanian genitive), 'Article 5'.
+    Returns the bare digit string, e.g. '5'.
+    """
+    m = ART_NUM_TEXT_PATTERN.search(_normalize_nbsp(text))
+    return m.group(1) if m else None
+
+
+class UnknownLayoutError(Exception):
+    """Raised when EUR-Lex HTML layout cannot be determined."""
+
+
+def detect_layout(soup: BeautifulSoup) -> str:
+    """Return 'divlayout' or 'tablelayout' for a EUR-Lex HTML document.
+
+    divlayout  — eli-subdivision wrappers present (EN and many languages)
+    tablelayout — table rows with dlist-term/dlist-definition cells (LT etc.)
+    """
+    doc_div = soup.find("div", id="docHtml") or soup
+    if doc_div.find("div", class_="eli-subdivision"):
+        return "divlayout"
+    if doc_div.find(class_="dlist-term") or doc_div.find(class_="dlist-definition"):
+        return "tablelayout"
+    raise UnknownLayoutError("Cannot determine EUR-Lex HTML layout variant")
+
+
+def _strip_corrigendum_markers(text: str) -> str:
+    """Remove ►Cx / ◄ corrigendum open/close markers, keeping inner content."""
+    return CORRIGENDUM_RE.sub("", text)
 
 
 def _normalize_nbsp(text: str) -> str:
@@ -194,12 +236,9 @@ class EurLexExtractor:
             soup = BeautifulSoup(raw, "html.parser")
         return soup
 
-    def _collect_structural_context(self, soup: BeautifulSoup) -> dict[str, dict]:
+    def _collect_structural_context(self, doc_div: Tag) -> dict[str, dict]:
         """Build a mapping of art_id → context dict by walking structural divs."""
         contexts: dict[str, dict] = {}
-        doc_div = soup.find("div", id="docHtml")
-        if doc_div is None:
-            doc_div = soup
 
         for art_div in doc_div.find_all("div", id=ART_ID_PATTERN):
             art_id = art_div.get("id", "")
@@ -380,29 +419,21 @@ class EurLexExtractor:
             parts.append(art_id)
         return ".".join(parts)
 
-    def extract(
-        self, soup: BeautifulSoup, article_filter: str | None = None
+    def _extract_variant_a(
+        self,
+        doc_div: Tag,
+        article_filter: str | None,
+        amendments_detected: set[str],
     ) -> list[dict]:
-        """Run the full extraction pipeline.
-
-        Returns list of record dicts (definition, article_metadata, footnote).
-        """
-        doc_div = soup.find("div", id="docHtml")
-        if doc_div is None:
-            self._warnings.append("docHtml div not found; scanning full document")
-            doc_div = soup
-
-        contexts = self._collect_structural_context(soup)
+        """Extract definitions from Variant A HTML (eli-subdivision wrappers present)."""
+        contexts = self._collect_structural_context(doc_div)
         records: list[dict] = []
-
         skipped_annexes = 0
         skipped_recitals = 0
-        amendments_detected: set[str] = set()
 
         for art_div in doc_div.find_all("div", id=ART_ID_PATTERN):
             art_id = art_div.get("id", "")
 
-            # Skip annexes and recitals at ancestor level
             skip = False
             for ancestor in art_div.parents:
                 if not isinstance(ancestor, Tag):
@@ -422,25 +453,17 @@ class EurLexExtractor:
             ctx = contexts.get(art_id, {})
             art_num = ctx.get("article_number")
 
-            # Apply --article filter
             if article_filter is not None and art_num != article_filter:
                 continue
 
             structural_path = self._structural_path(art_div)
-
-            # Walk items with amendment cursor reset at article boundary
             def_count = 0
-            cursor_at_start: dict[str, Any] = {"marker": "B", "celex": "", "action": None}
-
-            # First pass: collect amendment cursors and definition items
-            # We need to find grid-container items that are direct children of the article's list
             seen_grid_containers: set[int] = set()
+            cursor: dict[str, Any] = {"marker": "B", "celex": "", "action": None}
 
-            cursor: dict[str, Any] = dict(cursor_at_start)
             for el in art_div.descendants:
                 if not isinstance(el, Tag):
                     continue
-
                 classes = set(el.get("class") or [])
 
                 if "modref" in classes and el.name == "p":
@@ -457,8 +480,6 @@ class EurLexExtractor:
                 if eid in seen_grid_containers:
                     continue
 
-                # Only process top-level grid-containers (direct children of list wrapper)
-                # Skip if a parent grid-container is already in scope
                 parent_is_grid = False
                 for anc in el.parents:
                     if anc == art_div:
@@ -470,15 +491,13 @@ class EurLexExtractor:
                     continue
 
                 seen_grid_containers.add(eid)
-
                 result = self._match_definition(el, cursor, art_div)
                 if result is None:
                     continue
 
                 def_count += 1
                 list_path = result["list_path"] or str(def_count)
-
-                record: dict[str, Any] = {
+                records.append({
                     "record_type": "definition",
                     "term": result["term"],
                     "term_normalized": result["term"].lower(),
@@ -490,6 +509,7 @@ class EurLexExtractor:
                         "structural_path": structural_path,
                         "list_path": list_path,
                         "url": self._article_url(art_id),
+                        "layout": "divlayout",
                     },
                     "amendment": result["amendment"],
                     "context": {
@@ -504,40 +524,377 @@ class EurLexExtractor:
                     },
                     "sub_items": result["sub_items"],
                     "footnote_refs": result["footnote_refs"],
-                }
-                records.append(record)
+                })
 
-            # Emit article_metadata
-            records.append(
-                {
-                    "record_type": "article_metadata",
-                    "lang": self.lang,
-                    "source_ref": {
-                        "celex_id": self.celex_id,
-                        "structural_path": structural_path,
-                    },
+            records.append({
+                "record_type": "article_metadata",
+                "lang": self.lang,
+                "source_ref": {
+                    "celex_id": self.celex_id,
+                    "structural_path": structural_path,
+                    "layout": "divlayout",
+                },
+                "article_number": ctx.get("article_number"),
+                "article_rubric": ctx.get("article_rubric"),
+                "context": {
                     "article_number": ctx.get("article_number"),
                     "article_rubric": ctx.get("article_rubric"),
-                    "context": {
-                        "article_number": ctx.get("article_number"),
-                        "article_rubric": ctx.get("article_rubric"),
-                        "title_label": ctx.get("title_label"),
-                        "title_rubric": ctx.get("title_rubric"),
-                        "chapter_label": ctx.get("chapter_label"),
-                        "chapter_rubric": ctx.get("chapter_rubric"),
-                        "section_label": ctx.get("section_label"),
-                        "section_rubric": ctx.get("section_rubric"),
-                    },
-                    "definition_count": def_count,
-                }
-            )
+                    "title_label": ctx.get("title_label"),
+                    "title_rubric": ctx.get("title_rubric"),
+                    "chapter_label": ctx.get("chapter_label"),
+                    "chapter_rubric": ctx.get("chapter_rubric"),
+                    "section_label": ctx.get("section_label"),
+                    "section_rubric": ctx.get("section_rubric"),
+                },
+                "definition_count": def_count,
+            })
 
         if skipped_annexes:
             self._warnings.append(f"Skipped {skipped_annexes} annex article(s)")
         if skipped_recitals:
             self._warnings.append(f"Skipped {skipped_recitals} recital article(s)")
 
-        # Collect footnotes
+        return records
+
+    def _extract_variant_b(
+        self,
+        doc_div: Tag,
+        article_filter: str | None,
+        amendments_detected: set[str],
+    ) -> list[dict]:
+        """Extract definitions from Variant B HTML (flat structure, no eli-subdivision).
+
+        Articles are delimited by p.title-article-norm elements in the flat child
+        stream of docHtml.  Structural context comes from title-division-1/2 elements
+        that appear before their articles.  The amendment cursor resets at each
+        article boundary.
+        """
+        records: list[dict] = []
+
+        # Running structural context, updated as flat elements are encountered
+        ctx_state: dict[str, Any] = {
+            "title_label": None,
+            "title_rubric": None,
+            "chapter_label": None,
+            "chapter_rubric": None,
+            "section_label": None,
+            "section_rubric": None,
+        }
+
+        art_num: str | None = None
+        art_rubric: str | None = None
+        art_ctx: dict[str, Any] = {}
+        cursor: dict[str, Any] = {"marker": "B", "celex": "", "action": None}
+        # (grid-container element, cursor state at time of encounter)
+        pending: list[tuple[Tag, dict[str, Any]]] = []
+
+        def _flush() -> None:
+            if art_num is None:
+                return
+
+            structural_path = f"art_{art_num}"
+            art_id = f"art_{art_num}"
+            full_ctx = {
+                **art_ctx,
+                "article_number": art_num,
+                "article_rubric": art_rubric,
+            }
+
+            if article_filter is not None and art_num != article_filter:
+                return
+
+            def_count = 0
+            for el, el_cursor in pending:
+                result = self._match_definition(el, el_cursor, doc_div)
+                if result is None:
+                    continue
+
+                def_count += 1
+                list_path = result["list_path"] or str(def_count)
+                records.append({
+                    "record_type": "definition",
+                    "term": result["term"],
+                    "term_normalized": result["term"].lower(),
+                    "definition": result["definition"],
+                    "lang": self.lang,
+                    "approved": False,
+                    "source_ref": {
+                        "celex_id": self.celex_id,
+                        "structural_path": structural_path,
+                        "list_path": list_path,
+                        "url": self._article_url(art_id),
+                        "layout": "flatgrid",
+                    },
+                    "amendment": result["amendment"],
+                    "context": full_ctx,
+                    "sub_items": result["sub_items"],
+                    "footnote_refs": result["footnote_refs"],
+                })
+
+            records.append({
+                "record_type": "article_metadata",
+                "lang": self.lang,
+                "source_ref": {
+                    "celex_id": self.celex_id,
+                    "structural_path": structural_path,
+                    "layout": "flatgrid",
+                },
+                "article_number": art_num,
+                "article_rubric": art_rubric,
+                "context": full_ctx,
+                "definition_count": def_count,
+            })
+
+        for child in doc_div.children:
+            if not isinstance(child, Tag):
+                continue
+            classes = set(child.get("class") or [])
+
+            if "title-division-1" in classes:
+                ctx_state["title_label"] = _get_text(child) or None
+                ctx_state["title_rubric"] = None
+            elif "stitle-division-1" in classes:
+                ctx_state["title_rubric"] = _get_text(child) or None
+            elif "title-division-2" in classes:
+                ctx_state["chapter_label"] = _get_text(child) or None
+                ctx_state["chapter_rubric"] = None
+            elif "stitle-division-2" in classes:
+                ctx_state["chapter_rubric"] = _get_text(child) or None
+            elif "title-article-norm" in classes and child.name == "p":
+                _flush()
+                new_num = _extract_article_number_from_text(_get_text(child))
+                if new_num is not None:
+                    art_num = new_num
+                    art_rubric = None
+                    art_ctx = dict(ctx_state)
+                    cursor = {"marker": "B", "celex": "", "action": None}
+                    pending = []
+            elif "stitle-article-norm" in classes and child.name == "p":
+                art_rubric = _get_text(child) or None
+            elif "modref" in classes and child.name == "p":
+                cursor = _parse_amendment_marker(child)
+                mk = cursor.get("marker", "B")
+                if mk:
+                    amendments_detected.add(mk)
+            elif "grid-container" in classes and art_num is not None:
+                pending.append((child, dict(cursor)))
+
+        _flush()
+        return records
+
+    def _parse_table_row(
+        self,
+        table: Tag,
+        cursor: dict[str, Any],
+        amendments_detected: set[str],
+    ) -> dict | None:
+        """Parse one tablelayout <table> element into a definition result dict."""
+        row = table.find("tr")
+        if not row:
+            return None
+        term_td = row.find("td", class_="dlist-term")
+        def_td = row.find("td", class_="dlist-definition")
+        if not term_td or not def_td:
+            return None
+
+        list_path = _normalize_list_marker(_get_text(term_td))
+
+        # Consume modrefs that appear as direct children of the definition cell
+        for ch in list(def_td.children):
+            if isinstance(ch, Tag) and ch.name == "p" and "modref" in (ch.get("class") or []):
+                cursor = _parse_amendment_marker(ch)
+                mk = cursor.get("marker", "B")
+                if mk:
+                    amendments_detected.add(mk)
+
+        # Shape B: p.normal holds the term (with trailing dash)
+        p_normal = def_td.find("p", class_="normal")
+        if p_normal:
+            term_text = _get_text(p_normal)
+            term_text = re.sub(r"[–—]\s*$", "", term_text).strip()
+            term_text = term_text.strip("„“”‘’\"'")
+            p_norm = def_td.find("p", class_="norm")
+            chapeau = _strip_definition_text(_get_text(p_norm)) if p_norm else ""
+            sub_items = _collect_sub_items(def_td, dict(cursor))
+            return {
+                "term": term_text,
+                "definition": chapeau,
+                "amendment": dict(cursor),
+                "sub_items": sub_items,
+                "list_path": list_path,
+            }
+
+        # Shape A / C: split on en-dash (C strips corrigendum markers first)
+        raw = _normalize_nbsp(def_td.get_text(" ", strip=True))
+        raw = _strip_corrigendum_markers(raw)
+        idx = raw.find("–")
+        if idx == -1:
+            idx = raw.find("—")
+        if idx == -1:
+            return None
+        term = raw[:idx].strip().strip("„“”‘’\"'")
+        definition = _strip_definition_text(raw[idx + 1:])
+        if not term:
+            return None
+        return {
+            "term": term,
+            "definition": definition,
+            "amendment": dict(cursor),
+            "sub_items": [],
+            "list_path": list_path,
+        }
+
+    def _extract_tablelayout(
+        self,
+        doc_div: Tag,
+        article_filter: str | None,
+        amendments_detected: set[str],
+    ) -> list[dict]:
+        """Extract definitions from tablelayout HTML (LT and similar translations).
+
+        Articles are delimited by p.title-article-norm in the flat child stream of
+        docHtml.  Each top-level definition occupies one <table><tr> with
+        td.dlist-term (list marker) and td.dlist-definition (content).
+        """
+        records: list[dict] = []
+        ctx_state: dict[str, Any] = {
+            "title_label": None,
+            "title_rubric": None,
+            "chapter_label": None,
+            "chapter_rubric": None,
+            "section_label": None,
+            "section_rubric": None,
+        }
+        art_num: str | None = None
+        art_rubric: str | None = None
+        art_ctx: dict[str, Any] = {}
+        cursor: dict[str, Any] = {"marker": "B", "celex": "", "action": None}
+        pending: list[tuple[Tag, dict[str, Any]]] = []
+
+        def _flush() -> None:
+            if art_num is None:
+                return
+            structural_path = f"art_{art_num}"
+            art_id = f"art_{art_num}"
+            full_ctx = {
+                **art_ctx,
+                "article_number": art_num,
+                "article_rubric": art_rubric,
+            }
+            if article_filter is not None and art_num != article_filter:
+                return
+            def_count = 0
+            for table, tbl_cursor in pending:
+                result = self._parse_table_row(table, dict(tbl_cursor), amendments_detected)
+                if result is None:
+                    continue
+                def_count += 1
+                lp = result["list_path"] or str(def_count)
+                records.append({
+                    "record_type": "definition",
+                    "term": result["term"],
+                    "term_normalized": result["term"].lower(),
+                    "definition": result["definition"],
+                    "lang": self.lang,
+                    "approved": False,
+                    "source_ref": {
+                        "celex_id": self.celex_id,
+                        "structural_path": structural_path,
+                        "list_path": lp,
+                        "url": self._article_url(art_id),
+                        "layout": "tablelayout",
+                    },
+                    "amendment": result["amendment"],
+                    "context": full_ctx,
+                    "sub_items": result["sub_items"],
+                    "footnote_refs": [],
+                })
+            records.append({
+                "record_type": "article_metadata",
+                "lang": self.lang,
+                "source_ref": {
+                    "celex_id": self.celex_id,
+                    "structural_path": structural_path,
+                    "layout": "tablelayout",
+                },
+                "article_number": art_num,
+                "article_rubric": art_rubric,
+                "context": full_ctx,
+                "definition_count": def_count,
+            })
+
+        for child in doc_div.children:
+            if not isinstance(child, Tag):
+                continue
+            classes = set(child.get("class") or [])
+
+            if "title-division-1" in classes:
+                ctx_state["title_label"] = _get_text(child) or None
+                ctx_state["title_rubric"] = None
+            elif "stitle-division-1" in classes:
+                ctx_state["title_rubric"] = _get_text(child) or None
+            elif "title-division-2" in classes:
+                ctx_state["chapter_label"] = _get_text(child) or None
+                ctx_state["chapter_rubric"] = None
+            elif "stitle-division-2" in classes:
+                ctx_state["chapter_rubric"] = _get_text(child) or None
+            elif "title-article-norm" in classes and child.name == "p":
+                _flush()
+                raw_title = _get_text(child)
+                if "PRIEDAS" in raw_title.upper():
+                    art_num = None
+                    art_rubric = None
+                    pending = []
+                    continue
+                new_num = _extract_article_number_from_text(raw_title)
+                if new_num is not None:
+                    art_num = new_num
+                    art_rubric = None
+                    art_ctx = dict(ctx_state)
+                    cursor = {"marker": "B", "celex": "", "action": None}
+                    pending = []
+            elif "stitle-article-norm" in classes and child.name == "p":
+                art_rubric = _get_text(child) or None
+            elif "modref" in classes and child.name == "p":
+                cursor = _parse_amendment_marker(child)
+                mk = cursor.get("marker", "B")
+                if mk:
+                    amendments_detected.add(mk)
+            elif child.name == "table" and art_num is not None:
+                pending.append((child, dict(cursor)))
+
+        _flush()
+        return records
+
+    def extract(
+        self, soup: BeautifulSoup, article_filter: str | None = None
+    ) -> list[dict]:
+        """Run the full extraction pipeline.
+
+        Layout is detected automatically via detect_layout():
+          divlayout   — eli-subdivision wrappers present (EN and many languages)
+          tablelayout — table rows with dlist-term/dlist-definition cells (LT etc.)
+
+        Returns list of record dicts (definition, article_metadata, footnote).
+        """
+        doc_div = soup.find("div", id="docHtml")
+        if doc_div is None:
+            self._warnings.append("docHtml div not found; scanning full document")
+            doc_div = soup
+
+        amendments_detected: set[str] = set()
+
+        try:
+            layout = detect_layout(soup)
+        except UnknownLayoutError:
+            layout = "divlayout"
+            self._warnings.append("Layout not detected; falling back to divlayout")
+
+        if layout == "tablelayout":
+            records = self._extract_tablelayout(doc_div, article_filter, amendments_detected)
+        else:
+            records = self._extract_variant_a(doc_div, article_filter, amendments_detected)
+
         footnotes = self._collect_footnotes(soup)
         records.extend(footnotes)
 
@@ -583,6 +940,68 @@ def map_eurlex_to_writer_fields(rec: dict) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# I/O helpers
+# ---------------------------------------------------------------------------
+
+
+def _record_key(rec: dict) -> tuple[str, str, str, str]:
+    """Return a deduplication key for any EUR-Lex record type."""
+    rt = rec.get("record_type", "")
+    lang = rec.get("lang", "")
+    src = rec.get("source_ref", {})
+    celex_id = src.get("celex_id", "")
+
+    if rt == "definition":
+        return (celex_id, src.get("structural_path", ""), src.get("list_path", ""), lang)
+    if rt == "article_metadata":
+        return (celex_id, src.get("structural_path", ""), "article_metadata", lang)
+    if rt == "footnote":
+        return (celex_id, src.get("footnote_id", ""), "footnote", lang)
+    return (rt, lang, "", celex_id)
+
+
+def _load_existing_keys(output_path: Path) -> set[tuple[str, str, str, str]]:
+    """Load deduplication keys from an existing EUR-Lex JSONL output file."""
+    keys: set[tuple[str, str, str, str]] = set()
+    if not output_path.exists():
+        return keys
+    with output_path.open(encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                keys.add(_record_key(json.loads(line)))
+            except (json.JSONDecodeError, KeyError):
+                pass
+    return keys
+
+
+def write_records(
+    records: list[dict],
+    output_path: Path,
+    *,
+    append: bool = False,
+) -> int:
+    """Write EUR-Lex records to output_path as JSONL, optionally deduplicating.
+
+    In append mode, records whose (celex_id, structural_path, list_path, lang) key
+    already exists in the file are skipped.  Returns the number of records written.
+    """
+    existing_keys = _load_existing_keys(output_path) if append else set()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    mode = "a" if append else "w"
+    written = 0
+    with output_path.open(mode, encoding="utf-8") as fh:
+        for rec in records:
+            if _record_key(rec) in existing_keys:
+                continue
+            fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            written += 1
+    return written
+
+
+# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -597,6 +1016,12 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--lang", required=True, help="Language code (e.g. en)")
     parser.add_argument("--output", required=True, type=Path, help="Path to output .jsonl file")
     parser.add_argument("--article", default=None, help="Extract only from this article number")
+    parser.add_argument(
+        "--append",
+        action="store_true",
+        help="Append to existing output file instead of overwriting; "
+             "duplicate records (same celex_id + structural_path + list_path + lang) are skipped",
+    )
     args = parser.parse_args(argv)
 
     if not args.input.exists():
@@ -612,10 +1037,8 @@ def main(argv: list[str] | None = None) -> None:
     n_metadata = sum(1 for r in records if r["record_type"] == "article_metadata")
     n_amendments = len(getattr(extractor, "_amendments_detected", set()))
 
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    with args.output.open("w", encoding="utf-8") as fh:
-        for rec in records:
-            fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    written = write_records(records, args.output, append=args.append)
+    skipped = len(records) - written
 
     print(f"Articles scanned    : {n_metadata}")
     print(f"Definitions found   : {n_definitions}")
@@ -624,6 +1047,9 @@ def main(argv: list[str] | None = None) -> None:
     print(f"Warnings            : {len(extractor.warnings)}")
     for w in extractor.warnings:
         print(f"  WARNING: {w}")
+    print(f"Records written     : {written}")
+    if args.append:
+        print(f"Duplicates skipped  : {skipped}")
     print(f"Output written to   : {args.output}")
 
 
