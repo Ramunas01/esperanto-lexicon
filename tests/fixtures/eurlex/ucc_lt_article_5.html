@@ -4,84 +4,153 @@
 <body>
 <div id="docHtml">
 
-  <!-- tablelayout: flat siblings, structural divisions, three shapes, footnotes -->
+  <!-- Structural context -->
   <p class="title-division-1">I ANTRAŠTINĖ DALIS</p>
   <p class="stitle-division-1">BENDROSIOS NUOSTATOS</p>
   <p class="title-division-2">1 SKYRIUS</p>
   <p class="stitle-division-2">Taikymo sritis ir apibrėžtys</p>
 
-  <!-- Article 4: neighbor before art 5 -->
+  <!-- Article 4: neighbour article using real table structure -->
   <p class="title-article-norm">4 straipsnis</p>
   <p class="stitle-article-norm">Misija</p>
-  <p class="modref"><a href="#" title="32013R0952">&#9660;B</a></p>
-  <table><tr>
-    <td class="dlist-term">1)</td>
-    <td class="dlist-definition">&#8222;misija&#8220; &#8211;muitin&#279;s institucij&#371; vykdoma veikla;</td>
-  </tr></table>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+     <colgroup><col width="5%">
+     <col width="95%">
+     </colgroup><tbody><tr>
+        <td valign="top">
+           <p class="dlist-term">1)</p>
+        </td>
+        <td valign="top">
+           <p class="dlist-definition">misija – muitinės institucijų vykdoma veikla;</p>
+        </td>
+     </tr>
+  </tbody></table>
 
-  <!-- Article 5: main article with all three shapes -->
+  <!-- Article 5: items 1–5 verbatim from real LT UCC HTML -->
   <p class="title-article-norm">5 straipsnis</p>
-  <p class="stitle-article-norm">Apibrėžtys</p>
-  <p class="modref"><a href="#" title="32013R0952">&#9660;B</a></p>
+  <p class="stitle-article-norm">Terminų apibrėžtys</p>
+  <p class="norm">Kodekse vartojamų terminų apibrėžtys:</p>
 
-  <!-- Shape A: plain en-dash split. Term: muitinės institucijos -->
-  <table><tr>
-    <td class="dlist-term">1)</td>
-    <td class="dlist-definition">&#8222;muitin&#279;s institucijos&#8220; &#8211;valstybi&#371; nari&#371; muitin&#279;s administracijos, atsakingos u&#382; muit&#371; teis&#279;s akt&#371; taikym&#261;;</td>
-  </tr></table>
+  <!-- Item 1: Shape A (en-dash split, class on <p> inside <td>) -->
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+     <colgroup><col width="5%">
+     <col width="95%">
+     </colgroup><tbody><tr>
+        <td valign="top">
+           <p class="dlist-term">1)</p>
+        </td>
+        <td valign="top">
+           <p class="dlist-definition">muitinė –valstybių narių muitinės administracijos, atsakingos už muitų teisės aktų taikymą, ir visos kitos valdžios institucijos, nacionalinės teisės aktų įgaliotos taikyti tam tikrus muitų teisės aktus;</p>
+        </td>
+     </tr>
+  </tbody></table>
 
-  <!-- Shape B: p.normal (term) + p.norm (chapeau) + grid-container sub-items -->
-  <!-- Sub-item (c) gets M4 cursor from the modref inside the definition cell -->
-  <table><tr>
-    <td class="dlist-term">2)</td>
-    <td class="dlist-definition">
-      <p class="normal">&#8222;muit&#371; teis&#279;s aktai&#8220; &#8211;</p>
-      <p class="norm">teis&#279;s akt&#371; visuma, kuri&#261; sudaro:</p>
-      <div class="grid-container">
-        <div class="grid-list-column-1"><span>(a)</span></div>
-        <div class="grid-list-column-2"><p class="norm">Muitin&#279;s kodeksas ir j&#237; papildan&#269;ios nuostatos;</p></div>
-      </div>
-      <div class="grid-container">
-        <div class="grid-list-column-1"><span>(b)</span></div>
-        <div class="grid-list-column-2"><p class="norm">Bendrasis muit&#371; tarifas;</p></div>
-      </div>
-      <p class="modref"><a href="#" title="32022R2399: AMENDMENT">&#9660;M4</a></p>
-      <div class="grid-container">
-        <div class="grid-list-column-1"><span>(c)</span></div>
-        <div class="grid-list-column-2"><p class="norm">papildomos nuostatos d&#279;l &#382;em&#279;s &#363;kio produkt&#371;;</p></div>
-      </div>
-    </td>
-  </tr></table>
+  <!-- Item 2: Shape B (p.normal + grid sub-items, internal p.modref sets M4 before sub-item e) -->
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+     <colgroup><col width="5%">
+     <col width="95%">
+     </colgroup><tbody><tr>
+        <td valign="top">
+           <p class="dlist-term">2)</p>
+        </td>
+        <td valign="top">
+           <p class="normal">muitų teisės aktai –</p>
+           <p class="norm">teisės aktų visuma, kurią sudaro visi šie aktai:</p>
+           <div class="grid-container grid-list">
+              <div class="list grid-list-column-1">
+                 <span>a)&nbsp;</span>
+              </div>
+              <div class="grid-list-column-2">
+                 <p class="norm">Kodeksas ir jį papildančios ar įgyvendinančios nuostatos, priimtos Sąjungos arba nacionaliniu lygiu;</p>
+              </div>
+           </div>
+           <div class="grid-container grid-list">
+              <div class="list grid-list-column-1">
+                 <span>b)&nbsp;</span>
+              </div>
+              <div class="grid-list-column-2">
+                 <p class="norm">Bendrasis muitų tarifas;</p>
+              </div>
+           </div>
+           <div class="grid-container grid-list">
+              <div class="list grid-list-column-1">
+                 <span>c)&nbsp;</span>
+              </div>
+              <div class="grid-list-column-2">
+                 <p class="norm">teisės aktai, kuriais nustatoma Sąjungos atleidimo nuo muito sistema;</p>
+              </div>
+           </div>
+           <div class="grid-container grid-list">
+              <div class="list grid-list-column-1">
+                 <span>d)&nbsp;</span>
+              </div>
+              <div class="grid-list-column-2">
+                 <p class="norm">tarptautiniai susitarimai, kuriuose yra su muitų teise susijusių nuostatų, tiek, kiek jie taikomi Sąjungoje;</p>
+              </div>
+           </div>
+           <p class="modref">
+              <a href="https://eur-lex.europa.eu/legal-content/LT/AUTO/?uri=celex:32022R2399" onclick="window.open(this.href,'_blank'); return false;" title="32022R2399: INSERTED">▼M4</a>
+           </p>
+           <div class="grid-container grid-list">
+              <div class="list grid-list-column-1">
+                 <span>e)&nbsp;</span>
+              </div>
+              <div class="grid-list-column-2">
+                 <p class="norm">Europos Parlamento ir Tarybos reglamentas (ES) 2022/2399 ir jį papildančios ar įgyvendinančios nuostatos;</p>
+              </div>
+           </div>
+           <p class="modref">
+              <a href="https://eur-lex.europa.eu/legal-content/LT/AUTO/?uri=celex:32013R0952" onclick="window.open(this.href,'_blank'); return false;" title="32013R0952">▼B</a>
+           </p>
+        </td>
+     </tr>
+  </tbody></table>
 
-  <!-- Shape C: corrigendum markers ►C1 / ◄ surrounding the term -->
-  <table><tr>
-    <td class="dlist-term">3)</td>
-    <td class="dlist-definition">&#9658;C1 &#8222;muitin&#279;s skola&#8220; &#9664; &#8211;asmens pareiga sumok&#279;ti importo ar eksporto muit&#371; sum&#261;;</td>
-  </tr></table>
+  <!-- Item 3: Shape A -->
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+     <colgroup><col width="5%">
+     <col width="95%">
+     </colgroup><tbody><tr>
+        <td valign="top">
+           <p class="dlist-term">3)</p>
+        </td>
+        <td valign="top">
+           <p class="dlist-definition">muitinis tikrinimas –konkretūs veiksmai, kuriuos muitinė atlieka siekdama užtikrinti, kad būtų laikomasi muitų teisės aktų;</p>
+        </td>
+     </tr>
+  </tbody></table>
 
-  <!-- Shape A with M4 cursor set by preceding modref -->
-  <p class="modref"><a href="#" title="32022R2399: AMENDMENT">&#9660;M4</a></p>
-  <table><tr>
-    <td class="dlist-term">4)</td>
-    <td class="dlist-definition">&#8222;skolininkas&#8220; &#8211;bet kuris asmuo, privalantis sumok&#279;ti muitin&#279;s skol&#261;;</td>
-  </tr></table>
+  <!-- Item 4: Shape A -->
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+     <colgroup><col width="5%">
+     <col width="95%">
+     </colgroup><tbody><tr>
+        <td valign="top">
+           <p class="dlist-term">4)</p>
+        </td>
+        <td valign="top">
+           <p class="dlist-definition">asmuo –fizinis asmuo, juridinis asmuo ir bet kuris asmenų susivienijimas, kuris nėra juridinis asmuo, tačiau pagal Sąjungos arba nacionalinę teisę pripažįstamas galinčiu atlikti teisinius veiksmus;</p>
+        </td>
+     </tr>
+  </tbody></table>
 
-  <!-- Shape A, still M4 cursor -->
-  <table><tr>
-    <td class="dlist-term">5)</td>
-    <td class="dlist-definition">&#8222;prek&#279;s&#8220; &#8211;bet koks kilnojamasis turtas, &#299;skaitant elektros energij&#261;;</td>
-  </tr></table>
+  <!-- Item 5: Shape A -->
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+     <colgroup><col width="5%">
+     <col width="95%">
+     </colgroup><tbody><tr>
+        <td valign="top">
+           <p class="dlist-term">5)</p>
+        </td>
+        <td valign="top">
+           <p class="dlist-definition">ekonominės veiklos vykdytojas –asmuo, kuris užsiimdamas savo verslu vykdo veiklą, kuriai taikomi muitų teisės aktai;</p>
+        </td>
+     </tr>
+  </tbody></table>
 
-  <!-- Article 6: neighbor after art 5, M4 cursor -->
-  <p class="title-article-norm">6 straipsnio</p>
-  <p class="modref"><a href="#" title="32022R2399: AMENDMENT">&#9660;M4</a></p>
-  <table><tr>
-    <td class="dlist-term">1)</td>
-    <td class="dlist-definition">&#8222;skaitmenin&#279; aplinka&#8220; &#8211;elektronin&#279;s sistemos muitin&#279;s operacijoms tvarkyti;</td>
-  </tr></table>
-
-  <!-- Footnote -->
-  <div id="fnp_E0001"><p>(1)&#160;OL L 269, 2013 10 10, p. 1.</p></div>
+  <!-- Article 6: neighbour article; no definition tables in real file -->
+  <p class="title-article-norm">6 straipsnis</p>
+  <p class="stitle-article-norm">Muitinė</p>
 
 </div>
 </body>

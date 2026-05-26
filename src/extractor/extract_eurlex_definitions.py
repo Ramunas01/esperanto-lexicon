@@ -689,13 +689,18 @@ class EurLexExtractor:
         amendments_detected: set[str],
     ) -> dict | None:
         """Parse one tablelayout <table> element into a definition result dict."""
-        row = table.find("tr")
+        # Real EUR-Lex LT HTML wraps rows in <tbody> and puts dlist-term/definition
+        # classes on <p> elements inside <td>, not on <td> itself.  Descend through
+        # an optional <tbody> and use positional td access so both the real structure
+        # and simplified fixtures work.
+        row_container = table.find("tbody") or table
+        row = row_container.find("tr")
         if not row:
             return None
-        term_td = row.find("td", class_="dlist-term")
-        def_td = row.find("td", class_="dlist-definition")
-        if not term_td or not def_td:
+        tds = row.find_all("td", recursive=False)
+        if len(tds) < 2:
             return None
+        term_td, def_td = tds[0], tds[1]
 
         list_path = _normalize_list_marker(_get_text(term_td))
 

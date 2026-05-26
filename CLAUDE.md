@@ -294,6 +294,20 @@ languages with no primary entries.
 * Variable/function names reflecting domain concepts may use Esperanto roots
 where they match the schema (e.g. `eo\_root`, `concept\_lang`)
 
+**Test fixtures:**
+
+* HTML fixtures for parser tests must be copied verbatim from a real source
+  document, never hand-written. A minimal subset of the real document is fine —
+  the smallest fragment that exercises the code path — but no element may be
+  omitted, reformatted, or simplified. Real-world HTML includes structures that
+  hand-written fixtures routinely miss (implicit `<tbody>`, `<colgroup>`,
+  whitespace text nodes, attribute order, entity references), and parsers that
+  pass tests on simplified fixtures will silently fail on real input.
+* Document the source URL and retrieval date alongside each fixture file
+  (e.g. as an HTML comment at the top of the fixture).
+* This rule cost a full debugging cycle on the UCC LT extractor — see git
+  history for the regression class.
+
 \---
 
 ## Current state (update this section after each work session)
