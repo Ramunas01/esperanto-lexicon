@@ -18,7 +18,7 @@ from extractor.domain_db_writer import (
     process_group,
     run as db_writer_run,
 )
-from extractor.apply_overrides import apply_overrides_to_db
+from extractor.apply_overrides import apply_overrides_to_db, load_override_entries
 
 
 # ---------------------------------------------------------------------------
@@ -142,6 +142,15 @@ class TestApplyOverride:
 
 
 # ---------------------------------------------------------------------------
+# Helpers: build full override entries (new list[dict] format)
+# ---------------------------------------------------------------------------
+
+
+def _entry(match_on: dict, override: dict) -> dict:
+    return {"match_on": match_on, "override": override}
+
+
+# ---------------------------------------------------------------------------
 # apply_overrides_to_db (apply_overrides.py utility)
 # ---------------------------------------------------------------------------
 
@@ -150,13 +159,11 @@ class TestApplyOverridesToDb:
     def test_existing_row_updated(self) -> None:
         conn = _empty_db()
         _insert_mwe_lang(conn, "rilataj personoj", "eo", "susiję asmenys")
-        overrides = {
-            ("rilataj personoj", "eo"): {
-                "phrase": "Asociitaj personoj",
-                "phrase_normalized": "asociitaj personoj",
-            }
-        }
-        n = apply_overrides_to_db(conn, overrides)
+        entries = [_entry(
+            {"phrase_normalized": "rilataj personoj", "lang": "eo"},
+            {"phrase": "Asociitaj personoj", "phrase_normalized": "asociitaj personoj"},
+        )]
+        n = apply_overrides_to_db(conn, entries)
         assert n == 1
         row = conn.execute(
             "SELECT phrase, phrase_normalized FROM mwe_lang WHERE lang='eo'"
@@ -166,8 +173,8 @@ class TestApplyOverridesToDb:
 
     def test_no_match_prints_warning(self, capsys) -> None:
         conn = _empty_db()
-        overrides = {("nonexistent phrase", "eo"): {"phrase": "X"}}
-        n = apply_overrides_to_db(conn, overrides)
+        entries = [_entry({"phrase_normalized": "nonexistent phrase", "lang": "eo"}, {"phrase": "X"})]
+        n = apply_overrides_to_db(conn, entries)
         assert n == 0
         captured = capsys.readouterr()
         assert "WARNING" in captured.out
@@ -175,24 +182,194 @@ class TestApplyOverridesToDb:
     def test_definition_raw_updated_when_provided(self) -> None:
         conn = _empty_db()
         _insert_mwe_lang(conn, "some term", "lt", "old definition")
-        overrides = {
-            ("some term", "lt"): {
-                "phrase": "Some Term",
-                "phrase_normalized": "some term",
-                "definition_raw": "new definition",
-            }
-        }
-        apply_overrides_to_db(conn, overrides)
+        entries = [_entry(
+            {"phrase_normalized": "some term", "lang": "lt"},
+            {"phrase": "Some Term", "phrase_normalized": "some term", "definition_raw": "new definition"},
+        )]
+        apply_overrides_to_db(conn, entries)
         row = conn.execute("SELECT definition_raw FROM mwe_lang WHERE lang='lt'").fetchone()
         assert row[0] == "new definition"
 
     def test_definition_raw_unchanged_when_not_in_override(self) -> None:
         conn = _empty_db()
         _insert_mwe_lang(conn, "some term", "lt", "original definition")
-        overrides = {("some term", "lt"): {"phrase": "Some Term", "phrase_normalized": "some term"}}
-        apply_overrides_to_db(conn, overrides)
+        entries = [_entry(
+            {"phrase_normalized": "some term", "lang": "lt"},
+            {"phrase": "Some Term", "phrase_normalized": "some term"},
+        )]
+        apply_overrides_to_db(conn, entries)
         row = conn.execute("SELECT definition_raw FROM mwe_lang WHERE lang='lt'").fetchone()
         assert row[0] == "original definition"
+
+    def test_empty_entries_list(self) -> None:
+        conn = _empty_db()
+        assert apply_overrides_to_db(conn, []) == 0
+
+
+# ---------------------------------------------------------------------------
+# definition_contains criterion
+# ---------------------------------------------------------------------------
+
+
+class TestDefinitionContainsCriterion:
+    def test_matches_correct_row_only(self) -> None:
+        conn = _empty_db()
+        id_a = _insert_mwe_lang(conn, "rezidentas", "lt", "fizinis asmuo gyvenantis šalyje")
+        id_b = _insert_mwe_lang(conn, "rezidentas", "lt", "juridinis asmuo registruotas šalyje")
+
+        # Both rows have same phrase_normalized and lang, but different definitions.
+        # definition_contains narrows it to the first one.
+        entries = [_entry(
+            {"phrase_normalized": "rezidentas", "lang": "lt", "definition_contains": "fizinis"},
+            {"phrase": "Fizinis Rezidentas"},
+        )]
+        n = apply_overrides_to_db(conn, entries)
+        assert n == 1
+
+        rows = conn.execute(
+            "SELECT phrase FROM mwe_lang WHERE lang='lt' ORDER BY id"
+        ).fetchall()
+        assert rows[0][0] == "Fizinis Rezidentas"   # updated
+        assert rows[1][0] == "rezidentas"             # unchanged
+
+    def test_case_insensitive_match(self) -> None:
+        conn = _empty_db()
+        _insert_mwe_lang(conn, "term", "lt", "Uppercase Definition")
+        entries = [_entry(
+            {"phrase_normalized": "term", "lang": "lt", "definition_contains": "uppercase"},
+            {"phrase": "Term Updated"},
+        )]
+        n = apply_overrides_to_db(conn, entries)
+        assert n == 1
+
+    def test_no_match_when_substring_absent(self) -> None:
+        conn = _empty_db()
+        _insert_mwe_lang(conn, "term", "lt", "fizinis asmuo")
+        entries = [_entry(
+            {"phrase_normalized": "term", "lang": "lt", "definition_contains": "juridinis"},
+            {"phrase": "Should Not Update"},
+        )]
+        n = apply_overrides_to_db(conn, entries)
+        assert n == 0
+
+
+# ---------------------------------------------------------------------------
+# mwe_id criterion
+# ---------------------------------------------------------------------------
+
+
+class TestMweIdCriterion:
+    def test_mwe_id_matches_exact_row(self) -> None:
+        conn = _empty_db()
+        id_a = _insert_mwe_lang(conn, "phrase x", "lt", "def a")
+        id_b = _insert_mwe_lang(conn, "phrase x", "lt", "def b")
+
+        entries = [_entry(
+            {"mwe_id": id_a},
+            {"phrase": "Updated Phrase A"},
+        )]
+        n = apply_overrides_to_db(conn, entries)
+        assert n == 1
+
+        rows = {
+            row[0]: row[1]
+            for row in conn.execute("SELECT mwe_id, phrase FROM mwe_lang WHERE lang='lt'").fetchall()
+        }
+        assert rows[id_a] == "Updated Phrase A"
+        assert rows[id_b] == "phrase x"
+
+    def test_mwe_id_combined_with_lang(self) -> None:
+        conn = _empty_db()
+        id_a = _insert_mwe_lang(conn, "term", "lt", "lt def")
+        # same mwe_id can't have two rows with same lang (UNIQUE constraint),
+        # so add another mwe with a different lang
+        conn.execute(
+            """INSERT INTO mwe_lang (mwe_id, lang, phrase, phrase_normalized, definition_raw)
+               VALUES (?, 'en', 'term', 'term', 'en def')""",
+            (id_a,),
+        )
+        conn.commit()
+
+        entries = [_entry(
+            {"mwe_id": id_a, "lang": "lt"},
+            {"phrase": "Updated LT Only"},
+        )]
+        apply_overrides_to_db(conn, entries)
+
+        lt_row = conn.execute("SELECT phrase FROM mwe_lang WHERE lang='lt'").fetchone()
+        en_row = conn.execute("SELECT phrase FROM mwe_lang WHERE lang='en'").fetchone()
+        assert lt_row[0] == "Updated LT Only"
+        assert en_row[0] == "term"
+
+
+# ---------------------------------------------------------------------------
+# Multiple-match warning
+# ---------------------------------------------------------------------------
+
+
+class TestMultipleMatchWarning:
+    def test_multiple_matches_prints_warning(self, capsys) -> None:
+        conn = _empty_db()
+        _insert_mwe_lang(conn, "shared phrase", "lt", "def one")
+        _insert_mwe_lang(conn, "shared phrase", "lt", "def two")
+
+        entries = [_entry(
+            {"phrase_normalized": "shared phrase", "lang": "lt"},
+            {"phrase": "Shared Updated"},
+        )]
+        n = apply_overrides_to_db(conn, entries)
+        # Both rows updated
+        assert n == 2
+        captured = capsys.readouterr()
+        assert "WARNING" in captured.out
+        assert "2 rows matched" in captured.out
+
+    def test_multiple_matches_all_updated(self) -> None:
+        conn = _empty_db()
+        _insert_mwe_lang(conn, "shared phrase", "lt", "def one")
+        _insert_mwe_lang(conn, "shared phrase", "lt", "def two")
+
+        entries = [_entry(
+            {"phrase_normalized": "shared phrase", "lang": "lt"},
+            {"phrase": "Both Updated", "phrase_normalized": "both updated"},
+        )]
+        apply_overrides_to_db(conn, entries)
+
+        phrases = {r[0] for r in conn.execute("SELECT phrase FROM mwe_lang").fetchall()}
+        assert phrases == {"Both Updated"}
+
+
+# ---------------------------------------------------------------------------
+# load_override_entries
+# ---------------------------------------------------------------------------
+
+
+class TestLoadOverrideEntries:
+    def test_absent_file_returns_empty_list(self, tmp_path: Path) -> None:
+        assert load_override_entries(tmp_path / "nonexistent.jsonl") == []
+
+    def test_full_entry_preserved(self, tmp_path: Path) -> None:
+        p = tmp_path / "overrides.jsonl"
+        entry = {
+            "match_on": {"phrase_normalized": "test", "lang": "lt", "definition_contains": "foo"},
+            "override": {"phrase": "Test"},
+            "reason": "testing",
+            "overridden_by": "ramunas",
+            "override_date": "2026-05-26",
+        }
+        p.write_text(json.dumps(entry) + "\n", encoding="utf-8")
+        entries = load_override_entries(p)
+        assert len(entries) == 1
+        assert entries[0]["match_on"]["definition_contains"] == "foo"
+        assert entries[0]["reason"] == "testing"
+
+    def test_blank_lines_skipped(self, tmp_path: Path) -> None:
+        p = tmp_path / "overrides.jsonl"
+        p.write_text(
+            '{"match_on": {"lang": "lt"}, "override": {}}\n\n\n',
+            encoding="utf-8",
+        )
+        assert len(load_override_entries(p)) == 1
 
 
 # ---------------------------------------------------------------------------
