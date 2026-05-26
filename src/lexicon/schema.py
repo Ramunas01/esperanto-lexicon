@@ -88,6 +88,10 @@ def create_domain_schema(conn: sqlite3.Connection) -> None:
             context_snippet TEXT
         );
 
+        -- conflict_type valid values: 'text_divergence', 'context_divergence', 'synonym'
+        --   text_divergence:    same phrase, different definitions across documents
+        --   context_divergence: same phrase, same definition, different usage context
+        --   synonym:            different phrases expressing the same concept
         CREATE TABLE IF NOT EXISTS mwe_conflict (
             id                  INTEGER PRIMARY KEY AUTOINCREMENT,
             mwe_id_a            INTEGER NOT NULL REFERENCES mwe(id),

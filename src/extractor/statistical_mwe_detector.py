@@ -135,25 +135,24 @@ def tokenise(
 
 def count_ngrams(
     sentences: list[list[str]],
-) -> tuple[Counter[str], Counter[tuple[str, str]], Counter[tuple[str, str, str]]]:
-    """Count unigrams, bigrams, and trigrams from sentence-segmented token lists.
+    max_ngram: int = 4,
+) -> tuple[Counter, ...]:
+    """Count unigrams and ngrams up to *max_ngram* from sentence-segmented token lists.
 
     Sliding window never crosses a sentence boundary.
+    Returns a tuple of (max_ngram) Counters: (uni, bi, tri, quad, ...).
     """
-    uni: Counter[str] = Counter()
-    bi: Counter[tuple[str, str]] = Counter()
-    tri: Counter[tuple[str, str, str]] = Counter()
+    counters: list[Counter] = [Counter() for _ in range(max_ngram)]
 
     for sent in sentences:
         for tok in sent:
-            uni[tok] += 1
+            counters[0][tok] += 1
         n = len(sent)
-        for i in range(n - 1):
-            bi[(sent[i], sent[i + 1])] += 1
-        for i in range(n - 2):
-            tri[(sent[i], sent[i + 1], sent[i + 2])] += 1
+        for size in range(2, max_ngram + 1):
+            for i in range(n - size + 1):
+                counters[size - 1][tuple(sent[i : i + size])] += 1
 
-    return uni, bi, tri
+    return tuple(counters)
 
 
 # ---------------------------------------------------------------------------
@@ -169,18 +168,8 @@ def _safe_log(x: float) -> float:
     return math.log(x) if x > 0 else 0.0
 
 
-def _pmi_bigram(
-    w1: str, w2: str, uni: Counter[str], bi: Counter[tuple[str, str]], N: int
-) -> float:
-    """PMI = log2( P(w1,w2) / (P(w1) * P(w2)) ) where P(w) = freq(w)/N."""
-    f1, f2, f12 = uni[w1], uni[w2], bi[(w1, w2)]
-    if f12 == 0 or f1 == 0 or f2 == 0:
-        return -math.inf
-    return _safe_log2(f12 * N) - _safe_log2(f1) - _safe_log2(f2)
-
-
 def _g2_bigram(
-    w1: str, w2: str, uni: Counter[str], bi: Counter[tuple[str, str]], N: int
+    w1: str, w2: str, uni: Counter, bi: Counter, N: int
 ) -> float:
     """Log-likelihood G² for a bigram (Dunning 1993)."""
     f1, f2, f12 = uni[w1], uni[w2], bi[(w1, w2)]
@@ -199,33 +188,36 @@ def _g2_bigram(
     return 2.0 * (_cell(O11, E11) + _cell(O12, E12) + _cell(O21, E21) + _cell(O22, E22))
 
 
-def _pmi_trigram(
-    w1: str,
-    w2: str,
-    w3: str,
-    uni: Counter[str],
-    tri: Counter[tuple[str, str, str]],
-    N: int,
-) -> float:
-    """PMI = log2( P(w1,w2,w3) / (P(w1)*P(w2)*P(w3)) )."""
-    f1, f2, f3 = uni[w1], uni[w2], uni[w3]
-    f123 = tri[(w1, w2, w3)]
-    if f123 == 0 or f1 == 0 or f2 == 0 or f3 == 0:
+def _pmi_ngram(words: tuple, uni: Counter, ngram_counter: Counter, N: int) -> float:
+    """PMI = log2( P(w1..wn) / prod P(wi) ) for any n-gram size."""
+    f_ngram = ngram_counter[words]
+    if f_ngram == 0:
         return -math.inf
-    # log2(f123 * N^2 / (f1 * f2 * f3))
-    return _safe_log2(f123) + 2 * _safe_log2(N) - _safe_log2(f1) - _safe_log2(f2) - _safe_log2(f3)
+    for w in words:
+        if uni[w] == 0:
+            return -math.inf
+    n = len(words)
+    return (
+        _safe_log2(f_ngram)
+        + (n - 1) * _safe_log2(N)
+        - sum(_safe_log2(uni[w]) for w in words)
+    )
 
 
 def build_scored_candidates(
-    uni: Counter[str],
-    bi: Counter[tuple[str, str]],
-    tri: Counter[tuple[str, str, str]],
+    uni: Counter,
+    bi: Counter,
+    tri: Counter,
     min_freq: int,
     min_pmi: float,
     lang: str,
     source_file: str,
+    *extra_ngrams: Counter,
 ) -> list[dict]:
     """Score all ngrams above the frequency and PMI thresholds.
+
+    *extra_ngrams* are additional counters for sizes 4, 5, … (each positional arg
+    corresponds to ngram_size = 4, 5, …).
 
     Returns a list of candidate dicts (without component annotation fields,
     which are added later by apply_filters).
@@ -236,56 +228,134 @@ def build_scored_candidates(
 
     candidates: list[dict] = []
 
-    for (w1, w2), freq in bi.items():
-        if freq < min_freq:
-            continue
-        pmi = _pmi_bigram(w1, w2, uni, bi, N)
-        if pmi < min_pmi:
-            continue
-        g2 = _g2_bigram(w1, w2, uni, bi, N)
-        phrase = f"{w1} {w2}"
-        candidates.append(
-            {
-                "phrase": phrase,
-                "phrase_normalized": phrase,
-                "lang": lang,
-                "ngram_size": 2,
-                "frequency": freq,
-                "pmi": round(pmi, 4),
-                "g2": round(g2, 4),
-                "source_file": source_file,
-                "extraction_method": "statistical_pmi",
-                "approved": False,
-                "tier_suggestion": 4,
-                "notes": "",
-            }
-        )
+    all_ngram_counters = [(2, bi), (3, tri)] + [
+        (4 + i, ctr) for i, ctr in enumerate(extra_ngrams)
+    ]
 
-    for (w1, w2, w3), freq in tri.items():
-        if freq < min_freq:
-            continue
-        pmi = _pmi_trigram(w1, w2, w3, uni, tri, N)
-        if pmi < min_pmi:
-            continue
-        phrase = f"{w1} {w2} {w3}"
-        candidates.append(
-            {
-                "phrase": phrase,
-                "phrase_normalized": phrase,
-                "lang": lang,
-                "ngram_size": 3,
-                "frequency": freq,
-                "pmi": round(pmi, 4),
-                "g2": None,  # G2 defined for bigrams only
-                "source_file": source_file,
-                "extraction_method": "statistical_pmi",
-                "approved": False,
-                "tier_suggestion": 4,
-                "notes": "",
-            }
-        )
+    for size, counter in all_ngram_counters:
+        for words, freq in counter.items():
+            if freq < min_freq:
+                continue
+            pmi = _pmi_ngram(words, uni, counter, N)
+            if pmi < min_pmi:
+                continue
+            phrase = " ".join(words)
+            g2 = _g2_bigram(*words, uni, counter, N) if size == 2 else None
+            candidates.append(
+                {
+                    "phrase": phrase,
+                    "phrase_normalized": phrase,
+                    "phrase_inflected": None,
+                    "lang": lang,
+                    "ngram_size": size,
+                    "frequency": freq,
+                    "pmi": round(pmi, 4),
+                    "g2": round(g2, 4) if g2 is not None else None,
+                    "source_file": source_file,
+                    "extraction_method": "statistical_pmi",
+                    "approved": False,
+                    "tier_suggestion": 4,
+                    "subsumed_by": None,
+                    "notes": "",
+                }
+            )
 
     return candidates
+
+
+# ---------------------------------------------------------------------------
+# Step 3b — Lithuanian nominative normalisation
+# ---------------------------------------------------------------------------
+
+# Heuristic ending replacements applied to the LAST word of a Lithuanian phrase.
+# Tries longer suffixes first to avoid partial mismatches.
+# This is NOT a morphological analyser — Stanza lt would do this correctly.
+# See CLAUDE.md Known limitations for context.
+_LT_ENDING_MAP: list[tuple[str, str]] = [
+    ("ių", "ys"),   # plural gen → nom
+    ("ės", "ė"),    # fem gen → nom
+    ("io", "is"),   # masc gen i-stem
+    ("ui", "us"),   # masc dat u-stem
+    ("os", "a"),    # fem gen → nom: veiklos → veikla
+    ("ą", "as"),    # masc acc → nom: principą → principas
+    ("ę", "ė"),     # fem acc → nom
+    ("į", "is"),    # masc acc i-stem
+]
+
+
+def normalize_lt_phrase(phrase: str) -> str:
+    """Apply heuristic nominative normalisation to the last word of a Lithuanian phrase.
+
+    Only changes the final word. Returns the original phrase unchanged if no
+    ending rule matches or if the phrase is empty.
+    """
+    words = phrase.split()
+    if not words:
+        return phrase
+    last = words[-1]
+    for ending, replacement in _LT_ENDING_MAP:
+        if last.endswith(ending) and len(last) > len(ending):
+            new_last = last[: -len(ending)] + replacement
+            return " ".join(words[:-1] + [new_last])
+    return phrase
+
+
+def apply_lt_normalisation(candidates: list[dict]) -> list[dict]:
+    """Normalise LT phrase endings in-place; set phrase_inflected when changed."""
+    result = []
+    for cand in candidates:
+        if cand.get("lang") != "lt":
+            result.append(cand)
+            continue
+        original = cand["phrase"]
+        normalised = normalize_lt_phrase(original)
+        if normalised != original:
+            print(f"  NORMALISED: {original!r} → {normalised!r}")
+            cand = {**cand, "phrase": normalised, "phrase_normalized": normalised, "phrase_inflected": original}
+        result.append(cand)
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Step 3c — Subsumption filter
+# ---------------------------------------------------------------------------
+
+
+def apply_subsumption_filter(candidates: list[dict]) -> tuple[list[dict], int]:
+    """Remove shorter candidates subsumed by longer ones.
+
+    Candidate X is subsumed by Y when:
+      - X.phrase is a contiguous substring of Y.phrase
+      - Y.frequency >= X.frequency * 0.5
+      - Y.pmi >= X.pmi - 2.0
+
+    Returns (surviving_candidates, n_removed).
+    Surviving candidates get subsumed_by=None; removed ones are discarded.
+    """
+    phrase_set = {c["phrase"] for c in candidates}
+    by_phrase = {c["phrase"]: c for c in candidates}
+    subsumed: set[str] = set()
+
+    for cand in candidates:
+        phrase_x = cand["phrase"]
+        freq_x = cand["frequency"]
+        pmi_x = cand["pmi"]
+        for other in candidates:
+            phrase_y = other["phrase"]
+            if phrase_y == phrase_x:
+                continue
+            # X must be a proper contiguous substring of Y
+            if phrase_x not in phrase_y:
+                continue
+            if other["frequency"] < freq_x * 0.5:
+                continue
+            if other["pmi"] < pmi_x - 2.0:
+                continue
+            subsumed.add(phrase_x)
+            break
+
+    surviving = [c for c in candidates if c["phrase"] not in subsumed]
+    return surviving, len(subsumed)
 
 
 # ---------------------------------------------------------------------------
@@ -421,6 +491,7 @@ def run(
     top_n: int,
     min_freq: int,
     min_pmi: float,
+    max_ngram: int = 4,
 ) -> None:
     """Full MWE detection pipeline."""
     # Step 1 — load and tokenise
@@ -429,14 +500,28 @@ def run(
     print(f"Tokenising {input_path.name} ({lang}) …")
     sentences, propn_words, cap_words = tokenise(lines, nlp, lang)
 
-    # Step 2 — count
-    uni, bi, tri = count_ngrams(sentences)
+    # Step 2 — count up to max_ngram
+    ngram_counters = count_ngrams(sentences, max_ngram)
+    uni = ngram_counters[0]
+    bi = ngram_counters[1]
+    tri = ngram_counters[2]
+    extra = ngram_counters[3:]
     N = sum(uni.values())
 
     # Step 3 — score (applies min_freq + min_pmi thresholds)
-    candidates = build_scored_candidates(uni, bi, tri, min_freq, min_pmi, lang, input_path.name)
-    bigram_before = sum(1 for c in candidates if c["ngram_size"] == 2)
-    trigram_before = sum(1 for c in candidates if c["ngram_size"] == 3)
+    candidates = build_scored_candidates(
+        uni, bi, tri, min_freq, min_pmi, lang, input_path.name, *extra
+    )
+    by_size: dict[int, int] = {}
+    for c in candidates:
+        by_size[c["ngram_size"]] = by_size.get(c["ngram_size"], 0) + 1
+
+    # Step 3b — LT nominative normalisation
+    if lang == "lt":
+        candidates = apply_lt_normalisation(candidates)
+
+    # Step 3c — subsumption filter
+    candidates, n_subsumed = apply_subsumption_filter(candidates)
 
     # Step 4 — filter
     common_words = load_common_words(lexicon_db, lang)
@@ -472,8 +557,9 @@ def run(
 
     print(f"\nTokens analysed    : {N}")
     print(f"Unique unigrams    : {len(uni)}")
-    print(f"Bigram candidates  : {bigram_before}  (before filter)")
-    print(f"Trigram candidates : {trigram_before}  (before filter)")
+    for sz in sorted(by_size):
+        print(f"{sz}-gram candidates  : {by_size[sz]}  (before filter)")
+    print(f"Subsumed removed   : {n_subsumed}")
     print(f"After lexicon filter   : {len(after_lexicon)} remaining")
     print(f"After domain filter    : {len(after_domain)} remaining")
     print(f"MWE candidates written : {len(mwe_candidates)}")
@@ -505,6 +591,9 @@ def main(argv: list[str] | None = None) -> None:
                         help="Minimum ngram frequency (default 3)")
     parser.add_argument("--min-pmi", dest="min_pmi", type=float, default=2.0,
                         help="Minimum PMI score (default 2.0)")
+    parser.add_argument("--max-ngram", dest="max_ngram", type=int, default=4,
+                        choices=range(2, 6), metavar="N",
+                        help="Maximum ngram size to generate (2-5, default 4)")
     args = parser.parse_args(argv)
 
     run(
@@ -517,6 +606,7 @@ def main(argv: list[str] | None = None) -> None:
         top_n=args.top_n,
         min_freq=args.min_freq,
         min_pmi=args.min_pmi,
+        max_ngram=args.max_ngram,
     )
 
 

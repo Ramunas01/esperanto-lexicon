@@ -1,221 +1,268 @@
 # Adding a New Domain
 
 This guide walks through adding a new knowledge domain to the lexicon system.
-A "domain" is a subject area (e.g. personal income tax, corporate law, medical terminology)
+A "domain" is a subject area (e.g. personal income tax, corporate law, customs)
 represented as a SQLite database under `data/domain_db/`.
 
 ---
 
 ## Prerequisites
 
-- [ ] Source document(s) in `.docx` format, one file per language
-- [ ] `lexicon_v2.db` built and in `data/lexicon_db/` (run `src/lexicon/migrate_v1_to_v2.py` if absent)
-- [ ] spaCy model installed for your language (e.g. `python -m spacy download lt_core_news_sm`)
+- [ ] Source document(s): `.docx` for national law, `.html` for EUR-Lex
+- [ ] `lexicon_v2.db` in `data/lexicon_db/` (run `src/lexicon/migrate_v1_to_v2.py` if absent)
+- [ ] spaCy model for your language: `python -m spacy download lt_core_news_sm`
 - [ ] A short domain label with underscores, e.g. `corporate_income_tax`
-- [ ] A jurisdiction code (ISO 3166-1 alpha-2), e.g. `LT`
+- [ ] A jurisdiction code (ISO 3166-1 alpha-2 or `EU`), e.g. `LT`, `EU`
 
 ---
 
-## Directory layout you will create
+## Directory layout created by the pipeline
 
 ```
-data/
-├── corpus/<domain>/
-│   ├── lt.txt                 ← cleaned plain text (produced by ingest_document.py)
-│   └── lt_amendments.txt      ← stripped amendment records
-└── domain_db/
-    └── <domain>.db            ← the target SQLite domain database
-data/ingestion/<domain>_lt/    ← intermediate work files for each language
-    ├── corpus.txt
-    ├── amendments.txt
-    ├── definitions.jsonl      ← Article 2 definition candidates
-    ├── mwe_candidates.jsonl   ← statistical MWE candidates
-    └── ne_candidates.jsonl    ← named-entity candidates
+<corpus-dir>/<domain>/
+    corpus.txt             ← clean plain text (docx source only)
+    amendments.txt         ← stripped amendment records (docx source only)
+    definitions.jsonl      ← extracted definition candidates (review here)
+    mwe_candidates.jsonl   ← statistical MWE candidates (review here)
+    ne_candidates.jsonl    ← named-entity candidates
+
+data/domain_db/
+    <domain>.db            ← the target SQLite domain database
+    manual_overrides.jsonl ← committed corrections (hand-edited, never regenerated)
 ```
 
 ---
 
-## Step-by-step
+## Workflow A: National law (docx source)
 
-### 1. Run Pass 1 (extract)
-
-For each language, run `ingest_document.py` in Pass 1 mode.  This converts the docx,
-extracts Article 2 definitions, and detects statistical MWE candidates.
+### Phase 1 — Extract
 
 ```bash
 python3 src/ingestion/ingest_document.py \
-    --docx    path/to/law_lt.docx \
-    --lang    lt \
-    --domain  corporate_income_tax \
+    --source docx \
+    --input path/to/law_lt.docx \
+    --lang lt \
+    --domain corporate_tax \
     --jurisdiction LT \
-    --lexicon data/lexicon_db/lexicon_v2.db \
-    --work-dir data/ingestion/corporate_income_tax_lt
-```
-
-If your document uses a different article for definitions, pass `--article 3` (or whichever).
-
-Repeat for each language (swap `--lang` and `--docx`):
-
-```bash
-python3 src/ingestion/ingest_document.py \
-    --docx    path/to/law_en.docx \
-    --lang    en \
-    --work-dir data/ingestion/corporate_income_tax_en \
+    --primary-lang lt \
+    --corpus-dir ~/projects/esperanto-lexicon-corpus/ \
+    --db data/domain_db/corporate_tax.db \
     --lexicon data/lexicon_db/lexicon_v2.db
 ```
 
-**Tip:** If you already have a plain-text corpus, pass `--skip-docx` and place it at
-`<work-dir>/corpus.txt` before running.
+If your document uses a non-standard article for definitions, pass `--article 3`.
 
----
+Repeat for each additional language (swap `--lang` and `--input`).
 
-### 2. Review definition candidates
-
-Open the interactive review CLI for each language:
+### Phase 2 — Review, then commit
 
 ```bash
+# Review definitions (required before Phase 2)
 python3 src/extractor/review_cli.py \
-    --input data/ingestion/corporate_income_tax_lt/definitions.jsonl \
+    --input ~/projects/esperanto-lexicon-corpus/corporate_tax/definitions.jsonl \
     --lang lt
-```
 
-Keys: `[a]` approve, `[r]` reject, `[s]` skip, `[q]` quit.
-
-For side-by-side bilingual review (e.g. LT + EO):
-
-```bash
-python3 src/extractor/review_cli.py \
-    --input data/ingestion/corporate_income_tax_lt/definitions.jsonl \
-    --lang lt eo
-```
-
----
-
-### 3. Review statistical MWE candidates
-
-```bash
-python3 src/extractor/review_cli.py \
-    --input data/ingestion/corporate_income_tax_lt/mwe_candidates.jsonl \
-    --lang lt
-```
-
-Statistical records show PHRASE, FREQ, PMI, and novelty components.
-Approve candidates that are genuine domain terms; reject common collocations.
-
----
-
-### 4. (Optional) Bulk-approve
-
-If all records for a language look good and you want to skip manual review:
-
-```bash
-python3 src/extractor/bulk_approve.py \
-    --input data/ingestion/corporate_income_tax_lt/definitions.jsonl \
-    --lang lt eo
+# Commit approved records
+python3 src/ingestion/ingest_document.py \
+    --phase 2 \
+    --lang lt \
+    --domain corporate_tax \
+    --jurisdiction LT \
+    --corpus-dir ~/projects/esperanto-lexicon-corpus/ \
+    --db data/domain_db/corporate_tax.db \
+    --lexicon data/lexicon_db/lexicon_v2.db
 ```
 
 ---
 
-### 5. Run Pass 2 (commit to domain DB)
-
-After review, commit approved records to the domain database:
+## Workflow B: EU legislation (EUR-Lex HTML source)
 
 ```bash
 python3 src/ingestion/ingest_document.py \
-    --work-dir    data/ingestion/corporate_income_tax_lt \
-    --domain      corporate_income_tax \
-    --jurisdiction LT \
-    --db          data/domain_db/corporate_income_tax.db \
-    --post-review
+    --source eurlex \
+    --input path/to/ucc_en.html \
+    --celex 02013R0952-20221212 \
+    --lang en \
+    --domain customs_ucc \
+    --jurisdiction EU \
+    --primary-lang en \
+    --corpus-dir ~/projects/esperanto-lexicon-corpus/ \
+    --db data/domain_db/customs_ucc.db \
+    --lexicon data/lexicon_db/lexicon_v2.db
 ```
 
-The domain DB is created automatically if it does not exist.
-Run Pass 2 separately for each language's work directory.
+Note: `extract_eurlex_definitions.py` handles EUR-Lex HTML directly and produces
+`definitions.jsonl` without an intermediate corpus text step.
 
 ---
 
-### 6. Check for conflicts
+## Manual review in detail
 
-Within a single DB (same phrase, different definitions across documents):
+### Definition records
+
+Keys: `[a]` approve, `[r]` reject, `[s]` skip, `[q]` quit.
+
+For bilingual side-by-side review (e.g. LT + EO):
+
+```bash
+python3 src/extractor/review_cli.py \
+    --input definitions.jsonl \
+    --lang lt eo
+```
+
+### Statistical MWE candidates
+
+Statistical records show PHRASE, FREQ, PMI, and component breakdown.
+Approve genuine domain terms; reject common collocations.
+
+```bash
+python3 src/extractor/review_cli.py \
+    --input mwe_candidates.jsonl \
+    --lang lt
+```
+
+### Bulk-approve (skip manual review)
+
+If all records look correct and you want to approve a language in bulk:
+
+```bash
+python3 src/extractor/bulk_approve.py \
+    --input definitions.jsonl \
+    --lang lt eo
+```
+
+---
+
+## Manual overrides
+
+If the extractor produces incorrect values (wrong Esperanto translation,
+typo in definition), add a correction to `data/domain_db/manual_overrides.jsonl`
+rather than re-running from scratch:
+
+```json
+{
+  "match_on": {"phrase_normalized": "rilataj personoj", "lang": "eo"},
+  "override": {"phrase": "Asociitaj personoj", "phrase_normalized": "asociitaj personoj"},
+  "reason": "Incorrect EO translation — 'rilataj' means 'related', correct is 'asociitaj'",
+  "overridden_by": "ramunas",
+  "override_date": "2026-05-26"
+}
+```
+
+The override is applied automatically on the next pipeline run. To apply it to
+an already-built DB without re-running the pipeline:
+
+```bash
+python3 src/extractor/apply_overrides.py \
+    --db data/domain_db/gpmi_lt_tax.db
+```
+
+---
+
+## Linking synonyms
+
+When two phrases express the same concept, link them rather than deleting one:
+
+```bash
+python3 src/extractor/link_synonyms.py \
+    --db data/domain_db/corporate_tax.db \
+    --phrase-a "individualia veikla besiverčiantys" \
+    --phrase-b "verčiasi individualia veikla" \
+    --lang lt \
+    --reason "participial vs verbal form of same concept"
+
+# List all synonym pairs
+python3 src/extractor/link_synonyms.py \
+    --db data/domain_db/corporate_tax.db \
+    --list
+```
+
+Coverage reports will annotate matched synonyms:
+`verčiasi individualia veikla  TIER4  (≡ individualia veikla besiverčiantys)`
+
+---
+
+## Conflict checking
+
+Within a single DB (same phrase, different definitions):
 
 ```bash
 python3 src/analyzer/conflict_report.py \
-    --db data/domain_db/corporate_income_tax.db
+    --db data/domain_db/corporate_tax.db
 ```
 
 Across two domain DBs (shared terms, diverging definitions):
 
 ```bash
 python3 src/analyzer/conflict_report.py \
-    --db       data/domain_db/corporate_income_tax.db \
+    --db       data/domain_db/corporate_tax.db \
     --cross-db data/domain_db/personal_income_tax.db \
     --lang     lt
 ```
 
 ---
 
-### 7. Run a coverage report
-
-Verify the domain DB with a sample text:
+## Coverage verification
 
 ```bash
 echo "Mokesčių mokėtojas privalo deklaruoti pelno mokestį." > /tmp/sample.txt
 
 python3 src/analyzer/coverage_report.py \
     --lexicon   data/lexicon_db/lexicon_v2.db \
-    --domain-db data/domain_db/corporate_income_tax.db \
+    --domain-db data/domain_db/corporate_tax.db \
     --lang      lt \
     --input     /tmp/sample.txt
 ```
 
 ---
 
+## Adding a second language to an existing domain
+
+Run Phase 1 for the second language:
+
+```bash
+python3 src/ingestion/ingest_document.py \
+    --source docx \
+    --input path/to/law_en.docx \
+    --lang en \
+    --domain corporate_tax \
+    --jurisdiction LT \
+    --corpus-dir ~/projects/esperanto-lexicon-corpus/ \
+    --db data/domain_db/corporate_tax.db \
+    --lexicon data/lexicon_db/lexicon_v2.db
+```
+
+Then review and run Phase 2 for EN. The writer deduplicates by phrase + definition
+and links new `mwe_lang` rows to existing `mwe` entries where possible.
+
+---
+
 ## Troubleshooting
 
-**"no definitions found"** — Check that Article 2 uses the `**Term** – definition` pattern
-with a double-asterisk bold marker (as in Lithuanian GPMI law).  Other formatting patterns
-require extending `extract_definitions.py`.
+**`permission denied`** — Run `sudo chown -R $USER:$USER <corpus-dir>` or check
+file permissions on the target directory.
 
-**"individualia" not matching "individuali veikla"** — Known issue: Lithuanian spaCy model
-sometimes mislemmatises inflected adjectives.  Phase 2 prefix matching compensates for the
-first token; subsequent tokens must match exactly.  See code comment in `coverage_report.py`.
+**`0 definitions found`** — Check that Article 2 uses the `**Term** – definition`
+pattern with double-asterisk bold markers (Lithuanian GPMI law convention). Other
+formatting requires extending `extract_definitions.py`.
 
-**LT Tier 1/2 coverage is 0** — The LT lexicon is built from English translations via
-`build_lt_lexicon.py`.  Run it against `lexicon_v2.db` if LT entries are absent:
+**`spaCy model not found`**:
+```bash
+pip install spacy --break-system-packages
+python -m spacy download lt_core_news_sm
+python -m spacy download xx_ent_wiki_sm
+```
 
+**`individualia` not matching `individuali veikla`** — Known issue: Lithuanian
+spaCy model mislemmatises some inflected adjectives. Phase 2 prefix matching
+compensates. If a case is not caught, report it for Stanza integration.
+See CLAUDE.md § Known limitations.
+
+**LT Tier 1/2 coverage is 0** — Run `build_lt_lexicon.py` to insert LT entries:
 ```bash
 python3 src/lexicon/build_lt_lexicon.py --db data/lexicon_db/lexicon_v2.db
 ```
 
-**Conflict detected for shared EO phrase** — Normal behaviour.  Two Lithuanian terms may
-share the same Esperanto canonical form (e.g. "Rilataj personoj" for both "Susiję asmenys"
-and "Asocijuoti asmenys").  The system creates two separate `mwe` rows and a `mwe_conflict`
-record linking them.  Resolve via `conflict_report.py`.
-
----
-
-## Adding a second language to an existing domain
-
-Run Pass 1 with the second-language docx and a new work-dir:
-
-```bash
-python3 src/ingestion/ingest_document.py \
-    --docx     path/to/law_en.docx \
-    --lang     en \
-    --lexicon  data/lexicon_db/lexicon_v2.db \
-    --work-dir data/ingestion/corporate_income_tax_en
-```
-
-Then Pass 2 pointing at the same domain DB:
-
-```bash
-python3 src/ingestion/ingest_document.py \
-    --work-dir    data/ingestion/corporate_income_tax_en \
-    --domain      corporate_income_tax \
-    --jurisdiction LT \
-    --db          data/domain_db/corporate_income_tax.db \
-    --post-review
-```
-
-The writer deduplicates by phrase + definition and links new `mwe_lang` rows to existing
-`mwe` entries where possible.
+**Conflict detected for shared EO phrase** — Normal behaviour. Two LT terms may
+share the same Esperanto canonical form. The system creates separate `mwe` rows
+and a `mwe_conflict` record. Resolve via `conflict_report.py` and `link_synonyms.py`.

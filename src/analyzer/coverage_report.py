@@ -47,6 +47,7 @@ class TokenResult:
     category: str           # TIER1 | TIER2 | TIER4 | UNKNOWN | SKIP
     n_tokens: int = 1       # source tokens consumed
     via_fallback: bool = False  # True when matched via fallback_lang, not primary lang
+    synonym_of: str | None = None  # canonical synonym phrase, if any
 
 
 # ---------------------------------------------------------------------------
@@ -84,6 +85,30 @@ def load_mwe_phrases(domain_db: Path | None, lang: str) -> set[str]:
     return phrases
 
 
+def load_synonym_map(domain_db: Path | None, lang: str) -> dict[str, str]:
+    """Return {phrase_normalized → canonical_synonym_phrase} for TIER4 synonym notation.
+
+    When a matched phrase has a synonym link, the other phrase is shown in the report
+    as: 'matched_phrase  TIER4  (≡ canonical_synonym)'.
+    """
+    if domain_db is None or not domain_db.exists():
+        return {}
+    conn = sqlite3.connect(domain_db)
+    # Synonym conflict: mwe_id_b phrase is matched → show mwe_id_a phrase as canonical
+    rows = conn.execute(
+        """
+        SELECT lb.phrase_normalized, la.phrase
+        FROM mwe_conflict c
+        JOIN mwe_lang la ON la.mwe_id = c.mwe_id_a AND la.lang = ?
+        JOIN mwe_lang lb ON lb.mwe_id = c.mwe_id_b AND lb.lang = ?
+        WHERE c.conflict_type = 'synonym'
+        """,
+        (lang, lang),
+    ).fetchall()
+    conn.close()
+    return {row[0]: row[1] for row in rows}
+
+
 # ---------------------------------------------------------------------------
 # Core classification (pure — no spaCy dependency)
 # ---------------------------------------------------------------------------
@@ -112,6 +137,7 @@ def classify_tokens(
     *,
     fallback_tier1: set[str] | None = None,
     fallback_tier2: set[str] | None = None,
+    synonym_map: dict[str, str] | None = None,
 ) -> list[TokenResult]:
     """Greedily classify *tokens*, longest MWE match wins.
 
@@ -158,9 +184,11 @@ def classify_tokens(
             phrase_text = " ".join(t.text.lower() for t in window)
             phrase_lemma = " ".join(t.lemma.lower() for t in window)
 
-            if phrase_text in mwe_phrases or phrase_lemma in mwe_phrases:
+            matched_phrase = phrase_text if phrase_text in mwe_phrases else (phrase_lemma if phrase_lemma in mwe_phrases else None)
+            if matched_phrase is not None:
                 display = " ".join(t.text for t in window)
-                results.append(TokenResult(display, "", "TIER4", window_size))
+                synonym = (synonym_map or {}).get(matched_phrase)
+                results.append(TokenResult(display, "", "TIER4", window_size, synonym_of=synonym))
                 i += window_size
                 matched = True
                 break
@@ -206,7 +234,8 @@ def classify_tokens(
                         )
                         if rest_ok:
                             display = " ".join(t.text for t in window)
-                            results.append(TokenResult(display, "", "TIER4", window_size))
+                            synonym = (synonym_map or {}).get(phrase)
+                            results.append(TokenResult(display, "", "TIER4", window_size, synonym_of=synonym))
                             i += window_size
                             matched = True
                             break
@@ -331,6 +360,8 @@ def format_text_report(
         else:
             cat_label = r.category
             suffix = f"  ({r.category})"
+        if r.synonym_of:
+            suffix += f"  (≡ {r.synonym_of})"
         lines.append(f"  {r.text:<30} {cat_label:<8}{suffix}")
 
     lines.append("")
@@ -389,6 +420,7 @@ def format_json_report(
                 "category": r.category,
                 "n_tokens": r.n_tokens,
                 "via_fallback": r.via_fallback,
+                "synonym_of": r.synonym_of,
             }
             for r in results
         ],
@@ -448,6 +480,7 @@ def analyse(
     """Run the full coverage analysis and return the formatted report string."""
     tier1, tier2 = load_tier_words(lexicon_db, lang)
     mwe_phrases = load_mwe_phrases(domain_db, lang)
+    synonym_map = load_synonym_map(domain_db, lang)
 
     fb_tier1: set[str] = set()
     fb_tier2: set[str] = set()
@@ -460,6 +493,7 @@ def analyse(
         tokens, mwe_phrases, tier1, tier2,
         fallback_tier1=fb_tier1 if fallback_lang else None,
         fallback_tier2=fb_tier2 if fallback_lang else None,
+        synonym_map=synonym_map if synonym_map else None,
     )
     summary = compute_summary(results)
 

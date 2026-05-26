@@ -31,6 +31,49 @@ def _today() -> str:
     return date.today().isoformat()
 
 
+# ---------------------------------------------------------------------------
+# Manual overrides
+# ---------------------------------------------------------------------------
+
+
+def load_overrides(overrides_path: Path) -> dict[tuple[str, str], dict]:
+    """Load manual_overrides.jsonl → dict keyed by (phrase_normalized, lang).
+
+    Returns an empty dict if the file does not exist.
+    """
+    if not overrides_path.exists():
+        return {}
+    result: dict[tuple[str, str], dict] = {}
+    with overrides_path.open(encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            rec = json.loads(line)
+            key = (
+                rec["match_on"]["phrase_normalized"],
+                rec["match_on"]["lang"],
+            )
+            result[key] = rec["override"]
+    return result
+
+
+def apply_override(rec: dict, phrase_normalized: str, overrides: dict[tuple[str, str], dict]) -> tuple[dict, str]:
+    """Apply an override to *rec* if one exists for (phrase_normalized, lang).
+
+    Returns (possibly-modified rec, possibly-modified phrase_normalized).
+    """
+    lang = rec.get("lang", "")
+    key = (phrase_normalized, lang)
+    if key not in overrides:
+        return rec, phrase_normalized
+    override = overrides[key]
+    rec = {**rec, **override}
+    new_phrase_normalized = rec.get("phrase_normalized", phrase_normalized)
+    print(f"OVERRIDE applied: {phrase_normalized} ({lang}) → {new_phrase_normalized}")
+    return rec, new_phrase_normalized
+
+
 def _normalize_definition(text: str | None) -> str:
     """Lowercase and strip leading/trailing whitespace for comparison."""
     if not text:
@@ -94,16 +137,60 @@ def _upgrade_mwe(conn: sqlite3.Connection, mwe_id: int, n_sources: int) -> str:
     return "emerging"
 
 
+def _is_statistical(rec: dict) -> bool:
+    """Return True if rec is a statistical MWE candidate (has 'phrase' key)."""
+    return "phrase" in rec
+
+
 def _clause_ref(rec: dict) -> str | None:
     article = rec.get("article")
     clause_num = rec.get("clause_num")
     return f"Art.{article}.{clause_num}" if article and clause_num else None
 
 
+def _insert_mwe_lang_stat(
+    conn: sqlite3.Connection, mwe_id: int, rec: dict
+) -> None:
+    """Insert a mwe_lang row for a statistical MWE candidate record."""
+    phrase = rec["phrase"]
+    phrase_normalized = phrase.lower()
+    phrase_base = phrase_normalized.split()[0] if phrase_normalized else ""
+    conn.execute(
+        """
+        INSERT INTO mwe_lang
+            (mwe_id, lang, phrase, phrase_normalized, phrase_base, definition_raw, abbrev)
+        VALUES (?, ?, ?, ?, ?, NULL, NULL)
+        """,
+        (mwe_id, rec["lang"], phrase, phrase_normalized, phrase_base),
+    )
+
+
+def _insert_occurrence_stat(
+    conn: sqlite3.Connection, mwe_id: int, rec: dict, today: str
+) -> None:
+    freq = rec.get("frequency", 0)
+    conn.execute(
+        """
+        INSERT INTO mwe_occurrence
+            (mwe_id, source_doc, source_lang, clause_ref, date_extracted)
+        VALUES (?, ?, ?, ?, ?)
+        """,
+        (
+            mwe_id,
+            rec.get("source_file") or "",
+            rec["lang"],
+            f"statistical_pmi_freq{freq}",
+            today,
+        ),
+    )
+
+
 def _insert_mwe_lang(
     conn: sqlite3.Connection, mwe_id: int, rec: dict
 ) -> None:
-    phrase_normalized = rec.get("term_normalized") or rec["term_raw"].lower()
+    # Override may set "phrase"/"phrase_normalized" directly; fall back to term_raw fields.
+    phrase = rec.get("phrase") or rec.get("term_raw") or ""
+    phrase_normalized = rec.get("phrase_normalized") or rec.get("term_normalized") or phrase.lower()
     phrase_base = phrase_normalized.split()[0] if phrase_normalized else ""
     conn.execute(
         """
@@ -114,7 +201,7 @@ def _insert_mwe_lang(
         (
             mwe_id,
             rec["lang"],
-            rec["term_raw"],
+            phrase,
             phrase_normalized,
             phrase_base,
             rec.get("definition_raw") or "",
@@ -151,18 +238,56 @@ def _insert_new_mwe(
     return cur.lastrowid  # type: ignore[return-value]
 
 
+def process_stat_record(
+    conn: sqlite3.Connection,
+    rec: dict,
+    domain: str,
+    jurisdiction: str,
+    overrides: dict[tuple[str, str], dict] | None = None,
+) -> dict:
+    """Process a single statistical MWE candidate record.
+
+    Returns a counts dict with keys: new_concepts, lang_counts, merged, conflicts.
+    """
+    today = _today()
+    phrase_normalized = rec["phrase"].lower()
+    lang = rec["lang"]
+
+    rec, phrase_normalized = apply_override(rec, phrase_normalized, overrides or {})
+    existing = _lookup_mwe_lang(conn, phrase_normalized, lang)
+    if existing is not None:
+        mwe_id = existing[0]
+        _insert_occurrence_stat(conn, mwe_id, rec, today)
+        n = _count_distinct_sources(conn, mwe_id)
+        _upgrade_mwe(conn, mwe_id, n)
+        return {"new_concepts": 0, "lang_counts": {}, "merged": 1, "conflicts": 0}
+
+    mwe_id = _insert_new_mwe(
+        conn, rec.get("source_file") or "", today, domain, jurisdiction
+    )
+    _insert_mwe_lang_stat(conn, mwe_id, rec)
+    _insert_occurrence_stat(conn, mwe_id, rec, today)
+    freq = rec.get("frequency", 0)
+    pmi = rec.get("pmi", 0.0)
+    print(f"STAT-NEW: {rec['phrase']}  (freq={freq}, pmi={pmi})")
+    return {"new_concepts": 1, "lang_counts": {lang: 1}, "merged": 0, "conflicts": 0}
+
+
 def process_group(
     conn: sqlite3.Connection,
     records: list[dict],
     cross_lang_num: str,
     domain: str,
     jurisdiction: str,
+    overrides: dict[tuple[str, str], dict] | None = None,
 ) -> dict:
     """Process a group of same-concept records (same cross_lang_num) across languages.
 
     Returns a counts dict with keys: new_concepts, lang_counts, merged, conflicts.
     """
     today = _today()
+
+    _overrides = overrides or {}
 
     # STEP 1 — deduplication: find an existing mwe via any lang in the group.
     # Require phrase AND definition to match so that two different concepts sharing
@@ -186,6 +311,7 @@ def process_group(
         for rec in records:
             phrase_normalized = rec.get("term_normalized") or rec["term_raw"].lower()
             definition_raw = rec.get("definition_raw") or ""
+            rec, phrase_normalized = apply_override(rec, phrase_normalized, _overrides)
             _insert_mwe_lang(conn, mwe_id, rec)
             _insert_occurrence(conn, mwe_id, rec, today)
             lang_counts[rec["lang"]] = lang_counts.get(rec["lang"], 0) + 1
@@ -226,6 +352,7 @@ def process_group(
         lang = rec["lang"]
         phrase_normalized = rec.get("term_normalized") or rec["term_raw"].lower()
         definition_raw = rec.get("definition_raw") or ""
+        rec, phrase_normalized = apply_override(rec, phrase_normalized, _overrides)
 
         found = _lookup_mwe_lang(conn, phrase_normalized, lang)
 
@@ -290,16 +417,28 @@ def run(
     db_path: Path,
     domain: str,
     jurisdiction: str,
+    overrides_path: Path | None = None,
 ) -> None:
     """Load approved records, group by cross_lang_num, write to domain DB."""
-    records: list[dict] = []
+    # Auto-discover overrides: <db_dir>/manual_overrides.jsonl unless explicit path given
+    if overrides_path is None:
+        overrides_path = db_path.parent / "manual_overrides.jsonl"
+    overrides = load_overrides(overrides_path)
+    if overrides:
+        print(f"Loaded {len(overrides)} manual override(s) from {overrides_path.name}")
+
+    def_records: list[dict] = []
+    stat_records: list[dict] = []
     with input_path.open(encoding="utf-8") as fh:
         for line in fh:
             line = line.strip()
             if line:
                 rec = json.loads(line)
                 if rec.get("approved") is True:
-                    records.append(rec)
+                    if _is_statistical(rec):
+                        stat_records.append(rec)
+                    else:
+                        def_records.append(rec)
 
     db_path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(db_path)
@@ -311,8 +450,16 @@ def run(
     total_merged = 0
     total_conflicts = 0
 
-    for cross_lang_num, group in _group_records(records):
-        result = process_group(conn, group, cross_lang_num, domain, jurisdiction)
+    for cross_lang_num, group in _group_records(def_records):
+        result = process_group(conn, group, cross_lang_num, domain, jurisdiction, overrides)
+        total_new += result["new_concepts"]
+        total_merged += result["merged"]
+        total_conflicts += result["conflicts"]
+        for lang, count in result["lang_counts"].items():
+            total_lang_counts[lang] = total_lang_counts.get(lang, 0) + count
+
+    for rec in stat_records:
+        result = process_stat_record(conn, rec, domain, jurisdiction, overrides)
         total_new += result["new_concepts"]
         total_merged += result["merged"]
         total_conflicts += result["conflicts"]
@@ -346,13 +493,17 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--db", required=True, type=Path, help="Path to domain .db file")
     parser.add_argument("--domain", required=True, help="Domain label (e.g. personal_income_tax)")
     parser.add_argument("--jurisdiction", required=True, help="Jurisdiction code (e.g. LT)")
+    parser.add_argument(
+        "--overrides", type=Path, default=None,
+        help="Path to manual_overrides.jsonl (default: <db_dir>/manual_overrides.jsonl)",
+    )
     args = parser.parse_args(argv)
 
     if not args.input.exists():
         print(f"Error: input file not found: {args.input}", file=sys.stderr)
         sys.exit(1)
 
-    run(args.input, args.db, args.domain, args.jurisdiction)
+    run(args.input, args.db, args.domain, args.jurisdiction, args.overrides)
 
 
 if __name__ == "__main__":

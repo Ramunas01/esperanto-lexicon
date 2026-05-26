@@ -1,55 +1,60 @@
 #!/usr/bin/env python3
-"""Pipeline wrapper: docx → corpus → definitions → (optional) domain DB.
+"""Pipeline wrapper: ingest a legal document through the full extraction pipeline.
 
-Runs the extraction pipeline for a single language+document pair.  Stops after
-each stage so you can review outputs before committing to the domain DB.
+Runs in two phases so you can review candidates between extraction and DB commit.
 
-Two-pass workflow
------------------
-Pass 1 — extract and review (default):
+Phase 1 — extract (default):
+    For --source docx:
+        docx_to_corpus.py  → <work-dir>/corpus.txt + amendments.txt
+        extract_definitions.py → <work-dir>/definitions.jsonl
+    For --source eurlex:
+        extract_eurlex_definitions.py → <work-dir>/definitions.jsonl
+    Print: "Phase 1 complete. N candidates written to PATH"
+    Print: "Next: review candidates, then re-run with --phase 2"
 
+Phase 2 — commit (--phase 2):
+    Checks that at least one record is approved.
+    domain_db_writer.py  (definitions + statistical candidates)
+    statistical_mwe_detector.py → <work-dir>/mwe_candidates.jsonl
+
+Usage (national law, docx source):
     python3 src/ingestion/ingest_document.py \\
-        --docx data/corpus/new_domain/lt.docx \\
+        --source docx \\
+        --input path/to/law_lt.docx \\
         --lang lt \\
-        --domain personal_income_tax \\
+        --domain corporate_tax \\
         --jurisdiction LT \\
-        --lexicon data/lexicon_db/lexicon_v2.db \\
-        --work-dir data/ingestion/new_domain_lt
+        --primary-lang lt \\
+        --corpus-dir ~/projects/esperanto-lexicon-corpus/ \\
+        --db data/domain_db/corporate_tax_lt.db
 
-    Produces:
-      <work-dir>/corpus.txt          — clean text
-      <work-dir>/amendments.txt      — stripped amendment records
-      <work-dir>/definitions.jsonl   — extracted definition candidates
-      <work-dir>/mwe_candidates.jsonl — statistical MWE candidates
-      <work-dir>/ne_candidates.jsonl  — named-entity candidates
-
-    Then review with:
-      python3 src/extractor/review_cli.py --input <work-dir>/definitions.jsonl --lang lt
-      python3 src/extractor/review_cli.py --input <work-dir>/mwe_candidates.jsonl --lang lt
-
-Pass 2 — commit reviewed records to domain DB (--post-review):
-
+Usage (EUR-Lex, html source):
     python3 src/ingestion/ingest_document.py \\
-        --work-dir data/ingestion/new_domain_lt \\
-        --domain personal_income_tax \\
-        --jurisdiction LT \\
-        --db data/domain_db/personal_income_tax.db \\
-        --post-review
+        --source eurlex \\
+        --input path/to/ucc_en.html \\
+        --celex 02013R0952-20221212 \\
+        --lang en \\
+        --domain customs_ucc \\
+        --jurisdiction EU \\
+        --primary-lang en \\
+        --corpus-dir ~/projects/esperanto-lexicon-corpus/ \\
+        --db data/domain_db/ucc_customs.db
 
-Options
--------
---skip-docx       Skip the docx→corpus step (corpus.txt already exists).
---skip-extract    Skip extract_definitions (definitions.jsonl already exists).
---skip-stats      Skip statistical MWE detection.
---article N       Article number to extract (default: 2).
---min-freq N      Minimum frequency for statistical candidates (default: 3).
---min-pmi F       Minimum PMI for statistical candidates (default: 2.0).
---top-n N         Maximum statistical candidates per run (default: 200).
+Usage (Phase 2 — commit):
+    python3 src/ingestion/ingest_document.py \\
+        --phase 2 \\
+        --lang lt \\
+        --domain corporate_tax \\
+        --jurisdiction LT \\
+        --corpus-dir ~/projects/esperanto-lexicon-corpus/ \\
+        --db data/domain_db/corporate_tax_lt.db \\
+        --lexicon data/lexicon_db/lexicon_v2.db
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -61,10 +66,9 @@ from pathlib import Path
 
 
 def _run(cmd: list[str], label: str) -> None:
-    """Run a subprocess command, printing a header and exiting on failure."""
     print(f"\n{'─' * 60}")
     print(f"STAGE: {label}")
-    print(f"CMD  : {' '.join(cmd)}")
+    print(f"CMD  : {' '.join(str(c) for c in cmd)}")
     print("─" * 60)
     result = subprocess.run(cmd)
     if result.returncode != 0:
@@ -72,8 +76,29 @@ def _run(cmd: list[str], label: str) -> None:
         sys.exit(result.returncode)
 
 
+def _work_dir(args: argparse.Namespace) -> Path:
+    corpus_dir = Path(args.corpus_dir).expanduser()
+    return corpus_dir / args.domain
+
+
+def _count_candidates(jsonl_path: Path) -> tuple[int, int]:
+    """Return (total, approved) record counts in a jsonl file."""
+    total = approved = 0
+    if not jsonl_path.exists():
+        return 0, 0
+    with jsonl_path.open(encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if line:
+                rec = json.loads(line)
+                total += 1
+                if rec.get("approved") is True:
+                    approved += 1
+    return total, approved
+
+
 # ---------------------------------------------------------------------------
-# Stage runners
+# Phase 1 stages
 # ---------------------------------------------------------------------------
 
 
@@ -82,9 +107,8 @@ def stage_docx(args: argparse.Namespace, work_dir: Path) -> None:
     amendments_txt = work_dir / "amendments.txt"
     _run(
         [
-            sys.executable,
-            "src/ingestion/docx_to_corpus.py",
-            "--input", str(args.docx),
+            sys.executable, "src/ingestion/docx_to_corpus.py",
+            "--input", str(args.input),
             "--output", str(corpus_txt),
             "--amendments", str(amendments_txt),
         ],
@@ -92,52 +116,59 @@ def stage_docx(args: argparse.Namespace, work_dir: Path) -> None:
     )
 
 
-def stage_extract(args: argparse.Namespace, work_dir: Path) -> None:
+def stage_eurlex(args: argparse.Namespace, work_dir: Path) -> None:
+    definitions_jsonl = work_dir / "definitions.jsonl"
+    celex = getattr(args, "celex", None) or ""
+    _run(
+        [
+            sys.executable, "src/ingestion/extract_eurlex_definitions.py",
+            "--input", str(args.input),
+            "--lang", args.lang,
+            "--output", str(definitions_jsonl),
+        ] + (["--celex", celex] if celex else []),
+        "EUR-Lex HTML → definitions",
+    )
+
+
+def stage_extract_definitions(args: argparse.Namespace, work_dir: Path) -> None:
     corpus_txt = work_dir / "corpus.txt"
     definitions_jsonl = work_dir / "definitions.jsonl"
     _run(
         [
-            sys.executable,
-            "src/extractor/extract_definitions.py",
+            sys.executable, "src/extractor/extract_definitions.py",
             "--input", str(corpus_txt),
             "--lang", args.lang,
-            "--article", args.article,
+            "--article", getattr(args, "article", "2"),
             "--output", str(definitions_jsonl),
         ],
         "extract definitions",
     )
 
 
-def stage_stats(args: argparse.Namespace, work_dir: Path) -> None:
-    corpus_txt = work_dir / "corpus.txt"
-    mwe_jsonl = work_dir / "mwe_candidates.jsonl"
-    ne_jsonl = work_dir / "ne_candidates.jsonl"
-    _run(
-        [
-            sys.executable,
-            "src/extractor/statistical_mwe_detector.py",
-            "--input", str(corpus_txt),
-            "--lang", args.lang,
-            "--lexicon", str(args.lexicon),
-            "--output", str(mwe_jsonl),
-            "--output-ne", str(ne_jsonl),
-            "--min-freq", str(args.min_freq),
-            "--min-pmi", str(args.min_pmi),
-            "--top-n", str(args.top_n),
-        ],
-        "statistical MWE detection",
-    )
+# ---------------------------------------------------------------------------
+# Phase 2 stages
+# ---------------------------------------------------------------------------
 
 
 def stage_db_write(args: argparse.Namespace, work_dir: Path) -> None:
     definitions_jsonl = work_dir / "definitions.jsonl"
     if not definitions_jsonl.exists():
-        print(f"Error: {definitions_jsonl} not found — run Pass 1 first.", file=sys.stderr)
+        print(f"Error: {definitions_jsonl} not found — run Phase 1 first.", file=sys.stderr)
         sys.exit(1)
+
+    _, approved = _count_candidates(definitions_jsonl)
+    if approved == 0:
+        print(
+            f"Error: no approved records in {definitions_jsonl.name}.\n"
+            "Review with: python3 src/extractor/review_cli.py "
+            f"--input {definitions_jsonl} --lang {args.lang}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
     _run(
         [
-            sys.executable,
-            "src/extractor/domain_db_writer.py",
+            sys.executable, "src/extractor/domain_db_writer.py",
             "--input", str(definitions_jsonl),
             "--db", str(args.db),
             "--domain", args.domain,
@@ -148,19 +179,42 @@ def stage_db_write(args: argparse.Namespace, work_dir: Path) -> None:
 
     mwe_jsonl = work_dir / "mwe_candidates.jsonl"
     if mwe_jsonl.exists():
-        _run(
-            [
-                sys.executable,
-                "src/extractor/domain_db_writer.py",
-                "--input", str(mwe_jsonl),
-                "--db", str(args.db),
-                "--domain", args.domain,
-                "--jurisdiction", args.jurisdiction,
-            ],
-            "write MWE candidates → domain DB",
-        )
-    else:
-        print(f"  (no {mwe_jsonl.name} found — skipping MWE write)")
+        _, mwe_approved = _count_candidates(mwe_jsonl)
+        if mwe_approved > 0:
+            _run(
+                [
+                    sys.executable, "src/extractor/domain_db_writer.py",
+                    "--input", str(mwe_jsonl),
+                    "--db", str(args.db),
+                    "--domain", args.domain,
+                    "--jurisdiction", args.jurisdiction,
+                ],
+                "write statistical MWE candidates → domain DB",
+            )
+
+
+def stage_stats(args: argparse.Namespace, work_dir: Path) -> None:
+    corpus_txt = work_dir / "corpus.txt"
+    if not corpus_txt.exists():
+        print(f"  (corpus.txt not found at {corpus_txt} — skipping statistical MWE detection)")
+        return
+    lexicon = getattr(args, "lexicon", None)
+    if not lexicon:
+        print("  (--lexicon not provided — skipping statistical MWE detection)")
+        return
+    mwe_jsonl = work_dir / "mwe_candidates.jsonl"
+    ne_jsonl = work_dir / "ne_candidates.jsonl"
+    _run(
+        [
+            sys.executable, "src/extractor/statistical_mwe_detector.py",
+            "--input", str(corpus_txt),
+            "--lang", args.lang,
+            "--lexicon", str(lexicon),
+            "--output", str(mwe_jsonl),
+            "--output-ne", str(ne_jsonl),
+        ],
+        "statistical MWE detection",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -170,89 +224,76 @@ def stage_db_write(args: argparse.Namespace, work_dir: Path) -> None:
 
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(
-        description="Run the ingestion pipeline for one language+document.",
+        description="Ingest a legal document through the extraction pipeline.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-
-    # Work directory (always required)
-    parser.add_argument(
-        "--work-dir", dest="work_dir", required=True, type=Path,
-        help="Directory for intermediate files (created if absent)",
-    )
-
-    # Pass 1 inputs
-    parser.add_argument("--docx", type=Path, default=None, help="Input .docx file (Pass 1)")
-    parser.add_argument(
-        "--lang", choices=["lt", "en", "eo"], default=None,
-        help="Language code (required for Pass 1 and --post-review)",
-    )
-    parser.add_argument(
-        "--lexicon", type=Path, default=None,
-        help="Path to lexicon_v2.db (required for statistical MWE detection)",
-    )
-    parser.add_argument("--article", default="2", help="Article number to extract (default: 2)")
-    parser.add_argument("--min-freq", dest="min_freq", type=int, default=3)
-    parser.add_argument("--min-pmi", dest="min_pmi", type=float, default=2.0)
-    parser.add_argument("--top-n", dest="top_n", type=int, default=200)
-
-    # Pass 2 inputs
-    parser.add_argument(
-        "--post-review", dest="post_review", action="store_true",
-        help="Commit reviewed records to domain DB (Pass 2)",
-    )
-    parser.add_argument("--db", type=Path, default=None, help="Domain DB path (required for Pass 2)")
-    parser.add_argument("--domain", default=None, help="Domain label, e.g. personal_income_tax")
-    parser.add_argument("--jurisdiction", default=None, help="Jurisdiction code, e.g. LT")
-
-    # Skip flags
-    parser.add_argument("--skip-docx", dest="skip_docx", action="store_true")
-    parser.add_argument("--skip-extract", dest="skip_extract", action="store_true")
-    parser.add_argument("--skip-stats", dest="skip_stats", action="store_true")
-
+    parser.add_argument("--phase", type=int, default=1, choices=[1, 2],
+                        help="1=extract (default), 2=commit reviewed records to DB")
+    parser.add_argument("--source", choices=["docx", "eurlex"], default="docx",
+                        help="Document source format (default: docx)")
+    parser.add_argument("--input", type=Path, default=None,
+                        help="Input file path (required for Phase 1)")
+    parser.add_argument("--lang", required=True, choices=["lt", "en", "eo"],
+                        help="Language code")
+    parser.add_argument("--domain", required=True,
+                        help="Domain label, e.g. corporate_tax")
+    parser.add_argument("--jurisdiction", required=True,
+                        help="Jurisdiction code, e.g. LT")
+    parser.add_argument("--primary-lang", dest="primary_lang", default=None,
+                        help="Primary language for the document (informational)")
+    parser.add_argument("--corpus-dir", dest="corpus_dir", required=True,
+                        help="Root directory for corpus files (work files placed here)")
+    parser.add_argument("--db", type=Path, default=None,
+                        help="Domain DB path (required for Phase 2)")
+    parser.add_argument("--lexicon", type=Path, default=None,
+                        help="Path to lexicon_v2.db (for statistical MWE detection)")
+    parser.add_argument("--celex", default=None,
+                        help="EUR-Lex CELEX identifier (for --source eurlex)")
+    parser.add_argument("--article", default="2",
+                        help="Article number to extract definitions from (default: 2)")
     args = parser.parse_args(argv)
 
-    work_dir: Path = args.work_dir
+    work_dir = _work_dir(args)
     work_dir.mkdir(parents=True, exist_ok=True)
 
-    if args.post_review:
-        # Pass 2: commit reviewed files to domain DB
-        for flag, name in [("--db", args.db), ("--domain", args.domain), ("--jurisdiction", args.jurisdiction)]:
-            if name is None:
-                parser.error(f"{flag} is required for --post-review")
-        stage_db_write(args, work_dir)
-        print(f"\nPass 2 complete.  Domain DB: {args.db}")
-        return
+    if args.phase == 1:
+        if args.input is None:
+            parser.error("--input is required for Phase 1")
 
-    # Pass 1: extract pipeline
-    if args.lang is None:
-        parser.error("--lang is required for Pass 1")
-    if not args.skip_docx:
-        if args.docx is None:
-            parser.error("--docx is required unless --skip-docx is set")
-        stage_docx(args, work_dir)
-    if not args.skip_extract:
-        stage_extract(args, work_dir)
-    if not args.skip_stats:
-        if args.lexicon is None:
-            print("  (--lexicon not provided — skipping statistical MWE detection)")
-        else:
-            stage_stats(args, work_dir)
+        if args.source == "docx":
+            stage_docx(args, work_dir)
+            stage_extract_definitions(args, work_dir)
+        elif args.source == "eurlex":
+            stage_eurlex(args, work_dir)
 
-    print(f"\n{'═' * 60}")
-    print("Pass 1 complete.  Next steps:")
-    print(f"  1. Review definitions:")
-    print(f"     python3 src/extractor/review_cli.py \\")
-    print(f"         --input {work_dir}/definitions.jsonl --lang {args.lang}")
-    if not args.skip_stats and args.lexicon:
-        print(f"  2. Review MWE candidates:")
+        definitions_jsonl = work_dir / "definitions.jsonl"
+        total, _ = _count_candidates(definitions_jsonl)
+
+        print(f"\n{'═' * 60}")
+        print(f"Phase 1 complete. {total} candidate(s) written to:")
+        print(f"  {definitions_jsonl}")
+        print()
+        print("Next steps:")
+        print(f"  1. Review candidates:")
         print(f"     python3 src/extractor/review_cli.py \\")
-        print(f"         --input {work_dir}/mwe_candidates.jsonl --lang {args.lang}")
-    print(f"  3. Commit reviewed records:")
-    print(f"     python3 src/ingestion/ingest_document.py \\")
-    print(f"         --work-dir {work_dir} \\")
-    print(f"         --domain <domain> --jurisdiction <JUR> --db <db> --post-review")
-    print(f"{'═' * 60}")
+        print(f"         --input {definitions_jsonl} --lang {args.lang}")
+        print(f"  2. Commit reviewed records (Phase 2):")
+        print(f"     python3 src/ingestion/ingest_document.py --phase 2 \\")
+        print(f"         --lang {args.lang} --domain {args.domain} \\")
+        print(f"         --jurisdiction {args.jurisdiction} \\")
+        print(f"         --corpus-dir {args.corpus_dir} \\")
+        print(f"         --db <path-to-domain.db>")
+        print(f"{'═' * 60}")
+
+    elif args.phase == 2:
+        if args.db is None:
+            parser.error("--db is required for Phase 2")
+        stage_db_write(args, work_dir)
+        stage_stats(args, work_dir)
+        print(f"\n{'═' * 60}")
+        print(f"Phase 2 complete. Domain DB: {args.db}")
+        print(f"{'═' * 60}")
 
 
 if __name__ == "__main__":
