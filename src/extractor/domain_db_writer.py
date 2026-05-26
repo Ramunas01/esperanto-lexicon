@@ -25,10 +25,6 @@ from pathlib import Path
 # schema.py lives in src/lexicon/; resolve relative to this file
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from lexicon.schema import create_domain_schema
-from extractor.extract_eurlex_definitions import (
-    is_eurlex_definition,
-    map_eurlex_to_writer_fields,
-)
 
 
 def _today() -> str:
@@ -147,6 +143,8 @@ def _is_statistical(rec: dict) -> bool:
 
 
 def _clause_ref(rec: dict) -> str | None:
+    if "clause_ref" in rec:
+        return rec["clause_ref"]
     article = rec.get("article")
     clause_num = rec.get("clause_num")
     return f"Art.{article}.{clause_num}" if article and clause_num else None
@@ -298,7 +296,7 @@ def process_group(
     # the same translated phrase are not incorrectly merged.
     existing_mwe_id: int | None = None
     for rec in records:
-        phrase_normalized = rec.get("term_normalized") or rec["term_raw"].lower()
+        phrase_normalized = rec.get("phrase_normalized") or rec.get("term_normalized") or (rec.get("phrase") or rec.get("term_raw", "")).lower()
         definition_raw = rec.get("definition_raw") or ""
         found_id = _lookup_mwe_lang_same_def(conn, phrase_normalized, rec["lang"], definition_raw)
         if found_id is not None:
@@ -308,12 +306,16 @@ def process_group(
     # STEP 2 — NOT FOUND: create one mwe row and one mwe_lang + mwe_occurrence per language
     if existing_mwe_id is None:
         mwe_id = _insert_new_mwe(
-            conn, records[0].get("source_file") or "", today, domain, jurisdiction
+            conn,
+            records[0].get("first_seen_source") or records[0].get("source_file") or "",
+            today,
+            domain,
+            jurisdiction,
         )
         lang_counts: dict[str, int] = {}
         conflicts = 0
         for rec in records:
-            phrase_normalized = rec.get("term_normalized") or rec["term_raw"].lower()
+            phrase_normalized = rec.get("phrase_normalized") or rec.get("term_normalized") or (rec.get("phrase") or rec.get("term_raw", "")).lower()
             definition_raw = rec.get("definition_raw") or ""
             rec, phrase_normalized = apply_override(rec, phrase_normalized, _overrides)
             _insert_mwe_lang(conn, mwe_id, rec)
@@ -337,12 +339,13 @@ def process_group(
                         """,
                         (existing_mwe_id_other, mwe_id, detail, today),
                     )
-                    print(f"CONFLICT: {rec['term_raw']} ({rec['lang']}) — text divergence recorded")
+                    phrase_label = rec.get("phrase") or rec.get("term_raw", "?")
+                    print(f"CONFLICT: {phrase_label} ({rec['lang']}) — text divergence recorded")
                     conflicts += 1
 
         _LANG_ORDER = {"lt": 0, "eo": 1, "en": 2}
         ordered = sorted(records, key=lambda r: _LANG_ORDER.get(r["lang"], 99))
-        phrases_str = " | ".join(r["term_raw"] for r in ordered)
+        phrases_str = " | ".join(r.get("phrase") or r.get("term_raw", "?") for r in ordered)
         print(f"NEW [clause {cross_lang_num}]: {phrases_str}")
         return {"new_concepts": 1, "lang_counts": lang_counts, "merged": 0, "conflicts": conflicts}
 
@@ -354,7 +357,7 @@ def process_group(
 
     for rec in records:
         lang = rec["lang"]
-        phrase_normalized = rec.get("term_normalized") or rec["term_raw"].lower()
+        phrase_normalized = rec.get("phrase_normalized") or rec.get("term_normalized") or (rec.get("phrase") or rec.get("term_raw", "")).lower()
         definition_raw = rec.get("definition_raw") or ""
         rec, phrase_normalized = apply_override(rec, phrase_normalized, _overrides)
 
@@ -373,13 +376,18 @@ def process_group(
             n = _count_distinct_sources(conn, mwe_id)
             new_status = _upgrade_mwe(conn, mwe_id, n)
             row = conn.execute("SELECT scope FROM mwe WHERE id=?", (mwe_id,)).fetchone()
-            print(f"MERGED: {rec['term_raw']} (now {new_status}, scope={row[0] if row else '?'})")
+            phrase_label = rec.get("phrase") or rec.get("term_raw", "?")
+            print(f"MERGED: {phrase_label} (now {new_status}, scope={row[0] if row else '?'})")
             merged += 1
 
         else:
             # Same phrase, different definition — record conflict
             mwe_id_b = _insert_new_mwe(
-                conn, rec.get("source_file") or "", today, domain, jurisdiction
+                conn,
+                rec.get("first_seen_source") or rec.get("source_file") or "",
+                today,
+                domain,
+                jurisdiction,
             )
             _insert_mwe_lang(conn, mwe_id_b, rec)
             _insert_occurrence(conn, mwe_id_b, rec, today)
@@ -394,10 +402,85 @@ def process_group(
                 """,
                 (mwe_id, mwe_id_b, detail, today),
             )
-            print(f"CONFLICT: {rec['term_raw']} ({lang}) — text divergence recorded")
+            phrase_label = rec.get("phrase") or rec.get("term_raw", "?")
+            print(f"CONFLICT: {phrase_label} ({lang}) — text divergence recorded")
             conflicts += 1
 
     return {"new_concepts": 0, "lang_counts": lang_counts, "merged": merged, "conflicts": conflicts}
+
+
+def _map_eurlex_record(rec: dict) -> dict:
+    """Map a EUR-Lex definition record to writer's internal field format."""
+    src = rec.get("source_ref", {})
+    ctx = rec.get("context", {})
+    celex_id = src.get("celex_id", "")
+    list_path = src.get("list_path", "?")
+    art_num = ctx.get("article_number") or src.get("article_number", "?")
+    structural_path = src.get("structural_path", "")  # structural_path lives in source_ref
+
+    term = rec.get("term", "")
+    term_norm = rec.get("term_normalized") or term.lower()
+
+    first_seen_date = _today()
+    if "-" in celex_id:
+        suffix = celex_id.rsplit("-", 1)[-1]
+        if len(suffix) == 8 and suffix.isdigit():
+            first_seen_date = f"{suffix[:4]}-{suffix[4:6]}-{suffix[6:8]}"
+
+    first_seen_src = (
+        f"{celex_id}#{structural_path}.{list_path}"
+        if structural_path
+        else f"{celex_id}#{list_path}"
+    )
+
+    return {
+        "phrase": term,
+        "phrase_normalized": term_norm,
+        "definition_raw": rec.get("definition", ""),
+        "lang": rec.get("lang", ""),
+        "cross_lang_num": list_path,
+        "source_file": celex_id,
+        "clause_ref": f"Art.{art_num}.{list_path}",
+        "first_seen_source": first_seen_src,
+        "first_seen_date": first_seen_date,
+    }
+
+
+def _group_eurlex_records(
+    records: list[dict],
+) -> list[tuple[str, list[dict]]]:
+    """Group EUR-Lex definition records by (celex_id, article_number, list_path).
+
+    Structural_path is intentionally excluded — it differs between language
+    versions of the same document (EN renders full chapter nesting, LT renders
+    only the article ID). Only celex_id, article_number, and list_path are
+    stable across translations.
+
+    Returns (list_path, records_in_group) pairs sorted by celex_id,
+    article_number, then list_path (numeric where possible).
+    """
+    groups: dict[tuple[str, str, str], list[dict]] = defaultdict(list)
+    for rec in records:
+        src = rec.get("source_ref", {})
+        ctx = rec.get("context", {})
+        celex_id = src.get("celex_id", "")
+        list_path = src.get("list_path", "?")
+        article_number = ctx.get("article_number") or src.get("article_number", "?")
+        groups[(celex_id, article_number, list_path)].append(rec)
+
+    def _sort_key(k: tuple[str, str, str]) -> tuple:
+        celex, art, path = k
+        try:
+            return (celex, art, 0, int(path))
+        except ValueError:
+            return (celex, art, 1, path)
+
+    return [
+        (list_path, recs)
+        for (celex_id, article_number, list_path), recs in sorted(
+            groups.items(), key=lambda item: _sort_key(item[0])
+        )
+    ]
 
 
 def _group_records(records: list[dict]) -> list[tuple[str, list[dict]]]:
@@ -440,10 +523,10 @@ def run(
             if line:
                 rec = json.loads(line)
                 if rec.get("approved") is True:
-                    if is_eurlex_definition(rec):
+                    if rec.get("record_type") == "definition":
                         eurlex_records.append(rec)
                     elif rec.get("record_type") is not None:
-                        # Non-definition EUR-Lex records (article_metadata, footnote): skip
+                        # Non-definition records (article_metadata, footnote): skip
                         pass
                     elif _is_statistical(rec):
                         stat_records.append(rec)
@@ -476,13 +559,9 @@ def run(
         for lang, count in result["lang_counts"].items():
             total_lang_counts[lang] = total_lang_counts.get(lang, 0) + count
 
-    for eurlex_rec in eurlex_records:
-        mapped = map_eurlex_to_writer_fields(eurlex_rec)
-        src = eurlex_rec["source_ref"]
-        list_path = src.get("list_path") or "?"
-        result = process_group(
-            conn, [mapped], list_path, domain, jurisdiction, overrides
-        )
+    for display_num, group_recs in _group_eurlex_records(eurlex_records):
+        group = [_map_eurlex_record(rec) for rec in group_recs]
+        result = process_group(conn, group, display_num, domain, jurisdiction, overrides)
         total_new += result["new_concepts"]
         total_merged += result["merged"]
         total_conflicts += result["conflicts"]

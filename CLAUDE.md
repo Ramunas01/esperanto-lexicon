@@ -332,6 +332,7 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
 * \[x] tests/fixtures/eurlex/ucc\_en\_article5\_fragment.html — 41-definition Article 5 fixture with sub-items, three-level nesting, M4 amendment marker, single-quote variant, footnotes, annex (skipped)
 * \[x] tests/test\_extract\_eurlex\_definitions.py — 19 tests passing (1 slow integration test skipped)
 * \[x] domain\_db\_writer.py — updated to accept EUR-Lex definition records (record\_type=definition with celex\_id); article\_metadata and footnote records skipped
+* \[x] domain\_db\_writer.py — EUR-Lex cross-language grouping fixed; join key is (celex\_id, article\_number, list\_path), excluding language-dependent structural\_path. Regression test added.
 * \[x] review\_cli.py — updated to display EUR-Lex records with amendment info, list\_path, and article rubric
 * \[ ] Statistical candidates review — pending human review
 * \[ ] Named entity layer — design deferred

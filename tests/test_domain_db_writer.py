@@ -15,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 from lexicon.schema import create_domain_schema
 from extractor.domain_db_writer import (
     _group_records,
+    _group_eurlex_records,
     process_group,
     process_stat_record,
     run,
@@ -568,3 +569,200 @@ class TestStatisticalRecords:
             conn.close()
 
         assert mwe_count == 0
+
+
+# ---------------------------------------------------------------------------
+# EUR-Lex cross-language grouping (regression for 82-mwe bug)
+# ---------------------------------------------------------------------------
+
+
+def _make_eurlex_record(
+    term: str,
+    definition: str,
+    lang: str,
+    list_path: str,
+    article_number: str = "5",
+    celex_id: str = "02013R0952-20221212",
+    structural_path: str = "",
+) -> dict:
+    """Return an approved EUR-Lex definition record."""
+    return {
+        "record_type": "definition",
+        "lang": lang,
+        "term": term,
+        "term_normalized": term.lower(),
+        "definition": definition,
+        "approved": True,
+        "source_ref": {
+            "celex_id": celex_id,
+            "structural_path": structural_path,
+            "list_path": list_path,
+            "layout": "divlayout" if lang == "en" else "tablelayout",
+        },
+        "amendment": {"marker": "B", "celex": "", "action": None},
+        "context": {
+            "article_number": article_number,
+            "article_rubric": "Definitions" if lang == "en" else "Terminų apibrėžtys",
+        },
+        "sub_items": [],
+        "footnote_refs": [],
+    }
+
+
+class TestEurLexGrouping:
+    """Regression tests for the 82-mwe bug.
+
+    EN and LT definition records for the same (celex_id, article_number,
+    list_path) must produce a single shared mwe row, regardless of whether
+    structural_path differs between language versions.
+    """
+
+    EN_RECORDS = [
+        _make_eurlex_record(
+            "customs authorities",
+            "the customs administrations of the Member States ...",
+            lang="en",
+            list_path="1",
+            structural_path="enc_1.tis_I.tis_I.cpt_1.art_5",
+        ),
+        _make_eurlex_record(
+            "customs legislation",
+            "the body of legislation ...",
+            lang="en",
+            list_path="2",
+            structural_path="enc_1.tis_I.tis_I.cpt_1.art_5",
+        ),
+    ]
+    LT_RECORDS = [
+        # structural_path intentionally differs from EN — this is the key invariant
+        _make_eurlex_record(
+            "muitinė",
+            "valstybių narių muitinės administracijos ...",
+            lang="lt",
+            list_path="1",
+            structural_path="art_5",
+        ),
+        _make_eurlex_record(
+            "muitų teisės aktai",
+            "teisės aktų visuma ...",
+            lang="lt",
+            list_path="2",
+            structural_path="art_5",
+        ),
+    ]
+
+    def _write_and_run(self, records: list[dict]) -> sqlite3.Connection:
+        tmp_dir = tempfile.mkdtemp()
+        jsonl = Path(tmp_dir) / "test.jsonl"
+        db = Path(tmp_dir) / "test.db"
+        with jsonl.open("w", encoding="utf-8") as fh:
+            for r in records:
+                fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+        run(jsonl, db, "customs", "EU")
+        return sqlite3.connect(db)
+
+    def test_group_eurlex_records_groups_by_celex_article_listpath(self) -> None:
+        """_group_eurlex_records must pair EN and LT records with the same
+        list_path regardless of differing structural_path."""
+        all_recs = self.EN_RECORDS + self.LT_RECORDS
+        groups = _group_eurlex_records(all_recs)
+        assert len(groups) == 2
+        keys = [k for k, _ in groups]
+        assert keys == ["1", "2"]
+        # Both languages appear in each group
+        for _key, recs in groups:
+            langs = {r["lang"] for r in recs}
+            assert langs == {"en", "lt"}
+
+    def test_eurlex_records_group_by_list_path_across_languages(self) -> None:
+        """Reproduction of the 82-mwe bug.
+
+        EN and LT definition records with the same (celex_id, article_number,
+        list_path) must produce a single shared mwe row with two mwe_lang rows.
+        Structural_path values intentionally differ between EN and LT.
+        """
+        conn = self._write_and_run(self.EN_RECORDS + self.LT_RECORDS)
+        mwe_count = conn.execute("SELECT COUNT(*) FROM mwe").fetchone()[0]
+        mwe_lang_count = conn.execute("SELECT COUNT(*) FROM mwe_lang").fetchone()[0]
+        # Each mwe_id must have exactly one EN and one LT row
+        pairs = conn.execute("""
+            SELECT COUNT(*) FROM mwe_lang ml1
+            JOIN mwe_lang ml2 ON ml1.mwe_id = ml2.mwe_id
+            WHERE ml1.lang = 'en' AND ml2.lang = 'lt'
+        """).fetchone()[0]
+        conn.close()
+
+        assert mwe_count == 2, (
+            f"Expected 2 mwe rows (one per concept), got {mwe_count}. "
+            "This is the 82-mwe bug: each record is being written as a separate concept."
+        )
+        assert mwe_lang_count == 4
+        assert pairs == 2
+
+    def test_different_structural_path_does_not_split_group(self) -> None:
+        """EN structural_path enc_1.tis_I.art_5 vs LT art_5 must not cause
+        separate mwe rows — structural_path is excluded from the join key."""
+        conn = self._write_and_run(self.EN_RECORDS[:1] + self.LT_RECORDS[:1])
+        mwe_count = conn.execute("SELECT COUNT(*) FROM mwe").fetchone()[0]
+        conn.close()
+        assert mwe_count == 1
+
+    def test_first_row_pairing(self) -> None:
+        """mwe_id=1 must have both (en, 'customs authorities') and (lt, 'muitinė')."""
+        conn = self._write_and_run(self.EN_RECORDS + self.LT_RECORDS)
+        rows = conn.execute(
+            "SELECT lang, phrase FROM mwe_lang WHERE mwe_id = 1 ORDER BY lang"
+        ).fetchall()
+        conn.close()
+        assert len(rows) == 2
+        lang_phrase = {r[0]: r[1] for r in rows}
+        assert lang_phrase["en"] == "customs authorities"
+        assert lang_phrase["lt"] == "muitinė"
+
+
+class TestGpmiGroupingNoRegression:
+    """Confirm that the GPMI (clause_num) grouping path is unaffected by the
+    EUR-Lex fix."""
+
+    def test_gpmi_two_groups_two_langs_produces_two_mwe_four_lang(self) -> None:
+        records = [
+            _make_record("Gyventojas", "nuolatinis", lang="lt", clause="1", cross_lang_num="1") | {"approved": True},
+            _make_record("Loĝanto", "permanenta", lang="eo", clause="1", cross_lang_num="1") | {"approved": True},
+            _make_record("Pajamos", "gautos", lang="lt", clause="2", cross_lang_num="2") | {"approved": True},
+            _make_record("Enspezo", "ricevitaj", lang="eo", clause="2", cross_lang_num="2") | {"approved": True},
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            jsonl = Path(tmp) / "gpmi.jsonl"
+            db = Path(tmp) / "gpmi.db"
+            with jsonl.open("w", encoding="utf-8") as fh:
+                for r in records:
+                    fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+            run(jsonl, db, "personal_income_tax", "LT")
+            conn = sqlite3.connect(db)
+            mwe_count = conn.execute("SELECT COUNT(*) FROM mwe").fetchone()[0]
+            mwe_lang_count = conn.execute("SELECT COUNT(*) FROM mwe_lang").fetchone()[0]
+            conn.close()
+
+        assert mwe_count == 2
+        assert mwe_lang_count == 4
+
+    def test_gpmi_same_clause_num_different_celex_not_confused(self) -> None:
+        """GPMI records have no celex_id — grouping by clause_num only is correct."""
+        records = [
+            _make_record("Gyventojas", "nuolatinis", lang="lt", cross_lang_num="1") | {"approved": True},
+            _make_record("Loĝanto", "permanenta", lang="eo", cross_lang_num="1") | {"approved": True},
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            jsonl = Path(tmp) / "gpmi.jsonl"
+            db = Path(tmp) / "gpmi.db"
+            with jsonl.open("w", encoding="utf-8") as fh:
+                for r in records:
+                    fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+            run(jsonl, db, "personal_income_tax", "LT")
+            conn = sqlite3.connect(db)
+            mwe_count = conn.execute("SELECT COUNT(*) FROM mwe").fetchone()[0]
+            mwe_lang_count = conn.execute("SELECT COUNT(*) FROM mwe_lang").fetchone()[0]
+            conn.close()
+
+        assert mwe_count == 1
+        assert mwe_lang_count == 2

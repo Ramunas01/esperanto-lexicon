@@ -80,7 +80,10 @@ def _load_nlp(lang: str):
 
     model = "lt_core_news_sm" if lang == "lt" else "xx_ent_wiki_sm"
     try:
-        return spacy.load(model)
+        nlp = spacy.load(model)
+        if not nlp.has_pipe("sentencizer") and not nlp.has_pipe("parser"):
+            nlp.add_pipe("sentencizer")
+        return nlp
     except OSError:
         print(
             f"spaCy model {model!r} not found.  Run:\n"

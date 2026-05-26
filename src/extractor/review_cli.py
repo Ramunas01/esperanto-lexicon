@@ -75,7 +75,7 @@ def _detect_format(records: list[dict]) -> str:
     """Return 'statistical', 'eurlex', or 'definition' based on first record's keys."""
     for rec in records:
         rt = rec.get("record_type")
-        if rt == "definition" and "source_ref" in rec and "celex_id" in rec.get("source_ref", {}):
+        if rt == "definition" and "source_ref" in rec:
             return "eurlex"
         if "phrase" in rec:
             return "statistical"
@@ -146,23 +146,17 @@ def _display_eurlex(rec: dict, position: int, total: int) -> None:
     defn = rec.get("definition", "?")
     list_path = src.get("list_path", "?")
     celex = src.get("celex_id", "?")
-    art_rubric = ctx.get("article_rubric") or ""
     art_num = ctx.get("article_number") or "?"
     marker = amendment.get("marker", "B")
-    amend_celex = amendment.get("celex", "")
-    amend_action = amendment.get("action") or ""
-    amend_str = f"[▼{marker}] {amend_celex}"
-    if amend_action:
-        amend_str += f" {amend_action}"
-    section = art_rubric or "(no rubric)"
+    amend_celex = amendment.get("celex", celex)
 
     print()
     print("  " + "─" * 61)
-    print(f"  [{position} of {total}]  Art.{art_num} §{list_path}  |  {lang}  |  {celex}")
-    print(f"  TERM:    {term}")
-    print(f"  DEF:     {defn}")
-    print(f"  SECTION: {section}")
-    print(f"  AMEND:   {amend_str}")
+    print(f"  [{position} of {total}]  Art.{art_num} item {list_path}  |  {lang}  [▼{marker} {amend_celex}]")
+    print(f"  TERM:   {term}")
+    print(f"  DEF:    {defn}")
+    print(f"  TYPE:   (none)")
+    print(f"  ABBREV: (none)")
     n_sub = len(rec.get("sub_items") or [])
     if n_sub:
         print(f"  SUB-ITEMS: {n_sub}")
@@ -176,7 +170,7 @@ def _pending_idxs_eurlex(records: list[dict], lang: str) -> list[int]:
         for i, r in enumerate(records)
         if r.get("lang") == lang
         and r.get("record_type") == "definition"
-        and "celex_id" in r.get("source_ref", {})
+        and "source_ref" in r
         and _is_pending(r.get("approved"))
     ]
 
@@ -233,7 +227,10 @@ def review(input_path: Path, lang: str) -> None:
             print(f"  (unknown key {key!r}, treating as skip)")
             skipped_count += 1
 
-    remaining = _pending_idxs(records, lang)
+    if fmt == "eurlex":
+        remaining = _pending_idxs_eurlex(records, lang)
+    else:
+        remaining = _pending_idxs(records, lang)
     print()
     print("  ── Session summary ──────────────────")
     print(f"  Approved  : {approved_count}")
@@ -249,19 +246,25 @@ def review(input_path: Path, lang: str) -> None:
 
 
 def _build_clause_groups(
-    records: list[dict], langs: list[str]
+    records: list[dict], langs: list[str], fmt: str = "definition"
 ) -> list[tuple[str, dict[str, int | None]]]:
-    """Group records by cross_lang_num for the given languages.
+    """Group records by clause key for the given languages.
 
-    Returns a sorted list of (cross_lang_num, {lang: record_index_or_None}).
-    Sorting is numeric where cross_lang_num is an integer string, lexicographic otherwise.
+    Returns a sorted list of (key, {lang: record_index_or_None}).
+    For EUR-Lex records, key is source_ref.list_path; otherwise cross_lang_num/clause_num.
+    Sorting is numeric where key is an integer string, lexicographic otherwise.
     """
     groups: dict[str, dict[str, int | None]] = {}
     for i, rec in enumerate(records):
         lang = rec.get("lang")
         if lang not in langs:
             continue
-        key = str(rec.get("cross_lang_num") or rec.get("clause_num") or "?")
+        if fmt == "eurlex":
+            if rec.get("record_type") != "definition":
+                continue
+            key = str(rec.get("source_ref", {}).get("list_path") or "?")
+        else:
+            key = str(rec.get("cross_lang_num") or rec.get("clause_num") or "?")
         if key not in groups:
             groups[key] = {L: None for L in langs}
         groups[key][lang] = i
@@ -290,10 +293,14 @@ def _display_two(
     langs: list[str],
     position: int,
     total: int,
+    fmt: str = "definition",
 ) -> None:
     print()
     print("  " + "─" * 65)
-    print(f"  [{position} of {total}]  Clause {clause_num}")
+    if fmt == "eurlex":
+        print(f"  [{position} of {total}]  item {clause_num}")
+    else:
+        print(f"  [{position} of {total}]  Clause {clause_num}")
 
     for lang in langs:
         idx = group[lang]
@@ -303,10 +310,19 @@ def _display_two(
             print(f"\n  {tag}  (no {tag} equivalent found)")
             continue
         rec = records[idx]
-        abbrev = rec.get("abbrev") or "(none)"
-        print(f"\n  {tag}  TERM:  {rec.get('term_raw', '?')}")
-        print(f"{indent}DEF:   {rec.get('definition_raw', '?')}")
-        print(f"{indent}TYPE:  {rec.get('definition_type', '?')}")
+        if fmt == "eurlex":
+            term = rec.get("term", "?")
+            defn = rec.get("definition", "?")
+            dtype = "(none)"
+            abbrev = "(none)"
+        else:
+            term = rec.get("term_raw", "?")
+            defn = rec.get("definition_raw", "?")
+            dtype = rec.get("definition_type", "?")
+            abbrev = rec.get("abbrev") or "(none)"
+        print(f"\n  {tag}  TERM:  {term}")
+        print(f"{indent}DEF:   {defn}")
+        print(f"{indent}TYPE:  {dtype}")
         print(f"{indent}ABBREV: {abbrev}")
 
     print()
@@ -326,10 +342,10 @@ def _set_approved(
 # ---------------------------------------------------------------------------
 
 
-def review_two(input_path: Path, langs: list[str]) -> None:
+def review_two(input_path: Path, langs: list[str], fmt: str = "definition") -> None:
     """Run the interactive review loop for two languages side by side."""
     records = _load_records(input_path)
-    all_groups = _build_clause_groups(records, langs)
+    all_groups = _build_clause_groups(records, langs, fmt)
     pending_groups = [(k, g) for k, g in all_groups if _group_is_pending(g, records)]
 
     if not pending_groups:
@@ -344,7 +360,7 @@ def review_two(input_path: Path, langs: list[str]) -> None:
     tag0, tag1 = lang0.upper(), lang1.upper()
 
     for pos, (clause_num, group) in enumerate(pending_groups, start=1):
-        _display_two(clause_num, group, records, langs, pos, total)
+        _display_two(clause_num, group, records, langs, pos, total, fmt)
         print(
             f"  [a] approve both   [r] reject both   [1] approve {tag0} only\n"
             f"  [2] approve {tag1} only   [s] skip   [q] quit  > ",
@@ -407,7 +423,7 @@ def review_two(input_path: Path, langs: list[str]) -> None:
 
     remaining_groups = [
         (k, g)
-        for k, g in _build_clause_groups(records, langs)
+        for k, g in _build_clause_groups(records, langs, fmt)
         if _group_is_pending(g, records)
     ]
     print()
@@ -468,7 +484,7 @@ def main(argv: list[str] | None = None) -> None:
             for lang in args.lang:
                 review(args.input, lang)
         else:
-            review_two(args.input, args.lang)
+            review_two(args.input, args.lang, fmt)
 
 
 if __name__ == "__main__":
