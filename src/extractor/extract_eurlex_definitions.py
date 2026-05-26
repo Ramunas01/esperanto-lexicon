@@ -752,11 +752,19 @@ class EurLexExtractor:
     ) -> list[dict]:
         """Extract definitions from tablelayout HTML (LT and similar translations).
 
-        Articles are delimited by p.title-article-norm in the flat child stream of
-        docHtml.  Each top-level definition occupies one <table><tr> with
-        td.dlist-term (list marker) and td.dlist-definition (content).
+        Phase 1: single forward pass over doc_div.children to collect structural
+        context (division headers) and build an ordered list of article scopes —
+        each scope is (title_el, art_num, art_ctx_snapshot, next_title_el).
+
+        Phase 2: for each article scope, walk title_el.next_siblings up to
+        next_title_el.  Direct p.modref siblings update the amendment cursor.
+        Tables are collected both at the direct-sibling level AND by searching
+        inside any non-table sibling containers (handles cases where tables are
+        wrapped in an intermediate div in the real LT HTML).
         """
         records: list[dict] = []
+
+        # ── Phase 1: enumerate article scopes ──────────────────────────────
         ctx_state: dict[str, Any] = {
             "title_label": None,
             "title_rubric": None,
@@ -765,15 +773,75 @@ class EurLexExtractor:
             "section_label": None,
             "section_rubric": None,
         }
-        art_num: str | None = None
-        art_rubric: str | None = None
-        art_ctx: dict[str, Any] = {}
-        cursor: dict[str, Any] = {"marker": "B", "celex": "", "action": None}
-        pending: list[tuple[Tag, dict[str, Any]]] = []
 
-        def _flush() -> None:
+        # (title_el, art_num_or_None, ctx_snapshot_at_title)
+        title_entries: list[tuple[Tag, str | None, dict[str, Any]]] = []
+
+        for child in doc_div.children:
+            if not isinstance(child, Tag):
+                continue
+            classes = set(child.get("class") or [])
+
+            if "title-division-1" in classes:
+                ctx_state["title_label"] = _get_text(child) or None
+                ctx_state["title_rubric"] = None
+            elif "stitle-division-1" in classes:
+                ctx_state["title_rubric"] = _get_text(child) or None
+            elif "title-division-2" in classes:
+                ctx_state["chapter_label"] = _get_text(child) or None
+                ctx_state["chapter_rubric"] = None
+            elif "stitle-division-2" in classes:
+                ctx_state["chapter_rubric"] = _get_text(child) or None
+            elif "title-article-norm" in classes and child.name == "p":
+                raw = _get_text(child)
+                if "PRIEDAS" in raw.upper():
+                    title_entries.append((child, None, {}))
+                else:
+                    num = _extract_article_number_from_text(raw)
+                    title_entries.append((child, num, dict(ctx_state)))
+
+        # ── Phase 2: process each article scope ────────────────────────────
+        for entry_idx, (title_el, art_num, art_ctx) in enumerate(title_entries):
             if art_num is None:
-                return
+                continue
+
+            # Sentinel: stop at the next article title element
+            next_title: Tag | None = None
+            for future_el, _, _ in title_entries[entry_idx + 1:]:
+                next_title = future_el
+                break
+
+            art_rubric: str | None = None
+            cursor: dict[str, Any] = {"marker": "B", "celex": "", "action": None}
+            pending: list[tuple[Tag, dict[str, Any]]] = []
+
+            for sib in title_el.next_siblings:
+                if not isinstance(sib, Tag):
+                    continue
+                if next_title is not None and sib is next_title:
+                    break
+                classes = set(sib.get("class") or [])
+
+                if "stitle-article-norm" in classes and sib.name == "p":
+                    art_rubric = _get_text(sib) or None
+                elif "modref" in classes and sib.name == "p":
+                    cursor = _parse_amendment_marker(sib)
+                    mk = cursor.get("marker", "B")
+                    if mk:
+                        amendments_detected.add(mk)
+                elif sib.name == "table":
+                    pending.append((sib, dict(cursor)))
+                else:
+                    # Tables may be nested inside an intermediate container in
+                    # some EUR-Lex language versions (the direct-child check
+                    # above would miss them).
+                    for nested in sib.find_all("table"):
+                        pending.append((nested, dict(cursor)))
+
+            # Apply article filter (after sibling walk so amendments are detected)
+            if article_filter is not None and art_num != article_filter:
+                continue
+
             structural_path = f"art_{art_num}"
             art_id = f"art_{art_num}"
             full_ctx = {
@@ -781,8 +849,7 @@ class EurLexExtractor:
                 "article_number": art_num,
                 "article_rubric": art_rubric,
             }
-            if article_filter is not None and art_num != article_filter:
-                return
+
             def_count = 0
             for table, tbl_cursor in pending:
                 result = self._parse_table_row(table, dict(tbl_cursor), amendments_detected)
@@ -809,6 +876,7 @@ class EurLexExtractor:
                     "sub_items": result["sub_items"],
                     "footnote_refs": [],
                 })
+
             records.append({
                 "record_type": "article_metadata",
                 "lang": self.lang,
@@ -823,47 +891,6 @@ class EurLexExtractor:
                 "definition_count": def_count,
             })
 
-        for child in doc_div.children:
-            if not isinstance(child, Tag):
-                continue
-            classes = set(child.get("class") or [])
-
-            if "title-division-1" in classes:
-                ctx_state["title_label"] = _get_text(child) or None
-                ctx_state["title_rubric"] = None
-            elif "stitle-division-1" in classes:
-                ctx_state["title_rubric"] = _get_text(child) or None
-            elif "title-division-2" in classes:
-                ctx_state["chapter_label"] = _get_text(child) or None
-                ctx_state["chapter_rubric"] = None
-            elif "stitle-division-2" in classes:
-                ctx_state["chapter_rubric"] = _get_text(child) or None
-            elif "title-article-norm" in classes and child.name == "p":
-                _flush()
-                raw_title = _get_text(child)
-                if "PRIEDAS" in raw_title.upper():
-                    art_num = None
-                    art_rubric = None
-                    pending = []
-                    continue
-                new_num = _extract_article_number_from_text(raw_title)
-                if new_num is not None:
-                    art_num = new_num
-                    art_rubric = None
-                    art_ctx = dict(ctx_state)
-                    cursor = {"marker": "B", "celex": "", "action": None}
-                    pending = []
-            elif "stitle-article-norm" in classes and child.name == "p":
-                art_rubric = _get_text(child) or None
-            elif "modref" in classes and child.name == "p":
-                cursor = _parse_amendment_marker(child)
-                mk = cursor.get("marker", "B")
-                if mk:
-                    amendments_detected.add(mk)
-            elif child.name == "table" and art_num is not None:
-                pending.append((child, dict(cursor)))
-
-        _flush()
         return records
 
     def extract(
