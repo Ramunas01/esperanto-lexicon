@@ -1,0 +1,631 @@
+#!/usr/bin/env python3
+"""Extract definitions from EUR-Lex HTML documents (consolidated acts).
+
+Parses the structured HTML produced by EUR-Lex (docHtml subtree) and emits
+three record types: definition, article_metadata, and footnote.
+
+Usage:
+    python3 src/extractor/extract_eurlex_definitions.py \\
+        --input path/to/ucc_en.html \\
+        --celex 02013R0952-20221212 \\
+        --lang en \\
+        --output data/domain_db/ucc_definitions.jsonl \\
+        [--article 5]
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import sys
+import warnings
+from pathlib import Path
+from typing import Any, Iterator
+
+try:
+    from bs4 import BeautifulSoup, Tag
+except ImportError:
+    print("Error: beautifulsoup4 not installed. Run: pip install beautifulsoup4 lxml", file=sys.stderr)
+    sys.exit(1)
+
+
+# ---------------------------------------------------------------------------
+# Patterns
+# ---------------------------------------------------------------------------
+
+DEFINITION_PATTERN = re.compile(
+    r"""
+    [""'“”‘’]
+    (?P<term>[^""'“”‘’]{2,120})
+    [""'“”‘’]
+    \s+means\b
+    """,
+    re.VERBOSE,
+)
+
+FOOTNOTE_REF_PATTERN = re.compile(r"\s*\(\s*\d+\s*\)")
+
+TRIANGLE_PATTERN = re.compile(r"[▼▲]([A-Z]\d*|[A-Z])")
+
+# Matches the article id attribute, e.g. art_5 or art_5a
+ART_ID_PATTERN = re.compile(r"^art_\w+$")
+
+# Celex date suffix e.g. "02013R0952-20221212" → "2022-12-12"
+CELEX_DATE_PATTERN = re.compile(r"-(\d{4})(\d{2})(\d{2})$")
+
+
+def _parse_celex_date(celex_id: str) -> str | None:
+    """Extract ISO date from celex_id suffix, e.g. '02013R0952-20221212' → '2022-12-12'."""
+    m = CELEX_DATE_PATTERN.search(celex_id)
+    if m:
+        return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
+    return None
+
+
+def _normalize_nbsp(text: str) -> str:
+    """Replace non-breaking spaces with regular spaces and strip."""
+    return text.replace("\xa0", " ").strip()
+
+
+def _get_text(el: Tag | None) -> str:
+    """Get normalized text from a BeautifulSoup element."""
+    if el is None:
+        return ""
+    return _normalize_nbsp(el.get_text(" ", strip=True))
+
+
+def _strip_definition_text(text: str) -> str:
+    """Strip trailing semicolons, nbsp, and footnote references from definition text."""
+    text = _normalize_nbsp(text)
+    text = FOOTNOTE_REF_PATTERN.sub("", text)
+    text = text.rstrip(";").rstrip()
+    return text
+
+
+def _parse_amendment_marker(p_modref: Tag) -> dict[str, Any]:
+    """Parse a p.modref element to extract amendment info."""
+    a_tag = p_modref.find("a")
+    marker = "B"
+    celex = ""
+    action = None
+
+    if a_tag:
+        title = a_tag.get("title", "") or ""
+        parts = title.split(":", 1)
+        celex = parts[0].strip()
+        action = parts[1].strip() if len(parts) > 1 else None
+        if not action:
+            action = None
+
+        # Extract triangle marker from full text of the modref paragraph
+        full_text = p_modref.get_text()
+        tm = TRIANGLE_PATTERN.search(full_text)
+        if tm:
+            marker = tm.group(1)
+
+    return {"marker": marker, "celex": celex, "action": action}
+
+
+def _normalize_list_marker(raw: str) -> str:
+    """Normalize a list column-1 marker: strip whitespace and parentheses."""
+    return raw.strip().strip("()")
+
+
+def _collect_sub_items(parent: Tag, amendment_cursor: dict[str, Any]) -> list[dict]:
+    """Recursively collect sub-items by iterating direct children of parent.
+
+    parent is typically a grid-list-column-2 div whose direct children may include
+    p.modref elements (which update the cursor) and grid-container divs (sub-items).
+    """
+    sub_items: list[dict] = []
+    cursor = dict(amendment_cursor)
+
+    for child in parent.children:
+        if not isinstance(child, Tag):
+            continue
+        classes = set(child.get("class") or [])
+
+        if "modref" in classes and child.name == "p":
+            cursor = _parse_amendment_marker(child)
+            continue
+
+        if "grid-container" not in classes:
+            continue
+
+        col1 = child.find("div", class_="grid-list-column-1", recursive=False)
+        col2 = child.find("div", class_="grid-list-column-2", recursive=False)
+
+        marker = ""
+        if col1:
+            span = col1.find("span")
+            raw = _get_text(span) if span else _get_text(col1)
+            marker = _normalize_list_marker(raw)
+
+        text = ""
+        nested_sub: list[dict] = []
+        if col2:
+            p_norm = col2.find("p", class_="norm")
+            if p_norm:
+                text = _normalize_nbsp(p_norm.get_text(" ", strip=True))
+                text = FOOTNOTE_REF_PATTERN.sub("", text).rstrip(";").rstrip()
+            nested_sub = _collect_sub_items(col2, dict(cursor))
+
+        sub_items.append(
+            {
+                "marker": marker,
+                "text": text,
+                "amendment": dict(cursor),
+                "sub_items": nested_sub,
+            }
+        )
+    return sub_items
+
+
+def _collect_footnote_refs(p_norm: Tag) -> list[str]:
+    """Collect footnote anchor ids from a p.norm element."""
+    refs = []
+    for a in p_norm.find_all("a"):
+        aid = a.get("id", "")
+        if aid.startswith("src.E"):
+            refs.append(aid[4:])  # strip "src."
+    return refs
+
+
+# ---------------------------------------------------------------------------
+# Main extractor class
+# ---------------------------------------------------------------------------
+
+
+class EurLexExtractor:
+    """Extract definitions from a EUR-Lex consolidated HTML document."""
+
+    def __init__(self, celex_id: str, lang: str) -> None:
+        self.celex_id = celex_id
+        self.lang = lang
+        self._warnings: list[str] = []
+
+    def parse_html(self, path: Path) -> BeautifulSoup:
+        """Parse HTML file, returning BeautifulSoup tree scoped to docHtml."""
+        raw = path.read_bytes()
+        try:
+            soup = BeautifulSoup(raw, "lxml")
+        except Exception:
+            soup = BeautifulSoup(raw, "html.parser")
+        return soup
+
+    def _collect_structural_context(self, soup: BeautifulSoup) -> dict[str, dict]:
+        """Build a mapping of art_id → context dict by walking structural divs."""
+        contexts: dict[str, dict] = {}
+        doc_div = soup.find("div", id="docHtml")
+        if doc_div is None:
+            doc_div = soup
+
+        for art_div in doc_div.find_all("div", id=ART_ID_PATTERN):
+            art_id = art_div.get("id", "")
+            ctx: dict[str, Any] = {
+                "title_label": None,
+                "title_rubric": None,
+                "chapter_label": None,
+                "chapter_rubric": None,
+                "section_label": None,
+                "section_rubric": None,
+                "article_number": None,
+                "article_rubric": None,
+            }
+
+            # Walk parent chain to collect structural labels
+            for parent in art_div.parents:
+                if not isinstance(parent, Tag):
+                    continue
+                pid = parent.get("id", "") or ""
+                pcls = set(parent.get("class") or [])
+
+                if pid.startswith("tis_") or "eli-title" in pcls:
+                    if ctx["title_label"] is None:
+                        label_el = parent.find(class_=re.compile(r"^tis_label"))
+                        rubric_el = parent.find(class_=re.compile(r"^tis_rubric"))
+                        ctx["title_label"] = _get_text(label_el) or None
+                        ctx["title_rubric"] = _get_text(rubric_el) or None
+
+                if pid.startswith("cpt_") or "eli-chapter" in pcls:
+                    if ctx["chapter_label"] is None:
+                        label_el = parent.find(class_=re.compile(r"^cpt_label"))
+                        rubric_el = parent.find(class_=re.compile(r"^cpt_rubric"))
+                        ctx["chapter_label"] = _get_text(label_el) or None
+                        ctx["chapter_rubric"] = _get_text(rubric_el) or None
+
+                if pid.startswith("sct_") or "eli-section" in pcls:
+                    if ctx["section_label"] is None:
+                        label_el = parent.find(class_=re.compile(r"^sct_label"))
+                        rubric_el = parent.find(class_=re.compile(r"^sct_rubric"))
+                        ctx["section_label"] = _get_text(label_el) or None
+                        ctx["section_rubric"] = _get_text(rubric_el) or None
+
+            # Article number and rubric from within the article div itself
+            art_num_el = art_div.find("p", class_="title-article-norm")
+            if art_num_el:
+                raw = _get_text(art_num_el)
+                # Extract just the number
+                num_match = re.search(r"\d+\w*", raw)
+                ctx["article_number"] = num_match.group(0) if num_match else raw or None
+
+            art_rub_el = art_div.find("p", class_="stitle-article-norm")
+            ctx["article_rubric"] = _get_text(art_rub_el) or None
+
+            contexts[art_id] = ctx
+
+        return contexts
+
+    def _walk_with_amendment_cursor(
+        self, article_div: Tag
+    ) -> Iterator[tuple[Tag, dict[str, Any]]]:
+        """Yield (element, amendment_cursor) for all non-modref elements in article_div."""
+        # Reset cursor at start of each article
+        cursor: dict[str, Any] = {"marker": "B", "celex": "", "action": None}
+
+        for el in article_div.descendants:
+            if not isinstance(el, Tag):
+                continue
+            classes = set(el.get("class") or [])
+            if "modref" in classes and el.name == "p":
+                cursor = _parse_amendment_marker(el)
+            else:
+                yield el, dict(cursor)
+
+    def _build_list_path(self, item_div: Tag, article_root: Tag) -> str:
+        """Build dotted list path like '1', '2.a', '40.a.i' by walking parent chain."""
+        parts: list[str] = []
+        node: Tag | None = item_div
+        while node is not None and node != article_root:
+            parent = node.parent
+            if not isinstance(parent, Tag):
+                break
+            pcls = set(parent.get("class") or [])
+            if "grid-container" in pcls or parent.name == "div" and parent.find(
+                "div", class_="grid-list-column-1", recursive=False
+            ):
+                col1 = parent.find("div", class_="grid-list-column-1", recursive=False)
+                if col1:
+                    span = col1.find("span")
+                    raw = _get_text(span) if span else _get_text(col1)
+                    marker = _normalize_list_marker(raw)
+                    if marker:
+                        parts.append(marker)
+            node = parent
+
+        parts.reverse()
+        return ".".join(parts) if parts else ""
+
+    def _match_definition(
+        self, item_div: Tag, amendment_cursor: dict[str, Any], article_root: Tag
+    ) -> dict | None:
+        """Try to extract a definition from item_div. Returns record dict or None."""
+        col2 = item_div.find("div", class_="grid-list-column-2", recursive=False)
+        if col2 is None:
+            return None
+
+        p_norm = col2.find("p", class_="norm")
+        if p_norm is None:
+            return None
+
+        full_text = _normalize_nbsp(p_norm.get_text(" ", strip=True))
+        m = DEFINITION_PATTERN.search(full_text)
+        if not m:
+            return None
+
+        term = m.group("term").strip()
+
+        # Definition is text after "means " to end of p.norm
+        after_means = full_text[m.end():].strip()
+        definition = _strip_definition_text(after_means)
+
+        # Footnote refs
+        footnote_refs = _collect_footnote_refs(p_norm)
+
+        # Sub-items from nested grid containers in col2 (modref siblings update cursor)
+        sub_items = _collect_sub_items(col2, dict(amendment_cursor))
+
+        # Build list path from item_div's grid-list-column-1
+        list_path = self._build_list_path(item_div, article_root)
+
+        return {
+            "term": term,
+            "definition": definition,
+            "amendment": dict(amendment_cursor),
+            "footnote_refs": footnote_refs,
+            "sub_items": sub_items,
+            "list_path": list_path,
+        }
+
+    def _collect_footnotes(self, soup: BeautifulSoup) -> list[dict]:
+        """Collect all footnote records from div[id^='fnp_'] elements."""
+        footnotes = []
+        doc_div = soup.find("div", id="docHtml") or soup
+        for fn_div in doc_div.find_all("div", id=re.compile(r"^fnp_")):
+            fn_id = fn_div.get("id", "")[4:]  # strip "fnp_"
+            # Marker is typically the number after "fnp_E" or just the number
+            marker_match = re.search(r"\d+", fn_id)
+            marker = marker_match.group(0) if marker_match else fn_id
+            text = _normalize_nbsp(fn_div.get_text(" ", strip=True))
+            footnotes.append(
+                {
+                    "record_type": "footnote",
+                    "lang": self.lang,
+                    "source_ref": {
+                        "celex_id": self.celex_id,
+                        "footnote_id": fn_id,
+                    },
+                    "marker": marker,
+                    "text": text,
+                }
+            )
+        return footnotes
+
+    def _article_url(self, art_id: str) -> str:
+        base = "https://eur-lex.europa.eu/legal-content"
+        return f"{base}/{self.lang.upper()}/TXT/HTML/?uri=CELEX:{self.celex_id}#{art_id}"
+
+    def _structural_path(self, art_div: Tag) -> str:
+        """Build structural path like 'enc_1.tis_I.cpt_1.art_5'."""
+        parts: list[str] = []
+        for parent in reversed(list(art_div.parents)):
+            if not isinstance(parent, Tag):
+                continue
+            pid = parent.get("id", "")
+            if pid and re.match(r"^(enc|tis|cpt|sct|art)_", pid):
+                parts.append(pid)
+        art_id = art_div.get("id", "")
+        if art_id not in parts:
+            parts.append(art_id)
+        return ".".join(parts)
+
+    def extract(
+        self, soup: BeautifulSoup, article_filter: str | None = None
+    ) -> list[dict]:
+        """Run the full extraction pipeline.
+
+        Returns list of record dicts (definition, article_metadata, footnote).
+        """
+        doc_div = soup.find("div", id="docHtml")
+        if doc_div is None:
+            self._warnings.append("docHtml div not found; scanning full document")
+            doc_div = soup
+
+        contexts = self._collect_structural_context(soup)
+        records: list[dict] = []
+
+        skipped_annexes = 0
+        skipped_recitals = 0
+        amendments_detected: set[str] = set()
+
+        for art_div in doc_div.find_all("div", id=ART_ID_PATTERN):
+            art_id = art_div.get("id", "")
+
+            # Skip annexes and recitals at ancestor level
+            skip = False
+            for ancestor in art_div.parents:
+                if not isinstance(ancestor, Tag):
+                    continue
+                anc_id = ancestor.get("id", "") or ""
+                if anc_id.startswith("anx_"):
+                    skipped_annexes += 1
+                    skip = True
+                    break
+                if anc_id.startswith("rct_"):
+                    skipped_recitals += 1
+                    skip = True
+                    break
+            if skip:
+                continue
+
+            ctx = contexts.get(art_id, {})
+            art_num = ctx.get("article_number")
+
+            # Apply --article filter
+            if article_filter is not None and art_num != article_filter:
+                continue
+
+            structural_path = self._structural_path(art_div)
+
+            # Walk items with amendment cursor reset at article boundary
+            def_count = 0
+            cursor_at_start: dict[str, Any] = {"marker": "B", "celex": "", "action": None}
+
+            # First pass: collect amendment cursors and definition items
+            # We need to find grid-container items that are direct children of the article's list
+            seen_grid_containers: set[int] = set()
+
+            cursor: dict[str, Any] = dict(cursor_at_start)
+            for el in art_div.descendants:
+                if not isinstance(el, Tag):
+                    continue
+
+                classes = set(el.get("class") or [])
+
+                if "modref" in classes and el.name == "p":
+                    cursor = _parse_amendment_marker(el)
+                    mk = cursor.get("marker", "B")
+                    if mk:
+                        amendments_detected.add(mk)
+                    continue
+
+                if "grid-container" not in classes:
+                    continue
+
+                eid = id(el)
+                if eid in seen_grid_containers:
+                    continue
+
+                # Only process top-level grid-containers (direct children of list wrapper)
+                # Skip if a parent grid-container is already in scope
+                parent_is_grid = False
+                for anc in el.parents:
+                    if anc == art_div:
+                        break
+                    if isinstance(anc, Tag) and "grid-container" in set(anc.get("class") or []):
+                        parent_is_grid = True
+                        break
+                if parent_is_grid:
+                    continue
+
+                seen_grid_containers.add(eid)
+
+                result = self._match_definition(el, cursor, art_div)
+                if result is None:
+                    continue
+
+                def_count += 1
+                list_path = result["list_path"] or str(def_count)
+
+                record: dict[str, Any] = {
+                    "record_type": "definition",
+                    "term": result["term"],
+                    "term_normalized": result["term"].lower(),
+                    "definition": result["definition"],
+                    "lang": self.lang,
+                    "approved": False,
+                    "source_ref": {
+                        "celex_id": self.celex_id,
+                        "structural_path": structural_path,
+                        "list_path": list_path,
+                        "url": self._article_url(art_id),
+                    },
+                    "amendment": result["amendment"],
+                    "context": {
+                        "article_number": ctx.get("article_number"),
+                        "article_rubric": ctx.get("article_rubric"),
+                        "title_label": ctx.get("title_label"),
+                        "title_rubric": ctx.get("title_rubric"),
+                        "chapter_label": ctx.get("chapter_label"),
+                        "chapter_rubric": ctx.get("chapter_rubric"),
+                        "section_label": ctx.get("section_label"),
+                        "section_rubric": ctx.get("section_rubric"),
+                    },
+                    "sub_items": result["sub_items"],
+                    "footnote_refs": result["footnote_refs"],
+                }
+                records.append(record)
+
+            # Emit article_metadata
+            records.append(
+                {
+                    "record_type": "article_metadata",
+                    "lang": self.lang,
+                    "source_ref": {
+                        "celex_id": self.celex_id,
+                        "structural_path": structural_path,
+                    },
+                    "article_number": ctx.get("article_number"),
+                    "article_rubric": ctx.get("article_rubric"),
+                    "context": {
+                        "article_number": ctx.get("article_number"),
+                        "article_rubric": ctx.get("article_rubric"),
+                        "title_label": ctx.get("title_label"),
+                        "title_rubric": ctx.get("title_rubric"),
+                        "chapter_label": ctx.get("chapter_label"),
+                        "chapter_rubric": ctx.get("chapter_rubric"),
+                        "section_label": ctx.get("section_label"),
+                        "section_rubric": ctx.get("section_rubric"),
+                    },
+                    "definition_count": def_count,
+                }
+            )
+
+        if skipped_annexes:
+            self._warnings.append(f"Skipped {skipped_annexes} annex article(s)")
+        if skipped_recitals:
+            self._warnings.append(f"Skipped {skipped_recitals} recital article(s)")
+
+        # Collect footnotes
+        footnotes = self._collect_footnotes(soup)
+        records.extend(footnotes)
+
+        self._amendments_detected = amendments_detected
+        return records
+
+    @property
+    def warnings(self) -> list[str]:
+        return self._warnings
+
+
+# ---------------------------------------------------------------------------
+# EUR-Lex record helpers (used by domain_db_writer and review_cli)
+# ---------------------------------------------------------------------------
+
+
+def is_eurlex_definition(rec: dict) -> bool:
+    """Return True if rec is an EUR-Lex definition record."""
+    return rec.get("record_type") == "definition" and "source_ref" in rec and "celex_id" in rec.get("source_ref", {})
+
+
+def map_eurlex_to_writer_fields(rec: dict) -> dict:
+    """Map an EUR-Lex definition record to domain_db_writer-compatible fields."""
+    src = rec["source_ref"]
+    celex_id = src["celex_id"]
+    structural_path = src.get("structural_path", "")
+    list_path = src.get("list_path", "")
+
+    first_seen_source = f"{celex_id}#{structural_path}.{list_path}"
+    first_seen_date = _parse_celex_date(celex_id) or ""
+
+    return {
+        "term_raw": rec["term"],
+        "term_normalized": rec["term_normalized"],
+        "definition_raw": rec["definition"],
+        "lang": rec["lang"],
+        "source_file": celex_id,
+        "clause_ref": list_path,
+        "first_seen_source": first_seen_source,
+        "first_seen_date": first_seen_date,
+        "approved": rec.get("approved", False),
+    }
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+
+
+def main(argv: list[str] | None = None) -> None:
+    """Entry point for extract_eurlex_definitions."""
+    parser = argparse.ArgumentParser(
+        description="Extract definitions from a EUR-Lex consolidated HTML file."
+    )
+    parser.add_argument("--input", required=True, type=Path, help="Path to HTML file")
+    parser.add_argument("--celex", required=True, help="CELEX identifier (e.g. 02013R0952-20221212)")
+    parser.add_argument("--lang", required=True, help="Language code (e.g. en)")
+    parser.add_argument("--output", required=True, type=Path, help="Path to output .jsonl file")
+    parser.add_argument("--article", default=None, help="Extract only from this article number")
+    args = parser.parse_args(argv)
+
+    if not args.input.exists():
+        print(f"Error: input file not found: {args.input}", file=sys.stderr)
+        sys.exit(1)
+
+    extractor = EurLexExtractor(celex_id=args.celex, lang=args.lang)
+    soup = extractor.parse_html(args.input)
+    records = extractor.extract(soup, article_filter=args.article)
+
+    n_definitions = sum(1 for r in records if r["record_type"] == "definition")
+    n_footnotes = sum(1 for r in records if r["record_type"] == "footnote")
+    n_metadata = sum(1 for r in records if r["record_type"] == "article_metadata")
+    n_amendments = len(getattr(extractor, "_amendments_detected", set()))
+
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    with args.output.open("w", encoding="utf-8") as fh:
+        for rec in records:
+            fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+    print(f"Articles scanned    : {n_metadata}")
+    print(f"Definitions found   : {n_definitions}")
+    print(f"Footnotes collected : {n_footnotes}")
+    print(f"Amendments detected : {n_amendments}")
+    print(f"Warnings            : {len(extractor.warnings)}")
+    for w in extractor.warnings:
+        print(f"  WARNING: {w}")
+    print(f"Output written to   : {args.output}")
+
+
+if __name__ == "__main__":
+    main()

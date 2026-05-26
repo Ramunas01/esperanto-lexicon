@@ -25,6 +25,10 @@ from pathlib import Path
 # schema.py lives in src/lexicon/; resolve relative to this file
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from lexicon.schema import create_domain_schema
+from extractor.extract_eurlex_definitions import (
+    is_eurlex_definition,
+    map_eurlex_to_writer_fields,
+)
 
 
 def _today() -> str:
@@ -429,13 +433,19 @@ def run(
 
     def_records: list[dict] = []
     stat_records: list[dict] = []
+    eurlex_records: list[dict] = []
     with input_path.open(encoding="utf-8") as fh:
         for line in fh:
             line = line.strip()
             if line:
                 rec = json.loads(line)
                 if rec.get("approved") is True:
-                    if _is_statistical(rec):
+                    if is_eurlex_definition(rec):
+                        eurlex_records.append(rec)
+                    elif rec.get("record_type") is not None:
+                        # Non-definition EUR-Lex records (article_metadata, footnote): skip
+                        pass
+                    elif _is_statistical(rec):
                         stat_records.append(rec)
                     else:
                         def_records.append(rec)
@@ -460,6 +470,19 @@ def run(
 
     for rec in stat_records:
         result = process_stat_record(conn, rec, domain, jurisdiction, overrides)
+        total_new += result["new_concepts"]
+        total_merged += result["merged"]
+        total_conflicts += result["conflicts"]
+        for lang, count in result["lang_counts"].items():
+            total_lang_counts[lang] = total_lang_counts.get(lang, 0) + count
+
+    for eurlex_rec in eurlex_records:
+        mapped = map_eurlex_to_writer_fields(eurlex_rec)
+        src = eurlex_rec["source_ref"]
+        list_path = src.get("list_path") or "?"
+        result = process_group(
+            conn, [mapped], list_path, domain, jurisdiction, overrides
+        )
         total_new += result["new_concepts"]
         total_merged += result["merged"]
         total_conflicts += result["conflicts"]

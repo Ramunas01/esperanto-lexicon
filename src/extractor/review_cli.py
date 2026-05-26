@@ -72,12 +72,15 @@ def _pending_idxs(records: list[dict], lang: str) -> list[int]:
 
 
 def _detect_format(records: list[dict]) -> str:
-    """Return 'statistical' or 'definition' based on the first record's keys.
-
-    Statistical records have a 'phrase' key; definition records have 'term_raw'.
-    """
-    if records and "phrase" in records[0]:
-        return "statistical"
+    """Return 'statistical', 'eurlex', or 'definition' based on first record's keys."""
+    for rec in records:
+        rt = rec.get("record_type")
+        if rt == "definition" and "source_ref" in rec and "celex_id" in rec.get("source_ref", {}):
+            return "eurlex"
+        if "phrase" in rec:
+            return "statistical"
+        if rt is None or rt == "definition":
+            return "definition"
     return "definition"
 
 
@@ -133,6 +136,51 @@ def _display_statistical(rec: dict, position: int, total: int) -> None:
     print("  " + "─" * 61)
 
 
+def _display_eurlex(rec: dict, position: int, total: int) -> None:
+    """Display a single EUR-Lex definition record."""
+    src = rec.get("source_ref", {})
+    amendment = rec.get("amendment", {})
+    ctx = rec.get("context", {})
+    lang = rec.get("lang", "?")
+    term = rec.get("term", "?")
+    defn = rec.get("definition", "?")
+    list_path = src.get("list_path", "?")
+    celex = src.get("celex_id", "?")
+    art_rubric = ctx.get("article_rubric") or ""
+    art_num = ctx.get("article_number") or "?"
+    marker = amendment.get("marker", "B")
+    amend_celex = amendment.get("celex", "")
+    amend_action = amendment.get("action") or ""
+    amend_str = f"[▼{marker}] {amend_celex}"
+    if amend_action:
+        amend_str += f" {amend_action}"
+    section = art_rubric or "(no rubric)"
+
+    print()
+    print("  " + "─" * 61)
+    print(f"  [{position} of {total}]  Art.{art_num} §{list_path}  |  {lang}  |  {celex}")
+    print(f"  TERM:    {term}")
+    print(f"  DEF:     {defn}")
+    print(f"  SECTION: {section}")
+    print(f"  AMEND:   {amend_str}")
+    n_sub = len(rec.get("sub_items") or [])
+    if n_sub:
+        print(f"  SUB-ITEMS: {n_sub}")
+    print("  " + "─" * 61)
+
+
+def _pending_idxs_eurlex(records: list[dict], lang: str) -> list[int]:
+    """Return indexes of EUR-Lex definition records for lang that are not yet reviewed."""
+    return [
+        i
+        for i, r in enumerate(records)
+        if r.get("lang") == lang
+        and r.get("record_type") == "definition"
+        and "celex_id" in r.get("source_ref", {})
+        and _is_pending(r.get("approved"))
+    ]
+
+
 def review(input_path: Path, lang: str) -> None:
     """Run the interactive review loop for a single language.
 
@@ -141,8 +189,15 @@ def review(input_path: Path, lang: str) -> None:
     """
     records = _load_records(input_path)
     fmt = _detect_format(records)
-    display_fn = _display_statistical if fmt == "statistical" else _display_single
-    pending = _pending_idxs(records, lang)
+    if fmt == "eurlex":
+        display_fn = _display_eurlex
+        pending = _pending_idxs_eurlex(records, lang)
+    elif fmt == "statistical":
+        display_fn = _display_statistical
+        pending = _pending_idxs(records, lang)
+    else:
+        display_fn = _display_single
+        pending = _pending_idxs(records, lang)
 
     if not pending:
         print(f"No pending records for lang={lang!r}.")

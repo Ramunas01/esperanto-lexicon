@@ -13,7 +13,12 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from lexicon.schema import create_domain_schema
-from extractor.domain_db_writer import _group_records, process_group, run
+from extractor.domain_db_writer import (
+    _group_records,
+    process_group,
+    process_stat_record,
+    run,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -395,3 +400,171 @@ class TestRunIntegration:
         # Only the lt clause-1 record is approved; eo and clause-2 are excluded
         assert mwe_count == 1
         assert mwe_lang_count == 1
+
+
+# ---------------------------------------------------------------------------
+# Statistical MWE candidate records
+# ---------------------------------------------------------------------------
+
+
+def _make_stat_record(
+    phrase: str,
+    lang: str = "lt",
+    source: str = "GPMI-LT.txt",
+    frequency: int = 14,
+    pmi: float = 19.81,
+    ngram_size: int = 2,
+) -> dict:
+    """Return an approved statistical MWE candidate record."""
+    return {
+        "phrase": phrase,
+        "phrase_normalized": phrase.lower(),
+        "lang": lang,
+        "ngram_size": ngram_size,
+        "frequency": frequency,
+        "pmi": pmi,
+        "g2": 42.0,
+        "source_file": source,
+        "extraction_method": "statistical_pmi",
+        "approved": True,
+        "tier_suggestion": 4,
+        "notes": "",
+    }
+
+
+class TestStatisticalRecords:
+    def test_single_record_creates_one_mwe(self) -> None:
+        conn = _fresh_conn()
+        process_stat_record(conn, _make_stat_record("ekonominių interesų grupės"), "d", "LT")
+        conn.commit()
+        assert conn.execute("SELECT COUNT(*) FROM mwe").fetchone()[0] == 1
+
+    def test_single_record_creates_one_mwe_lang(self) -> None:
+        conn = _fresh_conn()
+        process_stat_record(conn, _make_stat_record("ekonominių interesų grupės"), "d", "LT")
+        conn.commit()
+        assert conn.execute("SELECT COUNT(*) FROM mwe_lang").fetchone()[0] == 1
+
+    def test_single_record_creates_one_occurrence(self) -> None:
+        conn = _fresh_conn()
+        process_stat_record(conn, _make_stat_record("ekonominių interesų grupės"), "d", "LT")
+        conn.commit()
+        assert conn.execute("SELECT COUNT(*) FROM mwe_occurrence").fetchone()[0] == 1
+
+    def test_mwe_lang_phrase_and_normalized(self) -> None:
+        conn = _fresh_conn()
+        process_stat_record(conn, _make_stat_record("Ekonominių Interesų Grupės"), "d", "LT")
+        conn.commit()
+        row = conn.execute("SELECT phrase, phrase_normalized FROM mwe_lang").fetchone()
+        assert row[0] == "Ekonominių Interesų Grupės"
+        assert row[1] == "ekonominių interesų grupės"
+
+    def test_mwe_lang_definition_raw_is_null(self) -> None:
+        conn = _fresh_conn()
+        process_stat_record(conn, _make_stat_record("ekonominių interesų grupės"), "d", "LT")
+        conn.commit()
+        row = conn.execute("SELECT definition_raw FROM mwe_lang").fetchone()
+        assert row[0] is None
+
+    def test_mwe_lang_abbrev_is_null(self) -> None:
+        conn = _fresh_conn()
+        process_stat_record(conn, _make_stat_record("ekonominių interesų grupės"), "d", "LT")
+        conn.commit()
+        row = conn.execute("SELECT abbrev FROM mwe_lang").fetchone()
+        assert row[0] is None
+
+    def test_occurrence_clause_ref_format(self) -> None:
+        conn = _fresh_conn()
+        process_stat_record(
+            conn, _make_stat_record("ekonominių interesų grupės", frequency=14), "d", "LT"
+        )
+        conn.commit()
+        row = conn.execute("SELECT clause_ref FROM mwe_occurrence").fetchone()
+        assert row[0] == "statistical_pmi_freq14"
+
+    def test_new_concept_result_counts(self) -> None:
+        conn = _fresh_conn()
+        result = process_stat_record(
+            conn, _make_stat_record("ekonominių interesų grupės"), "d", "LT"
+        )
+        assert result["new_concepts"] == 1
+        assert result["lang_counts"].get("lt") == 1
+        assert result["merged"] == 0
+        assert result["conflicts"] == 0
+
+    def test_stat_new_print_output(self, capsys: pytest.CaptureFixture) -> None:
+        conn = _fresh_conn()
+        process_stat_record(
+            conn,
+            _make_stat_record("ekonominių interesų grupės", frequency=14, pmi=19.81),
+            "d",
+            "LT",
+        )
+        captured = capsys.readouterr()
+        assert "STAT-NEW: ekonominių interesų grupės  (freq=14, pmi=19.81)" in captured.out
+
+    def test_second_source_merges_not_creates(self) -> None:
+        conn = _fresh_conn()
+        process_stat_record(conn, _make_stat_record("pajamų mokestis", source="doc_a.txt"), "d", "LT")
+        conn.commit()
+        result = process_stat_record(
+            conn, _make_stat_record("pajamų mokestis", source="doc_b.txt"), "d", "LT"
+        )
+        conn.commit()
+        assert conn.execute("SELECT COUNT(*) FROM mwe").fetchone()[0] == 1
+        assert result["new_concepts"] == 0
+        assert result["merged"] == 1
+
+    def test_second_source_upgrades_status(self) -> None:
+        conn = _fresh_conn()
+        process_stat_record(conn, _make_stat_record("pajamų mokestis", source="doc_a.txt"), "d", "LT")
+        conn.commit()
+        process_stat_record(conn, _make_stat_record("pajamų mokestis", source="doc_b.txt"), "d", "LT")
+        conn.commit()
+        row = conn.execute("SELECT status, scope, promotable FROM mwe WHERE id=1").fetchone()
+        assert row[0] == "established"
+        assert row[1] == "domain"
+        assert row[2] == 1
+
+    def test_mixed_batch_via_run(self) -> None:
+        """run() correctly handles a JSONL with both stat and definition records."""
+        def_rec = (
+            _make_record("Gyventojas", "nuolatinis", lang="lt", clause="1", cross_lang_num="1")
+            | {"approved": True}
+        )
+        stat_rec = _make_stat_record("pajamų mokestis", source="GPMI-LT.txt")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            jsonl = Path(tmp) / "mixed.jsonl"
+            db = Path(tmp) / "mixed.db"
+            with jsonl.open("w", encoding="utf-8") as fh:
+                fh.write(json.dumps(def_rec, ensure_ascii=False) + "\n")
+                fh.write(json.dumps(stat_rec, ensure_ascii=False) + "\n")
+
+            run(jsonl, db, "test_domain", "LT")
+
+            conn = sqlite3.connect(db)
+            mwe_count = conn.execute("SELECT COUNT(*) FROM mwe").fetchone()[0]
+            mwe_lang_count = conn.execute("SELECT COUNT(*) FROM mwe_lang").fetchone()[0]
+            conn.close()
+
+        assert mwe_count == 2
+        assert mwe_lang_count == 2
+
+    def test_unapproved_stat_record_excluded(self) -> None:
+        rec = _make_stat_record("pajamų mokestis")
+        rec["approved"] = False
+
+        with tempfile.TemporaryDirectory() as tmp:
+            jsonl = Path(tmp) / "test.jsonl"
+            db = Path(tmp) / "test.db"
+            with jsonl.open("w", encoding="utf-8") as fh:
+                fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+            run(jsonl, db, "test_domain", "LT")
+
+            conn = sqlite3.connect(db)
+            mwe_count = conn.execute("SELECT COUNT(*) FROM mwe").fetchone()[0]
+            conn.close()
+
+        assert mwe_count == 0
