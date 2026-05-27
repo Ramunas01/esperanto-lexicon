@@ -57,6 +57,7 @@ class CrossConflict:
     definition_b: str
     db_a: str
     db_b: str
+    incomplete: bool = False  # True when one side has no definition (coverage gap, not a conflict)
 
 
 # ---------------------------------------------------------------------------
@@ -162,6 +163,7 @@ def load_cross_conflicts(
         def_a = phrases_a[phrase_norm]
         if def_a.strip().lower() == def_b.strip().lower():
             continue
+        incomplete = not def_a.strip() or not def_b.strip()
         conflicts.append(
             CrossConflict(
                 phrase_normalized=phrase_norm,
@@ -170,6 +172,7 @@ def load_cross_conflicts(
                 definition_b=def_b,
                 db_a=db_name_a,
                 db_b=db_name_b,
+                incomplete=incomplete,
             )
         )
     return conflicts
@@ -227,16 +230,27 @@ def format_conflict_report(
     return "\n".join(lines)
 
 
+_INCOMPLETE_LABEL = "INCOMPLETE — definition not available in this source"
+
+
 def format_cross_conflict_report(
     conflicts: list[CrossConflict], db_a: str, db_b: str, lang: str
 ) -> str:
+    real = [c for c in conflicts if not c.incomplete]
+    gaps = [c for c in conflicts if c.incomplete]
+
     lines: list[str] = []
     lines += [_SEP, f"CROSS-DOMAIN CONFLICTS  [{db_a} vs {db_b}]  lang={lang}", _SEP]
 
-    n = len(conflicts)
+    n = len(real)
     lines.append(f"{n} shared phrase{'s' if n != 1 else ''} with diverging definitions.")
+    if gaps:
+        ng = len(gaps)
+        lines.append(
+            f"{ng} phrase{'s' if ng != 1 else ''} where one side has no definition (incomplete)."
+        )
 
-    for c in conflicts:
+    for c in real:
         lines += ["", _THIN]
         lines.append(f"PHRASE:  {c.phrase_normalized}")
         lines.append(f"\n  {db_a}:")

@@ -300,6 +300,32 @@ class TestLoadCrossConflicts:
         conflicts = load_cross_conflicts(a, b, "lt", "a.db", "b.db")
         assert len(conflicts) == 2
 
+    def test_nonempty_vs_nonempty_not_incomplete(self) -> None:
+        a = self._make_db([("en", "carrier", "the person transporting")])
+        b = self._make_db([("en", "carrier", "person responsible for carriage")])
+        c = load_cross_conflicts(a, b, "en", "a.db", "b.db")[0]
+        assert c.incomplete is False
+
+    def test_empty_definition_on_b_side_marked_incomplete(self) -> None:
+        a = self._make_db([("fr", "transporteur", "la personne qui transporte")])
+        b = self._make_db([("fr", "transporteur", "")])
+        conflicts = load_cross_conflicts(a, b, "fr", "a.db", "b.db")
+        assert len(conflicts) == 1
+        assert conflicts[0].incomplete is True
+
+    def test_empty_definition_on_a_side_marked_incomplete(self) -> None:
+        a = self._make_db([("fr", "transporteur", "")])
+        b = self._make_db([("fr", "transporteur", "la personne qui transporte")])
+        conflicts = load_cross_conflicts(a, b, "fr", "a.db", "b.db")
+        assert len(conflicts) == 1
+        assert conflicts[0].incomplete is True
+
+    def test_both_empty_definitions_not_a_conflict(self) -> None:
+        # Both sides have no definition → they are equal → not returned at all
+        a = self._make_db([("fr", "transporteur", "")])
+        b = self._make_db([("fr", "transporteur", "")])
+        assert load_cross_conflicts(a, b, "fr", "a.db", "b.db") == []
+
 
 # ---------------------------------------------------------------------------
 # format_cross_conflict_report
@@ -334,6 +360,41 @@ class TestFormatCrossConflictReport:
         report = format_cross_conflict_report([self._conflict()], "a.db", "b.db", "lt")
         assert "first definition" in report
         assert "second definition" in report
+
+    def _incomplete_conflict(self) -> CrossConflict:
+        return CrossConflict(
+            phrase_normalized="transporteur",
+            lang="fr",
+            definition_a="la personne qui transporte",
+            definition_b="",
+            db_a="db_a.db",
+            db_b="db_b.db",
+            incomplete=True,
+        )
+
+    def test_incomplete_not_counted_as_conflict(self) -> None:
+        report = format_cross_conflict_report([self._incomplete_conflict()], "a.db", "b.db", "fr")
+        assert "0 shared phrases with diverging definitions" in report
+
+    def test_incomplete_count_shown(self) -> None:
+        report = format_cross_conflict_report([self._incomplete_conflict()], "a.db", "b.db", "fr")
+        assert "1 phrase where one side has no definition (incomplete)" in report
+
+    def test_incomplete_phrase_not_in_detail_sections(self) -> None:
+        report = format_cross_conflict_report([self._incomplete_conflict()], "a.db", "b.db", "fr")
+        assert "PHRASE:" not in report
+
+    def test_real_conflict_and_incomplete_separated(self) -> None:
+        conflicts = [self._conflict(), self._incomplete_conflict()]
+        report = format_cross_conflict_report(conflicts, "a.db", "b.db", "lt")
+        assert "1 shared phrase with diverging definitions" in report
+        assert "1 phrase where one side has no definition (incomplete)" in report
+        assert "rezidentas" in report        # real conflict shown in detail
+        assert "transporteur" not in report  # incomplete not shown in detail
+
+    def test_no_incomplete_line_when_none(self) -> None:
+        report = format_cross_conflict_report([self._conflict()], "a.db", "b.db", "lt")
+        assert "incomplete" not in report
 
 
 # ---------------------------------------------------------------------------
