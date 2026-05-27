@@ -345,6 +345,14 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
 * \[x] tests/test\_extract\_eurlex\_definitions.py — 17 new TestDivlayoutNumbered tests + 3 chapter-rubric fallback tests (400 total passing)
 * \[x] extract\_eurlex\_definitions.py — \_get\_article\_rubric() fallback to chapter title-division-2 when article has no stitle-article-norm; --list-articles marks inherited chapter rubrics with "← rubric (chapter)"; --auto-article=definitions resolves via chapter rubric with multi-article warning; article\_metadata record now includes article\_rubric\_source field
 * \[x] Dual Use (02021R0821-20251115) — EN 22 definitions, LT 22 definitions extracted via --article 2; --list-articles now shows all 32 articles with chapter rubrics; --auto-article=definitions warns that art\_1 and art\_2 share chapter "SUBJECT AND DEFINITIONS" and selects art\_1
+* \[x] review\_cli.py — sub\_items displayed when definition is empty/trivial (colon/dash placeholder); \_eurlex\_def\_lines() helper; max 5 items + overflow count; two-language display updated; 11 new tests in tests/test\_review\_cli.py
+* \[x] domain\_db\_writer.py — EUR-Lex records with empty/trivial definition joined from sub\_items as "(a) text; (b) text; ..." before DB write; \_join\_sub\_items() helper; 10 new tests
+* \[x] ucc\_customs.db — 41 concepts EN+LT committed
+* \[x] cbam.db — 32 concepts EN+LT committed
+* \[x] dualuse.db — 17 concepts EN+LT (5 sub-item defs skipped pending sub-items display fix — now fixed)
+* \[x] Cross-domain conflict detection working — 5 conflicts found across UCC/CBAM/DualUse
+* \[x] extract\_eurlex\_definitions.py — fix LT term extraction for divlayout\_numbered Sub-case B chapeau: strip from first en/em-dash after removing trailing colon so "eksportas – tai:" → "eksportas"; same fix for tablelayout Shape B \_parse\_table\_row(); truncation warning added for chapaeu terms > 5 words; 3 new unit tests
+* \[ ] DualUse 5 skipped items — re-review with sub-items now visible in review\_cli and LT terms now correct
 * \[ ] CBAM FR definitions — uses guillemet+colon style («term»: definition); divlayout\_numbered detection fires but em-dash split fails; requires separate FR variant or guillemet+colon extractor path
 * \[ ] Dual Use FR definitions — same guillemet+colon gap as CBAM FR; only 5 of 22 definitions extracted
 * \[ ] Statistical candidates review — pending human review

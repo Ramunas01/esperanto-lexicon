@@ -502,8 +502,14 @@ class EurLexExtractor:
         # Sub-case B: chapeau — term ends with ':', actual definition in sub-items
         if full_text.endswith(":"):
             term = full_text.rstrip(":").strip()
+            # Strip linking verb phrase (e.g. "– tai", "– yra") and any body text
+            # that follows the first en/em-dash so that "eksportas – tai" → "eksportas"
+            term = re.sub(r"\s*[–—].*", "", term, flags=re.DOTALL).strip()
             if not term:
                 return None
+            if len(term.split()) > 5:
+                self._warnings.append(f"Long chapeau term ({len(term.split())} words): {term!r}")
+                term = " ".join(term.split()[:5])
             return {
                 "term": term,
                 "definition": "",
@@ -880,7 +886,7 @@ class EurLexExtractor:
         p_normal = def_td.find("p", class_="normal")
         if p_normal:
             term_text = _get_text(p_normal)
-            term_text = re.sub(r"[–—]\s*$", "", term_text).strip()
+            term_text = re.sub(r"\s*[–—].*", "", term_text, flags=re.DOTALL).strip()
             term_text = term_text.strip("„“”‘’\"'")
             p_norm = def_td.find("p", class_="norm")
             chapeau = _strip_definition_text(_get_text(p_norm)) if p_norm else ""

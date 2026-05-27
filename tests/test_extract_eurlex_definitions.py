@@ -666,6 +666,57 @@ def test_auto_article_matches_via_chapter_rubric(capsys) -> None:
 
 
 # ---------------------------------------------------------------------------
+# _match_definition_numbered Sub-case B: chapeau term stripping
+# ---------------------------------------------------------------------------
+
+
+def _make_numbered_item(norm_text: str) -> "Tag":
+    """Build a minimal grid-container div with a single p.norm for unit tests."""
+    from bs4 import BeautifulSoup
+    html = (
+        '<div class="grid-container">'
+        '<div class="grid-list-column-1"><span>1) </span></div>'
+        f'<div class="grid-list-column-2"><p class="norm">{norm_text}</p></div>'
+        "</div>"
+    )
+    return BeautifulSoup(html, "html.parser").find("div", class_="grid-container")
+
+
+def _dummy_root() -> "Tag":
+    from bs4 import BeautifulSoup
+    return BeautifulSoup("<div/>", "html.parser").find("div")
+
+
+def test_chapeau_strips_dash_tai() -> None:
+    """'eksportas\xa0– tai:' should yield term='eksportas', not 'eksportas – tai'."""
+    ext = EurLexExtractor(celex_id="02021R0821-20211009", lang="lt")
+    item = _make_numbered_item("eksportas – tai:")
+    result = ext._match_definition_numbered(item, {}, _dummy_root())
+    assert result is not None
+    assert result["term"] == "eksportas"
+
+
+def test_chapeau_strips_dash_tai_multiword_term() -> None:
+    """'tarpininkavimo paslaugos – tai:' → term='tarpininkavimo paslaugos'."""
+    ext = EurLexExtractor(celex_id="02021R0821-20211009", lang="lt")
+    item = _make_numbered_item("tarpininkavimo paslaugos – tai:")
+    result = ext._match_definition_numbered(item, {}, _dummy_root())
+    assert result is not None
+    assert result["term"] == "tarpininkavimo paslaugos"
+
+
+def test_chapeau_long_term_without_dash_warns_and_truncates() -> None:
+    """A chapeau with no dash but > 5 words should warn and truncate to 5."""
+    ext = EurLexExtractor(celex_id="02021R0821-20211009", lang="lt")
+    long_term = "vienas du trys keturi penki šeši:"  # 6 words, no dash
+    item = _make_numbered_item(long_term)
+    result = ext._match_definition_numbered(item, {}, _dummy_root())
+    assert result is not None
+    assert len(result["term"].split()) <= 5
+    assert any("Long chapeau" in w for w in ext._warnings)
+
+
+# ---------------------------------------------------------------------------
 # Integration test (slow, skipped unless real UCC HTML present)
 # ---------------------------------------------------------------------------
 
