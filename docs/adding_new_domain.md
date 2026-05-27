@@ -77,6 +77,38 @@ python3 src/ingestion/ingest_document.py \
 
 ## Workflow B: EU legislation (EUR-Lex HTML source)
 
+---
+
+## Workflow C: PDF glossary with native table structure
+
+PDF glossaries that use real table structure (not visual-only columns) can be
+ingested via `pdfplumber`'s `extract_tables()`. Each table row maps to one
+glossary entry; the two-column layout gives a direct (term, definition) split.
+
+`src/extractor/extract_wco_glossary.py` is the reference implementation for this
+approach (WCO Glossary of International Customs Terms, 2024-06 edition). Key
+techniques used:
+
+- **Multiple tables per page**: letter-section dividers create new table objects;
+  collect rows from all `page.extract_tables()` results, not just `tables[0]`.
+- **Right-cell overflow rows**: pdfplumber sometimes splits a long cell across
+  rows, leaving the next row with an empty left cell. Detect `left == ""` with
+  non-empty right → append to previous entry's right cell.
+- **Page-break left-cell splits**: the last entry on a page may have an unbalanced
+  `(` (French parenthetical cut off). The first row of the next page has the
+  closing fragment (has `)`, no `(`). Merge both left and right cells.
+- **French-paren-on-next-row**: rarely the EN headword and the French parenthetical
+  are in consecutive rows (no `\n(` in the left cell, next left is `(Term)`).
+  Merge the two rows.
+- **Cross-language grouping key**: `(source, edition, entry_id)` — stable across
+  all language versions of the same document. The `entry_id` is derived from the
+  English headword by lowercasing, stripping parentheticals, and hyphenating.
+
+The cross-language grouping strategy is registered in `domain_db_writer.py` via
+`_is_wco_record()` / `_map_wco_record()` / `_group_wco_records()`.
+
+---
+
 ### Identifying the right source document
 
 EUR-Lex publishes three kinds of HTML for any given regulation:

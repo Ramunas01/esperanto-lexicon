@@ -355,6 +355,8 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
 * \[x] Cross-domain conflict detection working — 5 conflicts found across 4 domains (UCC/CBAM/DualUse/GPMI)
 * \[x] Living language lifecycle validated: LT terms promoted emerging → established on second source appearance
 * \[x] French definition extraction — French uses «term», definition or «term»: list (comma or colon separator depending on whether the definition is a noun phrase or a sub-list). Added FRENCH\_DEFINITION\_PATTERN with language dispatch via \_get\_definition\_pattern(lang). Handles guillemets (CBAM FR, DualUse FR), ASCII double-quotes (UCC FR), optional "ou ABBREV" suffix, and parenthesised abbreviation (numéro EORI) variant. UCC FR 41/41, CBAM FR 34/34, DualUse FR 22/22, 0 warnings. 4 new tests. UCC/CBAM/DualUse domain DBs now have 3 language packs (EN, FR, LT).
+* \[x] src/extractor/extract\_wco\_glossary.py — PDF extractor for WCO Glossary of International Customs Terms (2024-06 edition). Parses 182 bilingual EN+FR entries with notes and cross-references. Uses pdfplumber native table extraction; handles nested French parens, page-break continuations, right-cell overflow rows, French-paren-on-next-row split (RESILIENCE), and mixed-case headwords. 31 tests passing.
+* \[x] wco\_intl.db — new domain DB, EN+FR (LT and EO pending). 182 concepts × 2 langs = 364 mwe\_lang rows. Cross-language grouping key (source, edition, entry\_id) added to domain\_db\_writer.py as second source-specific grouping strategy alongside EUR-Lex. 10 cross-domain conflicts found vs ucc\_customs.db.
 * \[ ] Statistical candidates review — pending human review
 * \[ ] Named entity layer — design deferred
 * \[ ] Tier 3 — not yet designed

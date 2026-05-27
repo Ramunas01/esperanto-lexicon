@@ -503,6 +503,62 @@ def _group_eurlex_records(
     ]
 
 
+def _is_wco_record(rec: dict) -> bool:
+    """Return True if rec is a WCO-glossary definition record."""
+    return rec.get("source_ref", {}).get("source") == "wco-glossary"
+
+
+def _map_wco_record(rec: dict) -> dict:
+    """Map a WCO-glossary definition record to writer's internal field format.
+
+    Cross-language join key: (source, edition, entry_id) — stable across EN and FR.
+    """
+    src = rec.get("source_ref", {})
+    entry_id = src.get("entry_id", "?")
+    edition = src.get("edition", "")
+    source = src.get("source", "wco-glossary")
+
+    term = rec.get("term_original") or rec.get("term", "")
+    term_norm = (rec.get("term") or term).lower()
+
+    definition_raw = rec.get("definition") or ""
+    notes = rec.get("notes") or []
+    if not definition_raw and notes:
+        definition_raw = " ".join(notes)
+
+    page = src.get("page", 0)
+    cross_lang_key = f"{source}/{edition}/{entry_id}"
+
+    return {
+        "phrase": term,
+        "phrase_normalized": term_norm,
+        "definition_raw": definition_raw,
+        "lang": rec.get("lang", ""),
+        "cross_lang_num": cross_lang_key,
+        "source_file": f"{source}/{edition}",
+        "clause_ref": f"p{page}/{entry_id}",
+        "first_seen_source": f"{source}/{edition}#{entry_id}",
+        "first_seen_date": f"{edition[:4]}-{edition[5:7]}-01" if len(edition) >= 7 else _today(),
+    }
+
+
+def _group_wco_records(
+    records: list[dict],
+) -> list[tuple[str, list[dict]]]:
+    """Group WCO-glossary definition records by (source, edition, entry_id).
+
+    Returns (cross_lang_key, records_in_group) pairs sorted alphabetically
+    by entry_id (the glossary is already alphabetical in the source).
+    """
+    groups: dict[str, list[dict]] = defaultdict(list)
+    for rec in records:
+        src = rec.get("source_ref", {})
+        key = f"{src.get('source', '')}/{src.get('edition', '')}/{src.get('entry_id', '?')}"
+        groups[key].append(rec)
+
+    return sorted(groups.items())
+
+
 def _group_records(records: list[dict]) -> list[tuple[str, list[dict]]]:
     """Group records by cross_lang_num, sorted numerically where possible."""
     groups: dict[str, list[dict]] = defaultdict(list)
@@ -537,6 +593,7 @@ def run(
     def_records: list[dict] = []
     stat_records: list[dict] = []
     eurlex_records: list[dict] = []
+    wco_records: list[dict] = []
     with input_path.open(encoding="utf-8") as fh:
         for line in fh:
             line = line.strip()
@@ -544,7 +601,10 @@ def run(
                 rec = json.loads(line)
                 if rec.get("approved") is True:
                     if rec.get("record_type") == "definition":
-                        eurlex_records.append(rec)
+                        if _is_wco_record(rec):
+                            wco_records.append(rec)
+                        else:
+                            eurlex_records.append(rec)
                     elif rec.get("record_type") is not None:
                         # Non-definition records (article_metadata, footnote): skip
                         pass
@@ -582,6 +642,15 @@ def run(
     for display_num, group_recs in _group_eurlex_records(eurlex_records):
         group = [_map_eurlex_record(rec) for rec in group_recs]
         result = process_group(conn, group, display_num, domain, jurisdiction, overrides)
+        total_new += result["new_concepts"]
+        total_merged += result["merged"]
+        total_conflicts += result["conflicts"]
+        for lang, count in result["lang_counts"].items():
+            total_lang_counts[lang] = total_lang_counts.get(lang, 0) + count
+
+    for cross_lang_key, group_recs in _group_wco_records(wco_records):
+        group = [_map_wco_record(rec) for rec in group_recs]
+        result = process_group(conn, group, cross_lang_key, domain, jurisdiction, overrides)
         total_new += result["new_concepts"]
         total_merged += result["merged"]
         total_conflicts += result["conflicts"]
