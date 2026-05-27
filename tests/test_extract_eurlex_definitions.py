@@ -717,6 +717,45 @@ def test_chapeau_long_term_without_dash_warns_and_truncates() -> None:
 
 
 # ---------------------------------------------------------------------------
+# French definition pattern
+# ---------------------------------------------------------------------------
+
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+from extractor.extract_eurlex_definitions import FRENCH_DEFINITION_PATTERN as _FR_PAT
+
+
+def test_french_comma_separator() -> None:
+    """Guillemet term followed by comma: «exportateur», une personne..."""
+    m = _FR_PAT.search("«exportateur», une personne physique")
+    assert m is not None
+    assert m.group("term") == "exportateur"
+
+
+def test_french_colon_separator() -> None:
+    """Guillemet term followed by colon (list-style): «exportation»: a) ..."""
+    m = _FR_PAT.search("«exportation»: a) une procédure")
+    assert m is not None
+    assert m.group("term") == "exportation"
+
+
+def test_french_ascii_quotes() -> None:
+    """UCC FR uses ASCII double quotes: \"autorités douanières\": les administrations..."""
+    m = _FR_PAT.search('"autorités douanières": les administrations')
+    assert m is not None
+    assert m.group("term") == "autorités douanières"
+
+
+def test_french_ou_abbrev() -> None:
+    """Outlier: «term» ou ABBREV, definition — abbreviation group skipped."""
+    # The optional group consumes "ou PIC"; term is the long form only.
+    # TODO: if needed, capture the abbreviation and store as mwe_lang.abbrev
+    m = _FR_PAT.search("«programme interne de conformité» ou PIC, les politiques")
+    assert m is not None
+    assert m.group("term") == "programme interne de conformité"
+
+
+# ---------------------------------------------------------------------------
 # Integration test (slow, skipped unless real UCC HTML present)
 # ---------------------------------------------------------------------------
 

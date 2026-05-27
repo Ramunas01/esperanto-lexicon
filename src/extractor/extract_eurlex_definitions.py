@@ -45,6 +45,35 @@ DEFINITION_PATTERN = re.compile(
     re.VERBOSE,
 )
 
+# French legal drafting: <<term>>, definition... or <<term>>: list...
+# Quote variants: ASCII ", curly \u201c/\u201d, French guillemets \u00ab/\u00bb
+# Separator: comma (noun-phrase definition) or colon (sub-list)
+# Optional "ou ABBREV" between closing quote and separator handles
+# the rare "<<term>> ou ABBREV, definition" abbreviation convention.
+FRENCH_DEFINITION_PATTERN = re.compile(
+    r"""
+    ^\s*
+    [\u00ab"\u201c\u201d]        # opening: << or ASCII " or curly "/
+    (?P<term>[^\u00bb"\u201c\u201d]+?)  # term (non-greedy, no nested quote)
+    [\u00bb"\u201c\u201d]        # closing: >> or ASCII " or curly "/
+    (?:\s+(?:ou\s+[A-Z\u00c0-\u00dd]{2,10}|\([^)]+\)))?  # optional "ou ABBREV" or "(ABBREV)" (rare)
+    \s*[:,](?:\s+|$)             # separator: colon or comma (space optional at EOL)
+    """,
+    re.VERBOSE | re.UNICODE,
+)
+
+# Dispatch table: language code → definition-match pattern.
+# Tablelayout (LT) uses its own cell-based parser and never calls _match_definition().
+DEFINITION_PATTERN_BY_LANG: dict[str, re.Pattern[str]] = {
+    "en": DEFINITION_PATTERN,
+    "fr": FRENCH_DEFINITION_PATTERN,
+}
+
+
+def _get_definition_pattern(lang: str) -> re.Pattern[str]:
+    return DEFINITION_PATTERN_BY_LANG.get(lang, DEFINITION_PATTERN)
+
+
 FOOTNOTE_REF_PATTERN = re.compile(r"\s*\(\s*\d+\s*\)")
 
 TRIANGLE_PATTERN = re.compile(r"[▼▲]([A-Z]\d*|[A-Z])")
@@ -408,13 +437,14 @@ class EurLexExtractor:
             return None
 
         full_text = _normalize_nbsp(p_norm.get_text(" ", strip=True))
-        m = DEFINITION_PATTERN.search(full_text)
+        pattern = _get_definition_pattern(self.lang)
+        m = pattern.search(full_text)
         if not m:
             return None
 
         term = m.group("term").strip()
 
-        # Definition is text after "means " to end of p.norm
+        # Definition is text after the matched separator to end of p.norm
         after_means = full_text[m.end():].strip()
         definition = _strip_definition_text(after_means)
 
@@ -498,6 +528,28 @@ class EurLexExtractor:
             list_path = _normalize_list_marker(raw)
         else:
             list_path = ""
+
+        # Language-dispatched pattern (French and future non-EN numbered layouts).
+        # Tried before the LT en-dash logic; tablelayout is a separate code path.
+        pattern = _get_definition_pattern(self.lang)
+        if pattern is not DEFINITION_PATTERN:
+            m = pattern.search(full_text)
+            if m:
+                term = m.group("term").strip()
+                after_sep = full_text[m.end():].strip()
+                # Chapeau: remainder ends with colon → definition lives in sub_items
+                if after_sep.endswith(":") or (not after_sep and sub_items):
+                    definition = ""
+                else:
+                    definition = _strip_definition_text(after_sep) if after_sep else ""
+                return {
+                    "term": term,
+                    "definition": definition,
+                    "amendment": dict(amendment_cursor),
+                    "footnote_refs": footnote_refs,
+                    "sub_items": sub_items,
+                    "list_path": list_path,
+                }
 
         # Sub-case B: chapeau — term ends with ':', actual definition in sub-items
         if full_text.endswith(":"):

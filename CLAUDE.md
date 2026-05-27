@@ -349,12 +349,12 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
 * \[x] domain\_db\_writer.py — EUR-Lex records with empty/trivial definition joined from sub\_items as "(a) text; (b) text; ..." before DB write; \_join\_sub\_items() helper; 10 new tests
 * \[x] ucc\_customs.db — 41 concepts EN+LT committed
 * \[x] cbam.db — 32 concepts EN+LT committed
-* \[x] dualuse.db — 17 concepts EN+LT (5 sub-item defs skipped pending sub-items display fix — now fixed)
-* \[x] Cross-domain conflict detection working — 5 conflicts found across UCC/CBAM/DualUse
+* \[x] dualuse.db — 22 concepts EN+LT, lifecycle working
 * \[x] extract\_eurlex\_definitions.py — fix LT term extraction for divlayout\_numbered Sub-case B chapeau: strip from first en/em-dash after removing trailing colon so "eksportas – tai:" → "eksportas"; same fix for tablelayout Shape B \_parse\_table\_row(); truncation warning added for chapaeu terms > 5 words; 3 new unit tests
-* \[ ] DualUse 5 skipped items — re-review with sub-items now visible in review\_cli and LT terms now correct
-* \[ ] CBAM FR definitions — uses guillemet+colon style («term»: definition); divlayout\_numbered detection fires but em-dash split fails; requires separate FR variant or guillemet+colon extractor path
-* \[ ] Dual Use FR definitions — same guillemet+colon gap as CBAM FR; only 5 of 22 definitions extracted
+* \[x] Sub-items display in review\_cli.py — \_eurlex\_def\_lines() helper; empty/trivial definition shows sub\_items; max 5 items + overflow count
+* \[x] Cross-domain conflict detection working — 5 conflicts found across 4 domains (UCC/CBAM/DualUse/GPMI)
+* \[x] Living language lifecycle validated: LT terms promoted emerging → established on second source appearance
+* \[x] French definition extraction — French uses «term», definition or «term»: list (comma or colon separator depending on whether the definition is a noun phrase or a sub-list). Added FRENCH\_DEFINITION\_PATTERN with language dispatch via \_get\_definition\_pattern(lang). Handles guillemets (CBAM FR, DualUse FR), ASCII double-quotes (UCC FR), optional "ou ABBREV" suffix, and parenthesised abbreviation (numéro EORI) variant. UCC FR 41/41, CBAM FR 34/34, DualUse FR 22/22, 0 warnings. 4 new tests. UCC/CBAM/DualUse domain DBs now have 3 language packs (EN, FR, LT).
 * \[ ] Statistical candidates review — pending human review
 * \[ ] Named entity layer — design deferred
 * \[ ] Tier 3 — not yet designed
