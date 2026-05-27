@@ -334,6 +334,17 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
 * \[x] domain\_db\_writer.py — updated to accept EUR-Lex definition records (record\_type=definition with celex\_id); article\_metadata and footnote records skipped
 * \[x] domain\_db\_writer.py — EUR-Lex cross-language grouping fixed; join key is (celex\_id, article\_number, list\_path), excluding language-dependent structural\_path. Regression test added.
 * \[x] review\_cli.py — updated to display EUR-Lex records with amendment info, list\_path, and article rubric
+* \[x] src/ingestion/ingest\_eurlex.py — two-phase EUR-Lex ingestion pipeline wrapper; Phase 1 extracts definitions + corpus text per language and combines to \_combined.jsonl; Phase 2 commits approved records and optionally runs statistical MWE detection
+* \[x] docs/eurlex\_pipeline.md — end-to-end guide: downloading EUR-Lex HTML, directory layout, running Phase 1 and Phase 2, HTML layout variants, cross-language pairing, cross-domain conflict detection, standalone stat MWE detection
+* \[x] docs/coverage\_report\_examples.md — three annotated coverage report runs (general, specialist, mixed); includes threshold reference table and note on short Tier 4 terms inflating specialist score
+* \[x] src/extractor/candidate\_quality\_report.py — MWE candidate quality tiers (HIGH/MEDIUM/LOW by freq+PMI), NE overlap, cross-domain match detection, --auto-approve-high flag; 34 tests passing in tests/test\_candidate\_quality\_report.py
+* \[x] tests/test\_ingest\_eurlex.py — 10 tests for \_count\_records and \_combine\_jsonl; Phase 1 combined JSONL count and Phase 2 no-approved-records guard
+* \[x] CBAM definitions (02023R0956-20251020) — EN and LT both produce 34 definitions; LT uses divlayout\_numbered variant (N) term – definition em-dash style); FR uses guillemet+colon style (still 0 — different variant, not yet handled)
+* \[x] extract\_eurlex\_definitions.py — added --list-articles dry-run flag; --auto-article=definitions flag; DEFINITION\_RUBRICS per-language keyword map; 0-definition sanity warning; divlayout\_numbered variant handler (\_article\_uses\_numbered\_items, \_match\_definition\_numbered) for LT-style em-dash definitions
+* \[x] tests/fixtures/eurlex/cbam\_lt\_article3\_fragment.html — 4-item LT CBAM Article 3 fixture (items 1, 2, 19, 34); real HTML verbatim; exercises simple, chapeau+sub-items, and numbered list\_path cases
+* \[x] tests/test\_extract\_eurlex\_definitions.py — 17 new TestDivlayoutNumbered tests (397 total passing)
+* \[ ] CBAM FR definitions — uses guillemet+colon style («term»: definition); divlayout\_numbered detection fires but em-dash split fails; requires separate FR variant or guillemet+colon extractor path
+* \[ ] Dual Use definitions — need to download consolidated Regulation 2021/821 (CELEX 02021R0821-<date>); the previously fetched delegated regulation L\_202502003 is an annex-replacement and contains no definitions
 * \[ ] Statistical candidates review — pending human review
 * \[ ] Named entity layer — design deferred
 * \[ ] Tier 3 — not yet designed

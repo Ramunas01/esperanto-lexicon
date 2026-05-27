@@ -77,6 +77,59 @@ python3 src/ingestion/ingest_document.py \
 
 ## Workflow B: EU legislation (EUR-Lex HTML source)
 
+### Identifying the right source document
+
+EUR-Lex publishes three kinds of HTML for any given regulation:
+
+1. **The original act** as published in the Official Journal (Formex-style HTML using
+   `oj-*` classes, found under URLs like `L_YYYYNNNXX_NNNNNN_fmx_xml.html`).
+2. **The consolidated text** combining the original act with all subsequent amendments
+   as of a given date (consolidated-style HTML using ELI semantic classes —
+   `eli-subdivision`, `norm`, `grid-list`).
+3. **Amending and implementing acts** that modify the original by reference (also
+   Formex-style; typically 1–5 articles long, none of which are Definitions articles).
+
+For domain lexicon construction, **only use (2)**. The consolidated text contains all
+current definitions in one document. Original and amending acts either lack definitions
+(amending acts) or are superseded by the consolidated version.
+
+The URL pattern for consolidated texts is:
+
+```
+https://eur-lex.europa.eu/legal-content/{LANG}/TXT/HTML/?uri=CELEX:0{NNNNN}-{YYYYMMDD}
+```
+
+where the leading `0` in the CELEX identifier marks the consolidated form. Compare with
+original-act URLs which use `CELEX:3{NNNNN}` (no leading `0`).
+
+Before running the extractor, verify the document is consolidated by listing its
+articles:
+
+```bash
+python3 src/extractor/extract_eurlex_definitions.py \
+    --input <html> --celex <celex_id> --lang en --list-articles
+```
+
+A consolidated regulation typically has 50+ articles; an amending act has 1–5. If the
+list is short and no article is named "Definitions", you have the wrong document — fetch
+the consolidated version instead.
+
+Once you confirm the document is correct, use `--auto-article=definitions` to
+automatically select the definitions article rather than guessing the article number:
+
+```bash
+python3 src/extractor/extract_eurlex_definitions.py \
+    --input <html> --celex <celex_id> --lang en \
+    --output data/domain_db/<domain>_definitions_en.jsonl \
+    --auto-article definitions
+```
+
+If the extractor prints `0 definitions extracted` after running without `--article`,
+it will also list the articles present. Use that list to diagnose whether the document
+is the wrong type or the definitions article uses a layout not yet supported.
+
+---
+
 ```bash
 python3 src/ingestion/ingest_document.py \
     --source eurlex \
@@ -249,6 +302,89 @@ python3 src/ingestion/ingest_document.py \
 
 Then review and run Phase 2 for EN. The writer deduplicates by phrase + definition
 and links new `mwe_lang` rows to existing `mwe` entries where possible.
+
+---
+
+## Cross-language grouping key
+
+Every domain must declare how `domain_db_writer.py` groups records across languages
+into shared `mwe` concepts. This is the single most error-prone decision when
+onboarding a new domain — get it wrong and you will see one of two failure modes:
+
+**Over-merging**: distinct concepts collapse into one `mwe` row. Symptoms include
+`mwe_conflict` rows appearing for legitimately different terms, or `mwe_lang` rows
+whose phrase and definition do not correspond.
+
+**Under-merging**: each language's records become their own concepts. Symptom: total
+`mwe` count equals the sum of per-language record counts, instead of the per-language
+count. This is what happened with the first EUR-Lex run (41 + 41 → 82 `mwe` rows
+instead of 41).
+
+### How to choose a grouping key
+
+The grouping key is a tuple of record fields. It must satisfy three properties:
+
+1. **Identical across all language versions of the same source.** A field whose value
+   depends on how a specific language renders the source (DOM IDs, structural paths
+   reconstructed from translated headings, locale-specific numbering) must not appear
+   in the key.
+2. **Unique within the domain.** A field that takes the same value for two different
+   concepts (e.g. `clause_num = "1"` appearing in two unrelated source documents
+   within one domain) must be combined with a document identifier.
+3. **Present on every record the writer will see.** If any record type emitted by the
+   extractor lacks a key field, the writer cannot group it; either add the field
+   upstream in the extractor or exclude that record type from grouping.
+
+A useful test: for any two records that *should* pair, write down the key tuple from
+each — they must be byte-identical strings. For any two records that *should not* pair,
+the tuples must differ in at least one field.
+
+### Recommended keys for known domain shapes
+
+| Domain shape | Recommended key |
+|---|---|
+| Single-source domain (e.g. GPMI: one tax-law document, multiple languages) | `(clause_num,)` |
+| Multi-source legislative domain (e.g. EUR-Lex: many regulations, multiple languages each) | `(celex_id, article_number, list_path)` |
+| Multi-source non-legislative domain (terminology databases, glossaries) | `(source_doc_id, entry_id)` or equivalent |
+
+### What NOT to put in the key
+
+- **Structural paths reconstructed from DOM** (e.g. `enc_1.tis_I.cpt_1.art_5`).
+  EUR-Lex's EN HTML emits these from stable IDs; the LT HTML lacks the same IDs, so
+  the LT extractor synthesises a shorter form. Two records that should pair will have
+  different `structural_path` strings.
+- **Article rubrics or section headings** ("Definitions" / "Terminų apibrėžtys" /
+  "Définitions"). These translate.
+- **Term text itself** ("customs authorities" / "muitinė"). Terms translate by
+  definition; using them in the key defeats grouping.
+- **Footnote IDs, amendment marker text, or any field that exists for provenance
+  tracking.** These are stored alongside the record but never compared.
+
+### Verification before committing
+
+After configuring the writer for a new domain, run the writer on at least two language
+versions of the same source and check:
+
+```bash
+sqlite3 <domain>.db "SELECT COUNT(*) FROM mwe;"
+sqlite3 <domain>.db "SELECT COUNT(*) FROM mwe_lang;"
+sqlite3 <domain>.db \
+  "SELECT mwe_id, COUNT(DISTINCT lang) FROM mwe_lang GROUP BY mwe_id;"
+```
+
+The expected pattern: `mwe` count equals the per-language record count, `mwe_lang`
+count equals the per-language count times the number of languages, and every `mwe_id`
+has exactly as many distinct languages as you loaded. Any deviation indicates a key
+mismatch — usually a field that differs across languages when it should not.
+
+### History note
+
+This guidance is the lesson from the UCC EUR-Lex onboarding: the initial writer used
+`structural_path` in the key, which differed between EN and LT because LT's HTML lacks
+the corresponding stable DOM IDs. The writer produced 82 `mwe` rows instead of 41,
+with each language's records orphaned in their own concepts. See
+`tests/test_domain_db_writer.py::test_eurlex_records_group_by_list_path_across_languages`
+for the regression test that prevents recurrence.
 
 ---
 

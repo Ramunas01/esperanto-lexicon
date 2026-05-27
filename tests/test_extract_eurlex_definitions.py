@@ -10,9 +10,11 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 from extractor.extract_eurlex_definitions import (
+    NUMBERED_ITEM_PATTERN,
     EurLexExtractor,
     _extract_article_number_from_text,
     _record_key,
+    detect_layout,
     is_eurlex_definition,
     map_eurlex_to_writer_fields,
     write_records,
@@ -477,6 +479,113 @@ def test_variant_b_genitive_article_number(all_records_lt: list[dict]) -> None:
 def test_variant_b_footnotes_collected(all_records_lt: list[dict]) -> None:
     footnotes = [r for r in all_records_lt if r["record_type"] == "footnote"]
     assert len(footnotes) >= 1
+
+
+# ---------------------------------------------------------------------------
+# divlayout_numbered variant — CBAM LT Article 3 fixture
+# ---------------------------------------------------------------------------
+
+CBAM_LT_FIXTURE = (
+    Path(__file__).parent / "fixtures" / "eurlex" / "cbam_lt_article3_fragment.html"
+)
+CBAM_CELEX = "02023R0956-20251020"
+
+
+@pytest.fixture(scope="module")
+def extractor_cbam_lt() -> EurLexExtractor:
+    return EurLexExtractor(celex_id=CBAM_CELEX, lang="lt")
+
+
+@pytest.fixture(scope="module")
+def soup_cbam_lt(extractor_cbam_lt: EurLexExtractor):
+    return extractor_cbam_lt.parse_html(CBAM_LT_FIXTURE)
+
+
+@pytest.fixture(scope="module")
+def cbam_lt_defs(extractor_cbam_lt: EurLexExtractor, soup_cbam_lt) -> list[dict]:
+    records = extractor_cbam_lt.extract(soup_cbam_lt, article_filter="3")
+    return [r for r in records if r["record_type"] == "definition"]
+
+
+class TestDivlayoutNumbered:
+    """Numbered-item divlayout variant (CBAM LT and similar non-EN translations)."""
+
+    def test_layout_detected_as_divlayout(self, soup_cbam_lt) -> None:
+        assert detect_layout(soup_cbam_lt) == "divlayout"
+
+    def test_numbered_item_pattern_matches_first_item(self, soup_cbam_lt) -> None:
+        """NUMBERED_ITEM_PATTERN matches '1) ' style but not '(1) ' style."""
+        assert NUMBERED_ITEM_PATTERN.match("1) prekės – I priede")
+        assert not NUMBERED_ITEM_PATTERN.match("(1) 'goods' means")
+
+    def test_article_uses_numbered_items_true_for_cbam_lt(
+        self, extractor_cbam_lt: EurLexExtractor, soup_cbam_lt
+    ) -> None:
+        from bs4 import BeautifulSoup
+        art3 = soup_cbam_lt.find(id="art_3")
+        assert extractor_cbam_lt._article_uses_numbered_items(art3) is True
+
+    def test_fixture_yields_four_definitions(self, cbam_lt_defs: list[dict]) -> None:
+        """Fixture contains items 1, 2, 19, 34 — four definitions expected."""
+        assert len(cbam_lt_defs) == 4
+
+    def test_first_item_term_and_definition(self, cbam_lt_defs: list[dict]) -> None:
+        """Item 1: 'prekės – I priede išvardytos prekės;' → correct split."""
+        rec = cbam_lt_defs[0]
+        assert rec["term"] == "prekės"
+        assert rec["definition"] == "I priede išvardytos prekės"
+
+    def test_first_item_list_path_is_one(self, cbam_lt_defs: list[dict]) -> None:
+        assert cbam_lt_defs[0]["source_ref"]["list_path"] == "1"
+
+    def test_second_item_list_path_is_two(self, cbam_lt_defs: list[dict]) -> None:
+        assert cbam_lt_defs[1]["source_ref"]["list_path"] == "2"
+
+    def test_second_item_term_split_on_endash(self, cbam_lt_defs: list[dict]) -> None:
+        """Item 2 has en-dash in definition text — term must be left of dash only."""
+        rec = cbam_lt_defs[1]
+        assert rec["term"] == "šiltnamio efektą sukeliančios dujos"
+        assert "–" not in rec["term"]
+
+    def test_chapeau_item_list_path(self, cbam_lt_defs: list[dict]) -> None:
+        """Item 19 is a chapeau (ends with colon); list_path must be '19'."""
+        rec = cbam_lt_defs[2]
+        assert rec["source_ref"]["list_path"] == "19"
+
+    def test_chapeau_item_term_no_colon(self, cbam_lt_defs: list[dict]) -> None:
+        rec = cbam_lt_defs[2]
+        assert rec["term"] == "valstybėje narėje įsisteigęs asmuo"
+        assert not rec["term"].endswith(":")
+
+    def test_chapeau_item_has_sub_items(self, cbam_lt_defs: list[dict]) -> None:
+        rec = cbam_lt_defs[2]
+        assert len(rec["sub_items"]) == 2
+        assert rec["sub_items"][0]["marker"] == "a"
+        assert rec["sub_items"][1]["marker"] == "b"
+
+    def test_chapeau_item_definition_empty(self, cbam_lt_defs: list[dict]) -> None:
+        """Chapeau items have an empty definition string; content is in sub_items."""
+        assert cbam_lt_defs[2]["definition"] == ""
+
+    def test_last_item_list_path(self, cbam_lt_defs: list[dict]) -> None:
+        assert cbam_lt_defs[3]["source_ref"]["list_path"] == "34"
+
+    def test_article_rubric_detected(self, cbam_lt_defs: list[dict]) -> None:
+        """Article rubric 'Terminų apibrėžtys' must be captured in context."""
+        assert cbam_lt_defs[0]["context"]["article_rubric"] == "Terminų apibrėžtys"
+
+    def test_article_number_detected(self, cbam_lt_defs: list[dict]) -> None:
+        assert cbam_lt_defs[0]["context"]["article_number"] == "3"
+
+    def test_amendment_markers_detected(
+        self, extractor_cbam_lt: EurLexExtractor, soup_cbam_lt
+    ) -> None:
+        """Amendment markers (modref) between items 2 and 19 must be consumed."""
+        records = extractor_cbam_lt.extract(soup_cbam_lt, article_filter="3")
+        assert len(getattr(extractor_cbam_lt, "_amendments_detected", set())) >= 1
+
+    def test_layout_string_in_source_ref(self, cbam_lt_defs: list[dict]) -> None:
+        assert cbam_lt_defs[0]["source_ref"]["layout"] == "divlayout"
 
 
 # ---------------------------------------------------------------------------

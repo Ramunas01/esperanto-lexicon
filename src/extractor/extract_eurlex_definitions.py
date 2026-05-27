@@ -19,6 +19,7 @@ import argparse
 import json
 import re
 import sys
+import unicodedata
 import warnings
 from pathlib import Path
 from typing import Any, Iterator
@@ -54,8 +55,27 @@ CORRIGENDUM_RE = re.compile(r"[►▶][A-Z]\d*\s*|\s*[◄◀]")
 # Matches the article id attribute, e.g. art_5 or art_5a
 ART_ID_PATTERN = re.compile(r"^art_\w+$")
 
+# Matches numbered-item list markers: "1) ", "19) " (no leading parenthesis).
+# Used to distinguish divlayout_numbered (LT, FR-like) from standard divlayout (EN).
+NUMBERED_ITEM_PATTERN = re.compile(r"^\d+\)\s+")
+
 # Celex date suffix e.g. "02013R0952-20221212" → "2022-12-12"
 CELEX_DATE_PATTERN = re.compile(r"-(\d{4})(\d{2})(\d{2})$")
+
+# Per-language keywords that identify a Definitions article by rubric (substring match).
+# Lowercased; diacritic-stripped match is applied — see _find_definitions_article().
+DEFINITION_RUBRICS: dict[str, list[str]] = {
+    "en": ["definition", "definitions"],
+    "lt": ["apibrėžt"],          # apibrėžtys / apibrėžimai
+    "fr": ["définition", "définitions"],
+    "de": ["begriffsbestimmung"],
+    "es": ["definicion"],        # also "definición"
+    "it": ["definizion"],
+    "pl": ["definicj"],
+    "nl": ["definitie"],
+    "pt": ["definiç"],
+    "sv": ["definition"],
+}
 
 # Article number from title text: "5 straipsnis", "5 straipsnio", "Article 5"
 ART_NUM_TEXT_PATTERN = re.compile(
@@ -108,6 +128,14 @@ def _strip_corrigendum_markers(text: str) -> str:
 def _normalize_nbsp(text: str) -> str:
     """Replace non-breaking spaces with regular spaces and strip."""
     return text.replace("\xa0", " ").strip()
+
+
+def _strip_diacritics(text: str) -> str:
+    """Remove combining diacritical marks, leaving base characters."""
+    return "".join(
+        c for c in unicodedata.normalize("NFKD", text)
+        if not unicodedata.combining(c)
+    )
 
 
 def _get_text(el: Tag | None) -> str:
@@ -377,6 +405,105 @@ class EurLexExtractor:
             "list_path": list_path,
         }
 
+    def _article_uses_numbered_items(self, art_div: Tag) -> bool:
+        """Return True if art_div uses N) term – definition style (LT and similar).
+
+        Inspects the first top-level grid-container: if its full text starts with
+        a digit followed by ')' and whitespace, the article uses the numbered-item
+        variant rather than the standard '"term" means definition' style.
+        """
+        for el in art_div.descendants:
+            if not isinstance(el, Tag):
+                continue
+            if "grid-container" not in set(el.get("class") or []):
+                continue
+            # Skip nested grid-containers (only inspect top-level ones)
+            parent_is_gc = False
+            for anc in el.parents:
+                if anc is art_div:
+                    break
+                if isinstance(anc, Tag) and "grid-container" in set(anc.get("class") or []):
+                    parent_is_gc = True
+                    break
+            if parent_is_gc:
+                continue
+            text = _normalize_nbsp(el.get_text(" ", strip=True))
+            return bool(NUMBERED_ITEM_PATTERN.match(text))
+        return False
+
+    def _match_definition_numbered(
+        self,
+        item_div: Tag,
+        amendment_cursor: dict[str, Any],
+        article_root: Tag,
+    ) -> dict | None:
+        """Extract a definition from a numbered-item grid-container (LT and similar).
+
+        Handles two sub-cases:
+          A) Simple: p.norm text is 'term – definition;' → split on first en/em-dash.
+          B) Chapeau: p.norm text ends with ':' → term only; sub-items follow as
+             nested grid-containers inside col2.
+
+        list_path is the numeric marker from col1 (e.g. '1', '19'), NOT the
+        sequential def_count, so it aligns with EN divlayout's positional numbering.
+        """
+        col2 = item_div.find("div", class_="grid-list-column-2", recursive=False)
+        if col2 is None:
+            return None
+
+        p_norm = col2.find("p", class_="norm")
+        if p_norm is None:
+            return None
+
+        full_text = _normalize_nbsp(p_norm.get_text(" ", strip=True))
+        footnote_refs = _collect_footnote_refs(p_norm)
+        sub_items = _collect_sub_items(col2, dict(amendment_cursor))
+
+        # list_path from col1 numeric marker ("1) " → "1", "19) " → "19")
+        col1 = item_div.find("div", class_="grid-list-column-1", recursive=False)
+        if col1:
+            span = col1.find("span")
+            raw = _get_text(span) if span else _get_text(col1)
+            list_path = _normalize_list_marker(raw)
+        else:
+            list_path = ""
+
+        # Sub-case B: chapeau — term ends with ':', actual definition in sub-items
+        if full_text.endswith(":"):
+            term = full_text.rstrip(":").strip()
+            if not term:
+                return None
+            return {
+                "term": term,
+                "definition": "",
+                "amendment": dict(amendment_cursor),
+                "footnote_refs": footnote_refs,
+                "sub_items": sub_items,
+                "list_path": list_path,
+            }
+
+        # Sub-case A: 'term – definition text;' on a single p.norm line
+        idx = full_text.find("–")  # en-dash
+        if idx == -1:
+            idx = full_text.find("—")  # em-dash
+        if idx == -1:
+            return None
+
+        term = full_text[:idx].strip()
+        if not term:
+            return None
+
+        definition = _strip_definition_text(full_text[idx + 1:])
+
+        return {
+            "term": term,
+            "definition": definition,
+            "amendment": dict(amendment_cursor),
+            "footnote_refs": footnote_refs,
+            "sub_items": sub_items,
+            "list_path": list_path,
+        }
+
     def _collect_footnotes(self, soup: BeautifulSoup) -> list[dict]:
         """Collect all footnote records from div[id^='fnp_'] elements."""
         footnotes = []
@@ -460,6 +587,7 @@ class EurLexExtractor:
             def_count = 0
             seen_grid_containers: set[int] = set()
             cursor: dict[str, Any] = {"marker": "B", "celex": "", "action": None}
+            use_numbered = self._article_uses_numbered_items(art_div)
 
             for el in art_div.descendants:
                 if not isinstance(el, Tag):
@@ -491,7 +619,10 @@ class EurLexExtractor:
                     continue
 
                 seen_grid_containers.add(eid)
-                result = self._match_definition(el, cursor, art_div)
+                if use_numbered:
+                    result = self._match_definition_numbered(el, cursor, art_div)
+                else:
+                    result = self._match_definition(el, cursor, art_div)
                 if result is None:
                     continue
 
@@ -933,9 +1064,101 @@ class EurLexExtractor:
         self._amendments_detected = amendments_detected
         return records
 
+    def list_articles(self, soup: BeautifulSoup) -> list[tuple[str, str | None]]:
+        """Return [(art_id, rubric), ...] for all non-annex, non-recital articles.
+
+        Result is in document order.  Annexes (id^='anx_') and recitals
+        (id^='rct_') are excluded.  Rubric may be None if not present in the
+        document.  Used by --list-articles (dry-run) and --auto-article.
+        """
+        doc_div = soup.find("div", id="docHtml") or soup
+        try:
+            layout = detect_layout(soup)
+        except UnknownLayoutError:
+            layout = "divlayout"
+
+        result: list[tuple[str, str | None]] = []
+
+        if layout == "divlayout":
+            contexts = self._collect_structural_context(doc_div)
+            for art_div in doc_div.find_all("div", id=ART_ID_PATTERN):
+                art_id = art_div.get("id", "")
+                skip = False
+                for anc in art_div.parents:
+                    if not isinstance(anc, Tag):
+                        continue
+                    anc_id = anc.get("id", "") or ""
+                    if anc_id.startswith("anx_") or anc_id.startswith("rct_"):
+                        skip = True
+                        break
+                if skip:
+                    continue
+                ctx = contexts.get(art_id, {})
+                result.append((art_id, ctx.get("article_rubric")))
+
+        else:  # tablelayout
+            for child in doc_div.children:
+                if not isinstance(child, Tag):
+                    continue
+                classes = set(child.get("class") or [])
+                if "title-article-norm" not in classes or child.name != "p":
+                    continue
+                raw = _get_text(child)
+                if "PRIEDAS" in raw.upper():
+                    continue
+                num = _extract_article_number_from_text(raw)
+                if num is None:
+                    continue
+                art_id = f"art_{num}"
+                rubric: str | None = None
+                for sib in child.next_siblings:
+                    if not isinstance(sib, Tag):
+                        continue
+                    sib_classes = set(sib.get("class") or [])
+                    if "stitle-article-norm" in sib_classes and sib.name == "p":
+                        rubric = _get_text(sib) or None
+                        break
+                    if "title-article-norm" in sib_classes:
+                        break
+                result.append((art_id, rubric))
+
+        return result
+
     @property
     def warnings(self) -> list[str]:
         return self._warnings
+
+
+# ---------------------------------------------------------------------------
+# Article discovery helpers
+# ---------------------------------------------------------------------------
+
+
+def _find_definitions_article(
+    articles: list[tuple[str, str | None]],
+    lang: str,
+    keyword_set: str = "definitions",
+) -> str | None:
+    """Return the art_id of the first article whose rubric matches keyword_set.
+
+    Matching is case-insensitive and diacritic-insensitive (substring match).
+    For keyword_set='definitions', uses DEFINITION_RUBRICS[lang] as the keyword
+    list; otherwise treats keyword_set itself as the single keyword.
+    Returns None if no article matches.
+    """
+    if keyword_set == "definitions":
+        keywords = DEFINITION_RUBRICS.get(lang, ["definition", "definitions"])
+    else:
+        keywords = [keyword_set]
+
+    for art_id, rubric in articles:
+        if rubric is None:
+            continue
+        rubric_norm = _strip_diacritics(rubric.lower())
+        for kw in keywords:
+            if _strip_diacritics(kw.lower()) in rubric_norm:
+                return art_id
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -1046,13 +1269,32 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--input", required=True, type=Path, help="Path to HTML file")
     parser.add_argument("--celex", required=True, help="CELEX identifier (e.g. 02013R0952-20221212)")
     parser.add_argument("--lang", required=True, help="Language code (e.g. en)")
-    parser.add_argument("--output", required=True, type=Path, help="Path to output .jsonl file")
+    parser.add_argument(
+        "--output", required=False, default=None, type=Path,
+        help="Path to output .jsonl file (not required with --list-articles)",
+    )
     parser.add_argument("--article", default=None, help="Extract only from this article number")
     parser.add_argument(
         "--append",
         action="store_true",
         help="Append to existing output file instead of overwriting; "
              "duplicate records (same celex_id + structural_path + list_path + lang) are skipped",
+    )
+    parser.add_argument(
+        "--list-articles",
+        dest="list_articles",
+        action="store_true",
+        help="List article IDs and rubrics in document order then exit (dry-run; --output not required)",
+    )
+    parser.add_argument(
+        "--auto-article",
+        dest="auto_article",
+        default=None,
+        metavar="KEYWORD_SET",
+        help=(
+            "Auto-select the article whose rubric matches KEYWORD_SET. "
+            "Use 'definitions' to pick the Definitions article for --lang."
+        ),
     )
     args = parser.parse_args(argv)
 
@@ -1062,7 +1304,39 @@ def main(argv: list[str] | None = None) -> None:
 
     extractor = EurLexExtractor(celex_id=args.celex, lang=args.lang)
     soup = extractor.parse_html(args.input)
-    records = extractor.extract(soup, article_filter=args.article)
+
+    # --list-articles: dry-run — print article IDs + rubrics and exit
+    if args.list_articles:
+        for art_id, rubric in extractor.list_articles(soup):
+            print(f"{art_id}\t{rubric or '(no rubric)'}")
+        return
+
+    # --auto-article: resolve the article filter from the document's rubrics
+    article_filter = args.article
+    if args.auto_article is not None:
+        articles = extractor.list_articles(soup)
+        matched = _find_definitions_article(articles, args.lang, args.auto_article)
+        if matched is None:
+            print(
+                f"No '{args.auto_article}' article found. Articles present:",
+                file=sys.stderr,
+            )
+            for aid, rub in articles:
+                print(f"  {aid}\t{rub or '(no rubric)'}", file=sys.stderr)
+            sys.exit(1)
+        article_filter = matched[4:]  # "art_3" → "3"
+        rub = next((r for a, r in articles if a == matched), None)
+        print(f"Auto-selected: {matched}  {rub or ''}")
+
+    if args.output is None:
+        print(
+            "Error: --output is required for extraction. "
+            "Use --list-articles for a dry-run with no output.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    records = extractor.extract(soup, article_filter=article_filter)
 
     n_definitions = sum(1 for r in records if r["record_type"] == "definition")
     n_footnotes = sum(1 for r in records if r["record_type"] == "footnote")
@@ -1083,6 +1357,36 @@ def main(argv: list[str] | None = None) -> None:
     if args.append:
         print(f"Duplicates skipped  : {skipped}")
     print(f"Output written to   : {args.output}")
+
+    # Sanity warning: 0 definitions with no article filter is a strong signal
+    # that the wrong document was supplied (e.g. an amending act instead of
+    # the consolidated text).
+    if n_definitions == 0 and article_filter is None:
+        print(
+            "\nNote: 0 definitions extracted. This may indicate:",
+            file=sys.stderr,
+        )
+        print(
+            "  - The document is an amending or implementing act with no\n"
+            "    Definitions article.",
+            file=sys.stderr,
+        )
+        print(
+            "  - The Definitions article uses an unrecognised layout.",
+            file=sys.stderr,
+        )
+        print(
+            "  - --article filtered out the article that contains definitions.",
+            file=sys.stderr,
+        )
+        print("\nArticles present in this document:", file=sys.stderr)
+        for aid, rub in extractor.list_articles(soup):
+            print(f"  {aid}\t{rub or '(no rubric)'}", file=sys.stderr)
+        print(
+            "\nUse --list-articles to inspect the document, or "
+            "--auto-article=definitions to auto-select.",
+            file=sys.stderr,
+        )
 
 
 if __name__ == "__main__":
