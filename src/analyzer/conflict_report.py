@@ -5,11 +5,20 @@ Usage (single DB):
     python3 src/analyzer/conflict_report.py \\
         --db data/domain_db/gpmi_lt_tax.db
 
-Usage (cross-domain):
+Usage (cross-domain, auto-detect shared languages):
     python3 src/analyzer/conflict_report.py \\
-        --db data/domain_db/gpmi_lt_tax.db \\
-        --cross-db data/domain_db/corporate_tax_lt.db \\
-        --lang lt
+        --db data/domain_db/ucc_customs.db \\
+        --cross-db data/domain_db/wco_intl.db
+
+Usage (cross-domain, explicit language):
+    python3 src/analyzer/conflict_report.py \\
+        --db data/domain_db/ucc_customs.db \\
+        --cross-db data/domain_db/wco_intl.db \\
+        --lang en
+
+--lang accepts: a language code (lt, en, fr, …) or 'auto' (default).
+In auto mode the tool finds all languages present in both DBs and
+runs conflict detection for each, reporting them grouped by language.
 """
 
 from __future__ import annotations
@@ -110,6 +119,22 @@ def _load_sources(conn: sqlite3.Connection, mwe_id: int) -> list[str]:
             (mwe_id,),
         ).fetchall()
     ]
+
+
+def get_langs(conn: sqlite3.Connection) -> set[str]:
+    """Return the set of language codes present in mwe_lang for this DB."""
+    return {
+        row[0]
+        for row in conn.execute("SELECT DISTINCT lang FROM mwe_lang")
+    }
+
+
+def detect_common_langs(
+    conn_a: sqlite3.Connection,
+    conn_b: sqlite3.Connection,
+) -> list[str]:
+    """Return sorted list of language codes present in both DBs."""
+    return sorted(get_langs(conn_a) & get_langs(conn_b))
 
 
 def load_cross_conflicts(
@@ -229,6 +254,8 @@ def format_cross_conflict_report(
 
 
 def main(argv: list[str] | None = None) -> None:
+    import sys
+
     parser = argparse.ArgumentParser(
         description="Report mwe_conflict entries from a domain DB."
     )
@@ -238,13 +265,15 @@ def main(argv: list[str] | None = None) -> None:
         help="Second domain DB for cross-domain conflict detection",
     )
     parser.add_argument(
-        "--lang", default="lt",
-        help="Language code for cross-DB phrase comparison (default: lt)",
+        "--lang", default="auto",
+        help=(
+            "Language code for cross-DB phrase comparison, or 'auto' to "
+            "try all languages present in both DBs (default: auto)"
+        ),
     )
     args = parser.parse_args(argv)
 
     if not args.db.exists():
-        import sys
         print(f"Error: DB not found: {args.db}", file=sys.stderr)
         sys.exit(1)
 
@@ -254,14 +283,29 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.cross_db:
         if not args.cross_db.exists():
-            import sys
             print(f"Error: cross-DB not found: {args.cross_db}", file=sys.stderr)
             sys.exit(1)
         conn_b = sqlite3.connect(args.cross_db)
-        cross = load_cross_conflicts(
-            conn_a, conn_b, args.lang, args.db.name, args.cross_db.name
-        )
-        print(format_cross_conflict_report(cross, args.db.name, args.cross_db.name, args.lang))
+
+        if args.lang == "auto":
+            langs = detect_common_langs(conn_a, conn_b)
+            if not langs:
+                print(f"No languages in common between {args.db.name} and {args.cross_db.name}.")
+            for lang in langs:
+                cross = load_cross_conflicts(
+                    conn_a, conn_b, lang, args.db.name, args.cross_db.name
+                )
+                print(format_cross_conflict_report(
+                    cross, args.db.name, args.cross_db.name, lang
+                ))
+        else:
+            cross = load_cross_conflicts(
+                conn_a, conn_b, args.lang, args.db.name, args.cross_db.name
+            )
+            print(format_cross_conflict_report(
+                cross, args.db.name, args.cross_db.name, args.lang
+            ))
+
         conn_b.close()
 
     conn_a.close()

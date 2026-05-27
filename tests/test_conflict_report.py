@@ -17,8 +17,10 @@ from lexicon.schema import create_domain_schema
 from analyzer.conflict_report import (
     ConflictDetail,
     CrossConflict,
+    detect_common_langs,
     format_conflict_report,
     format_cross_conflict_report,
+    get_langs,
     load_conflicts,
     load_cross_conflicts,
 )
@@ -332,3 +334,69 @@ class TestFormatCrossConflictReport:
         report = format_cross_conflict_report([self._conflict()], "a.db", "b.db", "lt")
         assert "first definition" in report
         assert "second definition" in report
+
+
+# ---------------------------------------------------------------------------
+# get_langs / detect_common_langs
+# ---------------------------------------------------------------------------
+
+
+class TestGetLangs:
+    def test_empty_db_returns_empty_set(self) -> None:
+        conn = _empty_db()
+        assert get_langs(conn) == set()
+
+    def test_single_lang(self) -> None:
+        conn = _empty_db()
+        mwe_id = _insert_mwe(conn)
+        _insert_mwe_lang(conn, mwe_id, "lt", "rezidentas")
+        conn.commit()
+        assert get_langs(conn) == {"lt"}
+
+    def test_multiple_langs(self) -> None:
+        conn = _empty_db()
+        mwe_id = _insert_mwe(conn)
+        _insert_mwe_lang(conn, mwe_id, "lt", "rezidentas")
+        _insert_mwe_lang(conn, mwe_id, "en", "resident")
+        _insert_mwe_lang(conn, mwe_id, "fr", "résident")
+        conn.commit()
+        assert get_langs(conn) == {"lt", "en", "fr"}
+
+
+class TestDetectCommonLangs:
+    def _db_with_langs(self, langs: list[str]) -> sqlite3.Connection:
+        conn = _empty_db()
+        mwe_id = _insert_mwe(conn)
+        for lang in langs:
+            _insert_mwe_lang(conn, mwe_id, lang, f"term_{lang}")
+        conn.commit()
+        return conn
+
+    def test_no_common_langs_returns_empty(self) -> None:
+        a = self._db_with_langs(["lt"])
+        b = self._db_with_langs(["en"])
+        assert detect_common_langs(a, b) == []
+
+    def test_one_common_lang(self) -> None:
+        a = self._db_with_langs(["lt", "en"])
+        b = self._db_with_langs(["en", "fr"])
+        assert detect_common_langs(a, b) == ["en"]
+
+    def test_multiple_common_langs_sorted(self) -> None:
+        a = self._db_with_langs(["lt", "en", "fr"])
+        b = self._db_with_langs(["lt", "en", "fr"])
+        assert detect_common_langs(a, b) == ["en", "fr", "lt"]
+
+    def test_both_empty_returns_empty(self) -> None:
+        a = _empty_db()
+        b = _empty_db()
+        assert detect_common_langs(a, b) == []
+
+    def test_wco_vs_ucc_pattern(self) -> None:
+        """WCO (EN+FR only) vs UCC (EN+LT+FR) — common langs are EN and FR, not LT."""
+        wco = self._db_with_langs(["en", "fr"])
+        ucc = self._db_with_langs(["en", "lt", "fr"])
+        common = detect_common_langs(wco, ucc)
+        assert "lt" not in common
+        assert "en" in common
+        assert "fr" in common
