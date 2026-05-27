@@ -136,6 +136,33 @@ def _display_statistical(rec: dict, position: int, total: int) -> None:
     print("  " + "─" * 61)
 
 
+_TRIVIAL_DEFS = {"", ":", "–", "—"}
+
+
+def _eurlex_def_lines(rec: dict) -> list[str]:
+    """Return display lines for a EUR-Lex definition.
+
+    When definition is empty or trivial (colon/dash placeholder) and sub_items
+    are present, formats sub_items as '(marker) text' lines instead.  At most
+    5 sub_items are shown; a count line is appended when more exist.
+    """
+    defn = (rec.get("definition") or "").strip()
+    sub_items = rec.get("sub_items") or []
+
+    if defn in _TRIVIAL_DEFS and sub_items:
+        lines: list[str] = []
+        for item in sub_items[:5]:
+            marker = item.get("marker", "")
+            text = (item.get("text") or "")[:80]
+            prefix = f"({marker}) " if marker else ""
+            lines.append(f"{prefix}{text}")
+        if len(sub_items) > 5:
+            lines.append(f"... ({len(sub_items) - 5} more)")
+        return lines or ["(no definition)"]
+
+    return [defn if defn else "?"]
+
+
 def _display_eurlex(rec: dict, position: int, total: int) -> None:
     """Display a single EUR-Lex definition record."""
     src = rec.get("source_ref", {})
@@ -143,23 +170,23 @@ def _display_eurlex(rec: dict, position: int, total: int) -> None:
     ctx = rec.get("context", {})
     lang = rec.get("lang", "?")
     term = rec.get("term", "?")
-    defn = rec.get("definition", "?")
     list_path = src.get("list_path", "?")
     celex = src.get("celex_id", "?")
     art_num = ctx.get("article_number") or "?"
     marker = amendment.get("marker", "B")
     amend_celex = amendment.get("celex", celex)
 
+    def_lines = _eurlex_def_lines(rec)
+
     print()
     print("  " + "─" * 61)
     print(f"  [{position} of {total}]  Art.{art_num} item {list_path}  |  {lang}  [▼{marker} {amend_celex}]")
     print(f"  TERM:   {term}")
-    print(f"  DEF:    {defn}")
+    print(f"  DEF:    {def_lines[0]}")
+    for line in def_lines[1:]:
+        print(f"          {line}")
     print(f"  TYPE:   (none)")
     print(f"  ABBREV: (none)")
-    n_sub = len(rec.get("sub_items") or [])
-    if n_sub:
-        print(f"  SUB-ITEMS: {n_sub}")
     print("  " + "─" * 61)
 
 
@@ -312,16 +339,18 @@ def _display_two(
         rec = records[idx]
         if fmt == "eurlex":
             term = rec.get("term", "?")
-            defn = rec.get("definition", "?")
+            def_lines = _eurlex_def_lines(rec)
             dtype = "(none)"
             abbrev = "(none)"
         else:
             term = rec.get("term_raw", "?")
-            defn = rec.get("definition_raw", "?")
+            def_lines = [rec.get("definition_raw", "?")]
             dtype = rec.get("definition_type", "?")
             abbrev = rec.get("abbrev") or "(none)"
         print(f"\n  {tag}  TERM:  {term}")
-        print(f"{indent}DEF:   {defn}")
+        print(f"{indent}DEF:   {def_lines[0]}")
+        for line in def_lines[1:]:
+            print(f"{indent}       {line}")
         print(f"{indent}TYPE:  {dtype}")
         print(f"{indent}ABBREV: {abbrev}")
 

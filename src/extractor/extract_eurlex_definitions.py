@@ -182,6 +182,36 @@ def _normalize_list_marker(raw: str) -> str:
     return raw.strip().strip("()")
 
 
+def _get_article_rubric(art_div: Tag) -> tuple[str | None, str | None]:
+    """Return (rubric_text, source) for an article div element.
+
+    source is 'article' when stitle-article-norm is present inside art_div,
+    'chapter' when inherited from the closest enclosing cpt_* or tis_* parent's
+    title-division-2 element, or None when no rubric is found anywhere.
+
+    Some regulations (e.g. 2021/821 Dual Use) attach rubrics at the chapter level
+    (title-division-2) rather than per article (stitle-article-norm).  In those
+    cases the chapter rubric is the most specific label available.
+    """
+    own = art_div.find("p", class_="stitle-article-norm")
+    if own:
+        text = _get_text(own)
+        if text:
+            return text, "article"
+
+    for parent in art_div.parents:
+        if not isinstance(parent, Tag):
+            continue
+        pid = parent.get("id", "") or ""
+        if pid.startswith("cpt_") or pid.startswith("tis_"):
+            rubric_el = parent.find("p", class_="title-division-2", recursive=False)
+            if rubric_el:
+                text = _get_text(rubric_el)
+                if text:
+                    return text, "chapter"
+    return None, None
+
+
 def _collect_sub_items(parent: Tag, amendment_cursor: dict[str, Any]) -> list[dict]:
     """Recursively collect sub-items by iterating direct children of parent.
 
@@ -317,8 +347,9 @@ class EurLexExtractor:
                 num_match = re.search(r"\d+\w*", raw)
                 ctx["article_number"] = num_match.group(0) if num_match else raw or None
 
-            art_rub_el = art_div.find("p", class_="stitle-article-norm")
-            ctx["article_rubric"] = _get_text(art_rub_el) or None
+            rubric_text, rubric_source = _get_article_rubric(art_div)
+            ctx["article_rubric"] = rubric_text
+            ctx["article_rubric_source"] = rubric_source
 
             contexts[art_id] = ctx
 
@@ -667,6 +698,7 @@ class EurLexExtractor:
                 },
                 "article_number": ctx.get("article_number"),
                 "article_rubric": ctx.get("article_rubric"),
+                "article_rubric_source": ctx.get("article_rubric_source"),
                 "context": {
                     "article_number": ctx.get("article_number"),
                     "article_rubric": ctx.get("article_rubric"),
@@ -772,6 +804,7 @@ class EurLexExtractor:
                 },
                 "article_number": art_num,
                 "article_rubric": art_rubric,
+                "article_rubric_source": "article" if art_rubric else None,
                 "context": full_ctx,
                 "definition_count": def_count,
             })
@@ -1023,6 +1056,7 @@ class EurLexExtractor:
                 },
                 "article_number": art_num,
                 "article_rubric": art_rubric,
+                "article_rubric_source": "article" if art_rubric else None,
                 "context": full_ctx,
                 "definition_count": def_count,
             })
@@ -1064,12 +1098,12 @@ class EurLexExtractor:
         self._amendments_detected = amendments_detected
         return records
 
-    def list_articles(self, soup: BeautifulSoup) -> list[tuple[str, str | None]]:
-        """Return [(art_id, rubric), ...] for all non-annex, non-recital articles.
+    def list_articles(self, soup: BeautifulSoup) -> list[tuple[str, str | None, str | None]]:
+        """Return [(art_id, rubric, rubric_source), ...] for non-annex, non-recital articles.
 
         Result is in document order.  Annexes (id^='anx_') and recitals
-        (id^='rct_') are excluded.  Rubric may be None if not present in the
-        document.  Used by --list-articles (dry-run) and --auto-article.
+        (id^='rct_') are excluded.  rubric is None when absent; rubric_source is
+        'article', 'chapter', or None.  Used by --list-articles and --auto-article.
         """
         doc_div = soup.find("div", id="docHtml") or soup
         try:
@@ -1094,7 +1128,7 @@ class EurLexExtractor:
                 if skip:
                     continue
                 ctx = contexts.get(art_id, {})
-                result.append((art_id, ctx.get("article_rubric")))
+                result.append((art_id, ctx.get("article_rubric"), ctx.get("article_rubric_source")))
 
         else:  # tablelayout
             for child in doc_div.children:
@@ -1120,7 +1154,8 @@ class EurLexExtractor:
                         break
                     if "title-article-norm" in sib_classes:
                         break
-                result.append((art_id, rubric))
+                source = "article" if rubric else None
+                result.append((art_id, rubric, source))
 
         return result
 
@@ -1135,7 +1170,7 @@ class EurLexExtractor:
 
 
 def _find_definitions_article(
-    articles: list[tuple[str, str | None]],
+    articles: list[tuple[str, str | None, str | None]],
     lang: str,
     keyword_set: str = "definitions",
 ) -> str | None:
@@ -1144,6 +1179,12 @@ def _find_definitions_article(
     Matching is case-insensitive and diacritic-insensitive (substring match).
     For keyword_set='definitions', uses DEFINITION_RUBRICS[lang] as the keyword
     list; otherwise treats keyword_set itself as the single keyword.
+
+    Article-level rubrics (source='article') take priority.  If no article-level
+    match is found, chapter-level rubrics (source='chapter') are checked.  When
+    multiple articles share a matching chapter rubric, a warning is printed to
+    stderr and the first matching article is returned.
+
     Returns None if no article matches.
     """
     if keyword_set == "definitions":
@@ -1151,14 +1192,32 @@ def _find_definitions_article(
     else:
         keywords = [keyword_set]
 
-    for art_id, rubric in articles:
+    chapter_matches: list[tuple[str, str]] = []  # (art_id, rubric_text)
+
+    for art_id, rubric, source in articles:
         if rubric is None:
             continue
         rubric_norm = _strip_diacritics(rubric.lower())
-        for kw in keywords:
-            if _strip_diacritics(kw.lower()) in rubric_norm:
-                return art_id
-    return None
+        if not any(_strip_diacritics(kw.lower()) in rubric_norm for kw in keywords):
+            continue
+        if source != "chapter":
+            return art_id  # article-level match wins immediately
+        chapter_matches.append((art_id, rubric))
+
+    if not chapter_matches:
+        return None
+
+    if len(chapter_matches) > 1:
+        rubric_text = chapter_matches[0][1]
+        matched_ids = [m[0] for m in chapter_matches]
+        print(
+            f"Warning: --auto-article={keyword_set} matched {len(chapter_matches)} articles via "
+            f'chapter rubric "{rubric_text}": {", ".join(matched_ids)}. '
+            f"Selecting {matched_ids[0]}. Use --article N to pick a different one.",
+            file=sys.stderr,
+        )
+
+    return chapter_matches[0][0]
 
 
 # ---------------------------------------------------------------------------
@@ -1307,8 +1366,11 @@ def main(argv: list[str] | None = None) -> None:
 
     # --list-articles: dry-run — print article IDs + rubrics and exit
     if args.list_articles:
-        for art_id, rubric in extractor.list_articles(soup):
-            print(f"{art_id}\t{rubric or '(no rubric)'}")
+        for art_id, rubric, source in extractor.list_articles(soup):
+            if source == "chapter":
+                print(f"{art_id}\t← {rubric} (chapter)")
+            else:
+                print(f"{art_id}\t{rubric or '(no rubric)'}")
         return
 
     # --auto-article: resolve the article filter from the document's rubrics
@@ -1321,11 +1383,14 @@ def main(argv: list[str] | None = None) -> None:
                 f"No '{args.auto_article}' article found. Articles present:",
                 file=sys.stderr,
             )
-            for aid, rub in articles:
-                print(f"  {aid}\t{rub or '(no rubric)'}", file=sys.stderr)
+            for aid, rub, src in articles:
+                if src == "chapter":
+                    print(f"  {aid}\t← {rub} (chapter)", file=sys.stderr)
+                else:
+                    print(f"  {aid}\t{rub or '(no rubric)'}", file=sys.stderr)
             sys.exit(1)
         article_filter = matched[4:]  # "art_3" → "3"
-        rub = next((r for a, r in articles if a == matched), None)
+        rub = next((r for a, r, s in articles if a == matched), None)
         print(f"Auto-selected: {matched}  {rub or ''}")
 
     if args.output is None:
@@ -1380,8 +1445,11 @@ def main(argv: list[str] | None = None) -> None:
             file=sys.stderr,
         )
         print("\nArticles present in this document:", file=sys.stderr)
-        for aid, rub in extractor.list_articles(soup):
-            print(f"  {aid}\t{rub or '(no rubric)'}", file=sys.stderr)
+        for aid, rub, src in extractor.list_articles(soup):
+            if src == "chapter":
+                print(f"  {aid}\t← {rub} (chapter)", file=sys.stderr)
+            else:
+                print(f"  {aid}\t{rub or '(no rubric)'}", file=sys.stderr)
         print(
             "\nUse --list-articles to inspect the document, or "
             "--auto-article=definitions to auto-select.",

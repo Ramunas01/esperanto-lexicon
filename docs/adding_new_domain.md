@@ -128,6 +128,16 @@ If the extractor prints `0 definitions extracted` after running without `--artic
 it will also list the articles present. Use that list to diagnose whether the document
 is the wrong type or the definitions article uses a layout not yet supported.
 
+Some older regulations attach rubrics at the chapter level rather than per article.
+The extractor's `--list-articles` handles this by falling back to the enclosing
+chapter's `title-division-2` rubric and marking such inherited rubrics with
+`← rubric (chapter)` in the output. For example, Regulation 2021/821 (Dual Use)
+groups Article 1 (Subject matter) and Article 2 (Definitions) under a shared chapter
+heading "SUBJECT AND DEFINITIONS" — neither article has its own `stitle-article-norm`.
+When `--auto-article=definitions` resolves via a chapter rubric that covers multiple
+articles, it selects the first matching article and prints a warning to stderr; use
+`--article N` to pick a different one if the auto-selection was wrong.
+
 ---
 
 ```bash

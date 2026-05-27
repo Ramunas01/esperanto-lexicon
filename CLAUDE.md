@@ -342,9 +342,11 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
 * \[x] CBAM definitions (02023R0956-20251020) — EN and LT both produce 34 definitions; LT uses divlayout\_numbered variant (N) term – definition em-dash style); FR uses guillemet+colon style (still 0 — different variant, not yet handled)
 * \[x] extract\_eurlex\_definitions.py — added --list-articles dry-run flag; --auto-article=definitions flag; DEFINITION\_RUBRICS per-language keyword map; 0-definition sanity warning; divlayout\_numbered variant handler (\_article\_uses\_numbered\_items, \_match\_definition\_numbered) for LT-style em-dash definitions
 * \[x] tests/fixtures/eurlex/cbam\_lt\_article3\_fragment.html — 4-item LT CBAM Article 3 fixture (items 1, 2, 19, 34); real HTML verbatim; exercises simple, chapeau+sub-items, and numbered list\_path cases
-* \[x] tests/test\_extract\_eurlex\_definitions.py — 17 new TestDivlayoutNumbered tests (397 total passing)
+* \[x] tests/test\_extract\_eurlex\_definitions.py — 17 new TestDivlayoutNumbered tests + 3 chapter-rubric fallback tests (400 total passing)
+* \[x] extract\_eurlex\_definitions.py — \_get\_article\_rubric() fallback to chapter title-division-2 when article has no stitle-article-norm; --list-articles marks inherited chapter rubrics with "← rubric (chapter)"; --auto-article=definitions resolves via chapter rubric with multi-article warning; article\_metadata record now includes article\_rubric\_source field
+* \[x] Dual Use (02021R0821-20251115) — EN 22 definitions, LT 22 definitions extracted via --article 2; --list-articles now shows all 32 articles with chapter rubrics; --auto-article=definitions warns that art\_1 and art\_2 share chapter "SUBJECT AND DEFINITIONS" and selects art\_1
 * \[ ] CBAM FR definitions — uses guillemet+colon style («term»: definition); divlayout\_numbered detection fires but em-dash split fails; requires separate FR variant or guillemet+colon extractor path
-* \[ ] Dual Use definitions — need to download consolidated Regulation 2021/821 (CELEX 02021R0821-<date>); the previously fetched delegated regulation L\_202502003 is an annex-replacement and contains no definitions
+* \[ ] Dual Use FR definitions — same guillemet+colon gap as CBAM FR; only 5 of 22 definitions extracted
 * \[ ] Statistical candidates review — pending human review
 * \[ ] Named entity layer — design deferred
 * \[ ] Tier 3 — not yet designed

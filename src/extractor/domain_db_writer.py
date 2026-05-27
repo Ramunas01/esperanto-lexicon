@@ -409,6 +409,20 @@ def process_group(
     return {"new_concepts": 0, "lang_counts": lang_counts, "merged": merged, "conflicts": conflicts}
 
 
+_TRIVIAL_DEFS = {"", ":", "–", "—"}
+
+
+def _join_sub_items(sub_items: list[dict]) -> str:
+    """Serialise sub_items as '(a) text; (b) text; ...' for DB storage."""
+    parts: list[str] = []
+    for item in sub_items:
+        marker = item.get("marker", "")
+        text = (item.get("text") or "").strip()
+        if text:
+            parts.append(f"({marker}) {text}" if marker else text)
+    return "; ".join(parts)
+
+
 def _map_eurlex_record(rec: dict) -> dict:
     """Map a EUR-Lex definition record to writer's internal field format."""
     src = rec.get("source_ref", {})
@@ -433,10 +447,16 @@ def _map_eurlex_record(rec: dict) -> dict:
         else f"{celex_id}#{list_path}"
     )
 
+    definition_raw = rec.get("definition", "") or ""
+    if definition_raw.strip() in _TRIVIAL_DEFS:
+        sub_items = rec.get("sub_items") or []
+        if sub_items:
+            definition_raw = _join_sub_items(sub_items)
+
     return {
         "phrase": term,
         "phrase_normalized": term_norm,
-        "definition_raw": rec.get("definition", ""),
+        "definition_raw": definition_raw,
         "lang": rec.get("lang", ""),
         "cross_lang_num": list_path,
         "source_file": celex_id,

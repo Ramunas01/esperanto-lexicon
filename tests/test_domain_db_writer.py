@@ -16,6 +16,8 @@ from lexicon.schema import create_domain_schema
 from extractor.domain_db_writer import (
     _group_records,
     _group_eurlex_records,
+    _join_sub_items,
+    _map_eurlex_record,
     process_group,
     process_stat_record,
     run,
@@ -766,3 +768,86 @@ class TestGpmiGroupingNoRegression:
 
         assert mwe_count == 1
         assert mwe_lang_count == 2
+
+
+# ---------------------------------------------------------------------------
+# _join_sub_items and _map_eurlex_record sub_items fallback
+# ---------------------------------------------------------------------------
+
+
+class TestJoinSubItems:
+    def test_basic_join(self) -> None:
+        sub_items = [
+            {"marker": "a", "text": "first part"},
+            {"marker": "b", "text": "second part"},
+        ]
+        assert _join_sub_items(sub_items) == "(a) first part; (b) second part"
+
+    def test_empty_list(self) -> None:
+        assert _join_sub_items([]) == ""
+
+    def test_skips_empty_text(self) -> None:
+        sub_items = [
+            {"marker": "a", "text": ""},
+            {"marker": "b", "text": "real content"},
+        ]
+        assert _join_sub_items(sub_items) == "(b) real content"
+
+    def test_no_marker(self) -> None:
+        sub_items = [{"marker": "", "text": "plain text"}]
+        assert _join_sub_items(sub_items) == "plain text"
+
+    def test_missing_text_key(self) -> None:
+        sub_items = [{"marker": "a"}, {"marker": "b", "text": "content"}]
+        assert _join_sub_items(sub_items) == "(b) content"
+
+
+class TestMapEurlexRecordSubItems:
+    def _make_rec(self, definition: str, sub_items: list[dict]) -> dict:
+        return {
+            "record_type": "definition",
+            "lang": "en",
+            "term": "export",
+            "term_normalized": "export",
+            "definition": definition,
+            "approved": True,
+            "source_ref": {
+                "celex_id": "02021R0821-20251115",
+                "structural_path": "art_2",
+                "list_path": "2",
+                "layout": "divlayout",
+            },
+            "context": {"article_number": "2"},
+            "sub_items": sub_items,
+            "footnote_refs": [],
+        }
+
+    def test_empty_definition_joins_sub_items(self) -> None:
+        rec = self._make_rec("", [
+            {"marker": "a", "text": "departure of dual-use items"},
+            {"marker": "b", "text": "re-export of dual-use items"},
+        ])
+        mapped = _map_eurlex_record(rec)
+        assert mapped["definition_raw"] == "(a) departure of dual-use items; (b) re-export of dual-use items"
+
+    def test_colon_definition_joins_sub_items(self) -> None:
+        rec = self._make_rec(":", [{"marker": "a", "text": "first option"}])
+        mapped = _map_eurlex_record(rec)
+        assert mapped["definition_raw"] == "(a) first option"
+
+    def test_dash_definition_joins_sub_items(self) -> None:
+        rec = self._make_rec("–", [{"marker": "a", "text": "dash case"}])
+        mapped = _map_eurlex_record(rec)
+        assert mapped["definition_raw"] == "(a) dash case"
+
+    def test_non_empty_definition_not_overridden(self) -> None:
+        rec = self._make_rec("items that can be used for both civil and military purposes", [
+            {"marker": "a", "text": "should be ignored"},
+        ])
+        mapped = _map_eurlex_record(rec)
+        assert mapped["definition_raw"] == "items that can be used for both civil and military purposes"
+
+    def test_empty_definition_no_sub_items_stays_empty(self) -> None:
+        rec = self._make_rec("", [])
+        mapped = _map_eurlex_record(rec)
+        assert mapped["definition_raw"] == ""

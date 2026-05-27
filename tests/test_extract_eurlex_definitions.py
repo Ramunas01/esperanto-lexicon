@@ -13,6 +13,8 @@ from extractor.extract_eurlex_definitions import (
     NUMBERED_ITEM_PATTERN,
     EurLexExtractor,
     _extract_article_number_from_text,
+    _find_definitions_article,
+    _get_article_rubric,
     _record_key,
     detect_layout,
     is_eurlex_definition,
@@ -586,6 +588,81 @@ class TestDivlayoutNumbered:
 
     def test_layout_string_in_source_ref(self, cbam_lt_defs: list[dict]) -> None:
         assert cbam_lt_defs[0]["source_ref"]["layout"] == "divlayout"
+
+
+# ---------------------------------------------------------------------------
+# Chapter-rubric fallback — _get_article_rubric and _find_definitions_article
+# ---------------------------------------------------------------------------
+
+
+def test_rubric_falls_back_to_chapter_when_article_has_no_stitle() -> None:
+    """For documents like Reg 2021/821 where stitle-article-norm is absent,
+    the rubric should fall back to the enclosing chapter's title-division-2
+    with source='chapter'.
+    """
+    from bs4 import BeautifulSoup
+
+    html = """
+    <html><body><div id="docHtml">
+      <div id="cpt_I" class="eli-subdivision">
+        <p class="title-division-2">Subject and Definitions</p>
+        <div id="art_1" class="eli-subdivision">
+          <p class="title-article-norm">Article 1</p>
+        </div>
+        <div id="art_2" class="eli-subdivision">
+          <p class="title-article-norm">Article 2</p>
+        </div>
+      </div>
+    </div></body></html>
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    art2 = soup.find(id="art_2")
+    rubric, source = _get_article_rubric(art2)
+    assert rubric == "Subject and Definitions"
+    assert source == "chapter"
+
+
+def test_rubric_prefers_article_when_both_present() -> None:
+    """When stitle-article-norm exists on the article, it wins over the chapter
+    rubric — UCC and CBAM regression: article-level rubric must not be displaced.
+    """
+    from bs4 import BeautifulSoup
+
+    html = """
+    <html><body><div id="docHtml">
+      <div id="cpt_I" class="eli-subdivision">
+        <p class="title-division-2">General provisions</p>
+        <div id="art_5" class="eli-subdivision">
+          <p class="title-article-norm">Article 5</p>
+          <p class="stitle-article-norm">Definitions</p>
+        </div>
+      </div>
+    </div></body></html>
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    art5 = soup.find(id="art_5")
+    rubric, source = _get_article_rubric(art5)
+    assert rubric == "Definitions"
+    assert source == "article"
+
+
+def test_auto_article_matches_via_chapter_rubric(capsys) -> None:
+    """_find_definitions_article resolves via chapter rubric when per-article
+    rubric is absent, returns the first matching article, and warns when
+    multiple articles share the same chapter rubric.
+    """
+    articles = [
+        ("art_1", "Subject and Definitions", "chapter"),
+        ("art_2", "Subject and Definitions", "chapter"),
+        ("art_3", "Scope", "chapter"),
+    ]
+    result = _find_definitions_article(articles, lang="en", keyword_set="definitions")
+    assert result == "art_1"
+    captured = capsys.readouterr()
+    assert "Warning" in captured.err
+    assert "2 articles" in captured.err
+    assert "art_1, art_2" in captured.err
+    assert "Subject and Definitions" in captured.err
 
 
 # ---------------------------------------------------------------------------
