@@ -18,6 +18,7 @@ from analyzer.coverage_report import (
     TokenResult,
     classify_tokens,
     compute_summary,
+    load_inflected_forms,
     load_mwe_phrases,
     load_tier_words,
 )
@@ -230,3 +231,168 @@ class TestLoadHelpers:
     def test_mwe_phrases_none_db(self) -> None:
         phrases = load_mwe_phrases(None, "lt")
         assert phrases == set()
+
+
+# ---------------------------------------------------------------------------
+# load_inflected_forms
+# ---------------------------------------------------------------------------
+
+
+class TestLoadInflectedForms:
+    def _make_db(self, tmp_path: Path, rows: list[tuple]) -> Path:
+        """Create a minimal lexicon DB with inflected_forms table."""
+        import sqlite3
+        db = tmp_path / "lex.db"
+        conn = sqlite3.connect(db)
+        conn.execute(
+            "CREATE TABLE inflected_forms "
+            "(inflected_word TEXT, lemma TEXT, lang TEXT, form_description TEXT, tier INTEGER)"
+        )
+        conn.executemany("INSERT INTO inflected_forms VALUES (?,?,?,?,?)", rows)
+        conn.commit()
+        conn.close()
+        return db
+
+    def test_absent_db_returns_empty(self, tmp_path: Path) -> None:
+        result = load_inflected_forms(tmp_path / "none.db", "en")
+        assert result == {}
+
+    def test_only_meaningful_mappings_loaded(self, tmp_path: Path) -> None:
+        db = self._make_db(tmp_path, [
+            ("is", "be", "en", "3sg present", 1),
+            ("is", "is", "en", "self", 1),   # self-referential — must be excluded
+            ("are", "be", "en", "plural present", 1),
+            ("are", "are", "en", "self", 1),  # self-referential — must be excluded
+        ])
+        result = load_inflected_forms(db, "en")
+        assert result == {"is": "be", "are": "be"}
+
+    def test_self_referential_only_returns_nothing(self, tmp_path: Path) -> None:
+        db = self._make_db(tmp_path, [
+            ("have", "have", "en", "self", 1),
+        ])
+        result = load_inflected_forms(db, "en")
+        assert result == {}
+
+    def test_lang_filter_applied(self, tmp_path: Path) -> None:
+        db = self._make_db(tmp_path, [
+            ("yra", "būti", "lt", "3sg present", 1),
+            ("is", "be", "en", "3sg present", 1),
+        ])
+        lt_result = load_inflected_forms(db, "lt")
+        en_result = load_inflected_forms(db, "en")
+        assert lt_result == {"yra": "būti"}
+        assert en_result == {"is": "be"}
+
+    def test_keys_lowercased(self, tmp_path: Path) -> None:
+        db = self._make_db(tmp_path, [
+            ("Were", "be", "en", "past plural", 1),
+        ])
+        result = load_inflected_forms(db, "en")
+        assert "were" in result
+        assert result["were"] == "be"
+
+
+# ---------------------------------------------------------------------------
+# classify_tokens — inflected_forms lookup (steps 3-4)
+# ---------------------------------------------------------------------------
+
+
+class TestInflectedFormsClassification:
+    """Tests for the inflected_forms lookup path in classify_tokens."""
+
+    def _classify(
+        self,
+        tokens: list[SimpleToken],
+        *,
+        tier1: set[str] | None = None,
+        tier2: set[str] | None = None,
+        inflected: dict[str, str] | None = None,
+    ) -> list[TokenResult]:
+        return classify_tokens(
+            tokens,
+            mwe_phrases=set(),
+            tier1_words=tier1 or set(),
+            tier2_words=tier2 or set(),
+            inflected_forms=inflected,
+        )
+
+    def test_inflected_to_tier1_via_text(self) -> None:
+        # 'is' not in tier1 directly; inflected_forms maps 'is' → 'be'; 'be' in tier1
+        tokens = [_tok("is", "is")]
+        result = self._classify(
+            tokens,
+            tier1={"be"},
+            inflected={"is": "be"},
+        )
+        assert result[0].category == "TIER1"
+
+    def test_inflected_to_tier1_via_spacy_lemma(self) -> None:
+        # spaCy gives lemma 'be' for 'are', but 'are' not in tier1; 'are' in inflected
+        # This tests step 4: tok.lemma_ in inflected_forms
+        tokens = [_tok("are", "be")]  # spaCy lemma is already 'be'
+        # Step 2 (lemma 'be' in tier1) wins here — test step 4 with a different lemma
+        tokens = [_tok("were", "be_wrong")]  # spaCy gives wrong lemma; text 'were' in inflected
+        result = self._classify(
+            tokens,
+            tier1={"be"},
+            inflected={"were": "be"},
+        )
+        assert result[0].category == "TIER1"
+
+    def test_inflected_to_tier2(self) -> None:
+        tokens = [_tok("was", "was")]
+        result = self._classify(
+            tokens,
+            tier2={"be"},
+            inflected={"was": "be"},
+        )
+        assert result[0].category == "TIER2"
+
+    def test_inflected_lemma_path_step4(self) -> None:
+        # tok.text 'xyz' not in inflected; tok.lemma 'had' is in inflected → 'have' → tier1
+        tokens = [_tok("xyz", "had")]
+        result = self._classify(
+            tokens,
+            tier1={"have"},
+            inflected={"had": "have"},
+        )
+        assert result[0].category == "TIER1"
+
+    def test_direct_match_wins_over_inflected(self) -> None:
+        # 'is' is directly in tier1 — inflected_forms should not be needed
+        tokens = [_tok("is", "is")]
+        result = self._classify(
+            tokens,
+            tier1={"is"},
+            inflected={"is": "be"},  # 'be' is NOT in tier1, but 'is' is
+        )
+        assert result[0].category == "TIER1"
+
+    def test_unknown_when_inflected_canon_not_in_tiers(self) -> None:
+        # inflected maps 'are' → 'be', but 'be' not in tier1 or tier2
+        tokens = [_tok("are", "are")]
+        result = self._classify(
+            tokens,
+            tier1={"cat"},
+            inflected={"are": "be"},
+        )
+        assert result[0].category == "UNKNOWN"
+
+    def test_no_inflected_forms_still_unknown(self) -> None:
+        tokens = [_tok("is", "is")]
+        result = self._classify(tokens, tier1={"be"}, inflected=None)
+        assert result[0].category == "UNKNOWN"
+
+    def test_inflected_forms_does_not_affect_mwe(self) -> None:
+        # MWE matching should be unaffected by inflected_forms
+        tokens = [_tok("customs", "customs"), _tok("duty", "duty")]
+        result = classify_tokens(
+            tokens,
+            mwe_phrases={"customs duty"},
+            tier1_words=set(),
+            tier2_words=set(),
+            inflected_forms={"customs": "custom"},
+        )
+        assert result[0].category == "TIER4"
+        assert result[0].n_tokens == 2

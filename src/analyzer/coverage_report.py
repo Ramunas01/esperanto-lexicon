@@ -85,6 +85,28 @@ def load_mwe_phrases(domain_db: Path | None, lang: str) -> set[str]:
     return phrases
 
 
+def load_inflected_forms(lexicon_db: Path, lang: str) -> dict[str, str]:
+    """Return {inflected_word → lemma} for non-self-referential entries in *lang*.
+
+    When multiple rows exist for the same inflected_word (e.g. 'is → be' and
+    'is → is'), only the row where inflected_word != lemma is loaded (the
+    meaningful mapping).  Self-referential rows (inflected_word == lemma) are
+    skipped entirely — they add nothing beyond what concept_lang already covers.
+    """
+    if not lexicon_db.exists():
+        return {}
+    conn = sqlite3.connect(lexicon_db)
+    result: dict[str, str] = {}
+    for inflected, lemma in conn.execute(
+        "SELECT LOWER(inflected_word), LOWER(lemma) FROM inflected_forms"
+        " WHERE lang = ? AND LOWER(inflected_word) != LOWER(lemma)",
+        (lang,),
+    ):
+        result[inflected] = lemma
+    conn.close()
+    return result
+
+
 def load_synonym_map(domain_db: Path | None, lang: str) -> dict[str, str]:
     """Return {phrase_normalized → canonical_synonym_phrase} for TIER4 synonym notation.
 
@@ -138,6 +160,7 @@ def classify_tokens(
     fallback_tier1: set[str] | None = None,
     fallback_tier2: set[str] | None = None,
     synonym_map: dict[str, str] | None = None,
+    inflected_forms: dict[str, str] | None = None,
 ) -> list[TokenResult]:
     """Greedily classify *tokens*, longest MWE match wins.
 
@@ -247,6 +270,7 @@ def classify_tokens(
             continue
 
         # TIER1 / TIER2 lookup — primary lang, then optional fallback lang
+        # Step 1-2: direct concept_lang lookup (text form, then spaCy lemma)
         text_lower = tok.text.lower()
         lemma_lower = tok.lemma.lower()
 
@@ -254,12 +278,27 @@ def classify_tokens(
             results.append(TokenResult(tok.text, tok.lemma, "TIER1"))
         elif text_lower in tier2_words or lemma_lower in tier2_words:
             results.append(TokenResult(tok.text, tok.lemma, "TIER2"))
-        elif fallback_tier1 and (text_lower in fallback_tier1 or lemma_lower in fallback_tier1):
-            results.append(TokenResult(tok.text, tok.lemma, "TIER1", via_fallback=True))
-        elif fallback_tier2 and (text_lower in fallback_tier2 or lemma_lower in fallback_tier2):
-            results.append(TokenResult(tok.text, tok.lemma, "TIER2", via_fallback=True))
         else:
-            results.append(TokenResult(tok.text, tok.lemma, "UNKNOWN"))
+            # Steps 3-4: inflected_forms → canonical lemma → concept_lang lookup.
+            # Catches common words like 'is'/'are' that live in inflected_forms
+            # (as 'is → be') but are absent from concept_lang directly.
+            tier_via_inflected: str | None = None
+            if inflected_forms:
+                canon = inflected_forms.get(text_lower) or inflected_forms.get(lemma_lower)
+                if canon:
+                    if canon in tier1_words:
+                        tier_via_inflected = "TIER1"
+                    elif canon in tier2_words:
+                        tier_via_inflected = "TIER2"
+
+            if tier_via_inflected:
+                results.append(TokenResult(tok.text, tok.lemma, tier_via_inflected))
+            elif fallback_tier1 and (text_lower in fallback_tier1 or lemma_lower in fallback_tier1):
+                results.append(TokenResult(tok.text, tok.lemma, "TIER1", via_fallback=True))
+            elif fallback_tier2 and (text_lower in fallback_tier2 or lemma_lower in fallback_tier2):
+                results.append(TokenResult(tok.text, tok.lemma, "TIER2", via_fallback=True))
+            else:
+                results.append(TokenResult(tok.text, tok.lemma, "UNKNOWN"))
 
         i += 1
 
@@ -442,7 +481,12 @@ def _load_nlp(lang: str):
         print("spaCy is not installed.  Run: pip install spacy", file=sys.stderr)
         sys.exit(1)
 
-    model = "lt_core_news_sm" if lang == "lt" else "xx_ent_wiki_sm"
+    MODEL_MAP = {
+        "lt": "lt_core_news_sm",
+        "en": "en_core_web_sm",
+        "fr": "fr_core_news_sm",
+    }
+    model = MODEL_MAP.get(lang, "xx_ent_wiki_sm")
     try:
         return spacy.load(model)
     except OSError:
@@ -481,6 +525,7 @@ def analyse(
     tier1, tier2 = load_tier_words(lexicon_db, lang)
     mwe_phrases = load_mwe_phrases(domain_db, lang)
     synonym_map = load_synonym_map(domain_db, lang)
+    inflected = load_inflected_forms(lexicon_db, lang)
 
     fb_tier1: set[str] = set()
     fb_tier2: set[str] = set()
@@ -494,6 +539,7 @@ def analyse(
         fallback_tier1=fb_tier1 if fallback_lang else None,
         fallback_tier2=fb_tier2 if fallback_lang else None,
         synonym_map=synonym_map if synonym_map else None,
+        inflected_forms=inflected if inflected else None,
     )
     summary = compute_summary(results)
 
