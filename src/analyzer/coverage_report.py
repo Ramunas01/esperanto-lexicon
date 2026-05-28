@@ -48,6 +48,7 @@ class TokenResult:
     n_tokens: int = 1       # source tokens consumed
     via_fallback: bool = False  # True when matched via fallback_lang, not primary lang
     synonym_of: str | None = None  # canonical synonym phrase, if any
+    matched_phrase: str | None = None  # phrase_normalized key that produced a TIER4 hit
 
 
 # ---------------------------------------------------------------------------
@@ -211,7 +212,7 @@ def classify_tokens(
             if matched_phrase is not None:
                 display = " ".join(t.text for t in window)
                 synonym = (synonym_map or {}).get(matched_phrase)
-                results.append(TokenResult(display, "", "TIER4", window_size, synonym_of=synonym))
+                results.append(TokenResult(display, "", "TIER4", window_size, synonym_of=synonym, matched_phrase=matched_phrase))
                 i += window_size
                 matched = True
                 break
@@ -258,7 +259,7 @@ def classify_tokens(
                         if rest_ok:
                             display = " ".join(t.text for t in window)
                             synonym = (synonym_map or {}).get(phrase)
-                            results.append(TokenResult(display, "", "TIER4", window_size, synonym_of=synonym))
+                            results.append(TokenResult(display, "", "TIER4", window_size, synonym_of=synonym, matched_phrase=phrase))
                             i += window_size
                             matched = True
                             break
@@ -506,6 +507,31 @@ def spacy_tokenise(text: str, nlp) -> list[SimpleToken]:
         is_skip = tok.is_punct or tok.is_space or tok.like_num or tok.is_stop
         tokens.append(SimpleToken(tok.text, tok.lemma_, is_skip))
     return tokens
+
+
+def spacy_tokenise_sentences(
+    text: str, nlp
+) -> tuple[list[SimpleToken], list[list[SimpleToken]]]:
+    """Tokenise text, returning both a flat token list and sentence-segmented lists.
+
+    The flat list is identical to what spacy_tokenise() returns.
+    Sentences containing only skip tokens are omitted from the sentence list.
+    Sentence boundaries come from spaCy's dependency parser (or sentencizer pipe
+    if the model has no parser).
+    """
+    doc = nlp(text)
+    all_tokens: list[SimpleToken] = []
+    sentences: list[list[SimpleToken]] = []
+    for sent in doc.sents:
+        sent_toks: list[SimpleToken] = []
+        for tok in sent:
+            is_skip = tok.is_punct or tok.is_space or tok.like_num or tok.is_stop
+            token = SimpleToken(tok.text, tok.lemma_, is_skip)
+            all_tokens.append(token)
+            sent_toks.append(token)
+        if any(not t.is_skip for t in sent_toks):
+            sentences.append(sent_toks)
+    return all_tokens, sentences
 
 
 # ---------------------------------------------------------------------------

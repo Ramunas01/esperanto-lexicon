@@ -62,7 +62,11 @@ def create_domain_schema(conn: sqlite3.Connection) -> None:
             current_tier        INTEGER DEFAULT 4,
             domain              TEXT,
             jurisdiction        TEXT,
-            promotable          INTEGER DEFAULT 0
+            promotable          INTEGER DEFAULT 0,
+            source_type         TEXT,
+            definition_status   TEXT,
+            attestation_count   INTEGER DEFAULT 1,
+            authority           TEXT
         );
 
         CREATE TABLE IF NOT EXISTS mwe_lang (
