@@ -17,3 +17,12 @@ Thumbs.db
 
 # Mining corpus — third-party content, not for public repo
 data/mining/
+
+# Generated analysis data — not for repo
+data/analysis/*.csv
+data/analysis/unknown_tokens_pooled.txt
+
+# Mining candidates — generated, not source
+data/domain_db/candidates_*.jsonl
+data/domain_db/merged_candidates*.jsonl
+data/domain_db/review_bucket_*.jsonl
