@@ -9,7 +9,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from extractor.review_cli import _eurlex_def_lines
+from extractor.review_cli import _eurlex_def_lines, _handle_review_key
 
 
 def _make_rec(definition: str, sub_items: list[dict] | None = None) -> dict:
@@ -87,3 +87,55 @@ class TestEurlexDefLines:
         rec = _make_rec("   ", [{"marker": "a", "text": "content"}])
         lines = _eurlex_def_lines(rec)
         assert lines == ["(a) content"]
+
+
+class TestReviewNavigation:
+    @staticmethod
+    def _fresh():
+        records = [{"lang": "en", "approved": None} for _ in range(3)]
+        pending = [0, 1, 2]
+        counts = {"approved": 0, "rejected": 0, "skipped": 0, "reviewed_again": 0}
+        history: list[tuple[int, object, str]] = []
+        return records, pending, counts, history
+
+    def test_back_navigation_restores_previous_state(self) -> None:
+        records, pending, counts, history = self._fresh()
+
+        # Approve the first record, advancing to position 1.
+        pos, quit_, save = _handle_review_key("a", records, pending, 0, history, counts)
+        assert pos == 1 and not quit_ and save
+        assert records[0]["approved"] is True
+        assert counts["approved"] == 1
+
+        # Back: undo the approve, restore prior state, return to position 0.
+        pos, quit_, save = _handle_review_key("-", records, pending, 1, history, counts)
+        assert pos == 0 and not quit_ and save
+        assert records[0]["approved"] is None  # restored to pre-action value
+        assert counts["approved"] == 0
+        assert counts["reviewed_again"] == 1
+        assert history == []
+
+    def test_back_at_first_record_stays_put(self, capsys) -> None:
+        records, pending, counts, history = self._fresh()
+
+        pos, quit_, save = _handle_review_key("-", records, pending, 0, history, counts)
+
+        assert pos == 0 and not quit_ and not save
+        assert history == []
+        assert counts["reviewed_again"] == 0
+        assert "Already at first record" in capsys.readouterr().out
+
+    def test_plus_same_as_skip(self) -> None:
+        # Run the same starting state through 's' and through '+'.
+        recs_s, pend_s, counts_s, hist_s = self._fresh()
+        recs_p, pend_p, counts_p, hist_p = self._fresh()
+
+        res_s = _handle_review_key("s", recs_s, pend_s, 0, hist_s, counts_s)
+        res_p = _handle_review_key("+", recs_p, pend_p, 0, hist_p, counts_p)
+
+        assert res_s == res_p == (1, False, False)
+        assert recs_s[0]["approved"] is None  # skip leaves value unchanged
+        assert recs_p[0]["approved"] is None
+        assert counts_s == counts_p
+        assert counts_p["skipped"] == 1
+        assert hist_s == hist_p == [(0, None, "skip")]

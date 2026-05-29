@@ -41,8 +41,9 @@ def _load_records(path: Path) -> list[dict]:
     with path.open(encoding="utf-8") as fh:
         for line in fh:
             line = line.strip()
-            if line:
-                records.append(json.loads(line))
+            if not line or line.startswith("#"):
+                continue
+            records.append(json.loads(line))
     return records
 
 
@@ -240,6 +241,72 @@ def _pending_idxs_eurlex(records: list[dict], lang: str) -> list[int]:
     ]
 
 
+def _handle_review_key(
+    key: str,
+    records: list[dict],
+    pending: list[int],
+    pos: int,
+    history: list[tuple[int, object, str]],
+    counts: dict[str, int],
+) -> tuple[int, bool, bool]:
+    """Apply one keypress in the single-language review loop.
+
+    Mutates ``records``, the undo ``history`` stack, and the ``counts`` tallies
+    in place.
+
+    Args:
+        key: the keypress to process.
+        records: all loaded records.
+        pending: indexes into records that are under review.
+        pos: current 0-based position within pending.
+        history: undo stack of (pos, previous_approved, action) entries.
+        counts: running tallies (approved/rejected/skipped/reviewed_again).
+
+    Returns:
+        (next_pos, quit_flag, needs_save).
+    """
+    if key == "q":
+        return pos, True, False
+
+    if key == "-":
+        if not history:
+            print("  Already at first record")
+            return pos, False, False
+        prev_pos, prev_approved, action = history.pop()
+        records[pending[prev_pos]]["approved"] = prev_approved
+        if action == "approve":
+            counts["approved"] -= 1
+        elif action == "reject":
+            counts["rejected"] -= 1
+        elif action == "skip":
+            counts["skipped"] -= 1
+        counts["reviewed_again"] += 1
+        return prev_pos, False, True
+
+    rec = records[pending[pos]]
+    prev_approved = rec.get("approved")
+
+    if key == "a":
+        history.append((pos, prev_approved, "approve"))
+        rec["approved"] = True
+        counts["approved"] += 1
+        return pos + 1, False, True
+    if key == "r":
+        history.append((pos, prev_approved, "reject"))
+        rec["approved"] = "rejected"
+        counts["rejected"] += 1
+        return pos + 1, False, True
+    if key in ("s", "+"):
+        history.append((pos, prev_approved, "skip"))
+        counts["skipped"] += 1
+        return pos + 1, False, False
+
+    print(f"  (unknown key {key!r}, treating as skip)")
+    history.append((pos, prev_approved, "skip"))
+    counts["skipped"] += 1
+    return pos + 1, False, False
+
+
 def review(input_path: Path, lang: str) -> None:
     """Run the interactive review loop for a single language.
 
@@ -266,34 +333,30 @@ def review(input_path: Path, lang: str) -> None:
         return
 
     total = len(pending)
-    approved_count = 0
-    rejected_count = 0
-    skipped_count = 0
+    counts = {"approved": 0, "rejected": 0, "skipped": 0, "reviewed_again": 0}
+    history: list[tuple[int, object, str]] = []
 
-    for pos, rec_idx in enumerate(pending, start=1):
-        rec = records[rec_idx]
-        display_fn(rec, pos, total)
-        print("  [a] approve   [r] reject   [s] skip   [q] quit  > ", end="", flush=True)
+    pos = 0
+    while pos < total:
+        rec = records[pending[pos]]
+        display_fn(rec, pos + 1, total)
+        print(
+            "  [a] approve  [r] reject  [s/+] skip  [-] back  [q] quit  > ",
+            end="",
+            flush=True,
+        )
 
         key = _read_key()
         print(key)
 
-        if key == "a":
-            rec["approved"] = True
+        pos, quit_, needs_save = _handle_review_key(
+            key, records, pending, pos, history, counts
+        )
+        if needs_save:
             _save_records(input_path, records)
-            approved_count += 1
-        elif key == "r":
-            rec["approved"] = "rejected"
-            _save_records(input_path, records)
-            rejected_count += 1
-        elif key == "s":
-            skipped_count += 1
-        elif key == "q":
+        if quit_:
             print("\n  Session ended early.")
             break
-        else:
-            print(f"  (unknown key {key!r}, treating as skip)")
-            skipped_count += 1
 
     if fmt == "eurlex":
         remaining = _pending_idxs_eurlex(records, lang)
@@ -301,10 +364,12 @@ def review(input_path: Path, lang: str) -> None:
         remaining = _pending_idxs(records, lang)
     print()
     print("  ── Session summary ──────────────────")
-    print(f"  Approved  : {approved_count}")
-    print(f"  Rejected  : {rejected_count}")
-    print(f"  Skipped   : {skipped_count}")
+    print(f"  Approved  : {counts['approved']}")
+    print(f"  Rejected  : {counts['rejected']}")
+    print(f"  Skipped   : {counts['skipped']}")
     print(f"  Remaining : {len(remaining)}")
+    if counts["reviewed_again"]:
+        print(f"  Re-reviewed: {counts['reviewed_again']} (via [-] back)")
     print()
 
 
