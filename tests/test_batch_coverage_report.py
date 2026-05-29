@@ -9,7 +9,11 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src" / "analyzer"))
 
-from batch_coverage_report import distinct_t4_count, sentence_cooccur_stats
+from batch_coverage_report import (
+    distinct_t4_count,
+    sentence_cooccur_stats,
+    t3_anchored_cooccur_stats,
+)
 from coverage_report import TokenResult
 
 
@@ -33,6 +37,10 @@ def _t1(text: str) -> TokenResult:
 
 def _t2(text: str) -> TokenResult:
     return TokenResult(text=text, lemma=text, category="TIER2")
+
+
+def _t3(text: str) -> TokenResult:
+    return TokenResult(text=text, lemma=text, category="TIER3")
 
 
 def _unk(text: str) -> TokenResult:
@@ -221,3 +229,62 @@ class TestMultiConceptRatio:
 
     def test_empty_input_returns_zero(self) -> None:
         assert self._ratio([]) == 0.0
+
+
+# ---------------------------------------------------------------------------
+# t3_anchored_cooccur_stats
+# ---------------------------------------------------------------------------
+
+
+class TestT3AnchoredCooccur:
+    def test_t3_anchor_empty_doc(self) -> None:
+        total_t3, activated_t3 = t3_anchored_cooccur_stats([])
+        assert total_t3 == 0
+        assert activated_t3 == 0
+
+    def test_t3_anchor_no_t4_in_sentence(self) -> None:
+        # Sentence has T3 tokens but no T4 → not activated
+        sent = [_t3("provisions"), _t3("framework"), _t1("the")]
+        total_t3, activated_t3 = t3_anchored_cooccur_stats([sent])
+        assert total_t3 == 2
+        assert activated_t3 == 0
+
+    def test_t3_anchor_with_t4(self) -> None:
+        # Sentence has both T3 and T4 → T3 tokens are activated
+        sent = [_t3("provisions"), _t4("customs duty", "customs duty"), _t3("framework")]
+        total_t3, activated_t3 = t3_anchored_cooccur_stats([sent])
+        assert total_t3 == 2
+        assert activated_t3 == 2
+
+    def test_t3_anchor_rate_zero_t3(self) -> None:
+        # No T3 in text → rate should be None (not 0 or NaN)
+        sents = [[_t4("customs duty", "customs duty"), _t1("the")]]
+        total_t3, activated_t3 = t3_anchored_cooccur_stats(sents)
+        assert total_t3 == 0
+        assert activated_t3 == 0
+        # Caller computes rate: None when total_t3 == 0
+        rate = round(activated_t3 / total_t3, 4) if total_t3 > 0 else None
+        assert rate is None
+
+    def test_t3_anchor_mixed_sentences(self) -> None:
+        # sent1: T3 only → 2 T3 total, 0 activated
+        # sent2: T3 + T4 → 1 T3 total, 1 activated
+        # sent3: T4 only → 0 T3 total, 0 activated
+        sent1 = [_t3("provisions"), _t3("framework")]
+        sent2 = [_t3("applicable"), _t4("tariff quota", "tariff quota")]
+        sent3 = [_t4("rules of origin", "rules of origin"), _t1("the")]
+        total_t3, activated_t3 = t3_anchored_cooccur_stats([sent1, sent2, sent3])
+        assert total_t3 == 3
+        assert activated_t3 == 1
+
+    def test_t3_anchor_density_formula(self) -> None:
+        # 3 sentences, 4 activated_t3 → density = 4/3 ≈ 1.333
+        sent1 = [_t3("a"), _t3("b"), _t4("x", "x")]  # 2 activated
+        sent2 = [_t3("c"), _t3("d"), _t4("y", "y")]  # 2 activated
+        sent3 = [_t1("the"), _t2("goods")]             # 0 T3
+        total_t3, activated_t3 = t3_anchored_cooccur_stats([sent1, sent2, sent3])
+        assert total_t3 == 4
+        assert activated_t3 == 4
+        n_sentences = 3
+        density = round(activated_t3 / max(n_sentences, 1), 4)
+        assert density == round(4 / 3, 4)

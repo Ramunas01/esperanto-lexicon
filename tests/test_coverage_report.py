@@ -210,7 +210,7 @@ class TestComputeSummary:
     def test_counts_correct(self) -> None:
         results = self._results("TIER1", "TIER1", "TIER4", "UNKNOWN", "SKIP")
         summary = compute_summary(results)
-        assert summary["counts"] == {"TIER1": 2, "TIER2": 0, "TIER4": 1, "UNKNOWN": 1, "SKIP": 1}
+        assert summary["counts"] == {"TIER1": 2, "TIER2": 0, "TIER3": 0, "TIER4": 1, "UNKNOWN": 1, "SKIP": 1}
 
 
 # ---------------------------------------------------------------------------
