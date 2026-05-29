@@ -281,6 +281,9 @@ languages with no primary entries.
 * Schema definitions in `src/lexicon/schema.py` (single source of truth)
 * All queries use parameterised statements (never f-string SQL)
 * Migrations are versioned scripts, never destructive in-place edits
+* Area attestation: store raw doc\_count + frequency per area. Derive weights
+  at query time. Do not bake a weighting scheme into the schema — preserves
+  flexibility for the eventual knowledge-graph layer.
 
 **Commits:**
 
@@ -361,7 +364,33 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
 * \[x] src/analyzer/coverage\_report.py — `load\_inflected\_forms()` added; `classify\_tokens()` now checks inflected\_forms as steps 3-4 before falling back to UNKNOWN; `en_core_web_sm` for EN (MODEL\_MAP); `matched\_phrase` field on TokenResult for TIER4 dedup; `spacy\_tokenise\_sentences()` returns flat+sentence lists. 39 tests passing.
 * \[x] src/lexicon/schema.py — mwe table extended with provenance columns: source\_type, definition\_status, attestation\_count (DEFAULT 1), authority; src/lexicon/migrate\_domain\_schema\_v2.py — idempotent migration; classifies via first\_seen\_source pattern (wco-glossary/ → wco\_glossary; #-containing → normative with celex\_id authority; corpus file → normative; empty → statistical\_mwe); attestation\_count set from COUNT(DISTINCT source\_doc) in mwe\_occurrence. All 5 domain DBs migrated (GPMI/UCC/CBAM/DualUse → normative, WCO → wco\_glossary).
 * \[x] src/analyzer/batch\_coverage\_report.py — rewritten with three expertise measures: density (T4\_ratio), variety (distinct\_t4, t4\_variety), relational (cooccur\_density, multi\_concept\_ratio); stray corpus root files excluded; comparison block + failure-case table + control-ceiling table; --measures flag; tests/test\_batch\_coverage\_report.py — 20 tests (distinct\_t4\_count, sentence\_cooccur\_stats, multi\_concept\_ratio). Proficiency baseline v3 (EN, 4 domain DBs): control 0.018 / novice 0.111 / expert 0.146 T4\_ratio (8x); cooccur\_density 0.000 / 0.270 / 0.687 (∞); 541 tests passing.
+* \[x] src/lexicon/seed\_tier3.py — seeds Tier 3 from UNKNOWN token pool; 4-stage filter (structural A1, T4 stem stoplist A2a, NE list A2b, fragment A2c, manual second-pass A3); inserts with POS tags from spaCy; 97 words inserted at tier=3, cefr=C1, source=tier3\_unknown\_pool\_2026\_05\_29.
+* \[x] src/analyzer/coverage\_report.py — load\_tier3\_words() added; classify\_tokens() gains tier3\_words param (checked after T1/T2/inflected, before fallback); TIER3 category added to compute\_summary(); load\_tier\_words() fixed to filter tier IN (1,2) only (was silently dumping T3 into tier2 set). 547 tests passing.
+* \[x] src/analyzer/batch\_coverage\_report.py — t3\_anchored\_cooccur\_stats() added; activated\_t3 = T3 tokens in sentences that also have ≥1 T4 token; t3\_anchor\_density = activated\_t3 / n\_sentences; t3\_anchor\_rate = activated\_t3 / total\_t3 (None if total\_t3=0); 6 new unit tests. Proficiency v4 baseline (EN, 4 domain DBs, 97 T3 words): control t3a\_density=0.063 / novice=0.171 / expert=0.475 (7.5x); t3\_anchor\_rate inverted (control=0.87 > expert=0.61) — controls use nearly all their T3 in domain sentences while experts have much more T3 in both domain and non-domain contexts.
+* \[x] Per-area attestation infrastructure:
+    - mwe\_area\_attestation table on all domain DBs (src/lexicon/schema.py +
+      idempotent src/lexicon/migrate\_area\_attestation.py; applied to all 6
+      domain DBs incl. gpmi to avoid drift)
+    - 7 canonical area names: law, tariff\_regulation,
+      non\_tariff\_regulation, customs\_procedures, origin, classification,
+      valuation
+    - 'cross\_cutting' tag for compliance/sustainability/tech/other; source\_file
+      column preserves the originating mining file
+    - area\_signature (7 hex digits, high = relevant; '0' absent → 'F' dominant)
+      derived in src/lexicon/area\_signature.py, cached on mwe.area\_signature
+    - src/extractor/merge\_area\_candidates.py joins per-area mining outputs
+      (--area name:path, --cross-cutting cross\_cutting:path), keyed on
+      phrase\_normalized; emits attestation list + area\_signature +
+      area\_specificity; sorted spec desc, total\_doc\_count desc
+    - domain\_db\_writer.py loads merged-format records (process\_merged\_record):
+      writes mwe\_area\_attestation rows alongside mwe\_lang, caches signature;
+      backward-compatible with attestation-less records
+    - src/lexicon/recompute\_signatures.py backfills/recomputes cached signatures
+    - review\_cli.py displays \[signature  spec=…\] one-liner per merged candidate
+    - mine\_01 candidates\_roo.jsonl re-homed via merge tool single-area mode
+      (--area origin:…) → candidates\_roo\_merged.jsonl, 297 phrases all 0000F00
+    - 36 new tests (test\_area\_signature, test\_merge\_area\_candidates,
+      TestProcessMergedRecord); 582 passing
 * \[ ] Statistical candidates review — pending human review
 * \[ ] Named entity layer — design deferred
-* \[ ] Tier 3 — not yet designed
 

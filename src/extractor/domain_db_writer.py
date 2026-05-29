@@ -25,6 +25,7 @@ from pathlib import Path
 # schema.py lives in src/lexicon/; resolve relative to this file
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from lexicon.schema import create_domain_schema
+from lexicon.area_signature import compute_signature
 
 
 def _today() -> str:
@@ -273,6 +274,176 @@ def process_stat_record(
     pmi = rec.get("pmi", 0.0)
     print(f"STAT-NEW: {rec['phrase']}  (freq={freq}, pmi={pmi})")
     return {"new_concepts": 1, "lang_counts": {lang: 1}, "merged": 0, "conflicts": 0}
+
+
+# ---------------------------------------------------------------------------
+# Area-aware merged candidate records (output of merge_area_candidates.py)
+# ---------------------------------------------------------------------------
+
+
+def _is_merged(rec: dict) -> bool:
+    """Return True if rec is an area-aware merged candidate (has 'attestation')."""
+    return "attestation" in rec
+
+
+def _insert_attestation_rows(
+    conn: sqlite3.Connection, mwe_id: int, attestation: list[dict]
+) -> int:
+    """Insert per-area attestation rows for *mwe_id*. Returns rows inserted.
+
+    Uses INSERT OR IGNORE against the UNIQUE(mwe_id, area, source_file)
+    constraint so re-loading the same merged record is idempotent.
+    """
+    inserted = 0
+    for row in attestation or []:
+        area = row.get("area")
+        if not area:
+            continue
+        cur = conn.execute(
+            """
+            INSERT OR IGNORE INTO mwe_area_attestation
+                (mwe_id, area, doc_count, frequency, source_file)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                mwe_id,
+                area,
+                int(row.get("doc_count") or 0),
+                int(row.get("frequency") or 0),
+                row.get("source_file"),
+            ),
+        )
+        inserted += cur.rowcount
+    return inserted
+
+
+def _update_area_signature(conn: sqlite3.Connection, mwe_id: int) -> str:
+    """Recompute the cached area_signature on mwe from its attestation rows."""
+    rows = [
+        {"area": area, "doc_count": doc_count, "frequency": frequency}
+        for area, doc_count, frequency in conn.execute(
+            "SELECT area, doc_count, frequency FROM mwe_area_attestation WHERE mwe_id = ?",
+            (mwe_id,),
+        )
+    ]
+    signature = compute_signature(rows)
+    conn.execute("UPDATE mwe SET area_signature = ? WHERE id = ?", (signature, mwe_id))
+    return signature
+
+
+def _merged_phrase(rec: dict) -> str:
+    return rec.get("phrase") or rec.get("phrase_inflected") or rec["phrase_normalized"]
+
+
+def _insert_mwe_lang_merged(conn: sqlite3.Connection, mwe_id: int, rec: dict) -> None:
+    """Insert a mwe_lang row for an area-aware merged candidate record."""
+    phrase = _merged_phrase(rec)
+    phrase_normalized = rec["phrase_normalized"]
+    phrase_base = phrase_normalized.split()[0] if phrase_normalized else ""
+    conn.execute(
+        """
+        INSERT INTO mwe_lang
+            (mwe_id, lang, phrase, phrase_normalized, phrase_base,
+             definition_raw, pos_pattern, abbrev)
+        VALUES (?, ?, ?, ?, ?, NULL, ?, NULL)
+        """,
+        (
+            mwe_id,
+            rec["lang"],
+            phrase,
+            phrase_normalized,
+            phrase_base,
+            rec.get("pos_pattern"),
+        ),
+    )
+
+
+def _insert_attestation_occurrences(
+    conn: sqlite3.Connection, mwe_id: int, rec: dict, today: str
+) -> None:
+    """Record one mwe_occurrence per attestation source_file.
+
+    This feeds the distinct-source promotion logic: a term attested across
+    several area corpora accrues distinct source_docs and is promoted
+    accordingly.
+    """
+    for row in rec.get("attestation") or []:
+        area = row.get("area", "?")
+        freq = row.get("frequency", 0)
+        conn.execute(
+            """
+            INSERT INTO mwe_occurrence
+                (mwe_id, source_doc, source_lang, clause_ref, date_extracted)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                mwe_id,
+                row.get("source_file") or "",
+                rec["lang"],
+                f"area:{area} freq{freq}",
+                today,
+            ),
+        )
+
+
+def process_merged_record(
+    conn: sqlite3.Connection,
+    rec: dict,
+    domain: str,
+    jurisdiction: str,
+    overrides: dict[tuple[str, str], dict] | None = None,
+) -> dict:
+    """Process a single area-aware merged candidate record.
+
+    Inserts/locates the mwe + mwe_lang, records per-area attestation rows, and
+    caches the recomputed area_signature on the mwe row.
+
+    Returns a counts dict with keys: new_concepts, lang_counts, merged,
+    conflicts, attestation_rows.
+    """
+    today = _today()
+    phrase_normalized = rec["phrase_normalized"]
+    lang = rec["lang"]
+
+    rec, phrase_normalized = apply_override(rec, phrase_normalized, overrides or {})
+    rec = {**rec, "phrase_normalized": phrase_normalized}
+
+    existing = _lookup_mwe_lang(conn, phrase_normalized, lang)
+    if existing is not None:
+        mwe_id = existing[0]
+        _insert_attestation_occurrences(conn, mwe_id, rec, today)
+        n = _count_distinct_sources(conn, mwe_id)
+        _upgrade_mwe(conn, mwe_id, n)
+        att_rows = _insert_attestation_rows(conn, mwe_id, rec.get("attestation", []))
+        signature = _update_area_signature(conn, mwe_id)
+        print(f"MERGED-ATTEST: {phrase_normalized}  [{signature}] (+{att_rows} area rows)")
+        return {
+            "new_concepts": 0,
+            "lang_counts": {},
+            "merged": 1,
+            "conflicts": 0,
+            "attestation_rows": att_rows,
+        }
+
+    # New concept: first_seen_source = the dominant area's source file (the
+    # attestation list is emitted sorted by doc_count descending).
+    attestation = rec.get("attestation") or []
+    first_source = attestation[0].get("source_file", "") if attestation else ""
+    mwe_id = _insert_new_mwe(conn, first_source, today, domain, jurisdiction)
+    _insert_mwe_lang_merged(conn, mwe_id, rec)
+    _insert_attestation_occurrences(conn, mwe_id, rec, today)
+    n = _count_distinct_sources(conn, mwe_id)
+    _upgrade_mwe(conn, mwe_id, n)
+    att_rows = _insert_attestation_rows(conn, mwe_id, attestation)
+    signature = _update_area_signature(conn, mwe_id)
+    print(f"MERGED-NEW: {_merged_phrase(rec)}  [{signature}] ({att_rows} area rows)")
+    return {
+        "new_concepts": 1,
+        "lang_counts": {lang: 1},
+        "merged": 0,
+        "conflicts": 0,
+        "attestation_rows": att_rows,
+    }
 
 
 def process_group(
@@ -592,6 +763,7 @@ def run(
 
     def_records: list[dict] = []
     stat_records: list[dict] = []
+    merged_records: list[dict] = []
     eurlex_records: list[dict] = []
     wco_records: list[dict] = []
     with input_path.open(encoding="utf-8") as fh:
@@ -608,6 +780,8 @@ def run(
                     elif rec.get("record_type") is not None:
                         # Non-definition records (article_metadata, footnote): skip
                         pass
+                    elif _is_merged(rec):
+                        merged_records.append(rec)
                     elif _is_statistical(rec):
                         stat_records.append(rec)
                     else:
@@ -622,6 +796,16 @@ def run(
     total_lang_counts: dict[str, int] = {}
     total_merged = 0
     total_conflicts = 0
+    total_attestation_rows = 0
+
+    for rec in merged_records:
+        result = process_merged_record(conn, rec, domain, jurisdiction, overrides)
+        total_new += result["new_concepts"]
+        total_merged += result["merged"]
+        total_conflicts += result["conflicts"]
+        total_attestation_rows += result.get("attestation_rows", 0)
+        for lang, count in result["lang_counts"].items():
+            total_lang_counts[lang] = total_lang_counts.get(lang, 0) + count
 
     for cross_lang_num, group in _group_records(def_records):
         result = process_group(conn, group, cross_lang_num, domain, jurisdiction, overrides)
@@ -661,6 +845,9 @@ def run(
 
     total_concepts = conn.execute("SELECT COUNT(*) FROM mwe").fetchone()[0]
     total_mwe_lang = conn.execute("SELECT COUNT(*) FROM mwe_lang").fetchone()[0]
+    total_attest = conn.execute(
+        "SELECT COUNT(*) FROM mwe_area_attestation"
+    ).fetchone()[0]
     conn.close()
 
     lang_str = ", ".join(
@@ -671,8 +858,11 @@ def run(
     print(f"Languages      : {lang_str}")
     print(f"Merged         : {total_merged}")
     print(f"Conflicts      : {total_conflicts}")
+    if total_attestation_rows:
+        print(f"Attestation rows: {total_attestation_rows} (this run)")
     print(f"Total concepts : {total_concepts}")
     print(f"Total mwe_lang : {total_mwe_lang}")
+    print(f"Total attest   : {total_attest}")
 
 
 def main(argv: list[str] | None = None) -> None:

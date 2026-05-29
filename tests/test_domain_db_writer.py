@@ -16,9 +16,11 @@ from lexicon.schema import create_domain_schema
 from extractor.domain_db_writer import (
     _group_records,
     _group_eurlex_records,
+    _is_merged,
     _join_sub_items,
     _map_eurlex_record,
     process_group,
+    process_merged_record,
     process_stat_record,
     run,
 )
@@ -851,3 +853,171 @@ class TestMapEurlexRecordSubItems:
         rec = self._make_rec("", [])
         mapped = _map_eurlex_record(rec)
         assert mapped["definition_raw"] == ""
+
+
+# ---------------------------------------------------------------------------
+# Area-aware merged candidate loading
+# ---------------------------------------------------------------------------
+
+
+def _merged_record(
+    phrase: str,
+    attestation: list[dict],
+    lang: str = "en",
+    pos_pattern: str = "ADJ NOUN",
+    approved: bool = True,
+) -> dict:
+    total_doc = sum(r["doc_count"] for r in attestation)
+    total_freq = sum(r["frequency"] for r in attestation)
+    rec = {
+        "phrase_normalized": phrase,
+        "phrase_inflected": None,
+        "pos_pattern": pos_pattern,
+        "lang": lang,
+        "total_doc_count": total_doc,
+        "total_frequency": total_freq,
+        "attestation": attestation,
+        "area_signature": "ignored-recomputed",
+        "area_specificity": 1.0,
+        "sample_context": "ctx",
+    }
+    if approved:
+        rec["approved"] = True
+    return rec
+
+
+class TestIsMerged:
+    def test_detects_attestation_key(self) -> None:
+        assert _is_merged({"phrase_normalized": "x", "attestation": []}) is True
+
+    def test_statistical_not_merged(self) -> None:
+        assert _is_merged({"phrase": "x"}) is False
+
+
+class TestProcessMergedRecord:
+    def test_new_concept_writes_mwe_lang_and_attestation(self) -> None:
+        conn = _fresh_conn()
+        rec = _merged_record(
+            "preferential origin",
+            [
+                {"area": "origin", "doc_count": 40, "frequency": 210,
+                 "source_file": "mine-A5-origin.txt"},
+                {"area": "law", "doc_count": 20, "frequency": 28,
+                 "source_file": "mine-A1-law.txt"},
+            ],
+        )
+        result = process_merged_record(conn, rec, "customs_expert", "EU")
+        assert result["new_concepts"] == 1
+        assert result["attestation_rows"] == 2
+
+        # mwe_lang row exists with pos_pattern
+        row = conn.execute(
+            "SELECT mwe_id, pos_pattern FROM mwe_lang WHERE phrase_normalized=?",
+            ("preferential origin",),
+        ).fetchone()
+        assert row is not None
+        mwe_id, pos = row
+        assert pos == "ADJ NOUN"
+
+        # attestation rows written
+        areas = conn.execute(
+            "SELECT area, doc_count, frequency FROM mwe_area_attestation WHERE mwe_id=? ORDER BY area",
+            (mwe_id,),
+        ).fetchall()
+        assert ("law", 20, 28) in areas
+        assert ("origin", 40, 210) in areas
+
+        # cached signature recomputed: origin 40 (F), law 20 (weight .5 → 8)
+        sig = conn.execute(
+            "SELECT area_signature FROM mwe WHERE id=?", (mwe_id,)
+        ).fetchone()[0]
+        assert sig == "8000F00"
+        conn.close()
+
+    def test_signature_cached_pure_origin(self) -> None:
+        conn = _fresh_conn()
+        rec = _merged_record(
+            "rules of origin",
+            [{"area": "origin", "doc_count": 100, "frequency": 300,
+              "source_file": "mine_01_rules_of_origin.txt"}],
+        )
+        process_merged_record(conn, rec, "customs_expert", "EU")
+        sig = conn.execute("SELECT area_signature FROM mwe").fetchone()[0]
+        assert sig == "0000F00"
+        conn.close()
+
+    def test_idempotent_attestation_on_reload(self) -> None:
+        conn = _fresh_conn()
+        rec = _merged_record(
+            "preferential origin",
+            [{"area": "origin", "doc_count": 40, "frequency": 210,
+              "source_file": "mine-A5-origin.txt"}],
+        )
+        process_merged_record(conn, rec, "customs_expert", "EU")
+        # Reload same record: attestation row must not duplicate (UNIQUE).
+        result2 = process_merged_record(conn, rec, "customs_expert", "EU")
+        assert result2["attestation_rows"] == 0
+        n = conn.execute("SELECT COUNT(*) FROM mwe_area_attestation").fetchone()[0]
+        assert n == 1
+        conn.close()
+
+    def test_run_loads_merged_jsonl(self, tmp_path: Path) -> None:
+        records = [
+            _merged_record(
+                "preferential origin",
+                [{"area": "origin", "doc_count": 40, "frequency": 210,
+                  "source_file": "mine-A5-origin.txt"}],
+            ),
+            _merged_record(
+                "customs declaration",
+                [
+                    {"area": "law", "doc_count": 30, "frequency": 60,
+                     "source_file": "mine-A1-law.txt"},
+                    {"area": "customs_procedures", "doc_count": 30, "frequency": 50,
+                     "source_file": "mine-A4-customs-understanding.txt"},
+                ],
+                pos_pattern="NOUN NOUN",
+            ),
+        ]
+        inp = tmp_path / "merged.jsonl"
+        with inp.open("w", encoding="utf-8") as fh:
+            for r in records:
+                fh.write(json.dumps(r) + "\n")
+        db = tmp_path / "test.db"
+        run(inp, db, "customs_expert", "EU")
+
+        conn = sqlite3.connect(db)
+        n_mwe = conn.execute("SELECT COUNT(*) FROM mwe").fetchone()[0]
+        n_att = conn.execute("SELECT COUNT(*) FROM mwe_area_attestation").fetchone()[0]
+        assert n_mwe == 2
+        assert n_att == 3
+        sigs = {
+            r[0]
+            for r in conn.execute(
+                "SELECT area_signature FROM mwe WHERE area_signature IS NOT NULL"
+            )
+        }
+        assert "0000F00" in sigs  # preferential origin
+        conn.close()
+
+    def test_backward_compat_record_without_attestation(self, tmp_path: Path) -> None:
+        # A statistical (old-format) record with no attestation loads as before.
+        rec = {
+            "phrase": "tariff classification",
+            "phrase_normalized": "tariff classification",
+            "lang": "en",
+            "frequency": 100,
+            "doc_count": 10,
+            "source_file": "mine_00.txt",
+            "approved": True,
+        }
+        inp = tmp_path / "stat.jsonl"
+        inp.write_text(json.dumps(rec) + "\n", encoding="utf-8")
+        db = tmp_path / "test.db"
+        run(inp, db, "customs_expert", "EU")
+        conn = sqlite3.connect(db)
+        assert conn.execute("SELECT COUNT(*) FROM mwe").fetchone()[0] == 1
+        assert conn.execute(
+            "SELECT COUNT(*) FROM mwe_area_attestation"
+        ).fetchone()[0] == 0
+        conn.close()

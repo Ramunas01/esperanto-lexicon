@@ -66,7 +66,8 @@ def create_domain_schema(conn: sqlite3.Connection) -> None:
             source_type         TEXT,
             definition_status   TEXT,
             attestation_count   INTEGER DEFAULT 1,
-            authority           TEXT
+            authority           TEXT,
+            area_signature      TEXT
         );
 
         CREATE TABLE IF NOT EXISTS mwe_lang (
@@ -107,8 +108,32 @@ def create_domain_schema(conn: sqlite3.Connection) -> None:
             detected_date       TEXT
         );
 
+        -- Per-area attestation: evidence of which canonical customs area(s) a
+        -- term appears in, and how strongly. One row per (mwe, area, source_file).
+        -- Cross-cutting/overlay corpora share the single 'cross_cutting' area tag;
+        -- source_file preserves which specific mining file the row came from.
+        -- Raw doc_count + frequency are stored; weights/signatures are derived at
+        -- query/display time, never baked into the schema.
+        CREATE TABLE IF NOT EXISTS mwe_area_attestation (
+            id          INTEGER PRIMARY KEY,
+            mwe_id      INTEGER NOT NULL,
+            area        TEXT    NOT NULL,    -- canonical area name OR 'cross_cutting'
+            doc_count   INTEGER NOT NULL,    -- documents in that area where the term appeared
+            frequency   INTEGER NOT NULL,    -- total occurrences in that area's corpus
+            source_file TEXT,                -- filename of the mining corpus that produced this row
+            mined_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (mwe_id) REFERENCES mwe(id) ON DELETE CASCADE,
+            UNIQUE (mwe_id, area, source_file)
+        );
+
         CREATE INDEX IF NOT EXISTS idx_mwe_lang_phrase
             ON mwe_lang(phrase_normalized, lang);
+
+        CREATE INDEX IF NOT EXISTS idx_mwe_area_attestation_term
+            ON mwe_area_attestation(mwe_id);
+
+        CREATE INDEX IF NOT EXISTS idx_mwe_area_attestation_area
+            ON mwe_area_attestation(area);
 
         CREATE INDEX IF NOT EXISTS idx_mwe_occurrence_mwe_id
             ON mwe_occurrence(mwe_id);

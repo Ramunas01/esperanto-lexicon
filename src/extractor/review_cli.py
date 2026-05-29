@@ -72,11 +72,13 @@ def _pending_idxs(records: list[dict], lang: str) -> list[int]:
 
 
 def _detect_format(records: list[dict]) -> str:
-    """Return 'statistical', 'eurlex', or 'definition' based on first record's keys."""
+    """Return 'merged', 'statistical', 'eurlex', or 'definition' from record keys."""
     for rec in records:
         rt = rec.get("record_type")
         if rt == "definition" and "source_ref" in rec:
             return "eurlex"
+        if "attestation" in rec:
+            return "merged"
         if "phrase" in rec:
             return "statistical"
         if rt is None or rt == "definition":
@@ -134,6 +136,42 @@ def _display_statistical(rec: dict, position: int, total: int) -> None:
     print(f"  {'NOVEL:':<10}{novel_str}")
     print(f"  {'COMMON:':<10}{common_str}")
     print("  " + "─" * 61)
+
+
+# ---------------------------------------------------------------------------
+# Single-language display (area-aware merged format)
+# ---------------------------------------------------------------------------
+
+
+def _display_merged(rec: dict, position: int, total: int) -> None:
+    """Display an area-aware merged candidate.
+
+    The area_signature in brackets is the at-a-glance reading: 7 hex digits,
+    one per canonical area (law, tariff_regulation, non_tariff_regulation,
+    customs_procedures, origin, classification, valuation); high = relevant.
+    spec is area_specificity (1.00 = area-specific, ~0.14 = uniform/general).
+    """
+    sig = rec.get("area_signature", "0000000")
+    spec = rec.get("area_specificity", 0.0)
+    phrase = rec.get("phrase_normalized", "?")
+    pos = rec.get("pos_pattern") or "?"
+    if rec.get("pos_pattern_inconsistent"):
+        pos += "*"
+    doc = rec.get("total_doc_count", "?")
+    freq = rec.get("total_frequency", "?")
+
+    print()
+    print(f"  [{position} of {total}]")
+    print(f"  [{sig}  spec={spec:.2f}]  {phrase}   ({pos}, doc={doc} freq={freq})")
+    # Per-area breakdown so the reviewer can see WHERE the evidence comes from.
+    for row in rec.get("attestation", []):
+        print(
+            f"        - {row.get('area'):<22} doc={row.get('doc_count')}"
+            f" freq={row.get('frequency')}  [{row.get('source_file')}]"
+        )
+    ctx = rec.get("sample_context")
+    if ctx:
+        print(f"        ctx: {ctx}")
 
 
 _TRIVIAL_DEFS = {"", ":", "–", "—"}
@@ -213,6 +251,9 @@ def review(input_path: Path, lang: str) -> None:
     if fmt == "eurlex":
         display_fn = _display_eurlex
         pending = _pending_idxs_eurlex(records, lang)
+    elif fmt == "merged":
+        display_fn = _display_merged
+        pending = _pending_idxs(records, lang)
     elif fmt == "statistical":
         display_fn = _display_statistical
         pending = _pending_idxs(records, lang)
@@ -505,9 +546,9 @@ def main(argv: list[str] | None = None) -> None:
         # so each language is reviewed sequentially in single-lang mode.
         records = _load_records(args.input)
         fmt = _detect_format(records)
-        if fmt == "statistical":
+        if fmt in ("statistical", "merged"):
             print(
-                "  (statistical format: no cross-language groups — "
+                f"  ({fmt} format: no cross-language groups — "
                 "reviewing each language separately)"
             )
             for lang in args.lang:
