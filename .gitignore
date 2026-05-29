@@ -14,3 +14,6 @@ Thumbs.db
 
 # Editor
 .vscode/settings.json
+
+# Mining corpus — third-party content, not for public repo
+data/mining/

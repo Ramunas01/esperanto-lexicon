@@ -57,18 +57,38 @@ class TokenResult:
 
 
 def load_tier_words(lexicon_db: Path, lang: str) -> tuple[set[str], set[str]]:
-    """Return (tier1_words, tier2_words) — lowercased from concept_lang."""
+    """Return (tier1_words, tier2_words) — lowercased from concept_lang.
+
+    Only tiers 1 and 2 are loaded. Tier 3 and above are intentionally
+    excluded so they can be classified separately by classify_tokens.
+    """
     if not lexicon_db.exists():
         return set(), set()
     conn = sqlite3.connect(lexicon_db)
     tier1: set[str] = set()
     tier2: set[str] = set()
     for word, tier in conn.execute(
-        "SELECT LOWER(word), tier FROM concept_lang WHERE lang = ?", (lang,)
+        "SELECT LOWER(word), tier FROM concept_lang WHERE lang = ? AND tier IN (1, 2)",
+        (lang,)
     ):
         (tier1 if tier == 1 else tier2).add(word)
     conn.close()
     return tier1, tier2
+
+
+def load_tier3_words(lexicon_db: Path, lang: str) -> set[str]:
+    """Return lowercased Tier 3 words from concept_lang for *lang*."""
+    if not lexicon_db.exists():
+        return set()
+    conn = sqlite3.connect(lexicon_db)
+    words = {
+        row[0]
+        for row in conn.execute(
+            "SELECT LOWER(word) FROM concept_lang WHERE lang = ? AND tier = 3", (lang,)
+        )
+    }
+    conn.close()
+    return words
 
 
 def load_mwe_phrases(domain_db: Path | None, lang: str) -> set[str]:
@@ -158,6 +178,7 @@ def classify_tokens(
     tier1_words: set[str],
     tier2_words: set[str],
     *,
+    tier3_words: set[str] | None = None,
     fallback_tier1: set[str] | None = None,
     fallback_tier2: set[str] | None = None,
     synonym_map: dict[str, str] | None = None,
@@ -294,6 +315,8 @@ def classify_tokens(
 
             if tier_via_inflected:
                 results.append(TokenResult(tok.text, tok.lemma, tier_via_inflected))
+            elif tier3_words and (text_lower in tier3_words or lemma_lower in tier3_words):
+                results.append(TokenResult(tok.text, tok.lemma, "TIER3"))
             elif fallback_tier1 and (text_lower in fallback_tier1 or lemma_lower in fallback_tier1):
                 results.append(TokenResult(tok.text, tok.lemma, "TIER1", via_fallback=True))
             elif fallback_tier2 and (text_lower in fallback_tier2 or lemma_lower in fallback_tier2):
@@ -313,14 +336,16 @@ def classify_tokens(
 
 def compute_summary(results: list[TokenResult]) -> dict:
     """Compute counts, percentages, and expertise signal from classified tokens."""
-    counts: dict[str, int] = {"TIER1": 0, "TIER2": 0, "TIER4": 0, "UNKNOWN": 0, "SKIP": 0}
+    counts: dict[str, int] = {
+        "TIER1": 0, "TIER2": 0, "TIER3": 0, "TIER4": 0, "UNKNOWN": 0, "SKIP": 0
+    }
     for r in results:
         counts[r.category] = counts.get(r.category, 0) + 1
 
-    total = counts["TIER1"] + counts["TIER2"] + counts["TIER4"] + counts["UNKNOWN"]
+    total = counts["TIER1"] + counts["TIER2"] + counts["TIER3"] + counts["TIER4"] + counts["UNKNOWN"]
     pct: dict[str, float] = {}
     if total > 0:
-        for k in ("TIER1", "TIER2", "TIER4", "UNKNOWN"):
+        for k in ("TIER1", "TIER2", "TIER3", "TIER4", "UNKNOWN"):
             pct[k] = counts[k] / total
 
     common = (counts["TIER1"] + counts["TIER2"]) / total if total > 0 else 0.0

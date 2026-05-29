@@ -59,6 +59,7 @@ from coverage_report import (  # noqa: E402
     load_inflected_forms,
     load_mwe_phrases,
     load_synonym_map,
+    load_tier3_words,
     load_tier_words,
     spacy_tokenise_sentences,
 )
@@ -109,6 +110,29 @@ def sentence_cooccur_stats(
     return cooccur_pairs, n_any, n_multi
 
 
+def t3_anchored_cooccur_stats(
+    per_sentence_results: list[list[TokenResult]],
+) -> tuple[int, int]:
+    """Compute T3-anchored co-occurrence stats across sentences.
+
+    A Tier 3 token is "activated" when it appears in a sentence that also
+    contains at least one Tier 4 token.
+
+    Returns:
+        total_t3:      total Tier 3 token count across all sentences.
+        activated_t3:  Tier 3 tokens in sentences that contain >=1 Tier 4 token.
+    """
+    total_t3 = 0
+    activated_t3 = 0
+    for sent_results in per_sentence_results:
+        sent_t3 = sum(1 for r in sent_results if r.category == "TIER3")
+        sent_has_t4 = any(r.category == "TIER4" for r in sent_results)
+        total_t3 += sent_t3
+        if sent_has_t4:
+            activated_t3 += sent_t3
+    return total_t3, activated_t3
+
+
 # ---------------------------------------------------------------------------
 # Per-file analysis
 # ---------------------------------------------------------------------------
@@ -128,6 +152,7 @@ def _classify_sent(
     inflected,
     fallback_tier1,
     fallback_tier2,
+    tier3=None,
 ):
     """Run classify_tokens on one sentence's token list."""
     return classify_tokens(
@@ -135,6 +160,7 @@ def _classify_sent(
         mwe_phrases,
         tier1,
         tier2,
+        tier3_words=tier3 or None,
         fallback_tier1=fallback_tier1,
         fallback_tier2=fallback_tier2,
         synonym_map=synonym_map or None,
@@ -151,6 +177,7 @@ def analyse_file(
     synonym_map: dict[str, str],
     inflected: dict[str, str],
     *,
+    tier3: set[str] | None = None,
     fallback_tier1: set[str] | None = None,
     fallback_tier2: set[str] | None = None,
     measures: str = "all",
@@ -168,6 +195,7 @@ def analyse_file(
         mwe_phrases,
         tier1,
         tier2,
+        tier3_words=tier3 or None,
         fallback_tier1=fallback_tier1,
         fallback_tier2=fallback_tier2,
         synonym_map=synonym_map or None,
@@ -177,7 +205,7 @@ def analyse_file(
     counts = summary["counts"]
     es = summary["expertise_signal"]
     total_classified = (
-        counts["TIER1"] + counts["TIER2"] + counts["TIER4"] + counts["UNKNOWN"]
+        counts["TIER1"] + counts["TIER2"] + counts["TIER3"] + counts["TIER4"] + counts["UNKNOWN"]
     )
     unknown_texts = _collect_unknown_texts(results)
     n_sentences = len(sentences)
@@ -189,15 +217,17 @@ def analyse_file(
         distinct_t4 = distinct_t4_count(results)
         t4_variety = round(distinct_t4 / max(total_classified, 1), 4)
 
-    # --- Relational measures ---
+    # --- Relational + T3-anchored measures (need per-sentence classification) ---
     cooccur_pairs = 0
     cooccur_density = 0.0
     multi_concept_ratio = 0.0
+    t3_anchor_density = 0.0
+    t3_anchor_rate: float | None = None
     if measures in ("relational", "all"):
         per_sentence_results = [
             _classify_sent(
                 sent, mwe_phrases, tier1, tier2, synonym_map, inflected,
-                fallback_tier1, fallback_tier2,
+                fallback_tier1, fallback_tier2, tier3,
             )
             for sent in sentences
         ]
@@ -205,13 +235,17 @@ def analyse_file(
         cooccur_density = round(cooccur_pairs / max(n_sentences, 1), 4)
         multi_concept_ratio = round(n_multi / max(n_any, 1), 4)
 
+        total_t3, activated_t3 = t3_anchored_cooccur_stats(per_sentence_results)
+        t3_anchor_density = round(activated_t3 / max(n_sentences, 1), 4)
+        t3_anchor_rate = round(activated_t3 / total_t3, 4) if total_t3 > 0 else None
+
     row = {
         "filename": path.name,
         "stratum": path.parent.name,
         "total_tokens": total_classified,
         "t1_count": counts["TIER1"],
         "t2_count": counts["TIER2"],
-        "t3_count": 0,
+        "t3_count": counts["TIER3"],
         "t4_count": counts["TIER4"],
         "unknown_count": counts["UNKNOWN"],
         "n_sentences": n_sentences,
@@ -222,6 +256,8 @@ def analyse_file(
         "cooccur_pairs": cooccur_pairs,
         "cooccur_density": cooccur_density,
         "multi_concept_ratio": multi_concept_ratio,
+        "t3_anchor_density": t3_anchor_density,
+        "t3_anchor_rate": t3_anchor_rate if t3_anchor_rate is not None else "",
         "unknown_tokens": json.dumps(sorted(set(unknown_texts)), ensure_ascii=False),
     }
     return row, unknown_texts
@@ -256,6 +292,7 @@ CSV_FIELDS = [
     "t4_ratio", "common_ratio",
     "distinct_t4", "t4_variety",
     "cooccur_pairs", "cooccur_density", "multi_concept_ratio",
+    "t3_anchor_density", "t3_anchor_rate",
     "unknown_tokens",
 ]
 
@@ -300,7 +337,7 @@ def print_summary_table(rows: list[dict], measures: str = "all") -> None:
     if measures in ("variety", "all"):
         header += f"  {'dist_t4':>7}  {'variety':>7}"
     if measures in ("relational", "all"):
-        header += f"  {'coc_dens':>8}  {'mc_ratio':>8}"
+        header += f"  {'coc_dens':>8}  {'mc_ratio':>8}  {'t3a_dens':>8}  {'t3a_rate':>8}"
 
     sep = "─" * len(header)
     print(header)
@@ -315,7 +352,12 @@ def print_summary_table(rows: list[dict], measures: str = "all") -> None:
         if measures in ("variety", "all"):
             line += f"  {r['distinct_t4']:>7d}  {r['t4_variety']:>7.4f}"
         if measures in ("relational", "all"):
-            line += f"  {r['cooccur_density']:>8.4f}  {r['multi_concept_ratio']:>8.4f}"
+            t3r = r["t3_anchor_rate"]
+            t3r_str = f"{t3r:>8.4f}" if isinstance(t3r, float) else f"{'N/A':>8}"
+            line += (
+                f"  {r['cooccur_density']:>8.4f}  {r['multi_concept_ratio']:>8.4f}"
+                f"  {r['t3_anchor_density']:>8.4f}  {t3r_str}"
+            )
         print(line)
 
     by_stratum: dict[str, list[dict]] = defaultdict(list)
@@ -342,7 +384,14 @@ def print_summary_table(rows: list[dict], measures: str = "all") -> None:
         if measures in ("relational", "all"):
             avg_coc = mean(r["cooccur_density"] for r in group)
             avg_mcr = mean(r["multi_concept_ratio"] for r in group)
-            line += f"  {avg_coc:>8.4f}  {avg_mcr:>8.4f}"
+            avg_t3ad = mean(r["t3_anchor_density"] for r in group)
+            t3ar_vals = [r["t3_anchor_rate"] for r in group if isinstance(r["t3_anchor_rate"], float)]
+            avg_t3ar = mean(t3ar_vals) if t3ar_vals else float("nan")
+            t3ar_str = f"{avg_t3ar:>8.4f}" if t3ar_vals else f"{'N/A':>8}"
+            line += (
+                f"  {avg_coc:>8.4f}  {avg_mcr:>8.4f}"
+                f"  {avg_t3ad:>8.4f}  {t3ar_str}"
+            )
         print(line)
 
 
@@ -376,6 +425,8 @@ def print_comparison_block(rows: list[dict], measures: str = "all") -> None:
         ("t4_variety",          "t4_variety",           "variety"),
         ("cooccur_density",     "cooccur_density",      "relational"),
         ("multi_concept_ratio", "multi_concept_ratio",  "relational"),
+        ("t3_anchor_density",   "t3_anchor_density",    "relational"),
+        ("t3_anchor_rate",      "t3_anchor_rate",       "relational"),
     ]
     enabled = {
         "density": measures in ("density", "all"),
@@ -389,13 +440,38 @@ def print_comparison_block(rows: list[dict], measures: str = "all") -> None:
     for label, key, mtype in measure_specs:
         if not enabled.get(mtype, False):
             continue
-        ctrl = avg(control, key)
-        nov  = avg(novice, key)
-        exp  = avg(expert, key)
+        # t3_anchor_rate may be None/"" for texts with zero T3 tokens
+        ctrl_vals = [r[key] for r in control if isinstance(r[key], float)]
+        nov_vals  = [r[key] for r in novice  if isinstance(r[key], float)]
+        exp_vals  = [r[key] for r in expert  if isinstance(r[key], float)]
+        ctrl = mean(ctrl_vals) if ctrl_vals else 0.0
+        nov  = mean(nov_vals)  if nov_vals  else 0.0
+        exp  = mean(exp_vals)  if exp_vals  else 0.0
         print(
             f"{label:<26}  {ctrl:>8.4f}  {nov:>8.4f}  {exp:>8.4f}  "
             f"{_ratio_str(ctrl, exp):>11}"
         )
+
+    def _row_cols(r: dict, enabled: dict) -> str:
+        line = f"{r['filename']:<20}  {r['t4_ratio']:>8.3f}"
+        if enabled["variety"]:
+            line += f"  {r['distinct_t4']:>7d}  {r['t4_variety']:>10.4f}"
+        if enabled["relational"]:
+            t3ar = r["t3_anchor_rate"]
+            t3ar_str = f"{t3ar:>8.4f}" if isinstance(t3ar, float) else f"{'N/A':>8}"
+            line += (
+                f"  {r['cooccur_density']:>10.4f}  {r['multi_concept_ratio']:>8.4f}"
+                f"  {r['t3_anchor_density']:>8.4f}  {t3ar_str}"
+            )
+        return line
+
+    def _col_header(enabled: dict) -> str:
+        col = f"{'File':<20}  {'T4_ratio':>8}"
+        if enabled["variety"]:
+            col += f"  {'dist_t4':>7}  {'t4_variety':>10}"
+        if enabled["relational"]:
+            col += f"  {'coc_density':>10}  {'mc_ratio':>8}  {'t3a_dens':>8}  {'t3a_rate':>8}"
+        return col
 
     # --- Failure-case table ---
     failure_files = {"expert_04.txt", "expert_06.txt", "expert_07.txt"}
@@ -403,39 +479,21 @@ def print_comparison_block(rows: list[dict], measures: str = "all") -> None:
     if failure_rows:
         print()
         print("Failure-case check (low T4_ratio expert texts):")
-        col = f"{'File':<20}  {'T4_ratio':>8}"
-        if enabled["variety"]:
-            col += f"  {'dist_t4':>7}  {'t4_variety':>10}"
-        if enabled["relational"]:
-            col += f"  {'coc_density':>11}  {'mc_ratio':>8}"
+        col = _col_header(enabled)
         print(col)
         print("─" * len(col))
         for r in sorted(failure_rows, key=lambda x: x["filename"]):
-            line = f"{r['filename']:<20}  {r['t4_ratio']:>8.3f}"
-            if enabled["variety"]:
-                line += f"  {r['distinct_t4']:>7d}  {r['t4_variety']:>10.4f}"
-            if enabled["relational"]:
-                line += f"  {r['cooccur_density']:>11.4f}  {r['multi_concept_ratio']:>8.4f}"
-            print(line)
+            print(_row_cols(r, enabled))
 
     # --- Control-ceiling check ---
     if control:
         top_ctrl = max(control, key=lambda r: r["t4_ratio"])
         print()
         print("Control-ceiling check (highest-T4_ratio control text):")
-        col2 = f"{'File':<20}  {'T4_ratio':>8}"
-        if enabled["variety"]:
-            col2 += f"  {'dist_t4':>7}  {'t4_variety':>10}"
-        if enabled["relational"]:
-            col2 += f"  {'coc_density':>11}  {'mc_ratio':>8}"
+        col2 = _col_header(enabled)
         print(col2)
         print("─" * len(col2))
-        line = f"{top_ctrl['filename']:<20}  {top_ctrl['t4_ratio']:>8.3f}"
-        if enabled["variety"]:
-            line += f"  {top_ctrl['distinct_t4']:>7d}  {top_ctrl['t4_variety']:>10.4f}"
-        if enabled["relational"]:
-            line += f"  {top_ctrl['cooccur_density']:>11.4f}  {top_ctrl['multi_concept_ratio']:>8.4f}"
-        print(line)
+        print(_row_cols(top_ctrl, enabled))
 
     print("=" * 78)
 
@@ -488,6 +546,7 @@ def main(argv: list[str] | None = None) -> None:
         sys.exit(1)
 
     tier1, tier2 = load_tier_words(args.lexicon, args.lang)
+    tier3 = load_tier3_words(args.lexicon, args.lang)
     fb_t1: set[str] = set()
     fb_t2: set[str] = set()
     if args.fallback_lang:
@@ -496,6 +555,7 @@ def main(argv: list[str] | None = None) -> None:
     inflected = load_inflected_forms(args.lexicon, args.lang)
     mwe_phrases, synonym_map = load_domain_data(args.domain_dbs, args.lang)
     nlp = _load_nlp(args.lang)
+    print(f"Loaded Tier 3: {len(tier3)} words")
 
     rows: list[dict] = []
     unknown_counter: Counter[str] = Counter()
@@ -508,6 +568,7 @@ def main(argv: list[str] | None = None) -> None:
         try:
             row, unknowns = analyse_file(
                 path, nlp, mwe_phrases, tier1, tier2, synonym_map, inflected,
+                tier3=tier3 or None,
                 fallback_tier1=fb_t1 if args.fallback_lang else None,
                 fallback_tier2=fb_t2 if args.fallback_lang else None,
                 measures=args.measures,
