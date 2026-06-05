@@ -26,3 +26,8 @@ data/analysis/unknown_tokens_pooled.txt
 data/domain_db/candidates_*.jsonl
 data/domain_db/merged_candidates*.jsonl
 data/domain_db/review_bucket_*.jsonl
+
+# Esperanto root inventory — generated at build time from parseo (GPL-3.0)
+# Regenerate: python src/lexicon/build_root_inventory.py --out data/lexicon_db/
+data/lexicon_db/akademio_roots.txt
+data/lexicon_db/eo_inventory.json
