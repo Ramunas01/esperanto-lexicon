@@ -46,6 +46,15 @@ SUFFIXES = ["aĉ","ad","aĵ","an","ant","ar","at","ĉj","ebl","ec","eg","ej","em
             "it","nj","obl","on","ont","op","ot","uj","ul","um"]
 PREFIXES = ["bo","ĉef","dis","ek","eks","fi","ge","mal","mem","mis","pra","re","vic",
             "ekster","kontraŭ","sen","sub","super","trans"]
+# Decode-time-only prefixes: Esperanto prepositions also build words
+# (inter-, laŭ-, kun-, pri-, etc.). They are unsafe for *peeling* during root
+# extraction — short prepositions over-reduce (e.g. periodo -> per+iod) — so
+# extract_roots only uses PREFIXES. The decomposer reads "prefixes" from the
+# emitted JSON, so we ship DECODE_PREFIXES (the union) there instead. See
+# docstring of eo_root_decomposer.py for the Rule 3 prefix-strip logic.
+PREPOSITIONAL = ["inter","laŭ","kun","al","el","en","sur","tra","pri","pro",
+                 "per","post","antaŭ","ĉirkaŭ","preter"]
+DECODE_PREFIXES = sorted(set(PREFIXES) | set(PREPOSITIONAL))
 NUMBER_ROOTS = ["nul","unu","du","tri","kvar","kvin","ses","sep","ok","naŭ","dek","cent","mil"]
 VERB_END = ["as","is","os","us","u","i"]
 NOMINAL_END = ["o","a","e"]
@@ -140,7 +149,7 @@ def main():
                         for t in ("core", "extended", "tail")},
         },
         "roots": roots,
-        "suffixes": SUFFIXES, "prefixes": PREFIXES, "number_roots": NUMBER_ROOTS,
+        "suffixes": SUFFIXES, "prefixes": DECODE_PREFIXES, "number_roots": NUMBER_ROOTS,
         "correlatives": CORRELATIVES, "other": OTHER,
         "verb_endings": VERB_END, "nominal_endings": NOMINAL_END,
     }
