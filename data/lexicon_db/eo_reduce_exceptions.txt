@@ -1,0 +1,26 @@
+# Esperanto root-extraction exceptions — stems that must NEVER be reduced.
+#
+# The attested-primitive reducer in build_eo_inventory.py:extract_roots is
+# orthographic: it peels a known suffix or prefix whenever the remainder is
+# itself an attested ESPDIC stem. That works for genuine derivations but
+# accidentally collapses unrelated pairs when the shorter form happens to be
+# attested for an unrelated sense.
+#
+# Known false merge that motivated this file:
+#   prezid (prezidi = "to preside")  ->  prez (prezo = "price")
+#                                            because -id strips and prezo
+#                                            is independently attested.
+#
+# Adding `prezid` here forces extract_roots to treat it as a primitive root
+# rather than peeling it. The downstream effect: prezid lands in `roots`
+# with whatever productivity the headwords reducing to it yield, and the
+# unrelated `prez` (price) keeps only its own productivity.
+#
+# Format: one stem per line, lowercased. Blank lines and "#" comments are
+# ignored. Keep this list SHORT and evidence-driven — it is a scalpel for
+# known false merges, not a general mechanism. Use audit_root_consistency.py
+# to surface candidates.
+#
+# License: project data, human-curated.
+#
+prezid

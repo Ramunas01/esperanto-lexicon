@@ -91,9 +91,20 @@ def parse_espdic(text):
         stems.add(st); gloss.setdefault(st, g.strip())
     return stems, gloss
 
-def extract_roots(stems):
+def extract_roots(stems, reduce_exceptions=()):
+    """Reduce stems to attested primitives, honoring a short exception list.
+
+    `reduce_exceptions` is a set of stems that must NEVER be reduced — they
+    stay primitive even when a shorter form is independently attested. This
+    is the scalpel for orthographic false merges (see
+    data/lexicon_db/eo_reduce_exceptions.txt). Pass [] / None for the
+    no-exception default.
+    """
     attested = stems | set(NUMBER_ROOTS)
+    exceptions = set(reduce_exceptions)
     def reduce_once(x):
+        if x in exceptions:
+            return None  # force x to be its own primitive
         for suf in _SUF:
             if x.endswith(suf) and len(x)-len(suf) >= 3 and x[:-len(suf)] in attested:
                 return x[:-len(suf)]
@@ -118,6 +129,60 @@ def extract_roots(stems):
 
 def tier(p): return "core" if p >= 3 else ("extended" if p == 2 else "tail")
 
+
+def load_supplement(path):
+    """Parse the curated modern-roots supplement TSV.
+
+    Each non-comment, non-blank line is `root \\t gloss \\t note`. Returns
+    `{root: {"gloss": str, "note": str}}` (lowercased keys). Missing file
+    returns {}.
+    """
+    entries = {}
+    if not path.exists():
+        return entries
+    for line in path.read_text(encoding="utf-8").splitlines():
+        s = line.strip()
+        if not s or s.startswith("#"):
+            continue
+        parts = line.split("\t")
+        if len(parts) < 2:
+            continue
+        root = parts[0].strip().lower()
+        if not root:
+            continue
+        gloss = parts[1].strip()
+        note = parts[2].strip() if len(parts) >= 3 else ""
+        entries[root] = {"gloss": gloss, "note": note}
+    return entries
+
+
+def load_reduce_exceptions(path):
+    """Parse the reduce-exceptions file — one lowercased stem per line."""
+    if not path.exists():
+        return set()
+    return {
+        line.strip().lower()
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.strip().startswith("#")
+    }
+
+
+def apply_supplement(roots, supplement):
+    """Merge supplement into roots. Returns the count of entries actually added.
+
+    Existing ESPDIC keys are NEVER overwritten — supplement entries for an
+    existing root are silently ignored. Supplement entries land with
+    `tier="modern"` and `prod=-1` (a sentinel so they're distinguishable
+    from frequency-derived productivity).
+    """
+    added = 0
+    for r, info in supplement.items():
+        if r in roots:
+            continue
+        roots[r] = {"gloss": info["gloss"], "prod": -1, "tier": "modern"}
+        added += 1
+    return added
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--espdic", help="local ESPDIC .txt (else fetch CC-BY mirror)")
@@ -135,18 +200,29 @@ def main():
         except Exception as e:
             sys.exit(f"ESPDIC fetch failed: {e}")
 
+    out_path = pathlib.Path(args.out)
+    reduce_exceptions = load_reduce_exceptions(
+        out_path / "eo_reduce_exceptions.txt"
+    )
+    supplement = load_supplement(out_path / "eo_roots_supplement.tsv")
+
     stems, gloss = parse_espdic(text)
-    prod = extract_roots(stems)
+    prod = extract_roots(stems, reduce_exceptions=reduce_exceptions)
     roots = {r: {"gloss": gloss.get(r, ""), "prod": prod[r], "tier": tier(prod[r])}
              for r in sorted(prod)}
+    supplement_added = apply_supplement(roots, supplement)
+    # Re-sort so supplement keys are interleaved alphabetically with ESPDIC keys.
+    roots = dict(sorted(roots.items()))
     inv = {
         "meta": {
             "source": "ESPDIC (Paul Denisowski), CC-BY-3.0; affix tables = public-domain grammar",
             "built": datetime.date.today().isoformat(),
             "espdic_src": src,
             "root_count": len(roots),
+            "supplement_modern_count": supplement_added,
+            "reduce_exceptions_count": len(reduce_exceptions),
             "by_tier": {t: sum(1 for v in roots.values() if v["tier"] == t)
-                        for t in ("core", "extended", "tail")},
+                        for t in ("core", "extended", "modern", "tail")},
         },
         "roots": roots,
         "suffixes": SUFFIXES, "prefixes": DECODE_PREFIXES, "number_roots": NUMBER_ROOTS,
@@ -161,7 +237,11 @@ def main():
         f"{len(roots)} roots\n" + "\n".join(roots) + "\n", encoding="utf-8")
     m = inv["meta"]
     print(f"roots: {m['root_count']}  (core {m['by_tier']['core']}, "
-          f"extended {m['by_tier']['extended']}, tail {m['by_tier']['tail']})")
+          f"extended {m['by_tier']['extended']}, modern {m['by_tier']['modern']}, "
+          f"tail {m['by_tier']['tail']})")
+    if supplement_added or reduce_exceptions:
+        print(f"supplement added: {supplement_added}; "
+              f"reduce exceptions: {len(reduce_exceptions)}")
     print(f"wrote {out/'eo_inventory.json'} and {out/'akademio_roots.txt'}")
 
 if __name__ == "__main__":
