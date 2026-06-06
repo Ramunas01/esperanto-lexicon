@@ -1,10 +1,14 @@
 """Tests for ``src.lexicon.audit_root_consistency`` — the read-only
-diagnostic introduced in Part C.
+diagnostic with the SV-based over-reduction detector.
 
-The audit must:
+Covers the spec's expected behaviours:
   * classify a ``klimato``/``klim`` row as ``truncation``;
-  * count a consistent row as ``ok`` and NOT write it to the jsonl;
-  * never modify the database (row counts and column values unchanged).
+  * count a consistent row as ``ok`` and NOT write it;
+  * SV detector: ``over_reduced("rapid","rap")`` and ``("koler","kol")``
+    → True; ``("kampad","kamp")``, ``("artist","art")``, ``("flugil","flug")``
+    → False;
+  * audit never modifies the database (row counts and column values
+    unchanged before vs after).
 """
 
 from __future__ import annotations
@@ -20,13 +24,15 @@ from src.lexicon.audit_root_consistency import (
     ISSUE_OVER_REDUCED,
     ISSUE_TRUNCATION,
     audit,
-    looks_unrelated,
+    build_successor_index,
+    over_reduced,
 )
 from src.lexicon.schema import create_common_lexicon_schema
 
 
 # ---------------------------------------------------------------------------
-# Minimal inventory fixture
+# Minimal inventory fixture (now with the ``headwords`` field the audit
+# expects, since the SV detector needs the HEADS set)
 # ---------------------------------------------------------------------------
 
 
@@ -40,14 +46,17 @@ def _build_inventory() -> dict:
         "roots": {
             "klimat": _root("climate", "core", prod=4),
             "patr":   _root("father", "core", prod=10),
-            # For the over-reduced detection check:
             "prez":   _root("price", "core", prod=9),
-            # Note: prezid intentionally NOT in this fixture inventory —
-            # it's the analogue of pre-Part-B state where prezid was
-            # collapsed into prez. The audit should detect that
-            # ``prezido`` decomposes into prez+id with an unrelated gloss
-            # (en_word="to preside" vs head_gloss="price").
+            # prezid NOT in this fixture — the pre-Part-B state.
         },
+        "headwords": sorted({
+            "klimato", "klimata", "klimate", "klimati",
+            "patro", "patra", "patre", "patri",
+            "prezo", "preza", "preze",
+            # Five prezid+ending forms — needed so SV(prezid) >= 5 (the
+            # default over_reduced threshold) and the detector fires.
+            "prezido", "prezida", "prezide", "prezidi", "prezidu",
+        }),
         "suffixes": ["ist", "ej", "ul", "in", "et", "ar", "id", "o", "a", "e"],
         "prefixes": ["mal", "re", "inter"],
         "number_roots": [],
@@ -98,8 +107,91 @@ def _read_concept_state(path: Path) -> list[tuple]:
     return rows
 
 
+def _read_concept_lang_state(path: Path) -> list[tuple]:
+    conn = sqlite3.connect(path)
+    rows = conn.execute(
+        "SELECT concept_id, lang, word, pos, cefr_level, tier, source "
+        "FROM concept_lang ORDER BY id"
+    ).fetchall()
+    conn.close()
+    return rows
+
+
 # ---------------------------------------------------------------------------
-# Issue classification
+# SV-based over_reduced detector (pure function, no DB)
+# ---------------------------------------------------------------------------
+
+
+def test_over_reduced_flags_rapid_over_rap() -> None:
+    """`rapid` is a real root that the greedy reducer wrongly collapsed
+    into `rap`. The SV detector sees that `rapid` itself is an attested
+    basic word (rapida/i/o/e in HEADS) with high SV → True."""
+    heads = {
+        "rapida", "rapide", "rapidi", "rapido", "rapidu",
+        "rapo", "rapi", "rapa",
+    }
+    succ = build_successor_index(heads)
+    assert over_reduced("rapid", "rap", heads, succ, sv_threshold=5) is True
+
+
+def test_over_reduced_flags_koler_over_kol() -> None:
+    """`koler` (anger) is the residual short-collision the spec calls out."""
+    heads = {
+        "kolero", "kolera", "kolere", "koleri", "koleru",
+        "kolo", "kola", "kole", "koli",
+    }
+    succ = build_successor_index(heads)
+    assert over_reduced("koler", "kol", heads, succ, sv_threshold=5) is True
+
+
+def test_over_reduced_skips_correct_kampad_reduction() -> None:
+    """`kampad` is a legitimate `kamp + ad` derivation — not over-reduced.
+    The SV detector should NOT flag it."""
+    heads = {
+        "kampo", "kampa", "kampe", "kampi",
+        "kampado", "kampada",
+    }
+    succ = build_successor_index(heads)
+    assert over_reduced("kampad", "kamp", heads, succ, sv_threshold=5) is False
+
+
+def test_over_reduced_skips_correct_artist_reduction() -> None:
+    heads = {
+        "arto", "arta", "arte", "arti",
+        "artisto", "artista",
+    }
+    succ = build_successor_index(heads)
+    assert over_reduced("artist", "art", heads, succ, sv_threshold=5) is False
+
+
+def test_over_reduced_skips_correct_flugil_reduction() -> None:
+    """`flugilo` = wing = `flug + il` (instrument). Correct derivation,
+    NOT over-reduced."""
+    heads = {
+        "flugi", "fluga", "fluge", "flugo",
+        "flugilo", "flugila",
+    }
+    succ = build_successor_index(heads)
+    assert over_reduced("flugil", "flug", heads, succ, sv_threshold=5) is False
+
+
+def test_over_reduced_returns_false_when_head_is_not_a_prefix() -> None:
+    """A precondition of the SV detector: ``head_root`` must be a strict
+    prefix of ``word_stem``. Otherwise return False without searching."""
+    heads = {"hundo", "hunda"}
+    succ = build_successor_index(heads)
+    assert over_reduced("hund", "kat", heads, succ) is False
+
+
+def test_over_reduced_returns_false_when_head_equals_stem() -> None:
+    """No suffix was stripped → nothing was discarded → not over-reduced."""
+    heads = {"hundo", "hunda", "hundi"}
+    succ = build_successor_index(heads)
+    assert over_reduced("hund", "hund", heads, succ) is False
+
+
+# ---------------------------------------------------------------------------
+# Audit-level issue classification (end-to-end on a fixture DB)
 # ---------------------------------------------------------------------------
 
 
@@ -146,8 +238,8 @@ def test_over_reduced_candidate_flagged_for_prezido_vs_prez(
 ) -> None:
     """In a fixture inventory where ``prezid`` is missing (the pre-Part-B
     state), the decomposer over-reduces ``prezido`` → ``prez`` + ``id``.
-    The head gloss ('price') and concept's en_word ('to preside') share
-    no meaningful overlap → ``over_reduced_candidate``."""
+    The SV detector sees ``prezid+o/a/e/i`` in HEADS with high SV →
+    ``over_reduced_candidate``."""
     db = tmp_path / "fix.db"
     _seed_db(db, [("prez", "prezido", "to preside")])
     out = tmp_path / "audit.jsonl"
@@ -167,42 +259,32 @@ def test_over_reduced_candidate_flagged_for_prezido_vs_prez(
 def test_audit_makes_no_db_writes(
     tmp_path: Path, inventory_path: Path
 ) -> None:
-    """The audit must not mutate any column of any concept row."""
+    """The audit must not mutate any column of any concept row, nor touch
+    concept_lang."""
     db = tmp_path / "fix.db"
     _seed_db(db, [
         ("klim", "klimato", "climate"),
         ("patr", "patro", "father"),
         ("prez", "prezido", "to preside"),
     ])
-    pre = _read_concept_state(db)
+    pre_concept = _read_concept_state(db)
+    pre_lang = _read_concept_lang_state(db)
 
     audit(db, inventory_path, tmp_path / "audit.jsonl")
 
-    post = _read_concept_state(db)
-    assert pre == post
+    post_concept = _read_concept_state(db)
+    post_lang = _read_concept_lang_state(db)
+    assert pre_concept == post_concept
+    assert pre_lang == post_lang
 
 
-# ---------------------------------------------------------------------------
-# The relatedness heuristic
-# ---------------------------------------------------------------------------
-
-
-def test_looks_unrelated_treats_substring_as_related() -> None:
-    """``active`` is a substring of ``activity`` — they should not be
-    flagged as unrelated (otherwise every simple-suffix derivation would
-    be a false positive)."""
-    assert not looks_unrelated("activity", "active, in action")
-
-
-def test_looks_unrelated_catches_genuine_gloss_drift() -> None:
-    """``turnip`` and ``rapid`` share nothing — this is exactly the
-    false-merge signature the audit exists to find."""
-    assert looks_unrelated("rapid", "turnip")
-
-
-def test_looks_unrelated_missing_side_is_not_flagged() -> None:
-    """Without both sides, we have no evidence — return ``False`` rather
-    than overreport."""
-    assert not looks_unrelated(None, "anything")
-    assert not looks_unrelated("anything", None)
-    assert not looks_unrelated("", "anything")
+def test_audit_writes_no_records_when_jsonl_empty(
+    tmp_path: Path, inventory_path: Path
+) -> None:
+    """When every row is ``ok``, the jsonl exists but is empty."""
+    db = tmp_path / "fix.db"
+    _seed_db(db, [("patr", "patro", "father")])
+    out = tmp_path / "audit.jsonl"
+    audit(db, inventory_path, out)
+    assert out.exists()
+    assert out.read_text(encoding="utf-8") == ""

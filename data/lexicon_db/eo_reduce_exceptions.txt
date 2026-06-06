@@ -1,40 +1,34 @@
-# Esperanto root-extraction exceptions — stems that must NEVER be reduced.
+# Esperanto root-extraction exceptions — short-collision residual that the
+# SV-guarded reducer cannot reach.
 #
-# The attested-primitive reducer in build_eo_inventory.py:extract_roots is
-# orthographic: it peels a known suffix or prefix whenever the remainder is
-# itself an attested ESPDIC stem. That works for genuine derivations but
-# accidentally collapses unrelated pairs when the shorter form happens to be
-# attested for an unrelated sense.
+# WHY THIS FILE EXISTS
+# build_eo_inventory.py's reducer is now successor-variety-guarded: it strips
+# a suffix only when the shorter form is a STRONGER morpheme boundary
+# (higher SV) than the current stem. That catches the bulk of the old
+# over-collapse class (rapid->rap, decid->dec, person->pers — all preserved
+# automatically because SV(rapid) > SV(rap) etc.).
 #
-# Known false merge that motivated this file:
-#   prezid (prezidi = "to preside")  ->  prez (prezo = "price")
-#                                            because -id strips and prezo
-#                                            is independently attested.
+# Residual cases SV can't catch are short-collision: the fragment has high
+# SV from completely UNRELATED words. Example:
 #
-# Adding `prezid` here forces extract_roots to treat it as a primitive root
-# rather than peeling it. The downstream effect: prezid lands in `roots`
-# with whatever productivity the headwords reducing to it yield, and the
-# unrelated `prez` (price) keeps only its own productivity.
+#     kol (neck/collar) has high SV from kolo, koloro, kolono, ...
+#     so SV(kol) > SV(koler), and the SV guard does not protect koler.
+#     But koler ("anger", as in kolero) is its own root, not derived from
+#     kol — this is a true false-merge that needs the explicit exception.
 #
-# Format: one stem per line, lowercased. Blank lines and "#" comments are
-# ignored. Keep this list SHORT and evidence-driven — it is a scalpel for
-# known false merges, not a general mechanism. Use audit_root_consistency.py
-# to surface candidates.
+# These entries are review-confirmed: each one has its `eo_word` /
+# concept_lang.en gloss visually checked against the inventory gloss of the
+# over-reduced head root. Candidates are surfaced by
+# audit_root_consistency.py's over_reduced_candidate queue.
 #
-# License: project data, human-curated.
+# FORMAT
+# One stem per line, lowercased. Lines starting with `#` are comments.
+# Inline `# ...` trailing comments on a stem line are also stripped.
+# Keep this list SHORT and evidence-driven — it is a scalpel for known
+# residual false merges, not a general mechanism.
 #
-prezid
-
-# Second-round additions surfaced by audit_root_consistency.py against
-# lexicon_v2.db (PR #3). Each entry was confirmed by eyeballing the
-# concept's eo_word / concept_lang.en gloss against the inventory's gloss
-# for the over-reduced head root.
-facil    # facila=easy; not related to fac (surface/face)
-koler    # kolero=anger; not related to kol (neck/collar)
-koleg    # kolego=colleague; not related to kol (neck/collar)
-spirit   # spirito=spirit; not related to spir (breathe)
-kalkul   # kalkuli=calculate; not related to kalk (heel area)
-kalkan   # kalkano=heel; not related to kalk
-buton    # butono=button; not related to but/butter
-monat    # monato=month; not related to mon (money)
-postul   # postuli=demand; not related to post (prefix after)
+# LICENSE: project data, human-curated.
+#
+koler     # kolero=anger; "kol" (neck/collar) is the SV-inflated false merge
+regul     # regulo=rule; "reg" (prevalent) absorbs unrelated derivations
+disting   # distingi=distinguish; SV(disting) does not exceed SV(disti...)

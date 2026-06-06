@@ -12,13 +12,18 @@ WHY THIS REPLACES build_root_inventory.py
   core (BRO ~4.6k roots vs ESPDIC ~25k), which is what Tier 3/4 specialist vocabulary
   needs.
 
-METHOD (attested-primitive root extraction)
+METHOD (attested-primitive root extraction, SV-guarded)
   ESPDIC lists word FORMS, not bare roots. For each single-word common headword we
   strip the grammatical ending to a stem, then reduce the stem to its primitive root
   by peeling derivational affixes -- but ONLY when the remainder is itself an attested
-  ESPDIC stem. So `konceptado` -> `koncept` (because `koncepto` exists), while
-  `kompil`-type roots stay whole (no shorter attested base exists). This avoids
-  inventing fragment "roots" like `tel` out of `telefono`.
+  ESPDIC stem AND the remainder has higher successor variety than the current stem.
+  The successor-variety guard (Harris) catches the over-collapse class where a
+  monoradical root ends in an affix-homograph: greedy reduction sends rapid->rap,
+  decid->dec, person->pers (lose to "rape", "10", "Persian") even though SV(rapid)
+  > SV(rap) etc. Suffix stripping only proceeds toward a STRONGER morpheme boundary.
+  Prefix stripping is unchanged (the conservative PREFIXES list).
+  Residual short-collisions that SV cannot reach (where the short fragment has high
+  SV from unrelated words) go in eo_reduce_exceptions.txt.
 
 CONFIDENCE TIERS (a root's productivity = how many distinct forms reduce to it)
   core      prod >= 3   workhorse set (~2.7k); load always
@@ -36,7 +41,7 @@ USAGE
   python build_eo_inventory.py --espdic /path/to/espdic.txt   # use a local/newer file
 """
 import argparse, json, re, sys, urllib.request, datetime, pathlib
-from collections import Counter
+from collections import Counter, defaultdict
 
 ESPDIC_URL = "https://raw.githubusercontent.com/drandre2014/ESPDIC/master/espdic.txt"
 
@@ -79,7 +84,15 @@ def strip_flexion(s):
     return s
 
 def parse_espdic(text):
-    stems, gloss = set(), {}
+    """Parse ESPDIC into ``(heads, stems, gloss)``.
+
+    ``heads`` is the set of single-word lowercase ESPDIC headwords (with
+    grammatical endings intact) — needed downstream for successor-variety
+    indexing in both the reducer and the audit.
+    ``stems`` is ``{strip_flexion(h) for h in heads}`` — the endingless
+    forms the reducer operates on.
+    """
+    heads, stems, gloss = set(), set(), {}
     for line in text.splitlines():
         if " : " not in line: continue
         head, g = line.split(" : ", 1)
@@ -87,31 +100,63 @@ def parse_espdic(text):
         if (not head or head.startswith("-") or head.endswith("-")
                 or " " in head or head[:1].isupper()): continue
         if not re.fullmatch(r"[a-zĉĝĥĵŝŭ]+", head.lower()): continue
-        st = strip_flexion(head.lower())
+        head = head.lower()
+        heads.add(head)
+        st = strip_flexion(head)
         stems.add(st); gloss.setdefault(st, g.strip())
-    return stems, gloss
+    return heads, stems, gloss
 
-def extract_roots(stems, reduce_exceptions=()):
-    """Reduce stems to attested primitives, honoring a short exception list.
 
-    `reduce_exceptions` is a set of stems that must NEVER be reduced — they
-    stay primitive even when a shorter form is independently attested. This
-    is the scalpel for orthographic false merges (see
-    data/lexicon_db/eo_reduce_exceptions.txt). Pass [] / None for the
+def build_successor_index(heads):
+    """Build the forward successor-variety index over the headword set.
+
+    ``succ[prefix] = set of chars that can follow `prefix``` across the
+    vocabulary. ``len(succ[L])`` is L's successor variety — high values
+    mark a strong morpheme boundary.
+    """
+    succ = defaultdict(set)
+    for h in heads:
+        for i in range(1, len(h)):
+            succ[h[:i]].add(h[i])
+    return succ
+
+
+def extract_roots(heads, stems, reduce_exceptions=()):
+    """Reduce stems to attested primitives with SV-guarded suffix stripping.
+
+    A suffix is stripped only when the remainder is attested AND has higher
+    successor variety than the current stem (i.e. only reduce toward a
+    stronger morpheme boundary). This is what stops the over-collapse
+    class (``rapid`` -> ``rap``, ``decid`` -> ``dec``). Prefix stripping
+    is unchanged — the conservative ``PREFIXES`` list has no over-collapse
+    risk because prepositional prefixes are excluded.
+
+    ``reduce_exceptions`` is a small curated do-not-reduce set for the
+    short-collision residual SV cannot reach. Pass ``[]`` for the
     no-exception default.
     """
     attested = stems | set(NUMBER_ROOTS)
     exceptions = set(reduce_exceptions)
+    succ = build_successor_index(heads)
+
+    def sv(prefix: str) -> int:
+        return len(succ.get(prefix, ()))
+
     def reduce_once(x):
         if x in exceptions:
-            return None  # force x to be its own primitive
+            return None
+        # Suffix strip — SV-guarded.
         for suf in _SUF:
-            if x.endswith(suf) and len(x)-len(suf) >= 3 and x[:-len(suf)] in attested:
-                return x[:-len(suf)]
+            if x.endswith(suf) and len(x) - len(suf) >= 3:
+                y = x[: -len(suf)]
+                if y in attested and sv(y) > sv(x):
+                    return y
+        # Prefix strip — conservative, no SV guard.
         for pre in _PRE:
-            if x.startswith(pre) and len(x)-len(pre) >= 3 and x[len(pre):] in attested:
+            if x.startswith(pre) and len(x) - len(pre) >= 3 and x[len(pre):] in attested:
                 return x[len(pre):]
         return None
+
     memo = {}
     def primitive(x):
         seen, cur = set(), x
@@ -193,6 +238,13 @@ def apply_supplement(roots, supplement):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--espdic", help="local ESPDIC .txt (else fetch CC-BY mirror)")
+    ap.add_argument(
+        "--exceptions",
+        help=(
+            "do-not-reduce stems, one per line. Defaults to "
+            "<out>/eo_reduce_exceptions.txt if that file exists."
+        ),
+    )
     ap.add_argument("--out", default=".")
     args = ap.parse_args()
 
@@ -208,13 +260,15 @@ def main():
             sys.exit(f"ESPDIC fetch failed: {e}")
 
     out_path = pathlib.Path(args.out)
-    reduce_exceptions = load_reduce_exceptions(
-        out_path / "eo_reduce_exceptions.txt"
+    exceptions_path = (
+        pathlib.Path(args.exceptions) if args.exceptions
+        else out_path / "eo_reduce_exceptions.txt"
     )
+    reduce_exceptions = load_reduce_exceptions(exceptions_path)
     supplement = load_supplement(out_path / "eo_roots_supplement.tsv")
 
-    stems, gloss = parse_espdic(text)
-    prod = extract_roots(stems, reduce_exceptions=reduce_exceptions)
+    heads, stems, gloss = parse_espdic(text)
+    prod = extract_roots(heads, stems, reduce_exceptions=reduce_exceptions)
     roots = {r: {"gloss": gloss.get(r, ""), "prod": prod[r], "tier": tier(prod[r])}
              for r in sorted(prod)}
     supplement_added = apply_supplement(roots, supplement)
@@ -225,13 +279,19 @@ def main():
             "source": "ESPDIC (Paul Denisowski), CC-BY-3.0; affix tables = public-domain grammar",
             "built": datetime.date.today().isoformat(),
             "espdic_src": src,
+            "reducer": "successor-variety-guarded",
             "root_count": len(roots),
+            "headword_count": len(heads),
             "supplement_modern_count": supplement_added,
-            "reduce_exceptions_count": len(reduce_exceptions),
+            "exceptions_loaded": len(reduce_exceptions),
             "by_tier": {t: sum(1 for v in roots.values() if v["tier"] == t)
                         for t in ("core", "extended", "modern", "tail")},
         },
         "roots": roots,
+        # ``headwords`` is shipped so audit_root_consistency.py can reuse the
+        # same HEADS set the builder used (for SV-based over-reduction detection)
+        # without re-fetching ESPDIC.
+        "headwords": sorted(heads),
         "suffixes": SUFFIXES, "prefixes": DECODE_PREFIXES, "number_roots": NUMBER_ROOTS,
         "correlatives": CORRELATIVES, "other": OTHER,
         "verb_endings": VERB_END, "nominal_endings": NOMINAL_END,
@@ -245,7 +305,8 @@ def main():
     m = inv["meta"]
     print(f"roots: {m['root_count']}  (core {m['by_tier']['core']}, "
           f"extended {m['by_tier']['extended']}, modern {m['by_tier']['modern']}, "
-          f"tail {m['by_tier']['tail']})")
+          f"tail {m['by_tier']['tail']})  reducer=SV-guarded  "
+          f"headwords={m['headword_count']}")
     if supplement_added or reduce_exceptions:
         print(f"supplement added: {supplement_added}; "
               f"reduce exceptions: {len(reduce_exceptions)}")
