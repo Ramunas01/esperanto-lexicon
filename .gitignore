@@ -31,3 +31,7 @@ data/domain_db/review_bucket_*.jsonl
 # Regenerate: python src/lexicon/build_root_inventory.py --out data/lexicon_db/
 data/lexicon_db/akademio_roots.txt
 data/lexicon_db/eo_inventory.json
+
+# Esperanto inventory — generated at build time from ESPDIC (CC-BY-3.0)
+data/lexicon_db/eo_inventory.json
+data/lexicon_db/akademio_roots.txt
