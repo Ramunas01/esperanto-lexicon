@@ -24,3 +24,17 @@
 # License: project data, human-curated.
 #
 prezid
+
+# Second-round additions surfaced by audit_root_consistency.py against
+# lexicon_v2.db (PR #3). Each entry was confirmed by eyeballing the
+# concept's eo_word / concept_lang.en gloss against the inventory's gloss
+# for the over-reduced head root.
+facil    # facila=easy; not related to fac (surface/face)
+koler    # kolero=anger; not related to kol (neck/collar)
+koleg    # kolego=colleague; not related to kol (neck/collar)
+spirit   # spirito=spirit; not related to spir (breathe)
+kalkul   # kalkuli=calculate; not related to kalk (heel area)
+kalkan   # kalkano=heel; not related to kalk
+buton    # butono=button; not related to but/butter
+monat    # monato=month; not related to mon (money)
+postul   # postuli=demand; not related to post (prefix after)

@@ -109,6 +109,22 @@ def test_reduce_exceptions_loader_missing_file_returns_empty(
     assert load_reduce_exceptions(tmp_path / "absent.txt") == set()
 
 
+def test_reduce_exceptions_loader_strips_inline_comments(
+    tmp_path: Path,
+) -> None:
+    """Per-entry rationale notes can sit on the same line as the stem
+    (`facil    # facila = easy; not related to fac`). The loader strips
+    everything from the first ``#`` onward."""
+    p = tmp_path / "ex.txt"
+    p.write_text(
+        "prezid\n"
+        "facil    # facila = easy; not related to fac (face/surface)\n"
+        "koler  # kolero = anger\n",
+        encoding="utf-8",
+    )
+    assert load_reduce_exceptions(p) == {"prezid", "facil", "koler"}
+
+
 def test_extract_roots_without_exceptions_collapses_prezid() -> None:
     """Sanity check: without the exception, ``prezid`` is orthographically
     reducible to ``prez`` (because ``prez`` is independently attested) and

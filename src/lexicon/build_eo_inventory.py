@@ -157,14 +157,21 @@ def load_supplement(path):
 
 
 def load_reduce_exceptions(path):
-    """Parse the reduce-exceptions file — one lowercased stem per line."""
+    """Parse the reduce-exceptions file — one lowercased stem per line.
+
+    Lines starting with ``#`` are comments. Inline ``# …`` trailing
+    comments on a stem line are also stripped, so per-entry rationale
+    notes can sit alongside the stem.
+    """
     if not path.exists():
         return set()
-    return {
-        line.strip().lower()
-        for line in path.read_text(encoding="utf-8").splitlines()
-        if line.strip() and not line.strip().startswith("#")
-    }
+    out = set()
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.split("#", 1)[0].strip()
+        if not line:
+            continue
+        out.add(line.lower())
+    return out
 
 
 def apply_supplement(roots, supplement):
