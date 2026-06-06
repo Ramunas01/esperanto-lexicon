@@ -393,4 +393,23 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
       TestProcessMergedRecord); 582 passing
 * \[ ] Statistical candidates review — pending human review
 * \[ ] Named entity layer — design deferred
-
+* [x] src/lexicon/build_root_inventory.py — downloads Baza Radikaro Oficiala
+  (BRO) root inventory from Rieselhilfe/parseo (GPL-3.0) at build time.
+  Produces data/lexicon_db/akademio_roots.txt (4,600 roots, one per line)
+  and data/lexicon_db/eo_inventory.json (roots with English glosses, plus
+  suffixes, prefixes, correlatives, other). Both files are gitignored —
+  regenerated locally. Pin --ref to a commit SHA for reproducible builds.
+  Tier 1 analysis: 833 concepts → 769 stems → ~538 true roots after BRO
+  decomposition. 59 unresolved residual = compound numbers (dudek/tridek),
+  ~12 modern loanwords (blog, dvd, dezajn — living-language candidates),
+  ~15 single-letter artifacts (data noise).
+* [x] src/lexicon/eo_root_decomposer.py — migrates concept.eo_root from
+  stored stems to true BRO/ESPDIC roots; fills eo_prefix/eo_suffix chains;
+  99.0% resolution (2,632 of 2,660 concepts); 84% of resolutions land on
+  core roots; compounds emitted to eo_compounds.jsonl for human review;
+  28 unresolved (dominated by artifacts — single letters, bare affixes);
+  18 tests passing. DECISION PENDING: compound anchoring in concept.eo_root.
+* [x] src/lexicon/build_eo_inventory.py — supersedes build_root_inventory.py;
+  ESPDIC-derived (CC-BY-3.0, no GPL); 25,679 roots tiered by confidence
+  (core 2,730 / extended 2,443 / tail 20,506); affix/correlative tables
+  read from JSON; eo_inventory.json + akademio_roots.txt gitignored.
