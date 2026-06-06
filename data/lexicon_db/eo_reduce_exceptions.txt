@@ -32,3 +32,11 @@
 koler     # kolero=anger; "kol" (neck/collar) is the SV-inflated false merge
 regul     # regulo=rule; "reg" (prevalent) absorbs unrelated derivations
 disting   # distingi=distinguish; SV(disting) does not exceed SV(disti...)
+banan    # banano (banana) ≠ ban (bathe)
+karot    # karoto (carrot) ≠ kar (dear/expensive)
+koleg    # kolego (colleague) ≠ kol (neck)
+koton    # kotono (cotton) ≠ kot (mud)
+region   # regiono (region) ≠ regi (to rule)
+album    # albumo (album) ≠ alb
+postul   # postuli (demand) ≠ post (after/prefix)
+ekstrem  # ekstrema (extreme) ≠ ekstr
