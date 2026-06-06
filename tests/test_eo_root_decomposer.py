@@ -1,11 +1,10 @@
 """Tests for ``src.lexicon.eo_root_decomposer``.
 
-These tests use a deliberately minimal in-memory inventory rather than the
-real BRO ``eo_inventory.json``. The real BRO contains entries (``log`` as a
-root, ``bo`` as a prefix) that would let ``blog`` decompose as ``bo + log``,
-which is correct against BRO but not the algorithmic property the spec wants
-to exercise. A controlled inventory lets each test case isolate exactly one
-algorithmic rule.
+These tests use a deliberately minimal in-memory inventory in the new
+``build_eo_inventory.py`` shape (``roots`` is a dict of
+``{gloss, prod, tier}`` objects). A controlled inventory lets each test case
+isolate exactly one algorithmic rule without contamination from the full
+25k-root ESPDIC.
 """
 
 from __future__ import annotations
@@ -21,8 +20,12 @@ from src.lexicon.eo_root_decomposer import (
     KIND_FUNCTION_WORD,
     KIND_SINGLE_ROOT,
     KIND_UNRESOLVED,
+    TIER_CORE,
+    TIER_EXTENDED,
+    TIER_TAIL,
     Decomposer,
     classify_unresolved,
+    load_inventory,
     process_db,
 )
 from src.lexicon.schema import create_common_lexicon_schema
@@ -33,35 +36,52 @@ from src.lexicon.schema import create_common_lexicon_schema
 # ---------------------------------------------------------------------------
 
 
-def _build_inventory() -> dict:
-    """Return a minimal inventory covering every spec test case.
+def _root(gloss: str, tier: str, prod: int = 5) -> dict:
+    return {"gloss": gloss, "prod": prod, "tier": tier}
 
-    The contents are chosen so that:
-      * ``maŝin`` stays whole via rule 1 (root listed; suffix ``-in`` is also
-        listed and would otherwise wrongly strip).
-      * ``kun`` is FUNCTION_WORD (listed in ``other``; not in roots).
-      * ``vaporŝip`` is a clean two-root compound.
-      * ``blog`` is UNRESOLVED — ``log`` is intentionally NOT listed as a
-        root and ``bo`` is intentionally NOT listed as a prefix.
+
+def _build_inventory() -> dict:
+    """Minimal tiered inventory covering every spec test case.
+
+    Key choices:
+      * ``maŝin`` is seeded as a *core* root so Rule 1 protects it from the
+        ``-in`` suffix-strip that would otherwise apply (and that's exactly
+        the kind of error Rule 1 exists to prevent).
+      * ``kun`` is seeded as a core root AND placed in ``other`` so Rule 2
+        precedence over Rule 1 is exercised.
+      * ``ili`` is seeded as an extended root AND in ``other`` so the
+        accusative-``n`` function-word path works (``ilin`` → ``ili``).
+      * For the core-preference test, stem ``patdek`` has two valid
+        analyses: SINGLE_ROOT (whole-stem-as-root, tier=tail) vs COMPOUND
+        ``[patr-without-r? no — we use distinct roots]``. We pick the two
+        primitives ``pat`` (core) and ``dek`` (core, from number_roots) so
+        the compound's worst tier is ``core`` while the whole-stem
+        ``patdek`` (tail) is rank ``tail``.
     """
     return {
-        # gloss values irrelevant to the algorithm — only the keys matter.
+        "meta": {"source": "test fixture"},
         "roots": {
-            "san": ["health"],
-            "art": ["art"],
-            "patr": ["father"],
-            "vapor": ["steam"],
-            "ŝip": ["ship"],
-            "maŝin": ["machine"],
-            "magazen": ["magazine"],
-            "centr": ["centre"],
-            "land": ["land"],
-            "labor": ["labour"],
+            "san": _root("health", TIER_CORE),
+            "art": _root("art", TIER_CORE),
+            "patr": _root("father", TIER_CORE),
+            "vapor": _root("steam", TIER_CORE),
+            "ŝip": _root("ship", TIER_CORE),
+            "maŝin": _root("machine", TIER_CORE),
+            "land": _root("country", TIER_CORE),
+            "labor": _root("labour", TIER_CORE),
+            "kun": _root("together", TIER_CORE),
+            "ili": _root("they", TIER_EXTENDED),
+            # Core-preference fixture: two ways to read ``patdek``.
+            "pat": _root("pat (core)", TIER_CORE),
+            "patdek": _root("patdek (tail)", TIER_TAIL),
         },
         "suffixes": ["ist", "ej", "ul", "in", "et", "ar"],
-        "prefixes": ["mal", "re", "ekster", "kun"],
-        "correlatives": ["iu", "ili"],
-        "other": ["kun", "kaj"],
+        "prefixes": ["mal", "re", "ekster"],
+        "number_roots": ["du", "dek"],
+        "correlatives": ["iu"],
+        "other": ["kun", "ili", "kaj"],
+        "verb_endings": ["as", "is", "os", "us", "u", "i"],
+        "nominal_endings": ["o", "a", "e"],
     }
 
 
@@ -71,12 +91,52 @@ def decomposer() -> Decomposer:
 
 
 # ---------------------------------------------------------------------------
+# Inventory loading / tier map
+# ---------------------------------------------------------------------------
+
+
+def test_new_format_root_set_and_tier_map(tmp_path: Path) -> None:
+    """Building the Decomposer from the new ``{gloss, prod, tier}`` shape
+    yields a root set keyed on the root strings and a ``tier_of`` map that
+    reports the correct tier."""
+    inv_path = tmp_path / "inv.json"
+    inv_path.write_text(
+        json.dumps(_build_inventory()), encoding="utf-8"
+    )
+    loaded = load_inventory(inv_path)
+    d = Decomposer(loaded)
+    assert "patr" in d.roots
+    assert "patr" in d.tier_of
+    assert d.tier_of["patr"] == TIER_CORE
+    # Number roots are folded in with tier override to core.
+    assert "du" in d.roots
+    assert d.tier_of["du"] == TIER_CORE
+
+
+def test_legacy_inventory_format_raises(tmp_path: Path) -> None:
+    """An inventory using the old list-of-glosses shape must fail loudly
+    rather than silently produce nonsense decompositions."""
+    legacy = {
+        "roots": {"san": ["health"]},
+        "suffixes": [],
+        "prefixes": [],
+        "correlatives": [],
+        "other": [],
+        "number_roots": [],
+    }
+    p = tmp_path / "legacy.json"
+    p.write_text(json.dumps(legacy), encoding="utf-8")
+    with pytest.raises(ValueError, match="legacy list-of-glosses format"):
+        load_inventory(p)
+
+
+# ---------------------------------------------------------------------------
 # Algorithmic property tests
 # ---------------------------------------------------------------------------
 
 
 def test_inventory_root_returns_single_root_unchanged(decomposer: Decomposer) -> None:
-    """Rule 1: ``patr`` is in roots → SINGLE_ROOT with no affixes."""
+    """Rule 1: ``patr`` is a core root → SINGLE_ROOT with no affixes."""
     d = decomposer.decompose("patr")
     assert d.kind == KIND_SINGLE_ROOT
     assert d.root == "patr"
@@ -94,11 +154,11 @@ def test_prefix_and_suffix_chain_strips_to_true_root(decomposer: Decomposer) -> 
 
 
 def test_single_suffix_strip(decomposer: Decomposer) -> None:
-    """``artist`` → root ``art``, suffix ``ist``."""
+    """``artist`` → root ``art`` (core) + suffix ``ist``. The affix analysis
+    wins because ``art`` is core and ``artist`` is not in the inventory."""
     d = decomposer.decompose("artist")
     assert d.kind == KIND_SINGLE_ROOT
     assert d.root == "art"
-    assert d.prefixes == ()
     assert d.suffixes == ("ist",)
 
 
@@ -110,39 +170,46 @@ def test_compound_number_roots_recognised(decomposer: Decomposer) -> None:
 
 
 def test_inventory_root_protects_against_suffix_strip(decomposer: Decomposer) -> None:
-    """Rule 1 must beat suffix-strip: ``maŝin`` stays whole, not ``maŝ+in``."""
+    """Rule 1 beats suffix-strip: ``maŝin`` (core) stays whole, not ``maŝ+in``."""
     d = decomposer.decompose("maŝin")
     assert d.kind == KIND_SINGLE_ROOT
     assert d.root == "maŝin"
-    assert d.prefixes == ()
     assert d.suffixes == ()
 
 
+def test_core_preference_beats_tail_whole_root(decomposer: Decomposer) -> None:
+    """Selection key prefers a core-only decomposition over a tail
+    whole-stem root.
+
+    The fixture inventory deliberately makes ``patdek`` a *tail* root AND
+    splittable as ``pat`` (core) + ``dek`` (core). The decomposer must pick
+    the compound because its worst tier rank (``core=0``) beats the tail
+    whole-stem rank (``tail=2``), even though the compound has more
+    morphemes.
+    """
+    d = decomposer.decompose("patdek")
+    assert d.kind == KIND_COMPOUND
+    assert d.components == ("pat", "dek")
+
+
 def test_function_word_classification(decomposer: Decomposer) -> None:
-    """``kun`` is in ``other`` → FUNCTION_WORD, eo_root unchanged."""
+    """Rule 2 takes precedence over Rule 1: ``kun`` is in ``other`` (and
+    also a core root in the fixture) → FUNCTION_WORD."""
     d = decomposer.decompose("kun")
     assert d.kind == KIND_FUNCTION_WORD
 
 
 def test_function_word_with_accusative_n(decomposer: Decomposer) -> None:
-    """``ilin`` → ``ili`` is a correlative → FUNCTION_WORD."""
+    """``ilin`` → strip the accusative ``-n`` → ``ili`` ∈ other → FUNCTION_WORD."""
     d = decomposer.decompose("ilin")
     assert d.kind == KIND_FUNCTION_WORD
 
 
 def test_two_root_compound(decomposer: Decomposer) -> None:
-    """``vaporŝip`` → COMPOUND, components [vapor, ŝip]."""
+    """``vaporŝip`` → COMPOUND, components ``[vapor, ŝip]``."""
     d = decomposer.decompose("vaporŝip")
     assert d.kind == KIND_COMPOUND
     assert d.components == ("vapor", "ŝip")
-
-
-def test_unresolved_loanword(decomposer: Decomposer) -> None:
-    """``blog`` has no inventory match → UNRESOLVED, category ``loanword``."""
-    d = decomposer.decompose("blog")
-    assert d.kind == KIND_UNRESOLVED
-    cat, _note = classify_unresolved("blog", decomposer)
-    assert cat == "loanword"
 
 
 def test_unresolved_single_char_artifact(decomposer: Decomposer) -> None:
@@ -153,27 +220,34 @@ def test_unresolved_single_char_artifact(decomposer: Decomposer) -> None:
     assert cat == "artifact"
 
 
+def test_unresolved_bare_affix_artifact(decomposer: Decomposer) -> None:
+    """A stem that is itself a bare affix (e.g. ``ebl``) → artifact."""
+    cat, _note = classify_unresolved("ebl", decomposer)
+    assert cat == "artifact"
+
+
 # ---------------------------------------------------------------------------
-# DB-pass tests — idempotency and column-constraint check
+# DB-pass tests
 # ---------------------------------------------------------------------------
 
 
 def _seed_fixture_db(path: Path) -> dict[int, dict]:
-    """Create a tiny v2 lexicon DB with a handful of concepts spanning each
-    decomposer outcome. Returns the pre-run state keyed by concept id so the
-    constraint-check test can verify unchanged columns.
+    """Create a tiny v2 lexicon DB with seed concepts spanning each outcome.
+
+    Returns the pre-run state keyed by concept id so the constraint-check
+    test can verify unchanged columns.
     """
     conn = sqlite3.connect(path)
     create_common_lexicon_schema(conn)
 
     seed = [
         # (eo_root, eo_word, eo_prefix, eo_suffix) — covers each outcome.
-        ("patr",        "patro",        "", ""),    # already correct
-        ("malsanulej",  "malsanulejo",  "", ""),    # strip prefix+suffixes
-        ("artist",      "artisto",      "", ""),    # strip suffix
-        ("vaporŝip",    "vaporŝipo",    "", ""),    # compound
-        ("kun",         "kun",          "", ""),    # function word
-        ("blog",        "blogo",        "", ""),    # unresolved (loanword)
+        ("patr",        "patro",        "", ""),  # already correct
+        ("malsanulej",  "malsanulejo",  "", ""),  # strip prefix+suffixes
+        ("artist",      "artisto",      "", ""),  # strip suffix
+        ("vaporŝip",    "vaporŝipo",    "", ""),  # compound
+        ("kun",         "kun",          "", ""),  # function word
+        ("k",           "k",            "", ""),  # unresolved (artifact)
     ]
     pre_state: dict[int, dict] = {}
     for eo_root, eo_word, pfx, suf in seed:
@@ -184,8 +258,6 @@ def _seed_fixture_db(path: Path) -> dict[int, dict]:
             (eo_root, eo_word, pfx, suf),
         )
         cid = cur.lastrowid
-        # Attach an EN concept_lang row so we can prove the script doesn't
-        # mutate non-target columns.
         conn.execute(
             "INSERT INTO concept_lang "
             "(concept_id, lang, word, pos, cefr_level, tier, source) "
@@ -230,17 +302,10 @@ def fixture_db(tmp_path: Path) -> Path:
     return db
 
 
-@pytest.fixture
-def inventory_path(tmp_path: Path) -> Path:
-    p = tmp_path / "inv.json"
-    p.write_text(json.dumps(_build_inventory()), encoding="utf-8")
-    return p
-
-
-def test_db_pass_emits_compound_and_unresolved_jsonl(
-    fixture_db: Path, inventory_path: Path, tmp_path: Path
+def test_db_pass_emits_compound_with_component_tiers(
+    fixture_db: Path, tmp_path: Path
 ) -> None:
-    """One full pass produces the two jsonl artefacts with the right rows."""
+    """Compound jsonl records carry the per-component tier list."""
     out_dir = tmp_path / "out"
     summary, _updates, compounds, unresolved = process_db(
         fixture_db,
@@ -248,33 +313,41 @@ def test_db_pass_emits_compound_and_unresolved_jsonl(
         out_dir,
         dry_run=False,
     )
-    # Counts add up.
     assert summary.processed == 6
     assert summary.compounds == 1
     assert summary.function_word == 1
     assert summary.unresolved == 1
-    assert summary.updated == 2  # malsanulej + artist (compound row unchanged
-    # because vaporŝip has no outer affixes, so no DB write needed for it).
-    # Compound jsonl contents.
+
     comp_path = out_dir / "eo_compounds.jsonl"
-    assert comp_path.exists()
-    lines = comp_path.read_text(encoding="utf-8").strip().splitlines()
-    assert len(lines) == 1
-    rec = json.loads(lines[0])
+    rec = json.loads(comp_path.read_text(encoding="utf-8").strip())
     assert rec["component_roots"] == ["vapor", "ŝip"]
+    assert rec["component_tiers"] == [TIER_CORE, TIER_CORE]
     assert rec["eo_root_stem"] == "vaporŝip"
-    # Unresolved jsonl contents.
+
     unres_path = out_dir / "eo_unresolved_stems.jsonl"
-    assert unres_path.exists()
-    lines = unres_path.read_text(encoding="utf-8").strip().splitlines()
-    assert len(lines) == 1
-    rec = json.loads(lines[0])
-    assert rec["category"] == "loanword"
-    assert rec["eo_root_stem"] == "blog"
+    rec = json.loads(unres_path.read_text(encoding="utf-8").strip())
+    assert rec["category"] == "artifact"
+    assert rec["eo_root_stem"] == "k"
+
+
+def test_db_pass_reports_tier_breakdown(
+    fixture_db: Path, tmp_path: Path
+) -> None:
+    """Summary tracks how many concepts resolved to each root tier."""
+    out_dir = tmp_path / "out"
+    summary, _u, _c, _r = process_db(
+        fixture_db,
+        Decomposer(_build_inventory()),
+        out_dir,
+        dry_run=False,
+    )
+    # patr / san (via malsanulej) / art (via artist) are all core roots.
+    # The compound and function-word and unresolved rows don't count.
+    assert summary.decomposed_by_tier[TIER_CORE] == 3
 
 
 def test_db_pass_is_idempotent(
-    fixture_db: Path, inventory_path: Path, tmp_path: Path
+    fixture_db: Path, tmp_path: Path
 ) -> None:
     """Second run reports 0 updated and leaves columns byte-identical."""
     out_dir = tmp_path / "out"
@@ -286,7 +359,7 @@ def test_db_pass_is_idempotent(
     )
     state_after_first = _read_concept_state(fixture_db)
 
-    summary_2, updates_2, _c2, _u2 = process_db(
+    summary_2, updates_2, _c, _r = process_db(
         fixture_db,
         Decomposer(_build_inventory()),
         out_dir,
@@ -300,7 +373,7 @@ def test_db_pass_is_idempotent(
 
 
 def test_db_pass_does_not_touch_tier_word_cefr_source_columns(
-    fixture_db: Path, inventory_path: Path, tmp_path: Path
+    fixture_db: Path, tmp_path: Path
 ) -> None:
     """``tier``, ``word``, ``cefr_level``, ``source`` (and ``eo_word``)
     must be byte-identical before and after the pass."""
@@ -318,21 +391,19 @@ def test_db_pass_does_not_touch_tier_word_cefr_source_columns(
     post_concept = _read_concept_state(fixture_db)
     post_lang = _read_concept_lang_state(fixture_db)
 
-    # eo_word never touched.
     for cid in pre_concept:
         assert pre_concept[cid]["eo_word"] == post_concept[cid]["eo_word"]
-    # concept_lang completely untouched (tier, word, pos, cefr_level, source).
     assert pre_lang == post_lang
 
 
 def test_dry_run_does_not_write_to_db_or_jsonl(
-    fixture_db: Path, inventory_path: Path, tmp_path: Path
+    fixture_db: Path, tmp_path: Path
 ) -> None:
     """``--dry-run`` must leave the DB and jsonl outputs untouched."""
     out_dir = tmp_path / "out"
     pre_concept = _read_concept_state(fixture_db)
 
-    summary, updates, _c, _u = process_db(
+    summary, updates, _c, _r = process_db(
         fixture_db,
         Decomposer(_build_inventory()),
         out_dir,

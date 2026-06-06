@@ -1,58 +1,64 @@
 #!/usr/bin/env python3
-"""Rewrite ``concept.eo_root`` / ``eo_prefix`` / ``eo_suffix`` to the BRO
-canonical decomposition.
+"""Rewrite ``concept.eo_root`` / ``eo_prefix`` / ``eo_suffix`` from the
+ESPDIC-derived, tiered Esperanto inventory.
 
-This is a one-shot migration over ``lexicon_v2.db``. It uses the BRO inventory
-(``data/lexicon_db/eo_inventory.json``) as the authority for what counts as a
-root, suffix, prefix, correlative, or function word, then walks every concept
-whose ``eo_root`` is set and rewrites the morphological columns so that
-``eo_root`` holds the **true root** and the affix columns spell out the chain.
+This is a one-shot migration over ``lexicon_v2.db``. It uses the inventory at
+``data/lexicon_db/eo_inventory.json`` (produced by ``build_eo_inventory.py``,
+ESPDIC + public-domain affix tables) as the authority for what counts as a
+root, suffix, prefix, correlative, or function word. The inventory now tags
+every root with a confidence tier (``core``, ``extended``, ``tail``); the
+decomposer prefers analyses whose primitive roots are higher-tier.
 
 Hard constraints (see ``CLAUDE.md``):
     * Touches only ``concept.eo_root``, ``concept.eo_prefix``,
       ``concept.eo_suffix``. Never modifies ``tier``, ``word``, ``cefr_level``,
       ``source``, or any ``concept_lang`` / ``inflected_forms`` row.
-    * Idempotent — a row whose ``eo_root`` is already a bare inventory root
-      (or function word) is detected as already-processed and skipped; the
+    * Idempotent — a row whose ``eo_root`` is already a bare inventory root or
+      a function word is detected as already-processed and skipped; the
       pre-existing affix columns are NOT cleared on a skip.
     * ``--dry-run`` performs the full analysis and prints would-be changes
       without writing anything.
     * Outside of ``--dry-run``, the DB file is backed up (timestamped) before
-      the first write, and the updates run inside a single transaction.
+      the first write, and updates run inside a single transaction.
 
-Decomposition algorithm (in strict precedence order):
+Algorithm:
 
-  Rule 1 — Inventory root wins outright. If the stem itself is in the
-    root set (including the loaded number roots), it is returned as
-    SINGLE_ROOT with no affix stripping attempted. This protects lexicalized
-    roots that happen to end in affix-like letters (``maŝin``, ``magazen``).
+  Rule 1 — Solid root short-circuit. If the stem is itself a ``core`` or
+    ``extended`` root, or a number root, return SINGLE_ROOT immediately and
+    do not decompose. This is what keeps ``maŝin`` (core/extended) whole
+    rather than wrongly splitting it into ``maŝ + in``.
 
   Rule 2 — Function word. If the stem is in ``correlatives`` or ``other``
-    (or in those sets after stripping a trailing accusative ``-n``), it is a
-    FUNCTION_WORD: ``eo_root`` is left untouched and the row is counted only.
+    (or such a word plus a trailing accusative ``-n``), return FUNCTION_WORD.
+    Checked BEFORE Rule 1 because some entries (``kun``, ``ili``) appear in
+    both ``roots`` and ``other``; the function-word identity wins.
 
-  Rule 3 — Affix-strip with validated residue. Try each known prefix; if the
-    stem starts with it AND the remainder fully decomposes to a SINGLE_ROOT
-    or COMPOUND, accept. Then try each suffix (longest first), same rule.
-    Affixes are NEVER stripped speculatively — only when the residue resolves.
+  Rule 3 — Enumerate every valid analysis:
+    * the whole-stem-as-root analysis, IF the stem is in ``roots`` (any tier
+      — a ``tail`` root is included as a candidate but not auto-kept by Rule 1);
+    * every prefix-strip where the residue fully resolves;
+    * every suffix-strip (longest suffix first) where the residue fully
+      resolves;
+    * every compound split ``leading-root + [connecting-vowel] + residue``
+      where ``leading-root`` is in the inventory and the residue resolves.
 
-  Rule 4 — Compound split. Scan split points from the longest leading root
-    down; if ``s[:i]`` is an inventory root and ``s[i:]`` (optionally after
-    consuming one connecting vowel from ``o a e i``) fully decomposes, the
-    stem is a compound of two or more content roots.
+  Rule 4 — Selection. Pick the candidate that minimises the lexicographic key
+    ``(worst_tier_rank, morpheme_count, -leading_root_len)`` with
+    ``core=0, extended=1, tail=2``. The tier component is what makes a
+    candidate whose primitives are all core beat one that requires a tail
+    root, even when both are valid.
 
   Otherwise — UNRESOLVED.
 
-Determinism: amongst the candidates produced by rules 3 and 4 the result
-with the **fewest morphemes** wins; ties are broken by the **longest matched
-root**. Memoized on the residue string.
+Memoized per stem.
 
 DECISION SURFACED TO HUMANS — compound anchoring
-    The schema has a single ``eo_root`` column, so overwriting a compound's
-    root with one component would corrupt the concept's lexical identity.
-    This pass deliberately **leaves ``eo_root`` unchanged for compounds** and
-    emits the component breakdown to ``eo_compounds.jsonl``. A follow-up
-    decision is needed on how compounds should be anchored — see the PR body.
+    The schema has a single ``eo_root`` column. A compound like ``vaporŝip``
+    has two content roots; overwriting ``eo_root`` with one component would
+    corrupt the concept's lexical identity. This pass leaves ``eo_root``
+    unchanged for compounds and emits the breakdown (including each
+    component's tier) to ``eo_compounds.jsonl``. The follow-up decision is
+    flagged in the PR body.
 
 CLI::
 
@@ -80,28 +86,23 @@ from pathlib import Path
 # Constants
 # ---------------------------------------------------------------------------
 
-# Number roots that BRO does not list in ``roots`` but every reader of
-# Esperanto treats as content roots; loading them prevents compound numbers
-# (``dudek``, ``tricent``) from drifting into UNRESOLVED.
-NUMBER_ROOTS: frozenset[str] = frozenset({
-    "nul", "unu", "du", "tri", "kvar", "kvin", "ses", "sep", "ok", "naŭ",
-    "dek", "cent", "mil",
-})
-
-# Prepositional particles that also act as productive prefixes. The BRO
-# inventory already covers most prefixes, but a handful of common particles
-# (``sen``, ``sub``, ``retro``) are listed only in ``other`` even though they
-# attach productively. Union these into the prefix set.
-EXTRA_PREFIXES: frozenset[str] = frozenset({
-    "ekster", "kontraŭ", "sen", "sub", "super", "trans", "sur", "tra",
-    "for", "retro",
-})
-
 CONNECTING_VOWELS: str = "oaei"
 ACCUSATIVE_N: str = "n"
 
-# Common bare affixes called out in the spec as "artifact" exemplars; unioned
-# with the full prefix/suffix sets at runtime.
+TIER_CORE = "core"
+TIER_EXTENDED = "extended"
+TIER_TAIL = "tail"
+
+TIER_RANK: dict[str, int] = {
+    TIER_CORE: 0,
+    TIER_EXTENDED: 1,
+    TIER_TAIL: 2,
+}
+
+SOLID_TIERS: frozenset[str] = frozenset({TIER_CORE, TIER_EXTENDED})
+
+# Bare-affix exemplars used in the ``artifact`` unresolved category — unioned
+# with the inventory's full prefix and suffix sets at runtime.
 EXPLICIT_BARE_AFFIXES: frozenset[str] = frozenset({
     "mal", "re", "ebl", "ul", "il", "in", "er", "ar", "et", "ĉef",
     "estr", "uj",
@@ -124,11 +125,9 @@ class Decomposition:
 
     For SINGLE_ROOT ``root`` is the content root; ``prefixes`` and
     ``suffixes`` list the affix chain in application order (outermost
-    prefix first, outermost suffix last).
-
-    For COMPOUND ``components`` lists the content roots left-to-right and
-    ``connectors`` holds the connecting vowel between each pair (``""`` when
-    none). ``prefixes`` / ``suffixes`` belong to the compound as a whole.
+    prefix first, outermost suffix last). For COMPOUND ``components`` lists
+    the content roots left-to-right and ``connectors`` holds the connecting
+    vowel between each pair (``""`` when none).
     """
 
     kind: str
@@ -139,15 +138,6 @@ class Decomposition:
     connectors: tuple[str, ...] = ()
     morpheme_count: int = 0
 
-    @property
-    def representative_root_len(self) -> int:
-        """Longest content-root length, used as the tie-breaker."""
-        if self.kind == KIND_SINGLE_ROOT and self.root:
-            return len(self.root)
-        if self.kind == KIND_COMPOUND:
-            return max((len(c) for c in self.components), default=0)
-        return 0
-
 
 # ---------------------------------------------------------------------------
 # Decomposer
@@ -155,94 +145,166 @@ class Decomposition:
 
 
 class Decomposer:
-    """Analyse Esperanto stems against a BRO-derived inventory."""
+    """Analyse Esperanto stems against the tiered ESPDIC-derived inventory."""
 
     def __init__(self, inventory: dict) -> None:
-        roots = {r.lower() for r in inventory.get("roots", {})}
-        roots.update(NUMBER_ROOTS)
-        self.roots: set[str] = roots
+        # roots is a dict ``{root: {gloss, prod, tier}}`` in the new format.
+        raw_roots = inventory.get("roots", {})
+        self.tier_of: dict[str, str] = {}
+        for r, info in raw_roots.items():
+            tier = (info or {}).get("tier", TIER_TAIL) if isinstance(info, dict) else TIER_TAIL
+            self.tier_of[r.lower()] = tier
+
+        # number_roots are loaded as core-tier regardless of any pre-existing
+        # entry in ``roots`` (some — ``du``, ``ok`` — are tagged ``tail`` in
+        # ESPDIC but every reader treats them as bedrock).
+        self.number_roots: set[str] = {
+            n.lower() for n in inventory.get("number_roots", [])
+        }
+        for nr in self.number_roots:
+            self.tier_of[nr] = TIER_CORE
+
+        self.roots: set[str] = set(self.tier_of.keys())
+
+        # Affix and grammar tables come straight from the JSON — do not
+        # hardcode or extend.
         self.suffixes: list[str] = sorted(
             {s.lower() for s in inventory.get("suffixes", [])},
             key=len,
             reverse=True,
         )
-        self.prefixes: set[str] = (
-            {p.lower() for p in inventory.get("prefixes", [])} | EXTRA_PREFIXES
-        )
+        self.prefixes: set[str] = {
+            p.lower() for p in inventory.get("prefixes", [])
+        }
         self.correlatives: set[str] = {
             c.lower() for c in inventory.get("correlatives", [])
         }
         self.other: set[str] = {o.lower() for o in inventory.get("other", [])}
-        # For "stem is itself a bare affix" artifact classification.
+        # Stored for completeness; not consumed by the algorithm itself
+        # (stems in concept.eo_root are already endingless).
+        self.verb_endings: set[str] = {
+            v.lower() for v in inventory.get("verb_endings", [])
+        }
+        self.nominal_endings: set[str] = {
+            v.lower() for v in inventory.get("nominal_endings", [])
+        }
+
         self.bare_affix_set: set[str] = (
-            set(self.suffixes) | set(self.prefixes) | EXPLICIT_BARE_AFFIXES
+            set(self.suffixes) | self.prefixes | EXPLICIT_BARE_AFFIXES
         )
+
         self._cache: dict[str, Decomposition | None] = {}
 
     # -- public ---------------------------------------------------------
 
     def decompose(self, stem: str) -> Decomposition:
-        """Top-level analysis: applies rules 1, 2, then delegates to ``_analyze``.
+        """Top-level analysis: Rules 2 → 1 → (3+4) → UNRESOLVED.
 
-        ``_analyze`` only ever returns SINGLE_ROOT / COMPOUND / None; the
-        function-word check lives here because residues during recursion are
-        not candidates for function-word classification.
+        Rule 2 precedes Rule 1 because some BRO-style stems are in both
+        ``roots`` and ``other`` (``kun``, ``ili``); the function-word
+        identity wins. Inside recursion this priority does not apply —
+        residues aren't function words.
         """
         if not stem:
             return Decomposition(kind=KIND_UNRESOLVED)
         s = stem.strip().lower()
 
-        # Rule 1 — inventory root wins outright.
-        if s in self.roots:
+        # Rule 2 — function word (precedence over Rule 1 for ambiguous stems).
+        if self._is_function_word(s):
+            return Decomposition(kind=KIND_FUNCTION_WORD)
+
+        # Rule 1 — solid root short-circuit.
+        if self._is_solid_root(s):
             return Decomposition(
                 kind=KIND_SINGLE_ROOT, root=s, morpheme_count=1
             )
 
-        # Rule 2 — function word (with optional accusative ``-n``).
-        if s in self.correlatives or s in self.other:
-            return Decomposition(kind=KIND_FUNCTION_WORD)
-        if s.endswith(ACCUSATIVE_N) and len(s) > 1:
-            base = s[:-1]
-            if base in self.correlatives or base in self.other:
-                return Decomposition(kind=KIND_FUNCTION_WORD)
-
-        # Rules 3 + 4.
         result = self._analyze(s)
         if result is None:
             return Decomposition(kind=KIND_UNRESOLVED)
         return result
 
-    # -- internal -------------------------------------------------------
+    # -- classification helpers ----------------------------------------
+
+    def _is_function_word(self, s: str) -> bool:
+        if s in self.correlatives or s in self.other:
+            return True
+        if s.endswith(ACCUSATIVE_N) and len(s) > 1:
+            base = s[:-1]
+            if base in self.correlatives or base in self.other:
+                return True
+        return False
+
+    def _is_solid_root(self, s: str) -> bool:
+        """True iff *s* is a root we never decompose further (Rule 1)."""
+        if s in self.number_roots:
+            return True
+        if s in self.tier_of and self.tier_of[s] in SOLID_TIERS:
+            return True
+        return False
+
+    # -- selection metrics ---------------------------------------------
+
+    def _worst_tier_rank(self, d: Decomposition) -> int:
+        """0=core, 1=extended, 2=tail. Used as the primary selection key."""
+        if d.kind == KIND_SINGLE_ROOT and d.root is not None:
+            return TIER_RANK.get(self.tier_of.get(d.root, TIER_TAIL), 2)
+        if d.kind == KIND_COMPOUND and d.components:
+            return max(
+                TIER_RANK.get(self.tier_of.get(c, TIER_TAIL), 2)
+                for c in d.components
+            )
+        return 2
+
+    def _leading_root_len(self, d: Decomposition) -> int:
+        if d.kind == KIND_SINGLE_ROOT and d.root is not None:
+            return len(d.root)
+        if d.kind == KIND_COMPOUND and d.components:
+            return len(d.components[0])
+        return 0
+
+    def _selection_key(self, d: Decomposition) -> tuple[int, int, int]:
+        return (
+            self._worst_tier_rank(d),
+            d.morpheme_count,
+            -self._leading_root_len(d),
+        )
+
+    # -- internal recursion --------------------------------------------
 
     def _analyze(self, s: str) -> Decomposition | None:
         """Return the best Decomposition for residue *s*, or ``None``.
 
-        Used recursively. Always returns SINGLE_ROOT or COMPOUND (never
-        FUNCTION_WORD — residues aren't function words). Memoized on *s*.
+        Always returns SINGLE_ROOT or COMPOUND — residues aren't function
+        words. Memoised on *s*.
         """
         if s in self._cache:
             return self._cache[s]
-        if len(s) < 2:
-            # Rule 1 below catches single-char roots that exist (e.g. none in
-            # BRO, but keep the check honest); shorter than 1 is meaningless.
-            if len(s) == 1 and s in self.roots:
-                result: Decomposition | None = Decomposition(
-                    kind=KIND_SINGLE_ROOT, root=s, morpheme_count=1
-                )
-            else:
-                result = None
-            self._cache[s] = result
-            return result
+        if len(s) < 1:
+            self._cache[s] = None
+            return None
 
-        # Rule 1 — inventory root wins outright, even inside recursion.
-        if s in self.roots:
-            result = Decomposition(
+        # Solid roots short-circuit inside recursion too: no point exploring
+        # alternative analyses when we have a high-confidence single-root
+        # answer that costs only 1 morpheme.
+        if self._is_solid_root(s):
+            result: Decomposition | None = Decomposition(
                 kind=KIND_SINGLE_ROOT, root=s, morpheme_count=1
             )
             self._cache[s] = result
             return result
 
         candidates: list[Decomposition] = []
+
+        # Whole-stem-as-root candidate — only when ``s`` is in the inventory
+        # at all (i.e. a tail root). Core/extended already short-circuited
+        # above; non-roots have no whole-stem candidate.
+        if s in self.tier_of:
+            candidates.append(
+                Decomposition(
+                    kind=KIND_SINGLE_ROOT, root=s, morpheme_count=1
+                )
+            )
 
         # Rule 3a — prefix strip with validated residue.
         for p in self.prefixes:
@@ -282,7 +344,9 @@ class Decomposer:
                 )
             )
 
-        # Rule 4 — compound split (longest leading root first).
+        # Rule 4 — compound split (longest leading root first iterated; final
+        # tie-break is handled by the selection key, so iteration order only
+        # affects which equivalent candidate is recorded first).
         for i in range(len(s) - 1, 1, -1):
             leading = s[:i]
             if leading not in self.roots:
@@ -325,13 +389,17 @@ class Decomposer:
             self._cache[s] = None
             return None
 
-        # Determinism: fewest morphemes, then longest representative root.
-        candidates.sort(
-            key=lambda c: (c.morpheme_count, -c.representative_root_len)
-        )
+        candidates.sort(key=self._selection_key)
         best = candidates[0]
         self._cache[s] = best
         return best
+
+    # -- tier inspection for reporting ---------------------------------
+
+    def root_tier(self, root: str) -> str | None:
+        """Return the inventory tier of *root* (``core`` / ``extended`` /
+        ``tail``), or ``None`` if not in inventory."""
+        return self.tier_of.get(root.lower())
 
 
 # ---------------------------------------------------------------------------
@@ -344,8 +412,11 @@ def classify_unresolved(
 ) -> tuple[str, str]:
     """Return ``(category, note)`` for an UNRESOLVED stem.
 
-    Categories: ``artifact``, ``compound_number``, ``loanword``,
-    ``international_root``, ``unknown``. The note records why.
+    Categories with the tiered ESPDIC inventory: ``artifact`` dominates the
+    residual (single letters, bare affixes left behind in the DB by earlier
+    migrations); ``compound_number`` is rare (number roots are loaded);
+    ``loanword`` and ``unknown`` are best-effort labels for stems that
+    ESPDIC genuinely doesn't cover.
     """
     s = stem.lower()
     if len(s) <= 2:
@@ -353,31 +424,20 @@ def classify_unresolved(
     if s in decomposer.bare_affix_set:
         return "artifact", "stem is a bare affix"
 
-    # compound_number heuristic: any number root anywhere in the stem and
-    # the rest looks number-shaped (i.e. composed of digits-of-letters) but
-    # didn't fully resolve.
-    for nr in NUMBER_ROOTS:
+    # compound_number heuristic: starts with a number root and the tail also
+    # starts with one (but the whole thing didn't resolve, so a piece must be
+    # missing or mistyped).
+    for nr in sorted(decomposer.number_roots, key=len, reverse=True):
         if s.startswith(nr) and s != nr:
             tail = s[len(nr):]
-            if any(tail.startswith(o) for o in NUMBER_ROOTS):
+            if any(tail.startswith(o) for o in decomposer.number_roots):
                 return (
                     "compound_number",
                     f"begins with number root {nr!r} but {tail!r} unresolved",
                 )
+            break
 
-    # international_root advisory: ≥5 chars with a Latinate consonant cluster.
-    if len(s) >= 5:
-        latinate_clusters = ("nt", "nc", "ks", "pr", "tr", "kr", "sp", "st")
-        if any(cl in s for cl in latinate_clusters):
-            return (
-                "international_root",
-                "len >= 5 with Latinate cluster (advisory)",
-            )
-
-    if len(s) >= 3:
-        return "loanword", "no inventory match"
-
-    return "unknown", "no heuristic matched"
+    return "unknown", "no inventory analysis found"
 
 
 # ---------------------------------------------------------------------------
@@ -394,14 +454,13 @@ class SummaryReport:
     function_word: int = 0
     compounds: int = 0
     unresolved: int = 0
-    unresolved_by_category: Counter = dataclasses.field(
-        default_factory=Counter
-    )
+    # SINGLE_ROOT resolutions counted by tier of the chosen root (a
+    # confidence signal on the result).
+    decomposed_by_tier: Counter = dataclasses.field(default_factory=Counter)
+    unresolved_by_category: Counter = dataclasses.field(default_factory=Counter)
 
     @property
     def decomposed_successfully(self) -> int:
-        # SINGLE_ROOT (whether already correct or via stripping) + COMPOUND +
-        # FUNCTION_WORD all count as "the decomposer reached a decision".
         return (
             self.already_correct
             + self.single_root_via_strip
@@ -421,11 +480,17 @@ class SummaryReport:
             f"Compounds                  : {self.compounds}",
             f"Unresolved                 : {self.unresolved}",
         ]
+        if self.decomposed_by_tier:
+            lines.append("  Single roots by tier:")
+            for tier in (TIER_CORE, TIER_EXTENDED, TIER_TAIL):
+                n = self.decomposed_by_tier.get(tier, 0)
+                if n:
+                    lines.append(f"    {tier:<10}: {n}")
         if self.unresolved_by_category:
-            lines.append("  by category:")
+            lines.append("  Unresolved by category:")
             for cat in sorted(self.unresolved_by_category):
                 lines.append(
-                    f"    {cat:<22} : {self.unresolved_by_category[cat]}"
+                    f"    {cat:<16}: {self.unresolved_by_category[cat]}"
                 )
         return "\n".join(lines)
 
@@ -439,6 +504,12 @@ def _join_chain(parts: tuple[str, ...]) -> str:
     return "+".join(parts) if parts else ""
 
 
+def _component_tiers(
+    decomposer: Decomposer, components: tuple[str, ...]
+) -> list[str]:
+    return [decomposer.root_tier(c) or "unknown" for c in components]
+
+
 def process_db(
     db_path: Path,
     decomposer: Decomposer,
@@ -449,9 +520,8 @@ def process_db(
     """Walk every concept with a non-empty ``eo_root`` and apply the decomposer.
 
     Returns ``(summary, updates, compound_records, unresolved_records)``.
-
     When ``dry_run`` is True, no DB writes or jsonl files are produced; the
-    returned data structures still describe what *would* have happened.
+    returned structures still describe what *would* have happened.
     """
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -505,6 +575,9 @@ def process_db(
                 new_root = dec.root or stem
                 new_prefix = _join_chain(dec.prefixes)
                 new_suffix = _join_chain(dec.suffixes)
+                tier = decomposer.root_tier(new_root) or TIER_TAIL
+                summary.decomposed_by_tier[tier] += 1
+
                 is_bare_root_and_no_affixes = (
                     new_root == stem.lower()
                     and not dec.prefixes
@@ -513,8 +586,6 @@ def process_db(
                 if is_bare_root_and_no_affixes:
                     summary.already_correct += 1
                     continue
-                # Only write if anything actually changes — also covers the
-                # "previously partially-decomposed, now correct" case.
                 if (
                     new_root != stem
                     or new_prefix != existing_prefix
@@ -544,6 +615,9 @@ def process_db(
                     "eo_root_stem": stem,
                     "eo_word": eo_word,
                     "component_roots": list(dec.components),
+                    "component_tiers": _component_tiers(
+                        decomposer, dec.components
+                    ),
                     "connectors": list(dec.connectors),
                 })
                 continue
@@ -581,15 +655,30 @@ def _write_jsonl(path: Path, records: list[dict]) -> None:
 
 
 def load_inventory(path: Path) -> dict:
-    """Load and lightly validate the BRO inventory JSON."""
+    """Load and lightly validate the tiered inventory JSON."""
     if not path.exists():
         raise FileNotFoundError(f"Inventory not found: {path}")
     with path.open(encoding="utf-8") as fh:
         inv = json.load(fh)
-    for key in ("roots", "suffixes", "prefixes", "correlatives", "other"):
+    required_keys = (
+        "roots", "suffixes", "prefixes", "correlatives", "other",
+        "number_roots",
+    )
+    for key in required_keys:
         if key not in inv:
             raise ValueError(
                 f"Inventory missing required key {key!r}: {path}"
+            )
+    # Spot-check the new ``{gloss, prod, tier}`` shape so a stale BRO-format
+    # file fails fast rather than producing garbage decompositions.
+    if inv["roots"]:
+        sample_key = next(iter(inv["roots"]))
+        sample_val = inv["roots"][sample_key]
+        if not isinstance(sample_val, dict) or "tier" not in sample_val:
+            raise ValueError(
+                f"Inventory at {path} appears to use the legacy "
+                "list-of-glosses format; expected "
+                "{root: {gloss, prod, tier}}."
             )
     return inv
 
@@ -603,7 +692,10 @@ def _print_dryrun_preview(updates: list[tuple], limit: int = 20) -> None:
     if not updates:
         print("(dry-run) no would-be updates.")
         return
-    print(f"(dry-run) {len(updates)} would-be updates; first {min(limit, len(updates))}:")
+    print(
+        f"(dry-run) {len(updates)} would-be updates; "
+        f"first {min(limit, len(updates))}:"
+    )
     for cid, root, pfx, suf in updates[:limit]:
         print(
             f"  concept_id={cid}: eo_root={root!r} "
@@ -616,8 +708,9 @@ def _print_dryrun_preview(updates: list[tuple], limit: int = 20) -> None:
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(
         description=(
-            "Rewrite concept.eo_root/eo_prefix/eo_suffix from BRO inventory. "
-            "Idempotent. --dry-run shows the diff without touching the DB."
+            "Rewrite concept.eo_root/eo_prefix/eo_suffix from the tiered "
+            "ESPDIC inventory. Idempotent. --dry-run shows the diff "
+            "without touching the DB."
         )
     )
     parser.add_argument(
@@ -626,7 +719,7 @@ def main(argv: list[str] | None = None) -> None:
     )
     parser.add_argument(
         "--inventory", required=True, type=Path,
-        help="Path to eo_inventory.json",
+        help="Path to eo_inventory.json (new {gloss, prod, tier} format)",
     )
     parser.add_argument(
         "--out-dir", required=True, type=Path,
