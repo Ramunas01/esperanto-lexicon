@@ -42,6 +42,22 @@ def create_common_lexicon_schema(conn: sqlite3.Connection) -> None:
             form_description TEXT,
             tier             INTEGER
         );
+
+        -- Ordered set of content roots making up each concept's eo_word.
+        -- A simple word produces one row (is_head=1); a compound produces
+        -- one row per content root with is_head=1 only on the final root
+        -- (Esperanto's semantic head). Maintained by eo_root_decomposer.py.
+        CREATE TABLE IF NOT EXISTS concept_root (
+            concept_id INTEGER NOT NULL REFERENCES concept(id),
+            root       TEXT    NOT NULL,
+            position   INTEGER NOT NULL,
+            is_head    INTEGER NOT NULL DEFAULT 0,
+            tier       TEXT,
+            PRIMARY KEY (concept_id, position)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_concept_root_root
+            ON concept_root(root);
         """
     )
     conn.commit()
