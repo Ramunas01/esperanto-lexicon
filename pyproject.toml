@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eolex-relevance"
+version = "0.1.0"
+description = "Score a text's relevance to domain (Tier-4) dictionaries via TF-IDF over Esperanto roots."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Esperanto Lexicon team", email = "team@customsclear.net" }]
+keywords = ["esperanto", "lexicon", "tf-idf", "domain-relevance", "nlp"]
+dependencies = [
+    "numpy>=1.23",
+]
+
+[project.optional-dependencies]
+# spaCy improves recall on en/lt by lemmatizing before lookup. Without it the
+# scorer falls back to lowercase surface forms (still works, lower recall).
+# Install the models separately, e.g.:
+#   python -m spacy download en_core_web_sm
+#   python -m spacy download lt_core_news_sm
+spacy = ["spacy>=3.7"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+eolex-relevance = "eolex_relevance.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["eolex_relevance*"]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: integration tests that build/score against the real lexicon assets",
+]
