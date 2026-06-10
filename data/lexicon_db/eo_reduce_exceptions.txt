@@ -1,0 +1,42 @@
+# Esperanto root-extraction exceptions — short-collision residual that the
+# SV-guarded reducer cannot reach.
+#
+# WHY THIS FILE EXISTS
+# build_eo_inventory.py's reducer is now successor-variety-guarded: it strips
+# a suffix only when the shorter form is a STRONGER morpheme boundary
+# (higher SV) than the current stem. That catches the bulk of the old
+# over-collapse class (rapid->rap, decid->dec, person->pers — all preserved
+# automatically because SV(rapid) > SV(rap) etc.).
+#
+# Residual cases SV can't catch are short-collision: the fragment has high
+# SV from completely UNRELATED words. Example:
+#
+#     kol (neck/collar) has high SV from kolo, koloro, kolono, ...
+#     so SV(kol) > SV(koler), and the SV guard does not protect koler.
+#     But koler ("anger", as in kolero) is its own root, not derived from
+#     kol — this is a true false-merge that needs the explicit exception.
+#
+# These entries are review-confirmed: each one has its `eo_word` /
+# concept_lang.en gloss visually checked against the inventory gloss of the
+# over-reduced head root. Candidates are surfaced by
+# audit_root_consistency.py's over_reduced_candidate queue.
+#
+# FORMAT
+# One stem per line, lowercased. Lines starting with `#` are comments.
+# Inline `# ...` trailing comments on a stem line are also stripped.
+# Keep this list SHORT and evidence-driven — it is a scalpel for known
+# residual false merges, not a general mechanism.
+#
+# LICENSE: project data, human-curated.
+#
+koler     # kolero=anger; "kol" (neck/collar) is the SV-inflated false merge
+regul     # regulo=rule; "reg" (prevalent) absorbs unrelated derivations
+disting   # distingi=distinguish; SV(disting) does not exceed SV(disti...)
+banan    # banano (banana) ≠ ban (bathe)
+karot    # karoto (carrot) ≠ kar (dear/expensive)
+koleg    # kolego (colleague) ≠ kol (neck)
+koton    # kotono (cotton) ≠ kot (mud)
+region   # regiono (region) ≠ regi (to rule)
+album    # albumo (album) ≠ alb
+postul   # postuli (demand) ≠ post (after/prefix)
+ekstrem  # ekstrema (extreme) ≠ ekstr

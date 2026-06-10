@@ -100,11 +100,17 @@ ACCUSATIVE_N: str = "n"
 
 TIER_CORE = "core"
 TIER_EXTENDED = "extended"
+# `modern` is the tier carried by entries from eo_roots_supplement.tsv —
+# curated modern borrowings absent from ESPDIC. Treated like `extended`
+# for keep-whole / selection rules so a supplement entry is never a
+# low-confidence singleton that competes against decompositions.
+TIER_MODERN = "modern"
 TIER_TAIL = "tail"
 
 TIER_RANK: dict[str, int] = {
     TIER_CORE: 0,
     TIER_EXTENDED: 1,
+    TIER_MODERN: 1,
     TIER_TAIL: 2,
 }
 
@@ -114,7 +120,9 @@ TIER_RANK: dict[str, int] = {
 # lexical unit and shouldn't be re-analysed.
 PROD_FLOOR_FOR_TAIL: int = 2
 
-SOLID_TIERS: frozenset[str] = frozenset({TIER_CORE, TIER_EXTENDED})
+SOLID_TIERS: frozenset[str] = frozenset(
+    {TIER_CORE, TIER_EXTENDED, TIER_MODERN}
+)
 
 # Bare-affix exemplars used in the ``artifact`` unresolved category — unioned
 # with the inventory's full prefix and suffix sets at runtime.
@@ -535,7 +543,7 @@ class SummaryReport:
         ]
         if self.head_tier_distribution:
             lines.append("  Head-root tiers:")
-            for tier in (TIER_CORE, TIER_EXTENDED, TIER_TAIL):
+            for tier in (TIER_CORE, TIER_EXTENDED, TIER_MODERN, TIER_TAIL):
                 n = self.head_tier_distribution.get(tier, 0)
                 if n:
                     lines.append(f"    {tier:<10}: {n}")
