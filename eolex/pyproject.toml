@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eolex"
+version = "0.1.0"
+description = "Thin read-side API over the Esperanto lexicon: morphology, multilingual word resolution, and pedagogical tiers."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Esperanto Lexicon team", email = "team@customsclear.net" }]
+keywords = ["esperanto", "lexicon", "morphology", "nlp"]
+dependencies = [
+    "numpy>=1.23",
+]
+
+[project.optional-dependencies]
+# spaCy improves recall on en/lt by lemmatizing before lookup.
+spacy = ["spacy>=3.7"]
+dev = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["eolex*"]
+
+[tool.setuptools.package-data]
+eolex = ["data/*.bundle"]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: tests that require the real lexicon assets",
+]

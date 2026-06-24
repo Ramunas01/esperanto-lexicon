@@ -9,12 +9,13 @@ What it compiles
 1. **Resolver tables** — the word→root map for the requested language packs,
    read straight from ``concept_lang`` joined to ``concept_root`` (compounds
    contribute every root; concepts lacking a ``concept_root`` row fall back to
-   ``concept.eo_root``), plus the full Esperanto inventory copied from
-   ``eo_inventory.json`` so Esperanto text can be decomposed at score time.
-2. **Domain vectors** — each domain spec is turned into a root-frequency map
-   ``f_i`` using the *same* resolver, then into an IDF-weighted, L2-normalized
-   vector. This is the only place the scoring math is defined; the scorer
-   mirrors it.
+   ``concept.eo_root``), plus the full Esperanto inventory.
+2. **Pedagogical tier map** — ``(lang, word) → (ped_tier, cefr_level)`` from
+   ``concept_lang``. For Esperanto, synthesised via ``concept.eo_word`` join
+   (minimum tier across associated languages).
+3. **Domain vectors** — each domain spec is turned into a root-frequency map
+   then into an IDF-weighted, L2-normalized vector. (Absent in lexicon-only
+   bundles produced by :func:`build_lexicon_bundle`.)
 
 Scoring math (exact)
 --------------------
@@ -23,19 +24,6 @@ Given ``N`` domains with root-frequency maps ``f_i``::
     df(r)   = number of domains containing r
     idf(r)  = log((N + 1) / (df(r) + 1)) + 1
     w_i(r)  = (f_i(r) / Σ_r f_i(r)) * idf(r)      then L2-normalize w_i
-
-The bundle vocabulary is every root with ``df >= 1`` (the union of all
-domains' roots), in a fixed sorted order.
-
-Domain spec forms
------------------
-* ``{"name", "source": "terms", "terms": [...], "lang": "en"}`` — explicit list.
-* ``{"name", "source": "corpus", "path": "...", "lang": "en"}`` — derive the
-  profile from an expert corpus file.
-* ``{"name", "source": "db", "query": "...", "lang": "en"}`` — pull terms from
-  the lexicon DB. A documented hook: the default query returns ``concept_lang``
-  words for ``:lang``; adapt ``query`` to the real domain-tagging schema. The
-  fully-specified paths are ``terms`` and ``corpus``.
 """
 
 from __future__ import annotations
@@ -49,10 +37,9 @@ from pathlib import Path
 
 import numpy as np
 
-from .bundle import Bundle
-from .resolver import Resolver
+from eolex.bundle import Bundle
+from eolex.resolver import Resolver
 
-# Documented default for source="db": adapt to the real domain-tagging schema.
 DEFAULT_DB_QUERY = "SELECT word FROM concept_lang WHERE lang = :lang"
 
 
@@ -69,12 +56,11 @@ def load_inventory(inventory: str | Path) -> dict:
 def build_word_root_map(
     lexicon_db: str | Path, langs: list[str]
 ) -> dict[tuple[str, str], list[str]]:
-    """Extract a ``(lang, lowercased word) -> [roots]`` map from the lexicon.
+    """Extract ``(lang, lowercased word) -> [roots]`` from the lexicon.
 
-    Roots come from ``concept_root`` (full root set per concept, so compounds
-    contribute every root); a concept with no ``concept_root`` rows falls back
-    to its single ``concept.eo_root``. Only non-Esperanto packs are emitted —
-    Esperanto is resolved by morphological decomposition, not by lookup.
+    Roots come from ``concept_root``; concepts with no ``concept_root`` rows
+    fall back to ``concept.eo_root``. Only non-Esperanto packs are emitted —
+    Esperanto is resolved by morphological decomposition.
     """
     pack_langs = [l for l in langs if l != "eo"]
     if not pack_langs:
@@ -117,8 +103,50 @@ def build_word_root_map(
     finally:
         conn.close()
 
-    # Sort the root lists for deterministic bundle bytes.
     return {k: sorted(v) for k, v in out.items()}
+
+
+def build_concept_lang_data(
+    lexicon_db: str | Path, langs: list[str]
+) -> dict[tuple[str, str], tuple[int | None, str | None]]:
+    """Extract ``(lang, lowercased_word) -> (ped_tier, cefr_level)`` map.
+
+    For non-Esperanto langs: read directly from ``concept_lang``, taking
+    MIN(tier) and MIN(cefr_level) per word to deduplicate multi-sense entries.
+    For Esperanto: synthesise from ``concept.eo_word`` joined to
+    ``concept_lang``, taking the minimum tier across all associated languages.
+    """
+    conn = sqlite3.connect(str(lexicon_db))
+    try:
+        out: dict[tuple[str, str], tuple[int | None, str | None]] = {}
+
+        pack_langs = [l for l in langs if l != "eo"]
+        if pack_langs:
+            placeholders = ",".join("?" for _ in pack_langs)
+            for lang, word, tier, cefr in conn.execute(
+                f"SELECT lang, word, MIN(tier), MIN(cefr_level) "
+                f"FROM concept_lang "
+                f"WHERE lang IN ({placeholders}) "
+                f"AND tier IS NOT NULL AND word IS NOT NULL AND word != '' "
+                f"GROUP BY lang, word",
+                pack_langs,
+            ):
+                out[(lang, word.strip().lower())] = (tier, cefr)
+
+        if "eo" in langs:
+            for eo_word, tier, cefr in conn.execute(
+                "SELECT c.eo_word, MIN(cl.tier), MIN(cl.cefr_level) "
+                "FROM concept c "
+                "JOIN concept_lang cl ON cl.concept_id = c.id "
+                "WHERE cl.tier IS NOT NULL "
+                "AND c.eo_word IS NOT NULL AND c.eo_word != '' "
+                "GROUP BY c.id, c.eo_word"
+            ):
+                out[("eo", eo_word.strip().lower())] = (tier, cefr)
+
+        return out
+    finally:
+        conn.close()
 
 
 # ---------------------------------------------------------------------------
@@ -127,11 +155,6 @@ def build_word_root_map(
 
 
 def _domain_terms(spec: dict, lexicon_db: str | Path) -> tuple[list[str], str]:
-    """Return ``(text_chunks, lang)`` for a domain spec.
-
-    Each chunk is resolved independently; for ``terms``/``db`` a chunk is one
-    term, for ``corpus`` it is the whole file text.
-    """
     source = spec.get("source")
     lang = spec.get("lang", "en")
     if source == "terms":
@@ -146,20 +169,20 @@ def _domain_terms(spec: dict, lexicon_db: str | Path) -> tuple[list[str], str]:
             rows = conn.execute(query, {"lang": lang}).fetchall()
         finally:
             conn.close()
-        # Accept (term,) or (term, lang) row shapes.
         terms: list[str] = []
         for row in rows:
             if not row:
                 continue
             terms.append(str(row[0]))
         return terms, lang
-    raise ValueError(f"Unknown domain source {source!r} for domain {spec.get('name')!r}")
+    raise ValueError(
+        f"Unknown domain source {source!r} for domain {spec.get('name')!r}"
+    )
 
 
 def domain_root_frequencies(
     spec: dict, resolver: Resolver, lexicon_db: str | Path
 ) -> Counter:
-    """Resolve a domain spec to a root-frequency map ``f_i``."""
     chunks, lang = _domain_terms(spec, lexicon_db)
     freq: Counter = Counter()
     for chunk in chunks:
@@ -177,12 +200,7 @@ def domain_root_frequencies(
 def compile_vectors(
     domain_freqs: list[Counter],
 ) -> tuple[list[str], np.ndarray, np.ndarray]:
-    """Compile per-domain frequency maps into vocab + idf + L2 vectors.
-
-    Returns ``(vocab, idf, vectors)`` where ``vocab`` is the sorted union of
-    all roots, ``idf`` has shape ``(V,)`` and ``vectors`` has shape ``(D, V)``
-    with L2-normalized rows.
-    """
+    """Compile per-domain frequency maps into vocab + idf + L2 vectors."""
     n_domains = len(domain_freqs)
     vocab = sorted({root for f in domain_freqs for root in f})
     root_index = {r: i for i, r in enumerate(vocab)}
@@ -212,7 +230,7 @@ def compile_vectors(
 
 
 # ---------------------------------------------------------------------------
-# Top-level build
+# Top-level builds
 # ---------------------------------------------------------------------------
 
 
@@ -228,8 +246,8 @@ def build_bundle(
 ) -> Bundle:
     """Compile ``domain_specs`` into a portable bundle written to ``out_path``.
 
-    ``langs`` lists the supported language codes (default ``["eo", "en", "lt"]``).
-    The returned :class:`Bundle` is also the in-memory form just written.
+    The bundle includes domain vectors for :class:`~eolex_relevance.RelevanceScorer`
+    plus the pedagogical tier map (``concept_lang``) from the lexicon DB.
     """
     if not domain_specs:
         raise ValueError("At least one domain spec is required.")
@@ -237,6 +255,7 @@ def build_bundle(
 
     inv = load_inventory(inventory)
     word_root_map = build_word_root_map(lexicon_db, langs)
+    concept_lang_map = build_concept_lang_data(lexicon_db, langs)
     resolver = Resolver(inv, word_root_map, langs, use_spacy=use_spacy)
 
     domains: list[str] = []
@@ -280,7 +299,11 @@ def build_bundle(
                 "source": s.get("source"),
                 "lang": s.get("lang", "en"),
                 **({"path": s["path"]} if s.get("source") == "corpus" else {}),
-                **({"n_terms": len(s.get("terms", []))} if s.get("source") == "terms" else {}),
+                **(
+                    {"n_terms": len(s.get("terms", []))}
+                    if s.get("source") == "terms"
+                    else {}
+                ),
             }
             for s in domain_specs
         ],
@@ -293,6 +316,64 @@ def build_bundle(
         vectors=vectors,
         word_root_map=word_root_map,
         inventory=inv,
+        concept_lang_map=concept_lang_map,
+        meta=meta,
+    )
+    bundle.save(out_path)
+    return bundle
+
+
+def build_lexicon_bundle(
+    lexicon_db: str | Path,
+    inventory: str | Path,
+    out_path: str | Path,
+    *,
+    langs: list[str] | None = None,
+    build_date: str | None = None,
+) -> Bundle:
+    """Build a lexicon-only bundle (no domain vectors) for ``eolex``.
+
+    The resulting bundle can answer all :class:`~eolex.Lexicon` queries:
+    morphological decomposition, word→root resolution, and pedagogical tiers.
+    It carries no domain-scoring machinery and has a minimal footprint.
+
+    This is the function that produces ``eolex/eolex/data/lexicon.bundle``.
+    """
+    langs = list(langs) if langs else ["eo", "en", "lt"]
+
+    inv = load_inventory(inventory)
+    word_root_map = build_word_root_map(lexicon_db, langs)
+    concept_lang_map = build_concept_lang_data(lexicon_db, langs)
+
+    conn = sqlite3.connect(str(lexicon_db))
+    try:
+        concept_count = conn.execute("SELECT COUNT(*) FROM concept").fetchone()[0]
+        concept_lang_count = conn.execute(
+            "SELECT COUNT(*) FROM concept_lang"
+        ).fetchone()[0]
+    finally:
+        conn.close()
+
+    meta = {
+        "build_date": build_date or datetime.date.today().isoformat(),
+        "langs": langs,
+        "bundle_type": "lexicon",
+        "inventory": inv.get("meta", {}),
+        "lexicon_db": {
+            "path": str(lexicon_db),
+            "concept_count": concept_count,
+            "concept_lang_count": concept_lang_count,
+        },
+    }
+
+    bundle = Bundle(
+        domains=[],
+        vocab=[],
+        idf=np.array([], dtype=np.float64),
+        vectors=np.zeros((0, 0), dtype=np.float64),
+        word_root_map=word_root_map,
+        inventory=inv,
+        concept_lang_map=concept_lang_map,
         meta=meta,
     )
     bundle.save(out_path)

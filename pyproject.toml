@@ -13,6 +13,7 @@ authors = [{ name = "Esperanto Lexicon team", email = "team@customsclear.net" }]
 keywords = ["esperanto", "lexicon", "tf-idf", "domain-relevance", "nlp"]
 dependencies = [
     "numpy>=1.23",
+    "eolex",
 ]
 
 [project.optional-dependencies]
