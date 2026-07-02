@@ -21,6 +21,8 @@ data/mining/
 # Generated analysis data — not for repo
 data/analysis/*.csv
 data/analysis/unknown_tokens_pooled.txt
+# TinyStories probe run outputs (regenerable via fetch + batch_coverage_report)
+data/analysis/tinystories_run/
 
 # Mining candidates — generated, not source
 data/domain_db/candidates_*.jsonl
