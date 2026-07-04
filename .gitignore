@@ -40,3 +40,7 @@ data/lexicon_db/akademio_roots.txt
 
 # ESPDIC raw dictionary — regenerable (CC-BY-3.0), fetched by build/gapfill tools
 data/lexicon_db/espdic.txt
+
+# Review harness — regenerable snapshot & Excel working copies
+data/analysis/gapfill/worksheet_export.tsv
+data/analysis/gapfill/*.xlsx
