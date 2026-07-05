@@ -1,0 +1,19 @@
+Names-straddle members — NOT authored into the common lexicon.
+Route to the future named-entity layer (per CLAUDE.md deferred NE design).
+
+  planets                mercury
+  planets                venus
+  planets                earth
+  planets                mars
+  planets                jupiter
+  planets                saturn
+  planets                uranus
+  planets                neptune
+  planets                sun
+  planets                moon
+  continents             asia
+  continents             africa
+  continents             europe
+  continents             america
+  continents             australia
+  continents             antarctica

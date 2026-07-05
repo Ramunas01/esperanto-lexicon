@@ -1,227 +1,372 @@
-set	member	in_lexicon	proposed_eo_anchor	eo_gloss
-family	mother	Y		
-family	father	Y		
-family	mom	Y		
-family	dad	Y		
-family	mommy	N	panj/panjo	mom, mommy
-family	daddy	N	paĉj/paĉjo	dad, daddy, pa, papa
-family	parent	Y		
-family	sister	Y		
-family	brother	Y		
-family	sibling	N	frat/frato	brother, sibling
-family	grandmother	Y		
-family	grandfather	Y		
-family	grandma	N		
-family	grandpa	N	avĉj/avĉjo	grandpa, granddad
-family	aunt	Y		
-family	uncle	Y		
-family	cousin	Y		
-family	niece	N	nevin/nevino	niece
-family	nephew	N	nev/nevo	nephew
-family	son	Y		
-family	daughter	Y		
-family	child	Y		
-family	baby	Y		
-family	wife	Y		
-family	husband	Y		
-family	family	Y		
-body	head	Y		
-body	hair	Y		
-body	face	Y		
-body	eye	Y		
-body	ear	Y		
-body	nose	Y		
-body	mouth	Y		
-body	lip	Y		
-body	tooth	Y		
-body	tongue	Y		
-body	cheek	N	vang/vango	cheek, jowl
-body	chin	N	menton/mentono	chin
-body	neck	Y		
-body	shoulder	Y		
-body	arm	Y		
-body	elbow	N	kubut/kubuto	elbow
-body	hand	Y		
-body	wrist	N	pojn/pojno	wrist
-body	finger	Y		
-body	thumb	N	poleks/polekso	thumb
-body	palm	N	palm/palmo	palm, palm tree
-body	chest	Y		
-body	back	Y		
-body	stomach	Y		
-body	belly	N	ventr/ventro	abdomen, stomach, belly, tummy
-body	leg	Y		
-body	knee	Y		
-body	foot	Y		
-body	toe	Y		
-body	heel	Y		
-body	ankle	Y		
-body	hip	N	koks/kokso	haunch, hip
-body	skin	Y		
-body	bone	Y		
-body	forefinger	N		
-body	pinky	N	etfingr/etfingro	little finger, pinky (finger)
-colours	red	Y		
-colours	orange	Y		
-colours	yellow	Y		
-colours	green	Y		
-colours	blue	Y		
-colours	purple	Y		
-colours	pink	Y		
-colours	brown	Y		
-colours	black	Y		
-colours	white	Y		
-colours	grey	N	griz/grizo	grey
-colours	gray	Y		
-numbers	one	Y		
-numbers	two	Y		
-numbers	three	Y		
-numbers	four	Y		
-numbers	five	Y		
-numbers	six	Y		
-numbers	seven	Y		
-numbers	eight	Y		
-numbers	nine	Y		
-numbers	ten	Y		
-numbers	eleven	Y		
-numbers	twelve	Y		
-numbers	thirteen	Y		
-numbers	fourteen	Y		
-numbers	fifteen	Y		
-numbers	sixteen	Y		
-numbers	seventeen	Y		
-numbers	eighteen	Y		
-numbers	nineteen	Y		
-numbers	twenty	Y		
-numbers	thirty	Y		
-numbers	forty	Y		
-numbers	fifty	Y		
-numbers	sixty	Y		
-numbers	seventy	Y		
-numbers	eighty	Y		
-numbers	ninety	Y		
-numbers	hundred	Y		
-days	monday	Y		
-days	tuesday	Y		
-days	wednesday	Y		
-days	thursday	Y		
-days	friday	Y		
-days	saturday	Y		
-days	sunday	Y		
-months	january	Y		
-months	february	Y		
-months	march	Y		
-months	april	Y		
-months	may	Y		
-months	june	Y		
-months	july	Y		
-months	august	Y		
-months	september	Y		
-months	october	Y		
-months	november	Y		
-months	december	Y		
-weather	sun	Y		
-weather	rain	Y		
-weather	snow	Y		
-weather	wind	Y		
-weather	cloud	Y		
-weather	storm	Y		
-weather	fog	N	nebul/nebulo	fog, mist
-weather	ice	Y		
-weather	sunny	N	sun/sune	sunny
-weather	rainy	N	pluv/pluva	rain, of rain, rainy
-weather	cloudy	N	nub/nuba	cloudy, overcast, gloomy, obscure, unclear
-weather	windy	N	vent/venta	windy
-weather	hot	Y		
-weather	cold	Y		
-weather	warm	Y		
-weather	wet	Y		
-weather	dry	Y		
-weather	thunder	N	tondr/tondri	to thunder
-weather	lightning	N	fulm/fulma	lightning
-weather	rainbow	N	pluvark/pluvarko	rainbow
-animals	dog	Y		
-animals	cat	Y		
-animals	cow	Y		
-animals	horse	Y		
-animals	pig	Y		
-animals	sheep	Y		
-animals	goat	N	kapr/kapro	goat
-animals	chicken	Y		
-animals	duck	N	anas/anasa	duck, duck-, duck’s, of a duck
-animals	goose	N	anser/ansero	goose
-animals	rabbit	N	lepor/leporo	hare, rabbit
-animals	mouse	Y		
-animals	rat	N	rat/rato	rat
-animals	bird	Y		
-animals	fish	Y		
-animals	frog	Y		
-animals	bee	Y		
-animals	ant	N	formik/formiko	ant
-animals	spider	Y		
-animals	fox	N	vulp/vulpa	fox, vulpine
-animals	wolf	N	lup/lupo	wolf
-animals	bear	Y		
-animals	lion	Y		
-animals	tiger	N	tigr/tigro	tiger
-animals	elephant	Y		
-animals	monkey	Y		
-animals	giraffe	N	ĝiraf/ĝirafo	giraffe
-animals	zebra	N	zebr/zebro	zebra
-animals	deer	N	cerv/cerva	deer, deer-, of a deer
-animals	squirrel	N	sciur/sciuro	squirrel
-animals	owl	N	guf/gufo	(eagle) owl
-animals	snake	Y		
-animals	turtle	N	keloni/kelonio	turtle
-animals	whale	N	balen/baleno	whale
-animals	dolphin	N	delfen/delfeno	dolphin
-animals	shark	N	ŝark/ŝarko	shark
-animals	butterfly	N	papili/papilio	butterfly
-motion_verbs	go	Y		
-motion_verbs	come	Y		
-motion_verbs	run	Y		
-motion_verbs	walk	Y		
-motion_verbs	jump	Y		
-motion_verbs	hop	N	hop/hopi	to hop
-motion_verbs	skip	N	dancet/danceti	to hop, skip
-motion_verbs	climb	Y		
-motion_verbs	crawl	N	ramp/rampi	to crawl, creep, sneak
-motion_verbs	fly	Y		
-motion_verbs	swim	Y		
-motion_verbs	fall	Y		
-motion_verbs	sit	Y		
-motion_verbs	stand	Y		
-motion_verbs	turn	Y		
-motion_verbs	roll	Y		
-motion_verbs	slide	Y		
-motion_verbs	spin	N	ŝpin/ŝpini	to spin (thread)
-motion_verbs	dance	Y		
-motion_verbs	march	Y		
-motion_verbs	throw	Y		
-motion_verbs	catch	Y		
-motion_verbs	push	Y		
-motion_verbs	pull	Y		
-motion_verbs	carry	Y		
-motion_verbs	kick	Y		
-motion_verbs	ride	Y		
-emotions	happy	Y		
-emotions	sad	Y		
-emotions	angry	Y		
-emotions	mad	Y		
-emotions	scared	Y		
-emotions	afraid	Y		
-emotions	glad	Y		
-emotions	excited	Y		
-emotions	surprised	Y		
-emotions	worried	Y		
-emotions	proud	Y		
-emotions	jealous	N	ĵaluz/ĵaluza	jealous
-emotions	shy	Y		
-emotions	lonely	Y		
-emotions	calm	Y		
-emotions	upset	Y		
-emotions	cheerful	Y		
-emotions	curious	N	sciam/sciama	curious, inquisitive
-emotions	bored	Y		
-emotions	nervous	Y		
-emotions	brave	Y		
+set_name	member_en	category	in_lexicon	proposed_eo_anchor	eo_gloss	proposed_tier
+numbers_cardinal	one	closed	Y			1
+numbers_cardinal	two	closed	Y			1
+numbers_cardinal	three	closed	Y			1
+numbers_cardinal	four	closed	Y			1
+numbers_cardinal	five	closed	Y			1
+numbers_cardinal	six	closed	Y			1
+numbers_cardinal	seven	closed	Y			1
+numbers_cardinal	eight	closed	Y			1
+numbers_cardinal	nine	closed	Y			1
+numbers_cardinal	ten	closed	Y			1
+numbers_cardinal	eleven	closed	Y			1
+numbers_cardinal	twelve	closed	Y			1
+numbers_cardinal	thirteen	closed	Y			1
+numbers_cardinal	fourteen	closed	Y			1
+numbers_cardinal	fifteen	closed	Y			1
+numbers_cardinal	sixteen	closed	Y			1
+numbers_cardinal	seventeen	closed	Y			1
+numbers_cardinal	eighteen	closed	Y			1
+numbers_cardinal	nineteen	closed	Y			1
+numbers_cardinal	twenty	closed	Y			1
+numbers_tens	thirty	closed	Y			2
+numbers_tens	forty	closed	Y			2
+numbers_tens	fifty	closed	Y			2
+numbers_tens	sixty	closed	Y			2
+numbers_tens	seventy	closed	Y			2
+numbers_tens	eighty	closed	Y			2
+numbers_tens	ninety	closed	Y			2
+numbers_tens	hundred	closed	Y			2
+numbers_tens	thousand	closed	Y			2
+numbers_tens	million	closed	Y			2
+numbers_ordinal	first	closed	Y			2
+numbers_ordinal	second	closed	Y			2
+numbers_ordinal	third	closed	Y			2
+numbers_ordinal	fourth	closed	Y			2
+numbers_ordinal	fifth	closed	Y			2
+numbers_ordinal	sixth	closed	N	ses/sesa	sixth	2
+numbers_ordinal	seventh	closed	N	sep/sepa	seventh	2
+numbers_ordinal	eighth	closed	N	ok/oka	eighth	2
+numbers_ordinal	ninth	closed	N	naŭ/naŭa	ninth	2
+numbers_ordinal	tenth	closed	N	dek/deka	tenth	2
+fractions	half	closed	Y			2
+fractions	quarter	closed	Y			2
+fractions	third	closed	Y			2
+fractions	whole	closed	Y			2
+fractions	double	closed	Y			2
+days	monday	closed	Y			1
+days	tuesday	closed	Y			1
+days	wednesday	closed	Y			1
+days	thursday	closed	Y			1
+days	friday	closed	Y			1
+days	saturday	closed	Y			1
+days	sunday	closed	Y			1
+months	january	closed	Y			2
+months	february	closed	Y			2
+months	march	closed	Y			2
+months	april	closed	Y			2
+months	may	closed	Y			2
+months	june	closed	Y			2
+months	july	closed	Y			2
+months	august	closed	Y			2
+months	september	closed	Y			2
+months	october	closed	Y			2
+months	november	closed	Y			2
+months	december	closed	Y			2
+seasons	spring	closed	Y			1
+seasons	summer	closed	Y			1
+seasons	autumn	closed	N	aŭtun/aŭtuna	autumn	1
+seasons	fall	closed	Y			1
+seasons	winter	closed	Y			1
+times_of_day	morning	closed	Y			1
+times_of_day	noon	closed	N	tagmez/tagmezo	midday, noon	1
+times_of_day	afternoon	closed	Y			1
+times_of_day	evening	closed	Y			1
+times_of_day	night	closed	Y			1
+times_of_day	midnight	closed	Y			1
+times_of_day	dawn	closed	N	aŭror/aŭrori	to dawn	1
+times_of_day	dusk	closed	N	krepusk/krepusko	dawn, dusk, twilight	1
+time_units	second	closed	Y			1
+time_units	minute	closed	Y			1
+time_units	hour	closed	Y			1
+time_units	day	closed	Y			1
+time_units	week	closed	Y			1
+time_units	month	closed	Y			1
+time_units	year	closed	Y			1
+relative_time	yesterday	closed	Y			1
+relative_time	today	closed	Y			1
+relative_time	tomorrow	closed	Y			1
+relative_time	now	closed	Y			1
+relative_time	soon	closed	Y			1
+relative_time	later	closed	Y			1
+relative_time	before	closed	Y			1
+relative_time	after	closed	Y			1
+directions_cardinal	north	closed	Y			2
+directions_cardinal	south	closed	Y			2
+directions_cardinal	east	closed	Y			2
+directions_cardinal	west	closed	Y			2
+directions_cardinal	northeast	closed	N	nordorient/nordoriento	the Northeast	2
+directions_cardinal	northwest	closed	N	nordokcident/nordokcidento	northwest	2
+directions_cardinal	southeast	closed	N	sudorient/sudorienta	southeast	2
+directions_cardinal	southwest	closed	N	suduest/suduesto	southwest, south west	2
+position_relative	up	closed	Y			1
+position_relative	down	closed	Y			1
+position_relative	left	closed	Y			1
+position_relative	right	closed	Y			1
+position_relative	front	closed	Y			1
+position_relative	back	closed	Y			1
+position_relative	top	closed	Y			1
+position_relative	bottom	closed	Y			1
+position_relative	middle	closed	Y			1
+position_relative	inside	closed	Y			1
+position_relative	outside	closed	Y			1
+position_relative	above	closed	Y			1
+position_relative	below	closed	Y			1
+position_relative	near	closed	Y			1
+position_relative	far	closed	Y			1
+colors	red	closed	Y			1
+colors	orange	closed	Y			1
+colors	yellow	closed	Y			1
+colors	green	closed	Y			1
+colors	blue	closed	Y			1
+colors	purple	closed	Y			1
+colors	pink	closed	Y			1
+colors	brown	closed	Y			1
+colors	black	closed	Y			1
+colors	white	closed	Y			1
+colors	grey	closed	N	griz/grizo	grey	1
+colors	light	closed	Y			1
+colors	dark	closed	Y			1
+shapes	circle	closed	Y			2
+shapes	square	closed	Y			2
+shapes	triangle	closed	N	triangul/triangulo	triangle	2
+shapes	rectangle	closed	N	ortangul/ortangulo	rectangle	2
+shapes	oval	closed	N	oval/ovala	oval	2
+shapes	star	closed	Y			2
+shapes	heart	closed	Y			2
+shapes	diamond	closed	Y			2
+shapes	sphere	closed	N	glob/globo	ball, ball bearing, globe, billiard ball, sphere	2
+shapes	cube	closed	N	kub/kubo	cube	2
+fingers	thumb	closed	N	poleks/polekso	thumb	2
+fingers	index	closed	N	indic/indico	index, indicant	2
+fingers	middle	closed	Y			2
+fingers	ring	closed	Y			2
+fingers	pinkie	closed	N			2
+family_immediate	mother	closed	Y			1
+family_immediate	father	closed	Y			1
+family_immediate	mom	closed	Y			1
+family_immediate	dad	closed	Y			1
+family_immediate	parent	closed	Y			1
+family_immediate	brother	closed	Y			1
+family_immediate	sister	closed	Y			1
+family_immediate	son	closed	Y			1
+family_immediate	daughter	closed	Y			1
+family_immediate	baby	closed	Y			1
+family_extended	grandmother	closed	Y			2
+family_extended	grandfather	closed	Y			2
+family_extended	grandparent	closed	Y			2
+family_extended	aunt	closed	Y			2
+family_extended	uncle	closed	Y			2
+family_extended	cousin	closed	Y			2
+family_extended	nephew	closed	N	nev/nevo	nephew	2
+family_extended	niece	closed	N	nevin/nevino	niece	2
+family_extended	grandson	closed	N	nep/nepo	grandson	2
+family_extended	granddaughter	closed	N	nepin/nepino	granddaughter	2
+meals	breakfast	closed	Y			1
+meals	lunch	closed	Y			1
+meals	dinner	closed	Y			1
+meals	supper	closed	N	supe/supeo	supper	1
+meals	snack	closed	N	lunĉ/lunĉo	lunch, snack	1
+senses	see	closed	Y			1
+senses	hear	closed	Y			1
+senses	smell	closed	Y			1
+senses	taste	closed	Y			1
+senses	touch	closed	Y			1
+body_external	head	closed	Y			1
+body_external	hair	closed	Y			1
+body_external	face	closed	Y			1
+body_external	eye	closed	Y			1
+body_external	ear	closed	Y			1
+body_external	nose	closed	Y			1
+body_external	mouth	closed	Y			1
+body_external	lip	closed	Y			1
+body_external	tooth	closed	Y			1
+body_external	tongue	closed	Y			1
+body_external	neck	closed	Y			1
+body_external	arm	closed	Y			1
+body_external	hand	closed	Y			1
+body_external	leg	closed	Y			1
+body_external	foot	closed	Y			1
+body_external	toe	closed	Y			1
+body_external	chest	closed	Y			1
+body_external	back	closed	Y			1
+body_external	tummy	closed	N	ventr/ventro	abdomen, stomach, belly, tummy	1
+body_external_detail	forehead	closed	N	frunt/frunto	brow, forehead	2
+body_external_detail	cheek	closed	N	vang/vango	cheek, jowl	2
+body_external_detail	chin	closed	N	menton/mentono	chin	2
+body_external_detail	eyebrow	closed	N	brov/brovo	brow, eyebrow	2
+body_external_detail	eyelash	closed	N	okulhar/okulharo	eyelash	2
+body_external_detail	shoulder	closed	Y			2
+body_external_detail	elbow	closed	N	kubut/kubuto	elbow	2
+body_external_detail	wrist	closed	N	pojn/pojno	wrist	2
+body_external_detail	finger	closed	Y			2
+body_external_detail	knuckle	closed	N			2
+body_external_detail	hip	closed	N	koks/kokso	haunch, hip	2
+body_external_detail	knee	closed	Y			2
+body_external_detail	ankle	closed	Y			2
+body_external_detail	heel	closed	Y			2
+body_external_detail	thumb	closed	N	poleks/polekso	thumb	2
+body_internal	heart	closed	Y			2
+body_internal	brain	closed	Y			2
+body_internal	lung	closed	Y			2
+body_internal	bone	closed	Y			2
+body_internal	blood	closed	Y			2
+body_internal	skin	closed	Y			2
+body_internal	muscle	closed	Y			2
+body_internal	stomach	closed	Y			2
+animals_farm	cow	semi-open	Y			1
+animals_farm	pig	semi-open	Y			1
+animals_farm	sheep	semi-open	Y			1
+animals_farm	horse	semi-open	Y			1
+animals_farm	chicken	semi-open	Y			1
+animals_farm	duck	semi-open	N	anas/anasa	duck, duck-, duck’s, of a duck	1
+animals_farm	goat	semi-open	N	kapr/kapro	goat	1
+animals_farm	rooster	semi-open	N	kok/koko	chicken, fowl, cock, rooster	1
+animals_farm	hen	semi-open	N	kokaĵ/kokaĵo	chicken, hen	1
+animals_pet	dog	semi-open	Y			1
+animals_pet	cat	semi-open	Y			1
+animals_pet	fish	semi-open	Y			1
+animals_pet	bird	semi-open	Y			1
+animals_pet	rabbit	semi-open	N	lepor/leporo	hare, rabbit	1
+animals_pet	hamster	semi-open	N	hamstr/hamstro	hamster	1
+animals_wild	lion	semi-open	Y			1
+animals_wild	tiger	semi-open	N	tigr/tigro	tiger	1
+animals_wild	bear	semi-open	Y			1
+animals_wild	elephant	semi-open	Y			1
+animals_wild	monkey	semi-open	Y			1
+animals_wild	giraffe	semi-open	N	ĝiraf/ĝirafo	giraffe	1
+animals_wild	zebra	semi-open	N	zebr/zebro	zebra	1
+animals_wild	wolf	semi-open	N	lup/lupo	wolf	1
+animals_wild	fox	semi-open	N	vulp/vulpa	fox, vulpine	1
+animals_wild	deer	semi-open	N	cerv/cerva	deer, deer-, of a deer	1
+animals_sea	shark	semi-open	N	ŝark/ŝarko	shark	2
+animals_sea	whale	semi-open	N	balen/baleno	whale	2
+animals_sea	dolphin	semi-open	N	delfen/delfeno	dolphin	2
+animals_sea	crab	semi-open	N	krab/krabo	crab	2
+animals_sea	octopus	semi-open	N	polp/polpo	octopus	2
+animals_sea	jellyfish	semi-open	N	meduz/meduzo	jellyfish	2
+insects	ant	semi-open	N	formik/formiko	ant	1
+insects	bee	semi-open	Y			1
+insects	fly	semi-open	Y			1
+insects	butterfly	semi-open	N	papili/papilio	butterfly	1
+insects	spider	semi-open	Y			1
+insects	ladybug	semi-open	N	kokcinel/kokcinelo	lady beetle, ladybird, ladybird beetle, ladybug	1
+insects	beetle	semi-open	N	skarab/skarabo	beetle, scarabaeus, scarab	1
+fruits	apple	semi-open	Y			1
+fruits	banana	semi-open	Y			1
+fruits	orange	semi-open	Y			1
+fruits	grape	semi-open	N	uv/uvo	grape	1
+fruits	strawberry	semi-open	N	frag/frago	strawberry	1
+fruits	pear	semi-open	N	pir/piro	pear	1
+fruits	peach	semi-open	N	persik/persiko	nectarine, peach	1
+fruits	cherry	semi-open	N	ĉeriz/ĉerizo	cherry	1
+fruits	lemon	semi-open	Y			1
+fruits	watermelon	semi-open	N	akvomelon/akvomelono	watermelon	1
+vegetables	carrot	semi-open	Y			1
+vegetables	potato	semi-open	Y			1
+vegetables	tomato	semi-open	Y			1
+vegetables	onion	semi-open	Y			1
+vegetables	pea	semi-open	N			1
+vegetables	bean	semi-open	Y			1
+vegetables	corn	semi-open	Y			1
+vegetables	broccoli	semi-open	N	brokol/brokolo	broccoli	1
+vegetables	lettuce	semi-open	N	laktuk/laktuko	lettuce, milt, roe	1
+vegetables	cucumber	semi-open	N	kukum/kukumo	cucumber	1
+weather	sun	semi-open	Y			1
+weather	rain	semi-open	Y			1
+weather	snow	semi-open	Y			1
+weather	wind	semi-open	Y			1
+weather	cloud	semi-open	Y			1
+weather	storm	semi-open	Y			1
+weather	fog	semi-open	N	nebul/nebulo	fog, mist	1
+weather	ice	semi-open	Y			1
+weather	thunder	semi-open	N	tondr/tondri	to thunder	1
+weather	lightning	semi-open	N	fulm/fulma	lightning	1
+weather	rainbow	semi-open	N	pluvark/pluvarko	rainbow	1
+emotions	happy	semi-open	Y			1
+emotions	sad	semi-open	Y			1
+emotions	angry	semi-open	Y			1
+emotions	scared	semi-open	Y			1
+emotions	surprised	semi-open	Y			1
+emotions	excited	semi-open	Y			1
+emotions	tired	semi-open	Y			1
+emotions	bored	semi-open	Y			1
+emotions	proud	semi-open	Y			1
+emotions	jealous	semi-open	N	ĵaluz/ĵaluza	jealous	1
+emotions	nervous	semi-open	Y			1
+emotions	worried	semi-open	Y			1
+emotions	calm	semi-open	Y			1
+clothing	shirt	semi-open	Y			1
+clothing	pants	semi-open	Y			1
+clothing	dress	semi-open	Y			1
+clothing	skirt	semi-open	Y			1
+clothing	shoe	semi-open	Y			1
+clothing	sock	semi-open	Y			1
+clothing	hat	semi-open	Y			1
+clothing	coat	semi-open	Y			1
+clothing	jacket	semi-open	Y			1
+clothing	glove	semi-open	Y			1
+clothing	scarf	semi-open	N	skarp/skarpo	(woman’s) scarf; arm-sling, sash, stole	1
+clothing	belt	semi-open	Y			1
+vehicles	car	semi-open	Y			1
+vehicles	bus	semi-open	Y			1
+vehicles	truck	semi-open	Y			1
+vehicles	train	semi-open	Y			1
+vehicles	plane	semi-open	Y			1
+vehicles	boat	semi-open	Y			1
+vehicles	bike	semi-open	Y			1
+vehicles	ship	semi-open	Y			1
+vehicles	helicopter	semi-open	Y			1
+materials	wood	semi-open	Y			2
+materials	metal	semi-open	Y			2
+materials	plastic	semi-open	Y			2
+materials	glass	semi-open	Y			2
+materials	stone	semi-open	Y			2
+materials	paper	semi-open	Y			2
+materials	cloth	semi-open	Y			2
+materials	rubber	semi-open	Y			2
+materials	gold	semi-open	Y			2
+materials	silver	semi-open	Y			2
+school_subjects	math	semi-open	Y			2
+school_subjects	reading	semi-open	Y			2
+school_subjects	writing	semi-open	Y			2
+school_subjects	science	semi-open	Y			2
+school_subjects	history	semi-open	Y			2
+school_subjects	art	semi-open	Y			2
+school_subjects	music	semi-open	Y			2
+verbs_motion	walk	semi-open	Y			1
+verbs_motion	run	semi-open	Y			1
+verbs_motion	jump	semi-open	Y			1
+verbs_motion	hop	semi-open	N	hop/hopi	to hop	1
+verbs_motion	skip	semi-open	N	dancet/danceti	to hop, skip	1
+verbs_motion	crawl	semi-open	N	ramp/rampi	to crawl, creep, sneak	1
+verbs_motion	climb	semi-open	Y			1
+verbs_motion	swim	semi-open	Y			1
+verbs_motion	fly	semi-open	Y			1
+verbs_motion	roll	semi-open	Y			1
+verbs_motion	slide	semi-open	Y			1
+verbs_motion	march	semi-open	Y			1
+opposites	big	semi-open	Y			1
+opposites	small	semi-open	Y			1
+opposites	hot	semi-open	Y			1
+opposites	cold	semi-open	Y			1
+opposites	fast	semi-open	Y			1
+opposites	slow	semi-open	Y			1
+opposites	good	semi-open	Y			1
+opposites	bad	semi-open	Y			1
+opposites	open	semi-open	Y			1
+opposites	closed	semi-open	Y			1
+opposites	full	semi-open	Y			1
+opposites	empty	semi-open	Y			1
+opposites	hard	semi-open	Y			1
+opposites	soft	semi-open	Y			1
+opposites	new	semi-open	Y			1
+opposites	old	semi-open	Y			1
+opposites	wet	semi-open	Y			1
+opposites	dry	semi-open	Y			1
+opposites	loud	semi-open	Y			1
+opposites	quiet	semi-open	Y			1
+opposites	clean	semi-open	Y			1
+opposites	dirty	semi-open	Y			1
+opposites	strong	semi-open	Y			1
+opposites	weak	semi-open	Y			1
