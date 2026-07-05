@@ -1,21 +1,21 @@
 en_lemma	base_word	total_freq	band	final_eo_root	final_eo_word	eo_gloss	gloss_source	anchor_source	tier_basis	proposed_tier	review_flag	note
-spoil#pamper	spoil	47	P2_hot	dorlot	dorloti	to coddle, pamper, pet, fondle	espdic	curated	freq	1		sense: spoil/pamper a child or pet
-spoil#rot	spoil	47	P2_hot	putr	putri	to decay, decompose, putrefy, rot, fester	espdic	curated	freq	1		sense: food spoils / goes bad
-trunk#chest	trunk	42	P2_hot	kofr	kofro	chest, coffer, suitcase, trunk	espdic	curated	freq	1		sense: storage trunk/chest for toys
-trunk#elephant	trunk	42	P2_hot	rostr	rostro	proboscis, snout, trunk, sucker	espdic	curated	freq	1		sense: elephant's trunk
-trunk#tree	trunk	42	P2_hot	trunk	trunko	frustum, stem, trunk, torso	espdic	curated	freq	1		sense: tree trunk
-beam#bar	beam	39	P2_hot	trab	trabo	beam, girder, joist, bar, tray	espdic	curated	freq	1		sense: balance beam in playground
-beam#smile	beam	39	P2_hot	radi	radii	to radiate, irradiate	espdic	curated	freq	1		sense: beamed with pride/joy
-flap#opening	flap	35	P2_hot	klap	klapo	flap, valve, half shell	espdic	curated	freq	1		sense: opened the flap (noun, tent/opening)
-flap#wings	flap	35	P2_hot	flirt	flirti	to flirt, flit, flutter	espdic	curated	freq	1		sense: flapped its wings (verb)
-tuck#bed	tuck	32	P4_nomatch	lit	enlitigi	to put to bed	espdic	curated	freq	1		sense: tucked into bed
-tuck#hide	tuck	32	P4_nomatch	kaŝ	kaŝi	to conceal, hide, veil	espdic	curated	freq	1		sense: tucked away / hidden
-scoop#lift	scoop	27	P2_hot	ĉerp	ĉerpi	to bail, draw (water), excerpt, extract, spoon	espdic	curated	freq	1		sense: scooped up / ladled (verb)
-scoop#portion	scoop	27	P2_hot	bul	buleto	pellet, small ball	espdic	curated	freq	1		sense: a scoop of ice cream/sand (noun)
-palm#hand	palm	24	P2_hot	manplat	manplato	palm (of hand)	espdic	curated	freq	1		sense: palm of the hand
-palm#tree	palm	24	P2_hot	palm	palmo	palm, palm tree	espdic	curated	freq	1		sense: palm tree
-perch#roost	perch	22	P2_hot	sidstang	sidstango	bass, perch (fish)	kept_original	curated	freq	1		sense: a perch/roost to sit on (noun)
-perch#sit	perch	22	P2_hot	sid	sidi	to sit, be seated	espdic	curated	freq	1		sense: bird perched on a branch (verb)
+spoil#pamper	spoil	47	P2_hot	dorlot	dorloti	to coddle, pamper, pet, fondle	espdic	curated	freq	2		sense: spoil/pamper a child or pet
+spoil#rot	spoil	47	P2_hot	putr	putri	to decay, decompose, putrefy, rot, fester	espdic	curated	freq	2		sense: food spoils / goes bad
+trunk#chest	trunk	42	P2_hot	kofr	kofro	chest, coffer, suitcase, trunk	espdic	curated	freq	2		sense: storage trunk/chest for toys
+trunk#elephant	trunk	42	P2_hot	rostr	rostro	proboscis, snout, trunk, sucker	espdic	curated	freq	2		sense: elephant's trunk
+trunk#tree	trunk	42	P2_hot	trunk	trunko	frustum, stem, trunk, torso	espdic	curated	freq	2		sense: tree trunk
+beam#bar	beam	39	P2_hot	trab	trabo	beam, girder, joist, bar, tray	espdic	curated	freq	2		sense: balance beam in playground
+beam#smile	beam	39	P2_hot	radi	radii	to radiate, irradiate	espdic	curated	freq	2		sense: beamed with pride/joy
+flap#opening	flap	35	P2_hot	klap	klapo	flap, valve, half shell	espdic	curated	freq	2		sense: opened the flap (noun, tent/opening)
+flap#wings	flap	35	P2_hot	flirt	flirti	to flirt, flit, flutter	espdic	curated	freq	2		sense: flapped its wings (verb)
+tuck#bed	tuck	32	P4_nomatch	lit	enlitigi	to put to bed	espdic	curated	freq	2		sense: tucked into bed
+tuck#hide	tuck	32	P4_nomatch	kaŝ	kaŝi	to conceal, hide, veil	espdic	curated	freq	2		sense: tucked away / hidden
+scoop#lift	scoop	27	P2_hot	ĉerp	ĉerpi	to bail, draw (water), excerpt, extract, spoon	espdic	curated	freq	2		sense: scooped up / ladled (verb)
+scoop#portion	scoop	27	P2_hot	bul	buleto	pellet, small ball	espdic	curated	freq	2		sense: a scoop of ice cream/sand (noun)
+palm#hand	palm	24	P2_hot	manplat	manplato	palm (of hand)	espdic	curated	freq	2		sense: palm of the hand
+palm#tree	palm	24	P2_hot	palm	palmo	palm, palm tree	espdic	curated	freq	2		sense: palm tree
+perch#roost	perch	22	P2_hot	sidstang	sidstango	bass, perch (fish)	kept_original	curated	freq	2		sense: a perch/roost to sit on (noun)
+perch#sit	perch	22	P2_hot	sid	sidi	to sit, be seated	espdic	curated	freq	2		sense: bird perched on a branch (verb)
 dodge	dodge	4	P6_tail	evit	eviti	to avoid, evade, eschew, keep aloof, shirk, shun	espdic	curated	inventory	2		
 gator	gator	4	P6_tail	aligator	aligatoro	alligator	espdic	curated	inventory	2	rare-anchor	
 gladly	gladly	4	P6_tail	ĝoj	ĝoje	joyfully, happily	espdic	curated	inventory	2		
@@ -249,22 +249,22 @@ rocket	rocket	66	P2_hot	raket	raketo	flare, missile, rocket	espdic	curated	freq	
 bull	bull	63	P1_name	bov	virbovo	bull	espdic	curated	freq	1		
 crown	crown	55	P2_hot	kron	krono	crown (money)	espdic	curated	freq	1		
 log	log	53	P2_hot	ŝtip	ŝtipo	billet, block, chunk of wood, log	espdic	curated	freq	1		
-jet	jet	47	P1_name	jet	jeto	jet (plane), jet propulsion	espdic	curated	freq	1		
-chubby	chubby	41	P1_name	dik	diketa	plump	espdic	curated	freq	1		
-tuna	tuna	38	P1_name	tinus	tinuso	tuna, tuna fish	espdic	curated	freq	1		
-crane	crane	37	P2_hot	gru	gruo	crane (bird)	espdic	curated	freq	1		
-spike	spike	37	P1_name	pik	pikilo	awl, dart, prick, sting, pin, pick, pointing device	espdic	curated	freq	1		
-laser	laser	35	P1_name	laser	lasero	laser	espdic	curated	freq	1		
-pigeon	pigeon	35	P1_name	kolomb	kolombo	dove, pigeon	espdic	curated	freq	1		
-squash	squash	33	P1_name	kukurb	kukurbo	gourd, pumpkin, squash	espdic	curated	freq	1		
-distant	distant	31	P1_name	for	fora	distant, far, remote	espdic	curated	freq	1		
-awe	awe	29	P1_name	mir	mirego	amazement, stupefaction, wonder	espdic	curated	freq	1		
-hut	hut	27	P1_name	kaban	kabano	cabin, hut, shack	espdic	curated	freq	1		
-kangaroo	kangaroo	26	P1_name	kangaru	kanguruo	kangaroo	espdic	curated	freq	1		
-counter	counter	25	P2_hot	tabl	labortablo	desk, desktop, workspace	espdic	curated	freq	1		kitchen+shop surface
-lime	lime	24	P1_name	lime	limeo	lime	kept_original	curated	freq	1		
-skeleton	skeleton	23	P1_name	skelet	skeleto	skeleton	espdic	curated	freq	1		
-screw	screw	20	P1_name	ŝraŭb	ŝraŭbo	screw	espdic	curated	freq	1		
+jet	jet	47	P1_name	jet	jeto	jet (plane), jet propulsion	espdic	curated	freq	2		
+chubby	chubby	41	P1_name	dik	diketa	plump	espdic	curated	freq	2		
+tuna	tuna	38	P1_name	tinus	tinuso	tuna, tuna fish	espdic	curated	freq	2		
+crane	crane	37	P2_hot	gru	gruo	crane (bird)	espdic	curated	freq	2		
+spike	spike	37	P1_name	pik	pikilo	awl, dart, prick, sting, pin, pick, pointing device	espdic	curated	freq	2		
+laser	laser	35	P1_name	laser	lasero	laser	espdic	curated	freq	2		
+pigeon	pigeon	35	P1_name	kolomb	kolombo	dove, pigeon	espdic	curated	freq	2		
+squash	squash	33	P1_name	kukurb	kukurbo	gourd, pumpkin, squash	espdic	curated	freq	2		
+distant	distant	31	P1_name	for	fora	distant, far, remote	espdic	curated	freq	2		
+awe	awe	29	P1_name	mir	mirego	amazement, stupefaction, wonder	espdic	curated	freq	2		
+hut	hut	27	P1_name	kaban	kabano	cabin, hut, shack	espdic	curated	freq	2		
+kangaroo	kangaroo	26	P1_name	kangaru	kanguruo	kangaroo	espdic	curated	freq	2		
+counter	counter	25	P2_hot	tabl	labortablo	desk, desktop, workspace	espdic	curated	freq	2		kitchen+shop surface
+lime	lime	24	P1_name	lime	limeo	lime	kept_original	curated	freq	2		
+skeleton	skeleton	23	P1_name	skelet	skeleto	skeleton	espdic	curated	freq	2		
+screw	screw	20	P1_name	ŝraŭb	ŝraŭbo	screw	espdic	curated	freq	2		
 bulb	bulb	16	P1_name	lamp	lampo	lamp	espdic	curated	freq	2		
 crystal	crystal	16	P1_name	kristal	kristalo	crystal	espdic	curated	freq	2		
 floppy	floppy	16	P1_name	mol	mola	gentle, soft, tender, minor (music)	espdic	curated	freq	2		
@@ -370,264 +370,264 @@ realise	realise	69	P4_nomatch	kompren	ekkompreni	to begin to understand	espdic	c
 twirl	twirl	58	P4_nomatch	piruet	pirueti	to pirouette	espdic	curated	freq	1		
 fridge	fridge	52	P4_nomatch	friduj	fridujo	refrigerator	espdic	curated	freq	1		
 grumpy	grumpy	52	P4_nomatch	malbonhumor	malbonhumora	cross, peevish, pettish, petulant	espdic	curated	freq	1		
-fin	fin	48	P1_name	naĝil	naĝilo	fin	espdic	worksheet-proposed	freq	1		
-marble	marble	45	P2_hot	glob	globeto	bead, corpuscle, marble, globule, corpuscle	espdic	curated	freq	1		
-safely	safely	45	P2_hot	sekur	sekure	safely	espdic	worksheet-proposed	freq	1		
+fin	fin	48	P1_name	naĝil	naĝilo	fin	espdic	worksheet-proposed	freq	2		
+marble	marble	45	P2_hot	glob	globeto	bead, corpuscle, marble, globule, corpuscle	espdic	curated	freq	2		
+safely	safely	45	P2_hot	sekur	sekure	safely	espdic	worksheet-proposed	freq	2		
 whale	whale	45	P2_hot	balen	baleno	whale	espdic	worksheet-proposed	seed	2		
 deer	deer	44	P2_hot	cerv	cervo	deer, hart, stag	espdic	curated	seed	1		
-fountain	fountain	44	P2_hot	fontan	fontano	fountain	espdic	curated	freq	1		
-kindness	kindness	44	P2_hot	bonkor	bonkoreco	kindness	espdic	curated	freq	1		
-nosy	nosy	44	P3_compound	scivol	scivolema	inquisitive	espdic	curated	freq	1		
-parade	parade	44	P2_hot	defil	defilado	march, marching, parade	espdic	curated	freq	1		
+fountain	fountain	44	P2_hot	fontan	fontano	fountain	espdic	curated	freq	2		
+kindness	kindness	44	P2_hot	bonkor	bonkoreco	kindness	espdic	curated	freq	2		
+nosy	nosy	44	P3_compound	scivol	scivolema	inquisitive	espdic	curated	freq	2		
+parade	parade	44	P2_hot	defil	defilado	march, marching, parade	espdic	curated	freq	2		
 pear	pear	44	P2_hot	pir	piro	pear	espdic	worksheet-proposed	seed	1		
-purse	purse	44	P2_hot	monuj	monujo	purse, wallet	espdic	worksheet-proposed	freq	1		
+purse	purse	44	P2_hot	monuj	monujo	purse, wallet	espdic	worksheet-proposed	freq	2		
 tummy	tummy	44	P2_hot	ventr	ventro	abdomen, stomach, belly, tummy	espdic	worksheet-proposed	seed	1		
-charming	charming	43	P2_hot	ĉarm	ĉarma	attractive, charming, lovely, pleasing, alluring	espdic	curated	freq	1		
-weird	weird	43	P2_hot	strang	stranga	odd, peculiar, strange, curious, eccentric, queer	espdic	curated	freq	1		
-cabin	cabin	42	P2_hot	kaban	kabano	cabin, hut, shack	espdic	worksheet-proposed	freq	1		
-dove	dove	42	P2_hot	kolomb	kolombo	dove, pigeon	espdic	worksheet-proposed	freq	1		
-vase	vase	42	P2_hot	vaz	vazo	vase, vessel, container	espdic	worksheet-proposed	freq	1		
-wand	wand	42	P2_hot	sorĉbaston	sorĉbastono	wand	espdic	curated	freq	1		
-zoo	zoo	42	P2_hot	bestoĝarden	bestoĝardeno	zoo	espdic	curated	freq	1		
-patch	patch	41	P2_hot	plac	placeto	patch	espdic	curated	freq	1		
-raft	raft	41	P2_hot	flos	floso	raft	espdic	worksheet-proposed	freq	1		
-tremble	tremble	41	P2_hot	trem	tremi	to quiver, shiver, tremble, shake, tremble	espdic	worksheet-proposed	freq	1		
-tutor	tutor	41	P2_hot	guvernist	guvernisto	preceptor, tutor	espdic	curated	freq	1		
+charming	charming	43	P2_hot	ĉarm	ĉarma	attractive, charming, lovely, pleasing, alluring	espdic	curated	freq	2		
+weird	weird	43	P2_hot	strang	stranga	odd, peculiar, strange, curious, eccentric, queer	espdic	curated	freq	2		
+cabin	cabin	42	P2_hot	kaban	kabano	cabin, hut, shack	espdic	worksheet-proposed	freq	2		
+dove	dove	42	P2_hot	kolomb	kolombo	dove, pigeon	espdic	worksheet-proposed	freq	2		
+vase	vase	42	P2_hot	vaz	vazo	vase, vessel, container	espdic	worksheet-proposed	freq	2		
+wand	wand	42	P2_hot	sorĉbaston	sorĉbastono	wand	espdic	curated	freq	2		
+zoo	zoo	42	P2_hot	bestoĝarden	bestoĝardeno	zoo	espdic	curated	freq	2		
+patch	patch	41	P2_hot	plac	placeto	patch	espdic	curated	freq	2		
+raft	raft	41	P2_hot	flos	floso	raft	espdic	worksheet-proposed	freq	2		
+tremble	tremble	41	P2_hot	trem	tremi	to quiver, shiver, tremble, shake, tremble	espdic	worksheet-proposed	freq	2		
+tutor	tutor	41	P2_hot	guvernist	guvernisto	preceptor, tutor	espdic	curated	freq	2		
 wolf	wolf	41	P2_hot	lup	lupo	wolf	espdic	worksheet-proposed	seed	1		
-alert	alert	40	P2_hot	vigl	vigla	adroit, agile, alert, brisk, keen, lively, nimble, vigilant, watchful	espdic	curated	freq	1		
-knob	knob	40	P2_hot	tenil	tenilo	grip, handle, knob, holder, hilt	espdic	curated	freq	1		
-laundry	laundry	40	P2_hot	lav	lavaĵo	laundry, lavatory, washroom	kept_original	curated	freq	1		
+alert	alert	40	P2_hot	vigl	vigla	adroit, agile, alert, brisk, keen, lively, nimble, vigilant, watchful	espdic	curated	freq	2		
+knob	knob	40	P2_hot	tenil	tenilo	grip, handle, knob, holder, hilt	espdic	curated	freq	2		
+laundry	laundry	40	P2_hot	lav	lavaĵo	laundry, lavatory, washroom	kept_original	curated	freq	2		
 lightning	lightning	40	P2_hot	fulm	fulmo	lightning	espdic	curated	seed	1		
-necklace	necklace	40	P2_hot	kolier	koliero	necklace	espdic	worksheet-proposed	freq	1		
-oyster	oyster	40	P2_hot	ostr	ostro	oyster	espdic	worksheet-proposed	freq	1		
-proudly	proudly	40	P2_hot	fier	fiere	proudly	espdic	worksheet-proposed	freq	1		
-twig	twig	40	P2_hot	branĉet	branĉeto	shoot (tree), twig, sprig	espdic	worksheet-proposed	freq	1		
-barn	barn	39	P2_hot	garbej	garbejo	barn, granary	espdic	curated	freq	1		
-blink	blink	39	P2_hot	palpebrum	palpebrumi	to blink, wink	espdic	curated	freq	1		
+necklace	necklace	40	P2_hot	kolier	koliero	necklace	espdic	worksheet-proposed	freq	2		
+oyster	oyster	40	P2_hot	ostr	ostro	oyster	espdic	worksheet-proposed	freq	2		
+proudly	proudly	40	P2_hot	fier	fiere	proudly	espdic	worksheet-proposed	freq	2		
+twig	twig	40	P2_hot	branĉet	branĉeto	shoot (tree), twig, sprig	espdic	worksheet-proposed	freq	2		
+barn	barn	39	P2_hot	garbej	garbejo	barn, granary	espdic	curated	freq	2		
+blink	blink	39	P2_hot	palpebrum	palpebrumi	to blink, wink	espdic	curated	freq	2		
 cube	cube	39	P2_hot	kub	kubo	cube	espdic	worksheet-proposed	seed	2		
-mole	mole	39	P2_hot	talp	talpo	mole (animal)	espdic	curated	freq	1		
-poke	poke	39	P2_hot	puŝet	puŝeti	to poke	espdic	worksheet-proposed	freq	1		
+mole	mole	39	P2_hot	talp	talpo	mole (animal)	espdic	curated	freq	2		
+poke	poke	39	P2_hot	puŝet	puŝeti	to poke	espdic	worksheet-proposed	freq	2		
 shark	shark	39	P2_hot	ŝark	ŝarko	shark	espdic	worksheet-proposed	seed	2		
-stubborn	stubborn	39	P2_hot	obstin	obstina	dogged, headstrong, obstinate, stubborn	espdic	worksheet-proposed	freq	1		
-fake	fake	38	P2_hot	fals	falsa	counterfeit, fake, false, spurious, forged, wrong	espdic	worksheet-proposed	freq	1		
-fierce	fierce	38	P2_hot	feroc	feroca	fierce	espdic	worksheet-proposed	freq	1		
-flashlight	flashlight	38	P2_hot	poŝlamp	poŝlampo	flashlight	espdic	worksheet-proposed	freq	1		
-hairy	hairy	38	P2_hot	vil	vila	hairy, shaggy	espdic	worksheet-proposed	freq	1		
-trap	trap	38	P2_hot	kaptil	kaptilo	decoy, snare, trap	espdic	curated	freq	1		
-vine	vine	38	P2_hot	lian	liano	bind-weed, liana, tropical climbing vine	espdic	curated	freq	1		
-cane	cane	37	P2_hot	baston	bastono	baton, cane, staff, stick, rod, bar	espdic	curated	freq	1		
-cocoa	cocoa	37	P2_hot	kaka	kakao	cocoa	espdic	worksheet-proposed	freq	1		
-graceful	graceful	37	P2_hot	graci	gracia	graceful, gracious, slender, slim	espdic	worksheet-proposed	freq	1		
-harmless	harmless	37	P2_hot	nenoc	nenoca	harmless	espdic	worksheet-proposed	freq	1		
-knight	knight	37	P2_hot	kavalir	kavaliro	cavalier, knight, chevalier	espdic	worksheet-proposed	freq	1		
-playful	playful	37	P2_hot	ludem	ludema	playful	espdic	curated	freq	1		
-polish	polish	37	P2_hot	polur	poluri	to brighten, burnish, glaze, gloss, polish	espdic	curated	freq	1		
-sticker	sticker	37	P3_compound	glumark	glumarko	sticker	espdic	worksheet-proposed	freq	1		
-swan	swan	37	P2_hot	cign	cigno	swan	espdic	worksheet-proposed	freq	1		
+stubborn	stubborn	39	P2_hot	obstin	obstina	dogged, headstrong, obstinate, stubborn	espdic	worksheet-proposed	freq	2		
+fake	fake	38	P2_hot	fals	falsa	counterfeit, fake, false, spurious, forged, wrong	espdic	worksheet-proposed	freq	2		
+fierce	fierce	38	P2_hot	feroc	feroca	fierce	espdic	worksheet-proposed	freq	2		
+flashlight	flashlight	38	P2_hot	poŝlamp	poŝlampo	flashlight	espdic	worksheet-proposed	freq	2		
+hairy	hairy	38	P2_hot	vil	vila	hairy, shaggy	espdic	worksheet-proposed	freq	2		
+trap	trap	38	P2_hot	kaptil	kaptilo	decoy, snare, trap	espdic	curated	freq	2		
+vine	vine	38	P2_hot	lian	liano	bind-weed, liana, tropical climbing vine	espdic	curated	freq	2		
+cane	cane	37	P2_hot	baston	bastono	baton, cane, staff, stick, rod, bar	espdic	curated	freq	2		
+cocoa	cocoa	37	P2_hot	kaka	kakao	cocoa	espdic	worksheet-proposed	freq	2		
+graceful	graceful	37	P2_hot	graci	gracia	graceful, gracious, slender, slim	espdic	worksheet-proposed	freq	2		
+harmless	harmless	37	P2_hot	nenoc	nenoca	harmless	espdic	worksheet-proposed	freq	2		
+knight	knight	37	P2_hot	kavalir	kavaliro	cavalier, knight, chevalier	espdic	worksheet-proposed	freq	2		
+playful	playful	37	P2_hot	ludem	ludema	playful	espdic	curated	freq	2		
+polish	polish	37	P2_hot	polur	poluri	to brighten, burnish, glaze, gloss, polish	espdic	curated	freq	2		
+sticker	sticker	37	P3_compound	glumark	glumarko	sticker	espdic	worksheet-proposed	freq	2		
+swan	swan	37	P2_hot	cign	cigno	swan	espdic	worksheet-proposed	freq	2		
 triangle	triangle	37	P2_hot	triangul	triangulo	triangle	espdic	worksheet-proposed	seed	2		
-trophy	trophy	37	P2_hot	trofe	trofeo	trophy	espdic	worksheet-proposed	freq	1		
-hammer	hammer	36	P2_hot	martel	martelo	hammer	espdic	curated	freq	1		
-knot	knot	36	P2_hot	nod	nodo	knot, node	espdic	curated	freq	1		
-mask	mask	36	P2_hot	mask	masko	mask	espdic	curated	freq	1		
-scissor	scissor	36	P4_nomatch	tondil	tondilo	scissors, shears	espdic	curated	freq	1		
-spill	spill	36	P2_hot	disverŝ	disverŝi	to spill	espdic	worksheet-proposed	freq	1		
-attic	attic	35	P2_hot	subtegment	subtegmento	attic, garret	espdic	curated	freq	1		
-horn	horn	35	P2_hot	korn	korno	hooter, horn, klaxon	espdic	worksheet-proposed	freq	1		
-shrimp	shrimp	35	P2_hot	salikok	salikoko	prawn, shrimp	espdic	worksheet-proposed	freq	1		
-thread	thread	35	P2_hot	faden	fadeno	strand, thread	espdic	curated	freq	1		
+trophy	trophy	37	P2_hot	trofe	trofeo	trophy	espdic	worksheet-proposed	freq	2		
+hammer	hammer	36	P2_hot	martel	martelo	hammer	espdic	curated	freq	2		
+knot	knot	36	P2_hot	nod	nodo	knot, node	espdic	curated	freq	2		
+mask	mask	36	P2_hot	mask	masko	mask	espdic	curated	freq	2		
+scissor	scissor	36	P4_nomatch	tondil	tondilo	scissors, shears	espdic	curated	freq	2		
+spill	spill	36	P2_hot	disverŝ	disverŝi	to spill	espdic	worksheet-proposed	freq	2		
+attic	attic	35	P2_hot	subtegment	subtegmento	attic, garret	espdic	curated	freq	2		
+horn	horn	35	P2_hot	korn	korno	hooter, horn, klaxon	espdic	worksheet-proposed	freq	2		
+shrimp	shrimp	35	P2_hot	salikok	salikoko	prawn, shrimp	espdic	worksheet-proposed	freq	2		
+thread	thread	35	P2_hot	faden	fadeno	strand, thread	espdic	curated	freq	2		
 zebra	zebra	35	P2_hot	zebr	zebro	zebra	espdic	worksheet-proposed	seed	1		
-axe	axe	34	P2_hot	hakil	hakilo	axe, chopper, hatchet	espdic	worksheet-proposed	freq	1		
-chamber	chamber	34	P2_hot	ĉambr	ĉambro	chamber, room	espdic	curated	freq	1		
-clapping	clapping	34	P4_nomatch	aplaŭd	aplaŭdi	to acclaim, applaud, clap	espdic	curated	freq	1		
-folder	folder	34	P2_hot	paperuj	paperujo	file, folder, portfolio	espdic	curated	freq	1		
-mailbox	mailbox	34	P2_hot	poŝtuj	poŝtujo	mailbox	espdic	worksheet-proposed	freq	1		
-miserable	miserable	34	P2_hot	mizer	mizera	abject, dismal, meager, miserable, wretched	espdic	worksheet-proposed	freq	1		
-sniff	sniff	34	P2_hot	enflar	enflari	to sniff	espdic	worksheet-proposed	freq	1		
-spaghetti	spaghetti	34	P2_hot	spaget	spageto	spaghetti	espdic	worksheet-proposed	freq	1		
-bossy	bossy	33	P2_hot	regem	regema	bossy	espdic	worksheet-proposed	freq	1		
-envelope	envelope	33	P2_hot	kovert	koverto	envelope	espdic	worksheet-proposed	freq	1		
-firework	firework	33	P3_compound	artfajraĵ	artfajraĵo	firework	espdic	worksheet-proposed	freq	1		
-fragile	fragile	33	P2_hot	romp	rompiĝema	breakable, brittle, fragile	espdic	curated	freq	1		
-harsh	harsh	33	P2_hot	aspr	aspra	rough, harsh	espdic	worksheet-proposed	freq	1		
-hook	hook	33	P2_hot	hok	hoko	hacek, hook, inverted circumflex, inverted hat, wedge	espdic	curated	freq	1		
-jolly	jolly	33	P2_hot	gaj	gaja	cheerful, gay, merry, happy	espdic	curated	freq	1		
-modest	modest	33	P2_hot	modest	modesta	bashful, demure, modest, unassuming, moderate	espdic	curated	freq	1		
-pebble	pebble	33	P2_hot	ŝtonet	ŝtoneto	pebble	espdic	worksheet-proposed	freq	1		
-pie	pie	33	P2_hot	tort	torto	pie, tart, pastry	espdic	worksheet-proposed	freq	1		
-razor	razor	33	P2_hot	razil	razilo	razor	espdic	worksheet-proposed	freq	1		
-disgust	disgust	32	P2_hot	naŭz	naŭzi	to disgust, nauseate	espdic	worksheet-proposed	freq	1		
-envious	envious	32	P2_hot	envi	envia	envious	espdic	worksheet-proposed	freq	1		
-grin	grin	32	P3_compound	rikan	rikani	to laugh derisively, sneer	espdic	curated	freq	1		
-heal	heal	32	P2_hot	san	resaniĝi	to get better, heal, recover, get well	espdic	curated	freq	1		
-muffin	muffin	32	P4_nomatch	mufen	mufeno		kept_original	curated	freq	1		
-tease	tease	32	P2_hot	mok	moketi	to tease	espdic	curated	freq	1		
-thoughtful	thoughtful	32	P2_hot	konsiderem	konsiderema	considerate, reflective, thoughtful	espdic	curated	freq	1		
+axe	axe	34	P2_hot	hakil	hakilo	axe, chopper, hatchet	espdic	worksheet-proposed	freq	2		
+chamber	chamber	34	P2_hot	ĉambr	ĉambro	chamber, room	espdic	curated	freq	2		
+clapping	clapping	34	P4_nomatch	aplaŭd	aplaŭdi	to acclaim, applaud, clap	espdic	curated	freq	2		
+folder	folder	34	P2_hot	paperuj	paperujo	file, folder, portfolio	espdic	curated	freq	2		
+mailbox	mailbox	34	P2_hot	poŝtuj	poŝtujo	mailbox	espdic	worksheet-proposed	freq	2		
+miserable	miserable	34	P2_hot	mizer	mizera	abject, dismal, meager, miserable, wretched	espdic	worksheet-proposed	freq	2		
+sniff	sniff	34	P2_hot	enflar	enflari	to sniff	espdic	worksheet-proposed	freq	2		
+spaghetti	spaghetti	34	P2_hot	spaget	spageto	spaghetti	espdic	worksheet-proposed	freq	2		
+bossy	bossy	33	P2_hot	regem	regema	bossy	espdic	worksheet-proposed	freq	2		
+envelope	envelope	33	P2_hot	kovert	koverto	envelope	espdic	worksheet-proposed	freq	2		
+firework	firework	33	P3_compound	artfajraĵ	artfajraĵo	firework	espdic	worksheet-proposed	freq	2		
+fragile	fragile	33	P2_hot	romp	rompiĝema	breakable, brittle, fragile	espdic	curated	freq	2		
+harsh	harsh	33	P2_hot	aspr	aspra	rough, harsh	espdic	worksheet-proposed	freq	2		
+hook	hook	33	P2_hot	hok	hoko	hacek, hook, inverted circumflex, inverted hat, wedge	espdic	curated	freq	2		
+jolly	jolly	33	P2_hot	gaj	gaja	cheerful, gay, merry, happy	espdic	curated	freq	2		
+modest	modest	33	P2_hot	modest	modesta	bashful, demure, modest, unassuming, moderate	espdic	curated	freq	2		
+pebble	pebble	33	P2_hot	ŝtonet	ŝtoneto	pebble	espdic	worksheet-proposed	freq	2		
+pie	pie	33	P2_hot	tort	torto	pie, tart, pastry	espdic	worksheet-proposed	freq	2		
+razor	razor	33	P2_hot	razil	razilo	razor	espdic	worksheet-proposed	freq	2		
+disgust	disgust	32	P2_hot	naŭz	naŭzi	to disgust, nauseate	espdic	worksheet-proposed	freq	2		
+envious	envious	32	P2_hot	envi	envia	envious	espdic	worksheet-proposed	freq	2		
+grin	grin	32	P3_compound	rikan	rikani	to laugh derisively, sneer	espdic	curated	freq	2		
+heal	heal	32	P2_hot	san	resaniĝi	to get better, heal, recover, get well	espdic	curated	freq	2		
+muffin	muffin	32	P4_nomatch	mufen	mufeno		kept_original	curated	freq	2		
+tease	tease	32	P2_hot	mok	moketi	to tease	espdic	curated	freq	2		
+thoughtful	thoughtful	32	P2_hot	konsiderem	konsiderema	considerate, reflective, thoughtful	espdic	curated	freq	2		
 beetle	beetle	31	P2_hot	skarab	skarabo	beetle, scarabaeus, scarab	espdic	worksheet-proposed	seed	1		
-bump	bump	31	P2_hot	puŝ	puŝiĝi	to thrust	espdic	curated	freq	1		
-chimney	chimney	31	P2_hot	kamentub	kamentubo	chimney, smokestack, stack, flue	espdic	worksheet-proposed	freq	1		
-filthy	filthy	31	P2_hot	malpur	malpurega	filthy, nasty, sordid	espdic	curated	freq	1		
-gloomy	gloomy	31	P2_hot	mallum	malluma	dark, dim, gloomy, murky	espdic	curated	freq	1		
-golden	golden	31	P2_hot	or	ora	golden	espdic	worksheet-proposed	freq	1		
-growl	growl	31	P2_hot	grumbl	grumbli	to growl, grumble	espdic	curated	freq	1		
-hoop	hoop	31	P2_hot	ringeg	ringego	hoop	espdic	worksheet-proposed	freq	1		
-louder	louder	31	P4_nomatch	laŭt	laŭta	aloud, loud	espdic	curated	freq	1		
-mechanic	mechanic	31	P2_hot	mekanikist	mekanikisto	mechanic	espdic	curated	freq	1		
-mill	mill	31	P2_hot	muelej	muelejo	mill, millhouse	espdic	curated	freq	1		
-pastel	pastel	31	P2_hot	paŝtel	paŝtelo	crayon, pastel	espdic	worksheet-proposed	freq	1		
-pill	pill	31	P2_hot	pilol	pilolo	pill	espdic	worksheet-proposed	freq	1		
-swamp	swamp	31	P2_hot	marĉ	marĉo	marsh, swamp	espdic	worksheet-proposed	freq	1		
-vendor	vendor	31	P2_hot	vendist	vendisto	salesman, vendor	espdic	curated	freq	1		
-compassionate	compassionate	30	P2_hot	kompatem	kompatema	charitable, merciful, compassionate, tenderhearted, sympathetic	espdic	curated	freq	1		
-creek	creek	30	P2_hot	river	rivereto	brook, rill, rivulet, stream	espdic	curated	freq	1		
-flutter	flutter	30	P2_hot	flug	flugeti	to flutter	espdic	curated	freq	1		
-lollipop	lollipop	30	P4_nomatch	lekbombon	lekbombono		kept_original	curated	freq	1		
-mixer	mixer	30	P2_hot	miksil	miksilo	mixer, scrambler	espdic	worksheet-proposed	freq	1		
-perfume	perfume	30	P2_hot	parfum	parfumo	perfume	espdic	curated	freq	1		
-pumpkin	pumpkin	30	P2_hot	kukurb	kukurbo	gourd, pumpkin, squash	espdic	worksheet-proposed	freq	1		
-veil	veil	30	P2_hot	vual	vualo	veil	espdic	curated	freq	1		
-wheat	wheat	30	P2_hot	tritik	tritiko	wheat	espdic	worksheet-proposed	freq	1		
-yawn	yawn	30	P2_hot	osced	oscedi	to yawn	espdic	curated	freq	1		
-pause	pause	29	P2_hot	paŭz	paŭzi	to pause, take a break, take a rest	espdic	worksheet-proposed	freq	1		
-pedal	pedal	29	P2_hot	pedal	pedalo	pedal, treadle	espdic	curated	freq	1		
-petal	petal	29	P2_hot	petal	petalo	petal	espdic	worksheet-proposed	freq	1		
-rug	rug	29	P2_hot	tapiŝ	tapiŝo	carpet, rug	espdic	worksheet-proposed	freq	1		
-sausage	sausage	29	P2_hot	kolbas	kolbaso	sausage, salami	espdic	worksheet-proposed	freq	1		
-scooter	scooter	29	P2_hot	trotil	trotilo	scooter	espdic	curated	freq	1		
-snowman	snowman	29	P3_compound	neĝhom	neĝhomo	snowman	espdic	worksheet-proposed	freq	1		
-snuggle	snuggle	29	P4_nomatch	alprem	alpremiĝi		kept_original	curated	freq	1		
-yacht	yacht	29	P2_hot	jakt	jakto	yacht	espdic	worksheet-proposed	freq	1		
-comb	comb	28	P2_hot	komb	kombilo	comb	espdic	curated	freq	1		
-jelly	jelly	28	P2_hot	ĵele	ĵeleo	jelly	espdic	worksheet-proposed	freq	1		
-massage	massage	28	P2_hot	masaĝ	masaĝo	massage	espdic	curated	freq	1		
-nicely	nicely	28	P2_hot	plaĉ	plaĉe	nicely, pleasantly, pleasingly	espdic	worksheet-proposed	freq	1		
-refresh	refresh	28	P2_hot	freŝ	refreŝiĝi	to refresh	espdic	curated	freq	1		
-sandcastle	sandcastle	28	P3_compound	sablokastel	sablokastelo	sandcastle	espdic	worksheet-proposed	freq	1		
-scatter	scatter	28	P2_hot	ĵet	disĵeti	to (broad)cast, scatter, strew	espdic	curated	freq	1		
-stitch	stitch	28	P2_hot	kudr	kudrero	stitch	espdic	curated	freq	1		
-tray	tray	28	P2_hot	plet	pleto	tray	espdic	curated	freq	1		
-trumpet	trumpet	28	P2_hot	trumpet	trumpeto	trumpet	espdic	curated	freq	1		
-amazement	amazement	27	P2_hot	mir	miro	amazement, astonishment, wonder, surprise	espdic	worksheet-proposed	freq	1		
-bandage	bandage	27	P2_hot	bandaĝ	bandaĝo	bandage	espdic	curated	freq	1		
-calendar	calendar	27	P2_hot	kalendar	kalendaro	calendar	espdic	curated	freq	1		
-cuddle	cuddle	27	P3_compound	karesprem	karespremi	to cuddle, hug	espdic	worksheet-proposed	freq	1		
-drawer	drawer	27	P2_hot	tirkest	tirkesto	drawer	espdic	curated	freq	1		
-eagerly	eagerly	27	P2_hot	avid	avide	eagerly, avidly	espdic	worksheet-proposed	freq	1		
-helpless	helpless	27	P2_hot	senhelp	senhelpa	helpless	espdic	worksheet-proposed	freq	1		
-lid	lid	27	P2_hot	kovril	kovrilo	cover, hood, lid, wrapper	espdic	worksheet-proposed	freq	1		
-microscope	microscope	27	P2_hot	mikroskop	mikroskopo	microscope	espdic	worksheet-proposed	freq	1		
-neighbourhood	neighbourhood	27	P4_nomatch	kvartal	kvartalo	district, neighborhood, quarter, ward	espdic	curated	freq	1		
-rake	rake	27	P2_hot	rast	rastilo	rake (implement)	espdic	curated	freq	1		
-reverse	reverse	27	P2_hot	antaŭ	malantaŭeniri	inverse, inverted, reverse, reversed	kept_original	curated	freq	1		
-softly	softly	27	P2_hot	laŭt	mallaŭte	softly	espdic	curated	freq	1		
+bump	bump	31	P2_hot	puŝ	puŝiĝi	to thrust	espdic	curated	freq	2		
+chimney	chimney	31	P2_hot	kamentub	kamentubo	chimney, smokestack, stack, flue	espdic	worksheet-proposed	freq	2		
+filthy	filthy	31	P2_hot	malpur	malpurega	filthy, nasty, sordid	espdic	curated	freq	2		
+gloomy	gloomy	31	P2_hot	mallum	malluma	dark, dim, gloomy, murky	espdic	curated	freq	2		
+golden	golden	31	P2_hot	or	ora	golden	espdic	worksheet-proposed	freq	2		
+growl	growl	31	P2_hot	grumbl	grumbli	to growl, grumble	espdic	curated	freq	2		
+hoop	hoop	31	P2_hot	ringeg	ringego	hoop	espdic	worksheet-proposed	freq	2		
+louder	louder	31	P4_nomatch	laŭt	laŭta	aloud, loud	espdic	curated	freq	2		
+mechanic	mechanic	31	P2_hot	mekanikist	mekanikisto	mechanic	espdic	curated	freq	2		
+mill	mill	31	P2_hot	muelej	muelejo	mill, millhouse	espdic	curated	freq	2		
+pastel	pastel	31	P2_hot	paŝtel	paŝtelo	crayon, pastel	espdic	worksheet-proposed	freq	2		
+pill	pill	31	P2_hot	pilol	pilolo	pill	espdic	worksheet-proposed	freq	2		
+swamp	swamp	31	P2_hot	marĉ	marĉo	marsh, swamp	espdic	worksheet-proposed	freq	2		
+vendor	vendor	31	P2_hot	vendist	vendisto	salesman, vendor	espdic	curated	freq	2		
+compassionate	compassionate	30	P2_hot	kompatem	kompatema	charitable, merciful, compassionate, tenderhearted, sympathetic	espdic	curated	freq	2		
+creek	creek	30	P2_hot	river	rivereto	brook, rill, rivulet, stream	espdic	curated	freq	2		
+flutter	flutter	30	P2_hot	flug	flugeti	to flutter	espdic	curated	freq	2		
+lollipop	lollipop	30	P4_nomatch	lekbombon	lekbombono		kept_original	curated	freq	2		
+mixer	mixer	30	P2_hot	miksil	miksilo	mixer, scrambler	espdic	worksheet-proposed	freq	2		
+perfume	perfume	30	P2_hot	parfum	parfumo	perfume	espdic	curated	freq	2		
+pumpkin	pumpkin	30	P2_hot	kukurb	kukurbo	gourd, pumpkin, squash	espdic	worksheet-proposed	freq	2		
+veil	veil	30	P2_hot	vual	vualo	veil	espdic	curated	freq	2		
+wheat	wheat	30	P2_hot	tritik	tritiko	wheat	espdic	worksheet-proposed	freq	2		
+yawn	yawn	30	P2_hot	osced	oscedi	to yawn	espdic	curated	freq	2		
+pause	pause	29	P2_hot	paŭz	paŭzi	to pause, take a break, take a rest	espdic	worksheet-proposed	freq	2		
+pedal	pedal	29	P2_hot	pedal	pedalo	pedal, treadle	espdic	curated	freq	2		
+petal	petal	29	P2_hot	petal	petalo	petal	espdic	worksheet-proposed	freq	2		
+rug	rug	29	P2_hot	tapiŝ	tapiŝo	carpet, rug	espdic	worksheet-proposed	freq	2		
+sausage	sausage	29	P2_hot	kolbas	kolbaso	sausage, salami	espdic	worksheet-proposed	freq	2		
+scooter	scooter	29	P2_hot	trotil	trotilo	scooter	espdic	curated	freq	2		
+snowman	snowman	29	P3_compound	neĝhom	neĝhomo	snowman	espdic	worksheet-proposed	freq	2		
+snuggle	snuggle	29	P4_nomatch	alprem	alpremiĝi		kept_original	curated	freq	2		
+yacht	yacht	29	P2_hot	jakt	jakto	yacht	espdic	worksheet-proposed	freq	2		
+comb	comb	28	P2_hot	komb	kombilo	comb	espdic	curated	freq	2		
+jelly	jelly	28	P2_hot	ĵele	ĵeleo	jelly	espdic	worksheet-proposed	freq	2		
+massage	massage	28	P2_hot	masaĝ	masaĝo	massage	espdic	curated	freq	2		
+nicely	nicely	28	P2_hot	plaĉ	plaĉe	nicely, pleasantly, pleasingly	espdic	worksheet-proposed	freq	2		
+refresh	refresh	28	P2_hot	freŝ	refreŝiĝi	to refresh	espdic	curated	freq	2		
+sandcastle	sandcastle	28	P3_compound	sablokastel	sablokastelo	sandcastle	espdic	worksheet-proposed	freq	2		
+scatter	scatter	28	P2_hot	ĵet	disĵeti	to (broad)cast, scatter, strew	espdic	curated	freq	2		
+stitch	stitch	28	P2_hot	kudr	kudrero	stitch	espdic	curated	freq	2		
+tray	tray	28	P2_hot	plet	pleto	tray	espdic	curated	freq	2		
+trumpet	trumpet	28	P2_hot	trumpet	trumpeto	trumpet	espdic	curated	freq	2		
+amazement	amazement	27	P2_hot	mir	miro	amazement, astonishment, wonder, surprise	espdic	worksheet-proposed	freq	2		
+bandage	bandage	27	P2_hot	bandaĝ	bandaĝo	bandage	espdic	curated	freq	2		
+calendar	calendar	27	P2_hot	kalendar	kalendaro	calendar	espdic	curated	freq	2		
+cuddle	cuddle	27	P3_compound	karesprem	karespremi	to cuddle, hug	espdic	worksheet-proposed	freq	2		
+drawer	drawer	27	P2_hot	tirkest	tirkesto	drawer	espdic	curated	freq	2		
+eagerly	eagerly	27	P2_hot	avid	avide	eagerly, avidly	espdic	worksheet-proposed	freq	2		
+helpless	helpless	27	P2_hot	senhelp	senhelpa	helpless	espdic	worksheet-proposed	freq	2		
+lid	lid	27	P2_hot	kovril	kovrilo	cover, hood, lid, wrapper	espdic	worksheet-proposed	freq	2		
+microscope	microscope	27	P2_hot	mikroskop	mikroskopo	microscope	espdic	worksheet-proposed	freq	2		
+neighbourhood	neighbourhood	27	P4_nomatch	kvartal	kvartalo	district, neighborhood, quarter, ward	espdic	curated	freq	2		
+rake	rake	27	P2_hot	rast	rastilo	rake (implement)	espdic	curated	freq	2		
+reverse	reverse	27	P2_hot	antaŭ	malantaŭeniri	inverse, inverted, reverse, reversed	kept_original	curated	freq	2		
+softly	softly	27	P2_hot	laŭt	mallaŭte	softly	espdic	curated	freq	2		
 strawberry	strawberry	27	P2_hot	frag	frago	strawberry	espdic	worksheet-proposed	seed	1		
-sunset	sunset	27	P2_hot	sunsubir	sunsubiro	sunset	espdic	worksheet-proposed	freq	1		
-tug	tug	27	P2_hot	tir	ektiri	to jerk, pull, tug	espdic	curated	freq	1		
-zipper	zipper	27	P2_hot	fulmoferm	fulmofermilo	fastener, zip, zip fastener, zipper	espdic	curated	freq	1		
-crib	crib	26	P2_hot	lul	lulilo	cradle	espdic	curated	freq	1		
-dishwasher	dishwasher	26	P3_compound	vazlavil	vazlavilo	dishwasher	espdic	worksheet-proposed	freq	1		
-dive	dive	26	P2_hot	plonĝ	plonĝi	to dive, plunge	espdic	worksheet-proposed	freq	1		
-fascinated	fascinated	26	P2_hot	fascin	fascinita	fascinated, gripped	espdic	curated	freq	1		
-fireman	fireman	26	P2_hot	fajrobrigadist	fajrobrigadisto	firefighter, fireman	espdic	curated	freq	1		
-forth	forth	26	P2_hot	antaŭ	antaŭen	ahead, forth, forward(s), on(ward)	espdic	curated	freq	1		
-gaze	gaze	26	P2_hot	rigardeg	rigardegi	to gaze, stare	espdic	worksheet-proposed	freq	1		
-gear	gear	26	P2_hot	ilar	ilaro	gear, tackle, apparatus, equipment, tool box, tool set, toolbar, toolkit	espdic	worksheet-proposed	freq	1		
-pastry	pastry	26	P2_hot	kuk	kukaĵo	pastry	espdic	curated	freq	1		
-shiver	shiver	26	P2_hot	frostotrem	frostotremi	to shiver	espdic	curated	freq	1		
-spade	spade	26	P2_hot	fos	fosilo	digging implement, shovel, spade	espdic	curated	freq	1		
-worm	worm	26	P2_hot	verm	vermo	worm	espdic	worksheet-proposed	freq	1		
-yoga	yoga	26	P2_hot	jog	jogo	yoga	espdic	worksheet-proposed	freq	1		
-apron	apron	25	P2_hot	antaŭtuk	antaŭtuko	apron	espdic	curated	freq	1		
-beak	beak	25	P2_hot	bek	beko	beak, bill	espdic	worksheet-proposed	freq	1		
-beneath	beneath	25	P2_hot	sub	sub	below, beneath, under, underneath	espdic	worksheet-proposed	freq	1		
-breeze	breeze	25	P2_hot	vent	venteto	breeze, zephyr	espdic	curated	freq	1		
-disturb	disturb	25	P2_hot	ĝen	ĝeni	to bother, disturb, hinder, trouble, make uncomfortable	espdic	worksheet-proposed	freq	1		
-dough	dough	25	P2_hot	past	pasto	dough, paste	espdic	worksheet-proposed	freq	1		
-gum	gum	25	P2_hot	maĉgum	maĉgumo	chewing gum	espdic	curated	freq	1		
-herb	herb	25	P2_hot	herb	herbo	grass, herb	espdic	worksheet-proposed	freq	1		
-ink	ink	25	P2_hot	ink	inko	ink	espdic	curated	freq	1		
-missile	missile	25	P2_hot	misil	misilo	missile	espdic	curated	freq	1		
-panda	panda	25	P2_hot	pand	pando	panda	espdic	worksheet-proposed	freq	1		
-penguin	penguin	25	P2_hot	pingven	pingveno	penguin	espdic	worksheet-proposed	freq	1		
-quarrel	quarrel	25	P2_hot	kverel	kvereli	to quarrel, wrangle	espdic	curated	freq	1		
-reef	reef	25	P2_hot	rif	rifo	dangerous rocks, reef	espdic	curated	freq	1		
-scare	scare	25	P2_hot	timig	timigi	to affright, alarm, frighten, intimidate, scare	espdic	worksheet-proposed	freq	1		
-scratch	scratch	25	P2_hot	grat	grati	to scratch	espdic	worksheet-proposed	freq	1		
-shrink	shrink	25	P2_hot	ŝrump	ŝrumpi	to crumple, shrink, shrivel up, wilt, wrinkle	espdic	curated	freq	1		
-tap	tap	25	P2_hot	frap	frapeti	to pat, tap, rap	espdic	curated	freq	1		
-ash	ash	24	P2_hot	cindr	cindro	ash(es), cinder	espdic	worksheet-proposed	freq	1		
-bracelet	bracelet	24	P2_hot	bracelet	braceleto	bracelet	espdic	worksheet-proposed	freq	1		
-collar	collar	24	P2_hot	kolrimen	kolrimeno	collar	espdic	curated	freq	1		
-fearful	fearful	24	P2_hot	tim	tima	afraid	espdic	curated	freq	1		
-gust	gust	24	P2_hot	ekvent	ekvento	gust (of wind)	espdic	worksheet-proposed	freq	1		
-jail	jail	24	P2_hot	prizon	prizono	jail, prison	espdic	worksheet-proposed	freq	1		
-oat	oat	24	P4_nomatch	aven	aveno	oats	espdic	curated	freq	1		
-paddle	paddle	24	P2_hot	pagaj	pagajo	paddle	espdic	curated	freq	1		
-pinch	pinch	24	P2_hot	pinĉ	pinĉi	to nip, pinch	espdic	worksheet-proposed	freq	1		
-popcorn	popcorn	24	P2_hot	krevmaiz	krevmaizo	popcorn	espdic	worksheet-proposed	freq	1		
-shampoo	shampoo	24	P2_hot	ŝampu	ŝampuo	shampoo	espdic	curated	freq	1		
-stack	stack	24	P2_hot	stak	stako	heap, pile, stack	espdic	curated	freq	1		
-suitcase	suitcase	24	P2_hot	valiz	valizo	suitcase, piece of luggage, valise	espdic	curated	freq	1		
-sunlight	sunlight	24	P3_compound	sunlum	sunlumo	sunlight	espdic	worksheet-proposed	freq	1		
-birdcage	birdcage	23	P4_nomatch	birdokaĝ	birdokaĝo	bird cage	espdic	curated	freq	1		
-bravely	bravely	23	P2_hot	brav	brave	bravely	espdic	worksheet-proposed	freq	1		
-chess	chess	23	P2_hot	ŝak	ŝako	check, chess	espdic	worksheet-proposed	freq	1		
-clearing	clearing	23	P2_hot	maldensej	maldensejo	clearing (in a forest), glade	espdic	worksheet-proposed	freq	1		
-haircut	haircut	23	P4_nomatch	hartond	hartondo		kept_original	curated	freq	1		
-humble	humble	23	P2_hot	humil	humila	humble, lowly, submissive	espdic	worksheet-proposed	freq	1		
-makeup	makeup	23	P4_nomatch	ŝmink	ŝminko	cosmetic, make up, make-up	espdic	curated	freq	1		
-microphone	microphone	23	P2_hot	mikrofon	mikrofono	microphone	espdic	worksheet-proposed	freq	1		
-oats	oats	23	P2_hot	aven	aveno	oats	espdic	worksheet-proposed	freq	1		
-opera	opera	23	P2_hot	oper	opero	opera	espdic	worksheet-proposed	freq	1		
-scrub	scrub	23	P2_hot	frotlav	frotlavi	to scour, scrub	espdic	curated	freq	1		
-sofa	sofa	23	P2_hot	sof	sofo	sofa	espdic	worksheet-proposed	freq	1		
+sunset	sunset	27	P2_hot	sunsubir	sunsubiro	sunset	espdic	worksheet-proposed	freq	2		
+tug	tug	27	P2_hot	tir	ektiri	to jerk, pull, tug	espdic	curated	freq	2		
+zipper	zipper	27	P2_hot	fulmoferm	fulmofermilo	fastener, zip, zip fastener, zipper	espdic	curated	freq	2		
+crib	crib	26	P2_hot	lul	lulilo	cradle	espdic	curated	freq	2		
+dishwasher	dishwasher	26	P3_compound	vazlavil	vazlavilo	dishwasher	espdic	worksheet-proposed	freq	2		
+dive	dive	26	P2_hot	plonĝ	plonĝi	to dive, plunge	espdic	worksheet-proposed	freq	2		
+fascinated	fascinated	26	P2_hot	fascin	fascinita	fascinated, gripped	espdic	curated	freq	2		
+fireman	fireman	26	P2_hot	fajrobrigadist	fajrobrigadisto	firefighter, fireman	espdic	curated	freq	2		
+forth	forth	26	P2_hot	antaŭ	antaŭen	ahead, forth, forward(s), on(ward)	espdic	curated	freq	2		
+gaze	gaze	26	P2_hot	rigardeg	rigardegi	to gaze, stare	espdic	worksheet-proposed	freq	2		
+gear	gear	26	P2_hot	ilar	ilaro	gear, tackle, apparatus, equipment, tool box, tool set, toolbar, toolkit	espdic	worksheet-proposed	freq	2		
+pastry	pastry	26	P2_hot	kuk	kukaĵo	pastry	espdic	curated	freq	2		
+shiver	shiver	26	P2_hot	frostotrem	frostotremi	to shiver	espdic	curated	freq	2		
+spade	spade	26	P2_hot	fos	fosilo	digging implement, shovel, spade	espdic	curated	freq	2		
+worm	worm	26	P2_hot	verm	vermo	worm	espdic	worksheet-proposed	freq	2		
+yoga	yoga	26	P2_hot	jog	jogo	yoga	espdic	worksheet-proposed	freq	2		
+apron	apron	25	P2_hot	antaŭtuk	antaŭtuko	apron	espdic	curated	freq	2		
+beak	beak	25	P2_hot	bek	beko	beak, bill	espdic	worksheet-proposed	freq	2		
+beneath	beneath	25	P2_hot	sub	sub	below, beneath, under, underneath	espdic	worksheet-proposed	freq	2		
+breeze	breeze	25	P2_hot	vent	venteto	breeze, zephyr	espdic	curated	freq	2		
+disturb	disturb	25	P2_hot	ĝen	ĝeni	to bother, disturb, hinder, trouble, make uncomfortable	espdic	worksheet-proposed	freq	2		
+dough	dough	25	P2_hot	past	pasto	dough, paste	espdic	worksheet-proposed	freq	2		
+gum	gum	25	P2_hot	maĉgum	maĉgumo	chewing gum	espdic	curated	freq	2		
+herb	herb	25	P2_hot	herb	herbo	grass, herb	espdic	worksheet-proposed	freq	2		
+ink	ink	25	P2_hot	ink	inko	ink	espdic	curated	freq	2		
+missile	missile	25	P2_hot	misil	misilo	missile	espdic	curated	freq	2		
+panda	panda	25	P2_hot	pand	pando	panda	espdic	worksheet-proposed	freq	2		
+penguin	penguin	25	P2_hot	pingven	pingveno	penguin	espdic	worksheet-proposed	freq	2		
+quarrel	quarrel	25	P2_hot	kverel	kvereli	to quarrel, wrangle	espdic	curated	freq	2		
+reef	reef	25	P2_hot	rif	rifo	dangerous rocks, reef	espdic	curated	freq	2		
+scare	scare	25	P2_hot	timig	timigi	to affright, alarm, frighten, intimidate, scare	espdic	worksheet-proposed	freq	2		
+scratch	scratch	25	P2_hot	grat	grati	to scratch	espdic	worksheet-proposed	freq	2		
+shrink	shrink	25	P2_hot	ŝrump	ŝrumpi	to crumple, shrink, shrivel up, wilt, wrinkle	espdic	curated	freq	2		
+tap	tap	25	P2_hot	frap	frapeti	to pat, tap, rap	espdic	curated	freq	2		
+ash	ash	24	P2_hot	cindr	cindro	ash(es), cinder	espdic	worksheet-proposed	freq	2		
+bracelet	bracelet	24	P2_hot	bracelet	braceleto	bracelet	espdic	worksheet-proposed	freq	2		
+collar	collar	24	P2_hot	kolrimen	kolrimeno	collar	espdic	curated	freq	2		
+fearful	fearful	24	P2_hot	tim	tima	afraid	espdic	curated	freq	2		
+gust	gust	24	P2_hot	ekvent	ekvento	gust (of wind)	espdic	worksheet-proposed	freq	2		
+jail	jail	24	P2_hot	prizon	prizono	jail, prison	espdic	worksheet-proposed	freq	2		
+oat	oat	24	P4_nomatch	aven	aveno	oats	espdic	curated	freq	2		
+paddle	paddle	24	P2_hot	pagaj	pagajo	paddle	espdic	curated	freq	2		
+pinch	pinch	24	P2_hot	pinĉ	pinĉi	to nip, pinch	espdic	worksheet-proposed	freq	2		
+popcorn	popcorn	24	P2_hot	krevmaiz	krevmaizo	popcorn	espdic	worksheet-proposed	freq	2		
+shampoo	shampoo	24	P2_hot	ŝampu	ŝampuo	shampoo	espdic	curated	freq	2		
+stack	stack	24	P2_hot	stak	stako	heap, pile, stack	espdic	curated	freq	2		
+suitcase	suitcase	24	P2_hot	valiz	valizo	suitcase, piece of luggage, valise	espdic	curated	freq	2		
+sunlight	sunlight	24	P3_compound	sunlum	sunlumo	sunlight	espdic	worksheet-proposed	freq	2		
+birdcage	birdcage	23	P4_nomatch	birdokaĝ	birdokaĝo	bird cage	espdic	curated	freq	2		
+bravely	bravely	23	P2_hot	brav	brave	bravely	espdic	worksheet-proposed	freq	2		
+chess	chess	23	P2_hot	ŝak	ŝako	check, chess	espdic	worksheet-proposed	freq	2		
+clearing	clearing	23	P2_hot	maldensej	maldensejo	clearing (in a forest), glade	espdic	worksheet-proposed	freq	2		
+haircut	haircut	23	P4_nomatch	hartond	hartondo		kept_original	curated	freq	2		
+humble	humble	23	P2_hot	humil	humila	humble, lowly, submissive	espdic	worksheet-proposed	freq	2		
+makeup	makeup	23	P4_nomatch	ŝmink	ŝminko	cosmetic, make up, make-up	espdic	curated	freq	2		
+microphone	microphone	23	P2_hot	mikrofon	mikrofono	microphone	espdic	worksheet-proposed	freq	2		
+oats	oats	23	P2_hot	aven	aveno	oats	espdic	worksheet-proposed	freq	2		
+opera	opera	23	P2_hot	oper	opero	opera	espdic	worksheet-proposed	freq	2		
+scrub	scrub	23	P2_hot	frotlav	frotlavi	to scour, scrub	espdic	curated	freq	2		
+sofa	sofa	23	P2_hot	sof	sofo	sofa	espdic	worksheet-proposed	freq	2		
 thumb	thumb	23	P3_compound	dikfingr	dikfingro	thumb	espdic	curated	seed	2		
-anchor	anchor	22	P2_hot	ankr	ankro	anchor, hyperlink	espdic	curated	freq	1		
-applaud	applaud	22	P2_hot	aplaŭd	aplaŭdi	to acclaim, applaud, clap	espdic	curated	freq	1		
+anchor	anchor	22	P2_hot	ankr	ankro	anchor, hyperlink	espdic	curated	freq	2		
+applaud	applaud	22	P2_hot	aplaŭd	aplaŭdi	to acclaim, applaud, clap	espdic	curated	freq	2		
 grape	grape	22	P2_hot	vinber	vinbero	grape	espdic	curated	seed	1		
-infant	infant	22	P2_hot	infan	infaneto	babe, baby, infant	espdic	curated	freq	1		
-magnet	magnet	22	P2_hot	magnet	magneto	loadstone, magnet	espdic	worksheet-proposed	freq	1		
-pride	pride	22	P2_hot	fier	fiero	pride	espdic	worksheet-proposed	freq	1		
-restless	restless	22	P2_hot	trankvil	maltrankvila	agitated, anxious, restless, uneasy, fitful	espdic	curated	freq	1		
-rot	rot	22	P2_hot	putr	putriĝi	to rot	espdic	curated	freq	1		
-scurry	scurry	22	P4_nomatch	kur	kureti		kept_original	curated	freq	1		
-avocado	avocado	21	P2_hot	avokad	avokado	avocado	espdic	worksheet-proposed	freq	1		
-dare	dare	21	P2_hot	kuraĝ	kuraĝi	to be bold enough (to), dare, have courage, venture to	espdic	curated	freq	1		
-darkness	darkness	21	P2_hot	lum	mallumo	darkness, murk, gloom	espdic	curated	freq	1		
-helmet	helmet	21	P2_hot	kask	kasko	helmet	espdic	worksheet-proposed	freq	1		
-kneel	kneel	21	P2_hot	genu	genui	to kneel	espdic	worksheet-proposed	freq	1		
-ornament	ornament	21	P2_hot	ornam	ornamaĵo	adornment, decoration, ornament, finery, ornamentation	espdic	curated	freq	1		
-soak	soak	21	P2_hot	tremp	trempi	to dip, immerse, plunge, soak, steep	espdic	worksheet-proposed	freq	1		
+infant	infant	22	P2_hot	infan	infaneto	babe, baby, infant	espdic	curated	freq	2		
+magnet	magnet	22	P2_hot	magnet	magneto	loadstone, magnet	espdic	worksheet-proposed	freq	2		
+pride	pride	22	P2_hot	fier	fiero	pride	espdic	worksheet-proposed	freq	2		
+restless	restless	22	P2_hot	trankvil	maltrankvila	agitated, anxious, restless, uneasy, fitful	espdic	curated	freq	2		
+rot	rot	22	P2_hot	putr	putriĝi	to rot	espdic	curated	freq	2		
+scurry	scurry	22	P4_nomatch	kur	kureti		kept_original	curated	freq	2		
+avocado	avocado	21	P2_hot	avokad	avokado	avocado	espdic	worksheet-proposed	freq	2		
+dare	dare	21	P2_hot	kuraĝ	kuraĝi	to be bold enough (to), dare, have courage, venture to	espdic	curated	freq	2		
+darkness	darkness	21	P2_hot	lum	mallumo	darkness, murk, gloom	espdic	curated	freq	2		
+helmet	helmet	21	P2_hot	kask	kasko	helmet	espdic	worksheet-proposed	freq	2		
+kneel	kneel	21	P2_hot	genu	genui	to kneel	espdic	worksheet-proposed	freq	2		
+ornament	ornament	21	P2_hot	ornam	ornamaĵo	adornment, decoration, ornament, finery, ornamentation	espdic	curated	freq	2		
+soak	soak	21	P2_hot	tremp	trempi	to dip, immerse, plunge, soak, steep	espdic	worksheet-proposed	freq	2		
 thunder	thunder	21	P2_hot	tondr	tondro	thunder	espdic	curated	seed	1		
-tickle	tickle	21	P2_hot	tikl	tikli	to tickle	espdic	worksheet-proposed	freq	1		
-trail	trail	21	P2_hot	pad	pado	path	espdic	curated	freq	1		
-twisted	twisted	21	P4_nomatch	tord	tordi	to contort, twist, warp, wind, wring, wriggle, sprain	espdic	curated	freq	1		
-unpack	unpack	21	P2_hot	elpak	elpaki	to unpack	espdic	worksheet-proposed	freq	1		
-waist	waist	21	P2_hot	tali	talio	waist, waistline	espdic	curated	freq	1		
-whip	whip	21	P2_hot	vip	vipo	whip	espdic	curated	freq	1		
-adorable	adorable	20	P2_hot	adorind	adorinda	adorable	espdic	worksheet-proposed	freq	1		
-bookcase	bookcase	20	P2_hot	librobretar	librobretaro	bookcase	espdic	curated	freq	1		
-cart	cart	20	P2_hot	ĉar	ĉareto	carriage, typewriter carriage, (push)cart, baseket (e-commerce)	espdic	curated	freq	1		
-cereal	cereal	20	P2_hot	cereal	cerealo	cereal	espdic	curated	freq	1		
+tickle	tickle	21	P2_hot	tikl	tikli	to tickle	espdic	worksheet-proposed	freq	2		
+trail	trail	21	P2_hot	pad	pado	path	espdic	curated	freq	2		
+twisted	twisted	21	P4_nomatch	tord	tordi	to contort, twist, warp, wind, wring, wriggle, sprain	espdic	curated	freq	2		
+unpack	unpack	21	P2_hot	elpak	elpaki	to unpack	espdic	worksheet-proposed	freq	2		
+waist	waist	21	P2_hot	tali	talio	waist, waistline	espdic	curated	freq	2		
+whip	whip	21	P2_hot	vip	vipo	whip	espdic	curated	freq	2		
+adorable	adorable	20	P2_hot	adorind	adorinda	adorable	espdic	worksheet-proposed	freq	2		
+bookcase	bookcase	20	P2_hot	librobretar	librobretaro	bookcase	espdic	curated	freq	2		
+cart	cart	20	P2_hot	ĉar	ĉareto	carriage, typewriter carriage, (push)cart, baseket (e-commerce)	espdic	curated	freq	2		
+cereal	cereal	20	P2_hot	cereal	cerealo	cereal	espdic	curated	freq	2		
 cheek	cheek	20	P2_hot	vang	vango	cheek, jowl	espdic	worksheet-proposed	seed	2		
-chore	chore	20	P2_hot	farotaĵ	farotaĵo	thing to be done, chore	espdic	worksheet-proposed	freq	1		
-fort	fort	20	P2_hot	fortikaĵ	fortikaĵo	citadel, fortification, fortress, stronghold, fort	espdic	curated	freq	1		
-grill	grill	20	P2_hot	kradrostil	kradrostilo	barbecue, gridiron, grill	espdic	curated	freq	1		
-hedge	hedge	20	P2_hot	heĝ	heĝo	hedge	espdic	worksheet-proposed	freq	1		
+chore	chore	20	P2_hot	farotaĵ	farotaĵo	thing to be done, chore	espdic	worksheet-proposed	freq	2		
+fort	fort	20	P2_hot	fortikaĵ	fortikaĵo	citadel, fortification, fortress, stronghold, fort	espdic	curated	freq	2		
+grill	grill	20	P2_hot	kradrostil	kradrostilo	barbecue, gridiron, grill	espdic	curated	freq	2		
+hedge	hedge	20	P2_hot	heĝ	heĝo	hedge	espdic	worksheet-proposed	freq	2		
 jellyfish	jellyfish	20	P2_hot	meduz	meduzo	jellyfish	espdic	worksheet-proposed	seed	2		
-overjoy	overjoy	20	P4_nomatch	ĝoj	ĝojega	jovial, jubilant	espdic	curated	freq	1		
-porch	porch	20	P2_hot	verand	verando	porch, veranda	espdic	curated	freq	1		
-rag	rag	20	P2_hot	ĉifon	ĉifono	rag, scrap, tatter, shred	espdic	curated	freq	1		
-rhinoceros	rhinoceros	20	P2_hot	rinocer	rinocero	rhino, rhinoceros	espdic	worksheet-proposed	freq	1		
-ribbon	ribbon	20	P2_hot	ruband	rubando	ribbon, band, tape	espdic	curated	freq	1		
-shrug	shrug	20	P2_hot	ŝultrolev	ŝultrolevi	to shrug	espdic	curated	freq	1		
-slap	slap	20	P2_hot	frap	frapi	to hit, knock, strike	espdic	curated	freq	1		
-slippery	slippery	20	P2_hot	glit	glita	floating, slick, slippery	espdic	curated	freq	1		
-thermometer	thermometer	20	P3_compound	termometr	termometro	thermometer	espdic	worksheet-proposed	freq	1		
-unlock	unlock	20	P2_hot	malŝlos	malŝlosi	to unlock	espdic	worksheet-proposed	freq	1		
-vest	vest	20	P2_hot	veŝt	veŝto	vest, waistcoat	espdic	worksheet-proposed	freq	1		
-warmth	warmth	20	P2_hot	varm	varmo	warmth	espdic	worksheet-proposed	freq	1		
-weep	weep	20	P2_hot	larm	larmi	to cry, shed tears, weep	espdic	worksheet-proposed	freq	1		
-yarn	yarn	20	P2_hot	lanfaden	lanfadeno	worsted	espdic	curated	freq	1		
+overjoy	overjoy	20	P4_nomatch	ĝoj	ĝojega	jovial, jubilant	espdic	curated	freq	2		
+porch	porch	20	P2_hot	verand	verando	porch, veranda	espdic	curated	freq	2		
+rag	rag	20	P2_hot	ĉifon	ĉifono	rag, scrap, tatter, shred	espdic	curated	freq	2		
+rhinoceros	rhinoceros	20	P2_hot	rinocer	rinocero	rhino, rhinoceros	espdic	worksheet-proposed	freq	2		
+ribbon	ribbon	20	P2_hot	ruband	rubando	ribbon, band, tape	espdic	curated	freq	2		
+shrug	shrug	20	P2_hot	ŝultrolev	ŝultrolevi	to shrug	espdic	curated	freq	2		
+slap	slap	20	P2_hot	frap	frapi	to hit, knock, strike	espdic	curated	freq	2		
+slippery	slippery	20	P2_hot	glit	glita	floating, slick, slippery	espdic	curated	freq	2		
+thermometer	thermometer	20	P3_compound	termometr	termometro	thermometer	espdic	worksheet-proposed	freq	2		
+unlock	unlock	20	P2_hot	malŝlos	malŝlosi	to unlock	espdic	worksheet-proposed	freq	2		
+vest	vest	20	P2_hot	veŝt	veŝto	vest, waistcoat	espdic	worksheet-proposed	freq	2		
+warmth	warmth	20	P2_hot	varm	varmo	warmth	espdic	worksheet-proposed	freq	2		
+weep	weep	20	P2_hot	larm	larmi	to cry, shed tears, weep	espdic	worksheet-proposed	freq	2		
+yarn	yarn	20	P2_hot	lanfaden	lanfadeno	worsted	espdic	curated	freq	2		
 alright	alright	19	P5_mid	bon	bone	well, ok, alright, fine	espdic	worksheet-proposed	freq	2		
 birdie	birdie	19	P4_nomatch	bird	birdeto	little bird	espdic	curated	freq	2		
 blouse	blouse	19	P5_mid	bluz	bluzo	blouse	espdic	worksheet-proposed	freq	2		
@@ -2050,80 +2050,80 @@ pillow	pillow	51	P2_hot	kusen	kuseno	cushion, pillow	espdic	worksheet-proposed	f
 smith	smith	51	P1_name	forĝist	forĝisto	blacksmith, smith	espdic	worksheet-proposed	freq	1		
 delicate	delicate	50	P2_hot	tikl	tikla	ticklish, delicate	espdic	worksheet-proposed	freq	1		Several meanings: noticed a delicate little box (delikatan); He especially enjoyed listening and learning about the delicate way of life. 
 mighty	mighty	50	P1_name	potenc	potenca	dominant, mighty, potent, powerful	espdic	worksheet-proposed	freq	1		translation: big
-exclaim	exclaim	49	P2_hot	ekkri	ekkrii	to call out, cry out, exclaim, shout out	espdic	worksheet-proposed	freq	1		Excited, he exclaimed out loud
-olive	olive	49	P1_name	oliv	olivo	olive	espdic	worksheet-proposed	freq	1		
-squeeze	squeeze	49	P2_hot	prem	premi	to press, oppress, squeeze, grasp, push, hold down, depress, hit (a key)	espdic	worksheet-proposed	freq	1		
-cushion	cushion	48	P2_hot	kusen	kuseno	cushion, pillow	espdic	worksheet-proposed	freq	1		
-eraser	eraser	48	P2_hot	gum	gumo	eraser, gum	espdic	worksheet-proposed	freq	1		
-higher	higher	48	P2_hot	alt	alta	high, lofty, tall, alto	espdic	curated	freq	1		
-kayak	kayak	48	P1_name	kajak	kajaki	to kayak	espdic	worksheet-proposed	freq	1		
-leash	leash	48	P2_hot	ligil	ligilo	band, strap, bond, tie, leash, tether, linker, link (WWW)	espdic	worksheet-proposed	freq	1		
-poppy	poppy	48	P1_name	papav	papavo	poppy	espdic	worksheet-proposed	freq	1		translation: flower poppy
-ignorant	ignorant	47	P1_name	malkler	malklera	dull, stupid, ignorant, illiterate, uncultured, uneducated, simple	espdic	worksheet-proposed	freq	1		translation: uneducated
-jewel	jewel	47	P1_name	gem	gemo	gem, jewel	espdic	worksheet-proposed	freq	1		
-juicy	juicy	47	P2_hot	suk	suka	juicy	espdic	worksheet-proposed	freq	1		
-otter	otter	47	P2_hot	lutr	lutro	otter	espdic	worksheet-proposed	freq	1		
-persistent	persistent	47	P2_hot	persist	persista	perennial, persistent, retentive	espdic	curated	freq	1		
-surrender	surrender	47	P1_name	rezign	rezigni	to abandon, give up, resign, renounce, yield, renounce, surrender, cancel	espdic	worksheet-proposed	freq	1		translation: give up
-blueberry	blueberry	46	P2_hot	mirtel	mirtelo	blueberry	espdic	curated	freq	1		
-cage	cage	46	P2_hot	kaĝ	kaĝo	cage	espdic	worksheet-proposed	freq	1		
-clown	clown	46	P1_name	klaŭn	klaŭno	clown	espdic	worksheet-proposed	freq	1		
+exclaim	exclaim	49	P2_hot	ekkri	ekkrii	to call out, cry out, exclaim, shout out	espdic	worksheet-proposed	freq	2		Excited, he exclaimed out loud
+olive	olive	49	P1_name	oliv	olivo	olive	espdic	worksheet-proposed	freq	2		
+squeeze	squeeze	49	P2_hot	prem	premi	to press, oppress, squeeze, grasp, push, hold down, depress, hit (a key)	espdic	worksheet-proposed	freq	2		
+cushion	cushion	48	P2_hot	kusen	kuseno	cushion, pillow	espdic	worksheet-proposed	freq	2		
+eraser	eraser	48	P2_hot	gum	gumo	eraser, gum	espdic	worksheet-proposed	freq	2		
+higher	higher	48	P2_hot	alt	alta	high, lofty, tall, alto	espdic	curated	freq	2		
+kayak	kayak	48	P1_name	kajak	kajaki	to kayak	espdic	worksheet-proposed	freq	2		
+leash	leash	48	P2_hot	ligil	ligilo	band, strap, bond, tie, leash, tether, linker, link (WWW)	espdic	worksheet-proposed	freq	2		
+poppy	poppy	48	P1_name	papav	papavo	poppy	espdic	worksheet-proposed	freq	2		translation: flower poppy
+ignorant	ignorant	47	P1_name	malkler	malklera	dull, stupid, ignorant, illiterate, uncultured, uneducated, simple	espdic	worksheet-proposed	freq	2		translation: uneducated
+jewel	jewel	47	P1_name	gem	gemo	gem, jewel	espdic	worksheet-proposed	freq	2		
+juicy	juicy	47	P2_hot	suk	suka	juicy	espdic	worksheet-proposed	freq	2		
+otter	otter	47	P2_hot	lutr	lutro	otter	espdic	worksheet-proposed	freq	2		
+persistent	persistent	47	P2_hot	persist	persista	perennial, persistent, retentive	espdic	curated	freq	2		
+surrender	surrender	47	P1_name	rezign	rezigni	to abandon, give up, resign, renounce, yield, renounce, surrender, cancel	espdic	worksheet-proposed	freq	2		translation: give up
+blueberry	blueberry	46	P2_hot	mirtel	mirtelo	blueberry	espdic	curated	freq	2		
+cage	cage	46	P2_hot	kaĝ	kaĝo	cage	espdic	worksheet-proposed	freq	2		
+clown	clown	46	P1_name	klaŭn	klaŭno	clown	espdic	worksheet-proposed	freq	2		
 crab	crab	46	P2_hot	krab	krabo	crab	espdic	worksheet-proposed	seed	2		
-dull	dull	46	P2_hot	malbril	malbrila	dull (unpolished)	espdic	curated	freq	1		
-flute	flute	46	P1_name	flut	fluto	flute	espdic	worksheet-proposed	freq	1		
-gasp	gasp	46	P2_hot	aĥ	aĥi	to gasp, whimper	espdic	worksheet-proposed	freq	1		
-glue	glue	46	P2_hot	glu	gluo	glue	espdic	curated	freq	1		
-pit	pit	46	P1_name	put	puto	well, pit	espdic	worksheet-proposed	freq	1		
-pole	pole	46	P1_name	fost	fosto	pole, post, stanchion, stake, upright, upright beam, upright support, vertical support, pier	espdic	worksheet-proposed	freq	1		translation: hole in the ground
-shopkeeper	shopkeeper	46	P2_hot	butikist	butikisto	merchant, retailer, shopkeeper, tradesman	espdic	worksheet-proposed	freq	1		
-spray	spray	46	P2_hot	ŝpruc	ŝpruci	to gush, spurt, spurt out, splash, spout, pop-out	espdic	curated	freq	1		
-witch	witch	46	P2_hot	sorĉistin	sorĉistino	witch	espdic	worksheet-proposed	freq	1		
-foolish	foolish	45	P2_hot	stult	stulta	foolish, silly, stupid, dumb	espdic	worksheet-proposed	freq	1		
-hippo	hippo	45	P1_name	hipopotam	hipopotamo	hippo, hippopotamus	espdic	worksheet-proposed	freq	1		
-leak	leak	45	P2_hot	lik	liki	to leak	espdic	worksheet-proposed	freq	1		
-loyal	loyal	45	P2_hot	fidel	fidela	accurate, exact, faithful, loyal, staunch, trusty, trustworthy	espdic	worksheet-proposed	freq	1		
-turtle	turtle	44	P1_name	keloni	kelonio	turtle	espdic	worksheet-proposed	freq	1		
-cone	cone	41	P1_name	konus	konuso	cone	espdic	worksheet-proposed	freq	1		
-crack	crack	41	P1_name	fend	fendi	to cleave, crack, split	espdic	worksheet-proposed	freq	1		several meanings: sound, a split/crack, a process of breaking
-sweetheart	sweetheart	41	P1_name	amat	amato	beloved, loved one, lover, sweetheart, well-beloved	espdic	worksheet-proposed	freq	1		meaning: dear
-mushroom	mushroom	40	P1_name	fung	fungo	fungus, mushroom, toadstool	espdic	worksheet-proposed	freq	1		
-sweetie	sweetie	40	P1_name	dolĉul	dolĉulo	sweetie, sweetheart	espdic	worksheet-proposed	freq	1		meaning: dear
-volcano	volcano	40	P1_name	vulkan	vulkano	volcano	espdic	worksheet-proposed	freq	1		
-velvet	velvet	39	P1_name	velur	velura	velvet	espdic	worksheet-proposed	freq	1		
-harbor	harbor	37	P1_name	haven	haveno	harbor, port, haven, seaport	espdic	worksheet-proposed	freq	1		
-snap	snap	36	P1_name	klak	klako	click, snap	espdic	worksheet-proposed	freq	1		
-meow	meow	35	P1_name	miaŭ	miaŭi	to meow, mew	espdic	worksheet-proposed	freq	1		
-rat	rat	35	P1_name	rat	rato	rat	espdic	worksheet-proposed	freq	1		
-hay	hay	34	P1_name	fojn	fojno	hay	espdic	worksheet-proposed	freq	1		
-beep	beep	33	P1_name	pep	pepi	to chirp, peep, twitter, warble, beep	espdic	worksheet-proposed	freq	1		
-ow	ow	33	P1_name	a	aj	ow, ouch, oh	espdic	worksheet-proposed	freq	1		translation: ouch
-faucet	faucet	32	P1_name	kran	krano	cock, faucet, tap, spigot	espdic	worksheet-proposed	freq	1		
-goose	goose	32	P1_name	anser	ansero	goose	espdic	worksheet-proposed	freq	1		
-snowy	snowy	32	P1_name	neĝ	neĝa	snowy	espdic	worksheet-proposed	freq	1		
-leopard	leopard	31	P1_name	panter	pantero	leopard, panther	espdic	worksheet-proposed	freq	1		
-pup	pup	31	P1_name	hundid	hundido	pup, puppy	espdic	worksheet-proposed	freq	1		
-zigzag	zigzag	31	P1_name	zigzag	zigzaga	zigzag	espdic	worksheet-proposed	freq	1		
-lemonade	lemonade	30	P1_name	limonad	limonado	lemonade	espdic	worksheet-proposed	freq	1		
-loop	loop	30	P1_name	maŝ	maŝo	knot, link, loop, mesh, mail (armor)	espdic	worksheet-proposed	freq	1		traslation: (buklo)
-pine	pine	29	P1_name	pin	pino	pine (tree)	espdic	worksheet-proposed	freq	1		
-sunflower	sunflower	29	P1_name	heliant	helianto	sunflower	espdic	worksheet-proposed	freq	1		
-yogurt	yogurt	29	P1_name	jahurt	jahurto	yogurt	espdic	worksheet-proposed	freq	1		
-boo	boo	28	P1_name	h	hu	boo	espdic	worksheet-proposed	freq	1		
+dull	dull	46	P2_hot	malbril	malbrila	dull (unpolished)	espdic	curated	freq	2		
+flute	flute	46	P1_name	flut	fluto	flute	espdic	worksheet-proposed	freq	2		
+gasp	gasp	46	P2_hot	aĥ	aĥi	to gasp, whimper	espdic	worksheet-proposed	freq	2		
+glue	glue	46	P2_hot	glu	gluo	glue	espdic	curated	freq	2		
+pit	pit	46	P1_name	put	puto	well, pit	espdic	worksheet-proposed	freq	2		
+pole	pole	46	P1_name	fost	fosto	pole, post, stanchion, stake, upright, upright beam, upright support, vertical support, pier	espdic	worksheet-proposed	freq	2		translation: hole in the ground
+shopkeeper	shopkeeper	46	P2_hot	butikist	butikisto	merchant, retailer, shopkeeper, tradesman	espdic	worksheet-proposed	freq	2		
+spray	spray	46	P2_hot	ŝpruc	ŝpruci	to gush, spurt, spurt out, splash, spout, pop-out	espdic	curated	freq	2		
+witch	witch	46	P2_hot	sorĉistin	sorĉistino	witch	espdic	worksheet-proposed	freq	2		
+foolish	foolish	45	P2_hot	stult	stulta	foolish, silly, stupid, dumb	espdic	worksheet-proposed	freq	2		
+hippo	hippo	45	P1_name	hipopotam	hipopotamo	hippo, hippopotamus	espdic	worksheet-proposed	freq	2		
+leak	leak	45	P2_hot	lik	liki	to leak	espdic	worksheet-proposed	freq	2		
+loyal	loyal	45	P2_hot	fidel	fidela	accurate, exact, faithful, loyal, staunch, trusty, trustworthy	espdic	worksheet-proposed	freq	2		
+turtle	turtle	44	P1_name	keloni	kelonio	turtle	espdic	worksheet-proposed	freq	2		
+cone	cone	41	P1_name	konus	konuso	cone	espdic	worksheet-proposed	freq	2		
+crack	crack	41	P1_name	fend	fendi	to cleave, crack, split	espdic	worksheet-proposed	freq	2		several meanings: sound, a split/crack, a process of breaking
+sweetheart	sweetheart	41	P1_name	amat	amato	beloved, loved one, lover, sweetheart, well-beloved	espdic	worksheet-proposed	freq	2		meaning: dear
+mushroom	mushroom	40	P1_name	fung	fungo	fungus, mushroom, toadstool	espdic	worksheet-proposed	freq	2		
+sweetie	sweetie	40	P1_name	dolĉul	dolĉulo	sweetie, sweetheart	espdic	worksheet-proposed	freq	2		meaning: dear
+volcano	volcano	40	P1_name	vulkan	vulkano	volcano	espdic	worksheet-proposed	freq	2		
+velvet	velvet	39	P1_name	velur	velura	velvet	espdic	worksheet-proposed	freq	2		
+harbor	harbor	37	P1_name	haven	haveno	harbor, port, haven, seaport	espdic	worksheet-proposed	freq	2		
+snap	snap	36	P1_name	klak	klako	click, snap	espdic	worksheet-proposed	freq	2		
+meow	meow	35	P1_name	miaŭ	miaŭi	to meow, mew	espdic	worksheet-proposed	freq	2		
+rat	rat	35	P1_name	rat	rato	rat	espdic	worksheet-proposed	freq	2		
+hay	hay	34	P1_name	fojn	fojno	hay	espdic	worksheet-proposed	freq	2		
+beep	beep	33	P1_name	pep	pepi	to chirp, peep, twitter, warble, beep	espdic	worksheet-proposed	freq	2		
+ow	ow	33	P1_name	a	aj	ow, ouch, oh	espdic	worksheet-proposed	freq	2		translation: ouch
+faucet	faucet	32	P1_name	kran	krano	cock, faucet, tap, spigot	espdic	worksheet-proposed	freq	2		
+goose	goose	32	P1_name	anser	ansero	goose	espdic	worksheet-proposed	freq	2		
+snowy	snowy	32	P1_name	neĝ	neĝa	snowy	espdic	worksheet-proposed	freq	2		
+leopard	leopard	31	P1_name	panter	pantero	leopard, panther	espdic	worksheet-proposed	freq	2		
+pup	pup	31	P1_name	hundid	hundido	pup, puppy	espdic	worksheet-proposed	freq	2		
+zigzag	zigzag	31	P1_name	zigzag	zigzaga	zigzag	espdic	worksheet-proposed	freq	2		
+lemonade	lemonade	30	P1_name	limonad	limonado	lemonade	espdic	worksheet-proposed	freq	2		
+loop	loop	30	P1_name	maŝ	maŝo	knot, link, loop, mesh, mail (armor)	espdic	worksheet-proposed	freq	2		traslation: (buklo)
+pine	pine	29	P1_name	pin	pino	pine (tree)	espdic	worksheet-proposed	freq	2		
+sunflower	sunflower	29	P1_name	heliant	helianto	sunflower	espdic	worksheet-proposed	freq	2		
+yogurt	yogurt	29	P1_name	jahurt	jahurto	yogurt	espdic	worksheet-proposed	freq	2		
+boo	boo	28	P1_name	h	hu	boo	espdic	worksheet-proposed	freq	2		
 peach	peach	28	P1_name	persik	persiko	nectarine, peach	espdic	worksheet-proposed	seed	1		
-tweet	tweet	28	P1_name	pepaĵ	pepaĵo	tweet	espdic	worksheet-proposed	freq	1		
-rod	rod	27	P1_name	verg	vergo	cane, rod, switch, wand, stick, staff	espdic	worksheet-proposed	freq	1		
-deaf	deaf	25	P1_name	surd	surda	deaf	espdic	worksheet-proposed	freq	1		
-hiding	hiding	25	P1_name	kaŝ	kaŝo	concealment, (act of) hiding, obfuscation	espdic	worksheet-proposed	freq	1		
-igloo	igloo	24	P1_name	igl	iglo	igloo	espdic	worksheet-proposed	freq	1		
-pat	pat	24	P1_name	frapet	frapeti	to pat, tap, rap	espdic	worksheet-proposed	freq	1		
-copper	copper	23	P1_name	kupr	kupra	copper	espdic	worksheet-proposed	freq	1		
-gorilla	gorilla	23	P1_name	goril	gorilo	gorilla	espdic	worksheet-proposed	freq	1		
-bang	bang	21	P1_name	knal	knali	to bang, explode, burst, make a loud sound	espdic	worksheet-proposed	freq	1		
-fuzzy	fuzzy	21	P1_name	svag	svaga	vague, fuzzy	espdic	worksheet-proposed	freq	1		
-granny	granny	21	P1_name	avinj	avinjo	granny	espdic	worksheet-proposed	freq	1		
-twinkle	twinkle	21	P1_name	brilet	brileti	to scintillate, twinkle	espdic	worksheet-proposed	freq	1		
-unite	unite	21	P1_name	kupl	kupli	to couple, join (up), unite, connect	espdic	worksheet-proposed	freq	1		translation: to unite
-veterinarian	veterinarian	21	P1_name	veterinar	veterinaro	veterinarian	espdic	worksheet-proposed	freq	1		
+tweet	tweet	28	P1_name	pepaĵ	pepaĵo	tweet	espdic	worksheet-proposed	freq	2		
+rod	rod	27	P1_name	verg	vergo	cane, rod, switch, wand, stick, staff	espdic	worksheet-proposed	freq	2		
+deaf	deaf	25	P1_name	surd	surda	deaf	espdic	worksheet-proposed	freq	2		
+hiding	hiding	25	P1_name	kaŝ	kaŝo	concealment, (act of) hiding, obfuscation	espdic	worksheet-proposed	freq	2		
+igloo	igloo	24	P1_name	igl	iglo	igloo	espdic	worksheet-proposed	freq	2		
+pat	pat	24	P1_name	frapet	frapeti	to pat, tap, rap	espdic	worksheet-proposed	freq	2		
+copper	copper	23	P1_name	kupr	kupra	copper	espdic	worksheet-proposed	freq	2		
+gorilla	gorilla	23	P1_name	goril	gorilo	gorilla	espdic	worksheet-proposed	freq	2		
+bang	bang	21	P1_name	knal	knali	to bang, explode, burst, make a loud sound	espdic	worksheet-proposed	freq	2		
+fuzzy	fuzzy	21	P1_name	svag	svaga	vague, fuzzy	espdic	worksheet-proposed	freq	2		
+granny	granny	21	P1_name	avinj	avinjo	granny	espdic	worksheet-proposed	freq	2		
+twinkle	twinkle	21	P1_name	brilet	brileti	to scintillate, twinkle	espdic	worksheet-proposed	freq	2		
+unite	unite	21	P1_name	kupl	kupli	to couple, join (up), unite, connect	espdic	worksheet-proposed	freq	2		translation: to unite
+veterinarian	veterinarian	21	P1_name	veterinar	veterinaro	veterinarian	espdic	worksheet-proposed	freq	2		
 luckily	luckily	19	P1_name	feliĉ	feliĉe	fortunately, happily, luckily	espdic	worksheet-proposed	freq	2		
 pancake	pancake	18	P1_name	flan	flano	flan, tart, pancake, thin flat pastry	espdic	worksheet-proposed	freq	2		
 ouch	ouch	17	P1_name	a	aj	ow, ouch, oh	espdic	worksheet-proposed	freq	2		translation : ow

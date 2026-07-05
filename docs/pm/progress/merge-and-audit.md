@@ -4,7 +4,7 @@
 
 - **Brief:** [`../briefs/merge-and-audit.md`](../briefs/merge-and-audit.md)
 - **Branch:** `analysis/merge-and-audit` (stacked on PR #7 `analysis/review-harness`)
-- **Status:** ✅ **Phases A + B done (no DB writes). ⏳ Awaiting Phase-C human review, then D–F.**
+- **Status:** ✅ **Phase C COMPLETE (2026-07-06). ⏳ Ready for Phase D (gated write) on Ramunas's go.**
 - **Depends on:** the reviewed inventory (`gapfill_review.reviewed.xlsx`, local/gitignored)
   and `docs/systematic_sets_seed.tsv` (Advisor tier authority).
 
@@ -41,11 +41,42 @@ smallest/highest-leverage first:
 3. **`tier_triage.tsv` — the 196 `review_flag=rare-anchor`** — the real triage: mark
    `drop` (junk/adult like `beachs`, `inevitably`) vs keep (set `proposed_tier` 1/2). The
    other ~956 default Tier 2 — **spot-check only**.
-4. **`number` demotion** — still open. The seed governs number *words* (cardinals T1, tens/
-   ordinals T2); the abstract concept **"number"** (currently Tier 3) is not a seed member —
-   give a one-line ruling (demote to T1 / keep T3).
+4. **`number` — RESOLVED (2026-07-05).** Phase D3, concept_id=2694 (en `number`):
+   - **tier 3 → 1** (approved demotion; sole sanctioned existing-row change, logged).
+   - **`cefr_level` left `C1`** (Ramunas: from a source, don't touch).
+   - **Anchor to `nombr`/`nombro`** (approved): fill the NULL `concept.eo_root='nombr'`,
+     `eo_word='nombro'`, `eo_pos='NOUN'`, and insert a `concept_root` row (root `nombr`,
+     is_head). Round-trips: ESPDIC `nombro` = "amount, number, quantity". Root `nombr`
+     already exists on concept 1649 (`numerous`/`multnombra`, ADJ) — shared root is fine
+     (like `kapablo`/`kapabla`), **not a duplicate**. Enrichment of NULL fields, not a
+     change to existing values.
 
 Hand back the edited TSVs (or a note of the changes) and I run Phase D.
+
+## Phase C results (2026-07-06) — review COMPLETE
+
+Ramunas's triaged files in `data/analysis/gapfill/`:
+- `anchor_flags_triaged.tsv` (150) — all **ok** (122 well-formed, 28 attested), 0 corrections.
+- `set_gaps_triaged.tsv` (80) — 57 ok + **23 fix** (corrected_eo_word); tiers 43 T1 / 37 T2.
+- `tier_triage_rare_triaged.tsv` (196) — 195 keep (T2), **1 drop** (`beachs`).
+- Tier-1 rule tightened to **seed + freq≥50** (`T1_FREQ_THRESHOLD=50`) → accepts now
+  195 T1 / 1,975 T2 (was 541/1,629). T1-vs-T2 does not affect T4_ratio; this is tier-model
+  correctness. Non-rare tail (956) and freq≥5 non-seed accepts accepted as auto-proposed.
+- `number`: tier 3→1 + anchor `nombr`/`nombro` (see item 4 above).
+
+### Reconciled Phase-D plan (dry preview; no writes yet)
+- Accepts to author: 2,170 − 1 drop (`beachs`) = **2,169**  (Wave 1 freq≥5/curated 1,312;
+  Wave 2 freq<5 tail 857). None already resolve in the current lexicon.
+- Set-gaps to author: **80** (43 T1 / 37 T2; 23 corrected anchors).
+- **Reconciliation rules Phase D must apply (owner: PROG):**
+  1. **56 words appear in BOTH the accepts and the set-gaps** (`giraffe`, `duck`, `butterfly`,
+     `fox`, `rabbit`, `thumb`, `elbow`, …) — author once; **the Advisor seed tier wins**
+     (systematic-set authority), prefer the corrected/curated anchor.
+  2. **8 sense-split base lemmas** (`trunk`×3, `spoil`/`beam`/`flap`/`tuck`/`scoop`/`palm`/
+     `perch`×2) — author each `lemma#sense` as its **own** concept with its own anchor (the
+     `#` contract). Not accidental duplicates.
+- `number`: 1 tier UPDATE + anchor enrichment.
+- Net new concepts ≈ 2,169 + 80 − 56 (dedup) ≈ **2,193**.
 
 ## Phase D–F — after approval (Claude Code)
 
@@ -73,7 +104,8 @@ Inputs: `gapfill_review.reviewed.xlsx` (local, gitignored), `docs/systematic_set
 ## Decisions on record
 - Tier-triage approach: **auto-propose + review flags** (Ramunas, this session).
 - Tier authority: **the Advisor seed** (`systematic_sets_seed.tsv`).
-- `number` demotion: **deferred** to the Phase-C long session.
+- `number` demotion: **APPROVED (2026-07-05)** — tier 3→1 for concept_lang concept_id=2694,
+  applied in Phase D3 (backed-up transaction, logged). cefr/anchor sub-questions still open.
 
 ## Operating notes
 - All prep is foreground, single script, no DB writes. Phase D is the only write phase and

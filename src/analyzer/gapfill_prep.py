@@ -31,8 +31,13 @@ import sqlite3
 import sys
 from pathlib import Path
 
-# freq >= this → propose Tier 1; below → tier-triage-needed (the risky tail).
+# freq < this → the tier-triage tail (rare-anchor flagged; the risky low-freq set).
 TAIL_THRESHOLD = 5
+# freq >= this (and not seed-tiered) → propose Tier 1, else Tier 2. Gap words are
+# by construction absent from the original A1 core, so the bar for Tier 1 is high
+# (Ramunas ruling 2026-07-06: seed + freq>=50). Note: T1-vs-T2 does not affect
+# T4_ratio (both are the denominator) — this is tier-model correctness.
+T1_FREQ_THRESHOLD = 50
 
 
 def _repo_root() -> Path:
@@ -96,7 +101,7 @@ def propose_tier(
         if k and k in seed_tiers:
             return seed_tiers[k]
     if freq >= threshold:
-        return "1" if freq >= 20 else "2"
+        return "1" if freq >= T1_FREQ_THRESHOLD else "2"
     return "2"  # tail default — Tier 2, never blanket Tier 1
 
 
