@@ -4,7 +4,11 @@
 
 - **Brief:** [`../briefs/merge-and-audit.md`](../briefs/merge-and-audit.md)
 - **Branch:** `analysis/merge-and-audit` (stacked on PR #7 `analysis/review-harness`)
-- **Status:** ✅ **Phase C COMPLETE (2026-07-06). ⏳ Ready for Phase D (gated write) on Ramunas's go.**
+- **Status:** ✅ **MERGE COMPLETE (Phases D–F done, 2026-07-06). ⏳ Awaiting Ramunas sign-off on the audit reports.**
+  - D: 2,192 concepts authored + `number` change; backup `lexicon_v2.db.bak-20260706-003928`.
+  - E: integrity PASS (0 eo_root mismatches, 0 new duplicates, ~99.7% resolution);
+    **TinyStories UNKNOWN 19.5% → 8.3%** (`merge_audit.md`).
+  - F: customs loop-closure — expert/control separation 8.9× → 10.0× (`loop_closure_report.md`).
 - **Depends on:** the reviewed inventory (`gapfill_review.reviewed.xlsx`, local/gitignored)
   and `docs/systematic_sets_seed.tsv` (Advisor tier authority).
 

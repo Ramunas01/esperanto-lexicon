@@ -44,3 +44,8 @@ data/lexicon_db/espdic.txt
 # Review harness — regenerable snapshot & Excel working copies
 data/analysis/gapfill/worksheet_export.tsv
 data/analysis/gapfill/*.xlsx
+
+# Gap-fill merge — DB backups & regenerable coverage outputs
+data/lexicon_db/*.db.bak-*
+data/analysis/gapfill/*.csv
+data/analysis/gapfill/unknown_tokens_pooled.txt
