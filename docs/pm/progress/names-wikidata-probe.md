@@ -31,3 +31,8 @@ Branch PR, no merge.
 
 ## Log
 - 2026-07-07 (PM): branch + briefs set up; endpoint throttle verified; awaiting Programmer.
+- 2026-07-06 (Programmer, session start): read briefs + progress. Plan: (P0) build paced/cached
+  SPARQL runner `src/analyzer/wikidata_probe.py`, emit per-set `.rq` files + `MANUAL_PULL_README.md`
+  as the signal for Ramunas, verify anchor QIDs cheaply; (P1) consume-or-fetch per set; (P2) EO
+  coverage % @ top-50/200/1000; (P3) salience/type/alias/licensing; write memo + sample TSV; pytest
+  pure logic w/ fixtures. Gitignored `_cache/` + `manual_pulls/`. STATUS: 🔧 P0 in progress.

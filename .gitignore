@@ -49,3 +49,7 @@ data/analysis/gapfill/*.xlsx
 data/lexicon_db/*.db.bak-*
 data/analysis/gapfill/*.csv
 data/analysis/gapfill/unknown_tokens_pooled.txt
+
+# D7 Wikidata names probe — raw/regenerable API cache & manual GUI pulls
+data/analysis/names/_cache/
+data/analysis/names/manual_pulls/
