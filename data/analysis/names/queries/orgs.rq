@@ -6,7 +6,7 @@ SELECT ?item ?en ?eo ?sitelinks
   (GROUP_CONCAT(DISTINCT ?enAlias; SEPARATOR="|") AS ?enAliases)
   (GROUP_CONCAT(DISTINCT ?eoAlias; SEPARATOR="|") AS ?eoAliases)
 WHERE {
-  VALUES ?item { wd:Q458 wd:Q1065 wd:Q7184 wd:Q7768 wd:Q7159 wd:Q37230 wd:Q7817 wd:Q1132 wd:Q7164 wd:Q8908 wd:Q41550 wd:Q1043527 }
+  VALUES ?item { wd:Q458 wd:Q1065 wd:Q7184 wd:Q7768 wd:Q7159 wd:Q7825 wd:Q7817 wd:Q7804 wd:Q7164 wd:Q8908 wd:Q41550 wd:Q7795 }
   ?item wikibase:sitelinks ?sitelinks .
   OPTIONAL { ?item rdfs:label ?en FILTER(LANG(?en)="en") }
   OPTIONAL { ?item rdfs:label ?eo FILTER(LANG(?eo)="eo") }

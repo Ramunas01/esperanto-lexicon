@@ -1,0 +1,787 @@
+qid	label_en	label_eo	coarse_type	sitelinks	aliases
+Q2	Earth	Tero	celestial	367	The Blue Planet;Mother Earth;World;The Earth;Planet Earth
+Q111	Mars	Marso	celestial	290	Planet Mars;Red Planet;ruĝa planedo
+Q313	Venus	Venuso	celestial	277	Planet Venus;♀
+Q308	Mercury	Merkuro	celestial	271	Sol I;Sol b;Sol 1;Planet Mercury;☿;Hermes
+Q319	Jupiter	Jupitero	celestial	269	Sol V;Sol 5;Planet Jupiter;♃
+Q193	Saturn	Saturno	celestial	260	Sol VI;Sol 6;♄;♄
+Q324	Uranus	Urano	celestial	259	the Georgian Planet;Sol VII;Sol h;Sol 7;Planet Uranus;Georgium Sidus;Georgian Planet, the;Bulls-eye planet;34 Tauri
+Q332	Neptune	Neptuno	celestial	250	Sol VIII;Sol 8;♆
+Q525	Sun	Suno	celestial	360	the Sun;Sol
+Q405	Moon	Luno	celestial	356	Sol IIIa;Earth I;☾;☽;Lua;The Moon;moon;Luna
+Q2565	Titan	Titano	celestial	120	Saturn VI
+Q7547	Phobos	Fobo	celestial	115	Mars I Phobos;Phobos (moon);Mars I;Marso I
+Q3143	Europa	Eŭropo	celestial	114	Europa (moon);Jupiter II
+Q3123	Io	Ioo	celestial	112	Jupiter I;Io (moon)
+Q3169	Ganymede	Ganimedo	celestial	110	Jupiter III;Jupitero III
+Q7548	Deimos	Dejmo	celestial	110	Mars II Deimos;Deimos (moon);Mars II;Deimos;Marso II
+Q3134	Callisto	Kalisto	celestial	102	Jupiter IV
+Q3359	Triton	Tritono	celestial	99	Triton (moon);Neptune I
+Q3303	Enceladus	Encelado	celestial	92	Enceladus (moon);Saturn II
+Q15034	Mimas	Mimaso	celestial	81	Death Star moon;Saturn I
+Q3352	Miranda	Mirando	celestial	76	Uranus V;Miranda (moon)
+Q17958	Iapetus	Japeto	celestial	76	Saturn VIII;Japetus
+Q11002	sugar	sukero	celestial	207	sugars
+Q3037	Kathmandu	Katmanduo	celestial	194	Khatmandu;Katmandou;Katmandir;Kathmandu Metropolitan City;Káthmándú;Kasthamandap;Kadmendu;City of Temples;Catmeduour;Catmandir;Cadmendu;Kantipur;Yambu;Katmandu;Yen;Kathmandu Valley
+Q3033	Göttingen	Göttingen	celestial	124	
+Q12167	malnutrition	subnutrado	celestial	123	nutritional deficiency;malnourishment;undernutrition
+Q12176	Alpha Centauri	Alfa Centaŭro	celestial	96	LPM 534;GCRV 8519;GC 19728;α Centauri;α Cen;Rigil Kentaurus;Rigel Kent;Bungula;2XMM J143933.0-605008;Toliman;2XMM J143933.0-605008
+Q14001	malware	fiprogramaro	celestial	81	badware;malicious software;malica programaro
+Q97	Atlantic Ocean	Atlantiko	physical_geographic	269	the Atlantick;the Atlantic;Great Western Ocean;Atlantick Sea;Atlantick Ocean;Atlantick;Atlantic Sea;Oceanus;Atlantic;Atlantika Oceano
+Q98	Pacific Ocean	Pacifiko	physical_geographic	262	the Southern Sea;the Pacifick;the Pacific;the Great Southern Sea;the Great Southern Ocean;Pacifick Ocean;Pacifick;Great Southern Sea;Great Southern Ocean;Pacifick Sea;Pacific Sea;Southern Sea;Southern Ocean;the Southern Ocean;the Pacific Ocean;Pacific;Oceano Pacifiko
+Q1239	Indian Ocean	Hinda Oceano	physical_geographic	247	Oriental Sea;Oriental Ocean;Indian Sea;Eastern Ocean;Eastern Sea
+Q788	Arctic Ocean	Arkta Oceano	physical_geographic	224	Yce Sea;the Northern Ocean;Tartaric Sea;Tartar Sea;Tartar Ocean;Sea of Tartary;Ocean of Tartary;Icy Ocean;Ice Ocean;Arctic Sea;Icy Sea;Ice Sea;Glacial Sea;Northern Ocean;Norda Oceano
+Q7354	Southern Ocean	Suda Oceano	physical_geographic	194	South Polar Ocean;Great Southern Ocean;Antarctic Ocean;antarkta oceano
+Q715269	World Ocean	Monda Oceano	physical_geographic	64	oceans of the world;Global Ocean
+Q12355425	South Pacific Ocean	Suda Pacifiko	physical_geographic	8	South Pacific
+Q12353254	North Pacific Ocean	Norda Pacifiko	physical_geographic	3	North Pacific Basin;North Pacific;Nord-Pacifiko
+Q34765253	North West Pacific Ocean	nordokcidenta Pacifiko	physical_geographic	1	Northwestern Pacific Ocean;Northwestern Pacific;Pacific, Northwest;Northwest Pacific;Northwest Pacific Ocean
+Q63860551	North East Pacific Ocean	nord-orienta Pacifiko	physical_geographic	0	North East Pacific;Northeastern Pacific Ocean;Northeastern Pacific;North-East Pacific Ocean
+Q46	Europe	Eŭropo	physical_geographic	403	The Old Continent;Old Continent;European Peninsula;European continent;European Continent
+Q15	Africa	Afriko	physical_geographic	370	African continent
+Q48	Asia	Azio	physical_geographic	359	Continental Asia;Asian continent
+Q18	South America	Sudameriko	physical_geographic	337	S. America;S America;South American continent;Sud-Ameriko
+Q51	Antarctica	Antarkto	physical_geographic	314	Antarktio
+Q49	North America	Nordameriko	physical_geographic	298	N. America;N America;N america;Amérique du Nord;003 (UN M.49 code);North American continent;North and Central America;Turtle Island;NA;North Amer;NOAM;NoAm;North Am;N Am;North-America;North American Continent;North America (region);North America (continent);North America (Americas);North america;Nord-Ameriko
+Q55643	Oceania	Oceanio	physical_geographic	279	Oceania and Australia;Australia and Oceania;Moana Oceania;Aŭstralio kaj Oceanio;Oceanio kaj Aŭstralio
+Q828	Americas	Ameriko	physical_geographic	266	the New World;North, Central, and South America;North and South America;American continent;the Americas;America
+Q3960	Australian continent	Aŭstralia kontinento	physical_geographic	136	the Australian continent;Nova Hollandia;Meganesia;Australinea;Australia (continent);New Holland;Sahul;Australia
+Q27527	Afro-Eurasia	Afrik-Eŭrazio	physical_geographic	106	Eurafrasia;Afroeurasia;Afrasia;World Island
+Q7856408	Turtle Island	Testud-insulo	physical_geographic	7	
+Q55614502	Insular India	Insula Hindio	physical_geographic	3	
+Q1239	Indian Ocean	Hinda Oceano	physical_geographic	247	Oriental Sea;Oriental Ocean;Indian Sea;Eastern Ocean;Eastern Sea
+Q5484	Caspian Sea	Kaspio	physical_geographic	205	Caspic Sea
+Q1693	North Sea	Norda Maro	physical_geographic	191	the German Sea;the British Ocean;German Sea;German Ocean;Cymbric Sea;Cumbric Sea;Cimbric Sea;British Ocean;the North Sea
+Q23406	Red Sea	Ruĝa Maro	physical_geographic	190	Sinus Arabicus;Al Baḩr al Aḩmar;Erythraean Sea;Arabian Gulf;the Red Sea
+Q1247	Caribbean Sea	Kariba Maro	physical_geographic	181	The Caribbean;North Sea of the Spaniards;Caribbean
+Q34675	Persian Gulf	Persa Golfo	physical_geographic	159	Arabian Gulf;The Gulf;Gulf of Iran;Al-Farsi Gulf;Araba Golfo;Araba-persa golfo
+Q13924	Adriatic Sea	Adriatiko	physical_geographic	154	the Adriatic;Riviera Adriatica;Mare Adriatico;Gulph of Venice;Gulf of Venice;Adriatic Riviera;Jadran;Adria
+Q34575	Aegean Sea	Egea Maro	physical_geographic	153	
+Q37660	South China Sea	Sudĉina maro	physical_geographic	143	South East Asia Sea;Nan Zhong Guo Hai;East Vietnamese Sea;West Philippine Sea;East Sea;South Sea;Nan Hai;Sud-Ĉina maro
+Q58705	Arabian Sea	Araba Maro	physical_geographic	136	Arab Sea;Akhzar Sea;Erythraean Sea;Indian Sea;Darya;Arabia Maro
+Q35000	Sea of Azov	Azova Maro	physical_geographic	130	Sea of Maeotis;Sea of Azof;Sea of Asov;Sea of Asoff;Sea of Asof;Maeotis Sea;Maeotian Swamp;Maeotian Sea;Lake of Maeotis;Lake Maeotis;Sea of Azoff;Meotida;Azov Sea
+Q34640	English Channel	Manika Markolo	physical_geographic	127	British Channel;British Ocean;the English Channel;the Channel;Britannic Ocean;Angla Markolo;Kanalo La Manche
+Q44725	Bering Sea	Beringa Maro	physical_geographic	113	Bering-maro;Maro de Beringo
+Q41735	Irish Sea	Irlanda Maro	physical_geographic	112	Vergive Sea;Manx Sea;Hiberian Sea;Manksa Maro
+Q38882	Tyrrhenian Sea	Tirena Maro	physical_geographic	110	Tireno
+Q37960	Yellow Sea	Flava Maro	physical_geographic	107	Hwang Hai;Huanghai Sea;Huanghai;Huang Hai;Whang-hai Sea;Whang-hai;Hwang Hai Sea
+Q14686	Gulf of Finland	Finna golfo	physical_geographic	106	
+Q33629	Kara Sea	Karaa Maro	physical_geographic	104	the Icy Sea;the Ice Sea;the Glacial Sea;Karskoye Sea;Karskoye More;Icy Sea;Ice Sea;Glacial Sea;Karska Maro
+Q49364	Java Sea	Java Maro	physical_geographic	104	
+Q37040	Baffin Bay	Bafina Golfo	physical_geographic	95	Baffin-golfeto;Golfo Baffin
+Q163434	East Siberian Sea	Orientsiberia Maro	physical_geographic	94	Oriensiberia Maro
+Q159252	Chukchi Sea	Ĉukĉa Maro	physical_geographic	94	Chukotka Sea
+Q33254	Tasman Sea	Tasmana Maro	physical_geographic	94	
+Q131274	Beaufort Sea	Beaufort-maro	physical_geographic	93	Boforta Maro;Maro de Beaufort
+Q132868	Greenland Sea	Gronlanda Maro	physical_geographic	93	
+Q159183	Philippine Sea	Filipina Maro	physical_geographic	91	East Philippine Sea;Maro de Filipinoj;Orient-Filipina Maro
+Q81499	Celtic Sea	Kelta Maro	physical_geographic	91	
+Q131418	Timor Sea	Timora Maro	physical_geographic	90	
+Q164466	Ross Sea	Maro de Ross	physical_geographic	87	Ross-Maro
+Q169274	Sargasso Sea	Sargasa Maro	physical_geographic	85	Maro de Sargasoj;Sargasmaro
+Q184189	Labrador Sea	Labradora Maro	physical_geographic	84	Maro Labradoro
+Q160194	Sulu Sea	Sula Maro	physical_geographic	83	Suga Maro
+Q150370	Flores Sea	Floresa Maro	physical_geographic	80	
+Q171510	Banda Sea	Banda Maro	physical_geographic	76	
+Q204703	Scotia Sea	Skotiŝipa Maro	physical_geographic	73	Skotia Maro
+Q185291	Molucca Sea	Moluka Maro	physical_geographic	73	Molukka Sea
+Q199479	Solomon Sea	Salomona Maro	physical_geographic	72	
+Q544914	Laccadive Sea	Lakediva Maro	physical_geographic	70	
+Q200712	Balearic Sea	Baleara Maro	physical_geographic	69	Iberian Sea
+Q277014	Bali Sea	Balia Maro	physical_geographic	66	
+Q3392	Nile	Nilo	physical_geographic	241	Shihor;Nilus River;Nīl River;Nahr an Nil;Bahr en Nīl;Nahr an Nīl;Nile River;The Nile;River Nile
+Q3783	Amazon	Amazono	physical_geographic	213	The Amazon River;River Amazon;Amazonian River;Amazon River;The Amazon
+Q1653	Danube	Danubo	physical_geographic	196	River Danube;Danube River;Donau
+Q584	Rhine	Rejno	physical_geographic	187	Rhine River
+Q626	Volga	Volgo	physical_geographic	187	Oares (in Greek);Rha river (in Scythian);Rā (in Scythian);Wolga River;Wolga R.;Volga R.;River Wolga;River Volga;R. Wolga;R. Volga;Volga River;Wolga
+Q1497	Mississippi River	Misisipo	physical_geographic	177	The Mississippi
+Q5089	Ganges	Gango	physical_geographic	177	Ganga Nadi;River Ganges;Ganges River;Ganga
+Q3503	Congo	Rivero Kongo	physical_geographic	165	Zaire River;Congo River;Zaire
+Q5413	Yangtze	Jangzio	physical_geographic	165	Yantse Kiang;Yangzi River;Yangtzekiang;Yangtze River;Yangtsze River;Yangtse-chiang;Yangtse River;Yang-tze River;Yang-tze;Yang-tsze-kiang;Yang-tsze;Yang-tse River;Yang-tse;Yan-tse-kian;Yan-tse;Kyang River;Changjiang River;Chang Jiang River;Ch'ang Chiang;Kyang;Kiang;Kiang River;Blue River;Yangzi;Chang Jiang;Jiang River;Changjiang;Kian;Jiang
+Q7348	Indus River	Induso	physical_geographic	155	Sindhu River;River Indus;R. Indus;Indus R.;Mehran River;Sindh River;Indus
+Q3542	Niger River	Niĝero	physical_geographic	154	River Niger;Quorra;fleuve Niger;Niger
+Q7355	Yellow River	Flava Rivero	physical_geographic	154	Hoang-ho;Huanghe;Huang He;Yellow R.;Whang-ho River;Huanghe River;Huanghe R.;Huang-ho River;Huang-ho R.;Huang-ho;Huang He River;Huang He R.;Hoangho;Hoang-ho River;Hoang-ho R.;Hoang ho;Hoan-ho River;Hoan-ho R.;Hoan-ho
+Q34589	Euphrates	Eŭfrato	physical_geographic	141	
+Q35591	Tigris	Tigriso	physical_geographic	129	Tigris River;Tigris;Tigro
+Q1471	Seine	Sejno	physical_geographic	128	Seine River;river Seine;Sekvano
+Q19686	River Thames	Tamizo	physical_geographic	128	Tamesis;Thames
+Q40855	Dnieper	Dnepro	physical_geographic	126	Dnipro River;Dnieper River;Dnipro;Dnepr;Dnipro;Dnepr
+Q40059	Jordan River	Jordano	physical_geographic	124	River Jordan;Jordan;Jordan-rivero;Rivero Jordano
+Q1644	Elbe	Elbo	physical_geographic	122	Elbe River;Łobjo;Łaba;Elba;Labe
+Q41179	Mekong River	Mekongo	physical_geographic	118	Mekong R.;Mékong;Mekhong R.;Mekhong;Lantzan-kiang;Lantzan River;Lantzan R.;Lantzan Kiang;Lancang R.;Lancang Jiang;Lancang River;Rivero Mekongo
+Q548	Vistula	Vistulo	physical_geographic	116	Visla;Wisla;Wisła;Weichsel
+Q6862	Amur River	Amuro	physical_geographic	114	Saghalien River;Heilongjiang River;Black Dragon River;Saghalien-Oula;Saghalien Oula;Heilong River;Black River;Heilong Jiang;Amur
+Q45403	Brahmaputra River	Bramaputro	physical_geographic	112	Sky river;Tsangpo-Brahmaputra;Brahmaputra R.;Brahmapoutra River;Brahmapoutra R.;Brahmapoutra;Dihong;Brahmaputra;Brahmaputro;Cangpo;Rivero Bramaputro
+Q46841	Lena River	Leno	physical_geographic	112	Lena;Lena
+Q973	Ob	Obo	physical_geographic	112	River Obi;River Ob;R. Obi;R. Ob;Obi River;Obi R.;Ob R.;Ob River;Obi
+Q80240	Ural River	Uralo	physical_geographic	111	Zhayyq;Jaik;Yaik;Ural;Ural;Urala rivero
+Q1229	Don	Don	physical_geographic	109	Tanaïs;River Don;Don River;Tanais
+Q5419	Missouri River	Misuro	physical_geographic	109	The Missouri;Missouri
+Q643	Po	Pado	physical_geographic	108	River Po;Po River
+Q552	Oder	Odro	physical_geographic	107	Oder River;Odra
+Q1469	Loire	Luaro	physical_geographic	107	River Loire;Loire River
+Q602	Rhône	Rodano	physical_geographic	106	Rhône River;Rhone River;Rhone
+Q131210	Dniester	Dnistro	physical_geographic	105	Dnister River
+Q134750	St. Lawrence River	rivero Sankt-Laŭrenco	physical_geographic	104	St Lawrence River;Saint Lawrence River;Fleuve Saint-Laurent;St. Lawrence;Rivero Sankta Laŭrenco;Rivero Sankta-Laŭrenco
+Q78707	Yenisey	Jenisejo	physical_geographic	104	River Yenisei;R. Yenisei;Jenisej;Yenisei;Enisey;Yenisei River;Yenisei R.
+Q13712	Tiber	Tibero	physical_geographic	104	Tiberis;Tevere
+Q8493	Amu Darya	Amudarjo	physical_geographic	103	Hamu River;Amudaria;Amu-Darya;Amu-Daria;Amu-daria;Amu Daria;Amou daria;Amudaryo;Amu River;Amudarya;Hamu;Oxus;Amu
+Q1265	Colorado River	rivero Kolorado	physical_geographic	100	Seetes-Ker-Der;Seedskeeden;Seedskeedee Agie;Seeds-ke-Agie;Seeds Keeder;Seeds Keeden;Seeds Keedee;Seedekeeden;Rio Grande de los Martyres;Rio Grande de los Cosninas;Rio Grande De Buena Esperanza;Rio Grande de Buena Esperanza;Rio Del Tizon;Rio del Tizon;Rio Del Norte;Rio del Norte;Rio del Norta;Rio de Buena Guia;Rio Cosnina;Rio Colorado Del Norte;Rio Colorado del Norte;Rio Buena Guia;Red River of the West;Red River of California;Pocket-to;Pagah;Packet-to;Pa-na-weap;North Fork of Grand River;North Fork Colorado River;Nah Oon Kara;Mar Bermejo;Javill;Hahweel;Hah Weal Asientic;Gritetho;El Rio de Buena Guia;Canon of the Colorado River;Buqui Acqumuri;Bunkara River;Ancon de San Andres;Ahan Yava Kothickwa;Rio Colorado;Rio de los Martires;Blue River;Grand River;Big River;North Fork;Green River;Kolorado
+Q14294	Tagus River	Taĵo	physical_geographic	100	Tajo River;Tajo;Tejo;Tejo River;Tagus;Taĥo
+Q131792	Orinoco River	Orinoko	physical_geographic	100	Orinoco;Rivero Orinoko
+Q132726	Yamuna	Jamuna	physical_geographic	99	Yamuna River;Jumna river;Jamna;Jumna
+Q645	Neva	Neva	physical_geographic	97	River Neva;Neva River
+Q128102	Irtysh	Irtiŝo	physical_geographic	96	River Irtysh;River Irtish;River Ertix;R. Irtysh;R. Irtish;R. Ertix;Irtysh River;Irtysh R.;Irtish River;Irtish R.;Ertix River;Ertix R.;Irtish;Irtiŝ
+Q41986	Meuse	Mozo	physical_geographic	94	Moûze;Mouze;Mosa;Maos;Meuse River;Maas;Maas
+Q483159	Syr Darya	Sirdarjo	physical_geographic	94	Yaxartes River;Yaxartes;Syr-darya;Syr River;Sirr River;Sirr Darya;Sîr-daria;Sir-Daria;Sir River;Sir Darya;Sir Daria;River Yaxartes;River Syr;River Sirr;River Sir;River Jaxartes;River Iaxartes;Jaxartes River;Iaxartes River;Iaxartes;Syr;Syrdarya;Jaxartes;Sirr;Sir;Sirdarja
+Q882739	Blue Nile	Blua Nilo	physical_geographic	94	El Bahr el Azraq River;El Bahr el Azraq;Blue Nile River;Al-Bahr al-azraq;Al-bahr al-Azraq;Abbay River;Abbai River;Abay River;Abay (river);Abai River;Abai river;Abai (river);Nilo Blua
+Q8197	Daugava	Daŭgavo	physical_geographic	94	Dźvina;Daugava River;Dzvina;Western Dvina;Düna
+Q104437	Yukon River	Jukono	physical_geographic	93	Yukon;Rivero Jukono
+Q3140	Hudson River	Hudsono	physical_geographic	91	Hudson
+Q1670	Main	Majno	physical_geographic	90	
+Q513	Mount Everest	Ĉomolungmo	physical_geographic	233	World highest peak;Qomolangma Feng;Peak XV;Mt Everest;Mount Sagarmatha;Mount Qomolangma;Mount Chomolubutangma;Himalaya Peak XV;Chomolangma;Ĉomolangma;Everesto
+Q39231	Mount Fuji	monto Fuĵi	physical_geographic	146	Fuji-san;Fujiyama;Mt. Fuji;Fujisan;Mt Fuji;Fuji-yama;Fuji Mountain;🗻;Fuĵio;Fuji-monto;Fuĵimonto;Fuĝi-monto;Fuĝimonto;monto Fuĝi;monto Fuĵio;Fuĝio;monto Fuĝio
+Q524	Mount Vesuvius	Vezuvio	physical_geographic	134	Vesuvius
+Q583	Mont Blanc	Blanka Monto	physical_geographic	127	Mt. Blanc;Mt Blanc;La Dame blanche;Il Bianco;Monte Bianco
+Q39739	Aconcagua	Akonkagvo	physical_geographic	113	Aconcagua
+Q43105	Mount Elbrus	Elbruso	physical_geographic	113	Elbrus;Mount Elbruz;Mingi Tau;Elbruz
+Q43512	K2	K2	physical_geographic	112	Mt. Qogir;Mount Godwin-Austen;Dapsang;Chhogori;Mount K2
+Q72303	Mount Ararat	Ararato	physical_geographic	110	Mount Agri;Mount Aghri;Greater Ararat;Agri Dagi;Ararat
+Q80344	Mount Olympus	Olimpo	physical_geographic	108	Oros Olympos;Olympus;Monto Olimpo
+Q725591	Mount Bazardüzü	Bazardüzü	physical_geographic	107	Mount Bazardyuzyu;Bazardyuzyu;Bazardüzü
+Q82019	Kanchenjunga	Kangchenjunga	physical_geographic	102	Kangchendzonga;Kañcanjaṅghā;Kangchenjunga;Kanchinjinga
+Q130018		McKinley	physical_geographic	100	Mt. Denali;Mount Denali;Bolshaya Gora;Denali;Monto Denali;Monto McKinley
+Q83497	Mount Rushmore	Monto Rushmore	physical_geographic	95	Mt. Rushmore;Monto Rushmore Nacia Memoraĵo;Mount Rushmore
+Q1374	Matterhorn	Materhorno	physical_geographic	92	Mont Cervin
+Q130736	Nanga Parbat	Nanga Parbat	physical_geographic	90	Diamir;Diamer
+Q229107	Mount Kailash	Kailash	physical_geographic	89	Kailas;Kailash;Kajlaŝo;Monto Kailaŝ
+Q165440	Dhaulagiri	Dhaulagiri	physical_geographic	89	Dhwalagiri;Dhaulagiri I
+Q169986	Makalu	Makalu	physical_geographic	88	Monto Makalu
+Q172070	Mount Kenya	Monto Kenja	physical_geographic	88	Mount Kenia;Monto Kenjo
+Q131230	Mauna Kea	Mauna Kea	physical_geographic	87	Mount Mauna Kea
+Q377485	Mount Sinai	Monto Sinajo	physical_geographic	87	Jebel Musa;Mount Horeb
+Q130321	Mount Athos	Athos	physical_geographic	86	Haghion Oros;Athos Mountain;Agion Oros;Holy Mountain;Athos;Atos;Atoso;Monto Athos
+Q178167	Mount Kosciuszko	Monto Kosciuszko	physical_geographic	86	Kunama Namadgi
+Q168702	Lhotse	Lhotse	physical_geographic	85	Lho Tse;Lhoze
+Q14081	Chimborazo	Monto Ĉimborazo	physical_geographic	84	Mount Chimborazo
+Q4675		Monto Saint Helens	physical_geographic	82	Saint Helens, Mount;Mount Saint Helens;Goat Rocks dome;Saint Helens;St. Helens;Saint Helens
+Q170089	Cho Oyu	Ĉo Oju	physical_geographic	81	
+Q170070	Manaslu	Manaslu	physical_geographic	80	
+Q40758	Damavand	Damavando	physical_geographic	79	Mount Demavend;Mount Damāvand;Mount Damavand;Demavend
+Q104674	Ben Nevis	Ben Nevis	physical_geographic	78	Beinn Nibheis
+Q6583	Sahara	Saharo	physical_geographic	221	the Great Desert;the Desert;the Desart;Saharra;aṣ-Ṣaḥrāʾ al-Kubrā;as-Sahra al-Kubra;as-Sahra;al-Sahra;al-Sahara;Desart;Zaara;Saara;Great Desert;Zahara;The Sahara;Sahara Desert;Zara;Desert
+Q36755	Sinai Peninsula	Sinajo	physical_geographic	131	the Sinai;Sinai;Sina;Dezerto Sinaja;Duoninsulo de Sinajo;Duoninsulo Sinaja;Duoninsulo Sinajo;Monto sinaja;Sinai;Sinaja Dezerto;Sinaja duoninsulo;Sinaja monto
+Q42070	Gobi Desert	Gobio	physical_geographic	116	Ta Ko-pih;Lop Desert;Ko-pih;Kara-kathay;Kara Kathay;Kalmack Desert;Hanhai;Hang-hai;Han-hai;Desert of Lop;Da Gebi;Gebi;Beljan;Lop;Kalmuk;Shamo;Cobi;Gobi;Samo;Gobi;Dezerto Gobi;Gobi-dezerto
+Q47141	Atacama Desert	Atakama-Dezerto	physical_geographic	104	Atacama;The Atacama;Atakamo
+Q47700	Kalahari Desert	Kalaharo	physical_geographic	104	Kalahari
+Q162843	Negev	Negevo	physical_geographic	96	Dezerto de Negevo;Negebo;Negev
+Q132956	Taklamakan	Taklamakano	physical_geographic	90	Taklamakan Desert;Takla Makan Desert;Takla Makan;Dezerto Taklamakano;Takla Makan;Taklamakan;Taklamakan-dezerto;Taklamakana dezerto
+Q172702	Karakum Desert	Karakumo	physical_geographic	90	Dezerto de Karakum
+Q131377	Namib	Namibo	physical_geographic	89	Namib Desert;Namib;Namib-dezerto;Namiba dezerto
+Q172691	Thar Desert	Dezerto Tar	physical_geographic	82	Rajputana Desert;Indian Desert;Great Indian Desert;Tar-Dezerto;Tara dezerto;Granda Hinda Dezerto
+Q118388	Death Valley	Valo de Morto	physical_geographic	79	Tumpisa;Tonesha;Todestal;Mound Spring Valley;LaVallee De Mort;Kunayiwaavi;Armuyosa Desert;Amargosa Desert;Northwestern Arm;North Arm;Mesquite Valley;Lost Valley;Death Valley;Morta valo
+Q145165	Great Victoria Desert	Granda Viktoria-Dezerto	physical_geographic	77	
+Q208299	Arabian Desert	Araba dezerto	physical_geographic	73	
+Q184364	Kyzyl Kum	Kizilkumo	physical_geographic	72	Red Sand Desert
+Q184355	Mojave Desert	Mojave-Dezerto	physical_geographic	70	Mojave;Mohave;Mohave-dezerto
+Q339162	Syrian Desert	Siria Dezerto	physical_geographic	70	Syrian steppe;Jordanian steppe;Badia
+Q229269	Rub' al Khali	Rub-al-Ĥalo	physical_geographic	69	Empty Quarter;Rub al-Ĥali;Rub-al-Ĥali;Vaka kvartalo
+Q189429	Sonoran Desert	Sonora-Dezerto	physical_geographic	67	Sonora Desert;Desierto Grande;Desierto de Sonora;Carson Plains;Sonora Dezerto
+Q181528	Libyan Desert	Libia Dezerto	physical_geographic	65	
+Q326896	Great Sandy Desert	Granda Sabla Dezerto	physical_geographic	55	Great Sandy Desert, Western Australia;Great Sandy Desert, Australia
+Q1286	Alps	Alpoj	physical_geographic	211	the Alps;European Alpine Region;Central European Alps;Alpeis;Alpeia;European Alps;Alpine;Eŭropaj Alpoj;Mezeŭropaj Alpoj
+Q5451	Himalayas	Himalajo	physical_geographic	208	the Himálaya;the Himalaya;Himalayan Mountains;Himálaya Mountains;Himalaya Mountains;Himálaya;Snowy Mountains;the Himalayas;Himmaleh;Himalaya
+Q5456	Andes	Andoj	physical_geographic	189	Ecuadorian Andes;Andes mountains;Andes mountain range;Andes Mountains
+Q5463	Rocky Mountains	Roka Montaro	physical_geographic	159	The Rockies;Rockies
+Q35600	Ural Mountains	Uralo	physical_geographic	139	the Urals;Urals;Ural-montaro;Urala montaro;Uralaj Montoj;Uraloj
+Q12431	Pyrenees	Pireneoj	physical_geographic	130	Pyrénées;Pyrenean Mountains
+Q1288	Carpathians	Karpatoj	physical_geographic	125	Carpathian Mountains
+Q5477	Caucasus Mountains	Kaŭkazo	physical_geographic	116	Caucasus
+Q1285	Apennines	Apeninoj	physical_geographic	105	Apennine Mountains
+Q5472	Hindu Kush	Hindukuŝo	physical_geographic	101	Pāriyātra Parvata;Hindukush;Caucasus;Paropamisadae
+Q5469	Karakoram	Karakorumo	physical_geographic	99	Karakorum Mountains;Karakoroum Mountains;Karakoroum;Karakoram Range;Karakoram Mountains;Karakorum
+Q93332	Appalachian Mountains	Apalaĉaj Montoj	physical_geographic	98	The Appalachians;Apalaches;Appalachians;Apalaĉa Montaro;Appalachian Mountains;Montoj Apalaĉoj
+Q130135	Atlas Mountains	Atlasa Montaro	physical_geographic	98	Atlaso;Atlas-montaro;Atlasoj
+Q5474	Tianshan Mountains	Tjanŝano	physical_geographic	96	Tien-Shan Range;Tien-Shan Mountains;Tien-Shan;Tianshan Range;Tian Shan Mountains;Than-Shan;Tengri Tagh;Tengir-Too;T'ien-shan Range;T'ien-shan Mountains;T'ien-shan;T'han-Shañ;T'han-Shan;Mountains of Heaven;Heavenly Mountains;Celestial Mountains;Tian Shan;Tianshan;Tianŝan;Tianŝano
+Q161750	Pamir Mountains	Pamiro	physical_geographic	96	The Pamirs;Pamirs;Pamir Plateau;Pamir;Pamiraj montoj
+Q159621	Annapurna	Anapurno	physical_geographic	92	Annapurna Massif;Annapurna Himal;Annapurna (Himalayas);Annapurna
+Q167021	Zagros Mountains	Zagros-montaro	physical_geographic	88	Zagros;Zagros
+Q170427	Balkan Mountains	Balkana montaro	physical_geographic	83	the Balkans;Balkan mountain range;Stara Planina
+Q4527	Western Ghats	Okcidentaj Ghatoj	physical_geographic	83	Western Ghauts;Western Ghats of Maharashtra;Western Ghāts;Western Ghâts;Western Ghat mountains;Western Ghat mountain ranges;Western Ghat mountain range;Western coast mountain range of india;West coast mountain range of India;The Western Ghats;Sahyadris;Sahyadri Mountains;Sahyadri mountain ranges;Sahyadri mountain range;Sahyadri;Sahya Parvatham;Sahya Parvatam;Sahya Parvat;Sahya Mountains;Sahayadri Hills;Sahayadri;Tamhini Ghat
+Q484725	Alborz	Elborz-Montaro	physical_geographic	81	Alborz mountain range;Alborzo;Elburz-Montaro;Montaro Elborz
+Q16635	Guam	Gvamo	physical_geographic	193	GUM;US-GU;Territory of Guam;ISO 3166-1:GU;Island of Guam;Guam (USA);Guåhån;Guåhan;Guahan;GU
+Q23666	Great Britain	Britio	physical_geographic	171	mainland Britain;Gt. Brit;Britannia;GB;Albion;Britain;GBR;Blighty;Granda Britio;Great Britain;Britujo
+Q3757	Java	Javo	physical_geographic	170	Ява;Pulau Java;Java, Indonesia;Java island;Giava;Jawa Island;Java Island;Pulau Jawa;Jawa
+Q22890	Ireland	Irlando	physical_geographic	168	Irlandia;Ivernia;Banba;Eire;Ierne;Irlande;Irlanda;Erin;Emerald Isle;Ireland (island);Hibernia;Scotia Major;Mikra Britannia;isle of Ireland;Island of Saints;Island of Ireland;Irland;Fódhla;Éire;Britannia Minor;Auld Sod;Airlann;Airlan;insulo Irlando;Erino
+Q14452	Easter Island	Paskinsulo	physical_geographic	164	Te pito o te kainga a Hau Maka;Paska Insulo
+Q3492	Sumatra	Sumatro	physical_geographic	159	Sumatra, Indonesia;Sumatera Island;Sumatra Island;Sumatera;Andalas;Pulau Sumatera
+Q13353	Montserrat	Moncerato	physical_geographic	158	Island of Montserrat;ms;MSR;MS;Montserato
+Q34374	Crete	Kreto	physical_geographic	158	Candia;Insulo Kreto
+Q31063	Christmas Island	Kristnaskinsulo	physical_geographic	153	Territory of Christmas Island;Christmas Island, Other Territories, Australia;Christmas Island, Other Territories;cx;Christmas island;Kristnaska Insulo
+Q34497	Saint Helena	Sankta Heleno	physical_geographic	147	SH-HL;Sankta Heleno, Ascension kaj Tristan da Cunha;Insulo de Sankta Helena;Insulo de Sankta Heleno;Insulo Sankta Heleno;Sankta-Heleno;Sent-Heleno
+Q40285	New Guinea	Nov-Gvineo	physical_geographic	147	Pulau Papua;Papua Island;Nov-Gvineo;Nouvelle Guinée;Nouvelle Guinee;Niugini;Neu Guinea;Nueva Guinea;Nieuw-Guinea;Papua;Nova Gvineo;Novgvineo
+Q36117	Borneo	Borneo	physical_geographic	147	Pulau Borneo;Borneo Island
+Q13987	Kyushu	Kiuŝuo	physical_geographic	135	Kyushu Island;Kyushu Is.;Kyushu I.;Kyûshû;Kiusiu;Kyūshū;Kiuŝu;Kjuŝuo
+Q13991	Shikoku	Ŝikokuo	physical_geographic	129	Sikoki;Shikoku Is.;Shikoku I.;Shikoku Island;Ŝikoku
+Q3812	Sulawesi	Sulaveso	physical_geographic	126	Sulawesi Island;Selebes;Pulau Sulawesi;Celebes Islands;Celebes;Celebeso;Sulaŭesio
+Q8828	Mallorca	Majorko	physical_geographic	124	Majorca
+Q42000	Tahiti	Tahitio	physical_geographic	123	Otaheitee;Tahiti
+Q25277	Hispaniola	Hispaniolo	physical_geographic	122	Sant Domingue;La Isla Española;La Isla Espanola;La Hispaniola;Island of Santo Domingo;Island of Hispaniola;Hispanola;Hispaniola Island;Cap Carcasse;Quisqueya;Ayiti;La Española;Isla Española;Isla Espanola;Hayti;Hispaniola;Hispanjolo
+Q125384	Luzon	Luzono	physical_geographic	119	Luzon Island;Luzon
+Q43048	Rhodes	Rodoso	physical_geographic	116	Ρόδος;Rodou;Rodos;Rhodos;Rodo;Rhodos;Rodiso;Rodos
+Q7792	Sakhalin	Saĥaleno	physical_geographic	116	Sakhalin Is.;Sakhalin I.;Saghalien Island;Saghalien Is.;Saghalien I.;Saghalien;Sakhalin Island;Karafuto;Kuye
+Q14056	Jan Mayen	Janmajeno	physical_geographic	113	Jan Mayen Land;Jan Mayen Island
+Q124873	Mindanao	Mindanao	physical_geographic	111	Mindanao Island
+Q52631	Ibiza	Ibizo	physical_geographic	104	Iviza;Eivissa
+Q1027830	Gotland	Gotlando	physical_geographic	103	Gothland;Gotland
+Q25528	Saba	Saba	physical_geographic	103	
+Q26180	Sint Eustatius	Sint Eustatius	physical_geographic	102	Saint Eustatius;Statia;Statius;St. Eustatius;Sint-Eustatius
+Q23408	Bouvet Island	Buvet-Insulo	physical_geographic	102	
+Q83067	Timor	Timoro	physical_geographic	102	Pulau Timor;Timor Island
+Q4648	Bali Island	Balio	physical_geographic	102	Isle of Bali;Island of Bali;Pulau Bali;Baly;Bali
+Q5484	Caspian Sea	Kaspio	physical_geographic	205	Caspic Sea
+Q5513	Lake Baikal	Bajkalo	physical_geographic	181	Ozero Bajkal;Baikal Sea;Bajkal;Baikal;Baykal
+Q5505	Lake Victoria	Viktoria lago	physical_geographic	160	Victoria Nyanza;Lake Nyanza
+Q5511	Lake Tanganyika	Tanganjiko	physical_geographic	151	Tanganyika
+Q35342	Titicaca	Lago Titikako	physical_geographic	132	Titiqaqa;Lake Titiqaqa;Lake Titicaca;Titikaka Lago;Titikaka-lago;Titikako
+Q1066	Lake Superior	Supra Lago	physical_geographic	111	Superior;Supera Lago
+Q1169	Lake Michigan	Miĉigano	physical_geographic	107	Michigan
+Q1062	Lake Ontario	Ontario	physical_geographic	106	Ontario
+Q125309	Lake Chad	Ĉada Lago	physical_geographic	105	Tchad Lake;Lake_Chad;Lac Tchad;Chad Lake;Ĉado;Lago Ĉado;Laĝo Ĉado
+Q5532	Lake Malawi	Malavia Lago	physical_geographic	105	Lake Nyassa;Lake Nyasa;Lago Niassa
+Q5492	Lake Erie	Eria Lago	physical_geographic	101	Erie
+Q1383	Lake Huron	Hurona Lago	physical_geographic	100	Huron
+Q15288	Lake Ladoga	Ladoga lago	physical_geographic	98	Ladoga;Ladoga
+Q6383	Lake Balaton	Balatono	physical_geographic	97	Platten-See;Balaton
+Q134485	Lake Balkhash	Balkaŝo	physical_geographic	89	Lake Balkash;Balkhash Lake;Balkhash;Balkash Lake;Balkash;Balhaŝ;Balhaŝo;Lago Balĥaŝo;Lago Balkaŝo
+Q125888	Lake Albert	Albertlago	physical_geographic	88	Lake Mwitanzige;Lake Mobutu Sese Seko;Albert Nyanza;Albert-lago
+Q42191	Issyk-Kul	Isik-Köl	physical_geographic	87	Temurtu Nor;Temurtu Lake;Temu'ertu Nuo'er;Rihai;Ri Hai;Issik-köl;Ysyk Köl;Issyk-Kol;Issyk Kul;Issigh Kul;Issik-Kul
+Q6414	Lake Garda	Garda-Lago	physical_geographic	87	Lago di Garda;Lach de Garda;(Lago) Benaco;Benacus
+Q166162	Lake Onega	Onega	physical_geographic	84	Onezhskoye Ozero;Onega Lake;Lake Onego;Onego;Ääninen;Äänisjärvi;Onega lago;Onega-lago;Oneĵskoje
+Q125912	Lake Kivu	Kivuo	physical_geographic	82	Kivu
+Q35958	Bosporus Strait	Bosporo	physical_geographic	129	Thracian Bosporus;Strait of Istanbul;Bosporus Thracian;Istanbul Strait;Bosphorus;Bosforo;Bospora markolo
+Q79883	Strait of Hormuz	Ormuza markolo	physical_geographic	128	Strait of Ormuz;Strait of Ormus;SoH;Hormoza Markolo;Markolo de Hormozo;Markolo de Hormuzo
+Q34640	English Channel	Manika Markolo	physical_geographic	127	British Channel;British Ocean;the English Channel;the Channel;Britannic Ocean;Angla Markolo;Kanalo La Manche
+Q36124	Strait of Gibraltar	Ĝibraltara Markolo	physical_geographic	123	
+Q11769	Bering Strait	Beringa Markolo	physical_geographic	112	Bhering Strait;Ice Curtain;Behring Strait
+Q6514	Dardanelles	Dardaneloj	physical_geographic	107	Dardanelles Strait;Çanakkale Strait;Hellespontos;Hellespont
+Q48359	Strait of Malacca	Malaka Markolo	physical_geographic	105	Strait of Kra;Malacca Strait;Kra Strait
+Q48365	Strait of Magellan	Magelana markolo	physical_geographic	94	Victoria Strait;Strait of Victoria;Magellan Strait
+Q83318	Bab-el-Mandeb	Bab al-Mandab	physical_geographic	91	Bab el-Mandeb Strait;Bab el-Mandeb;Bab El Mandeb;Bab El Mandeb Strait;Mandeb Strait;Gate of Tears
+Q131716	Kattegat	Kategato	physical_geographic	85	t'Schager Rack;Kategat;Cattegat;Categate;Categat;Kattegatt;Kattegat;Kattegatt
+Q165100	Mozambique Channel	Mozambika kanalo	physical_geographic	84	Kanalo de Mozambiko;Mozambika markolo
+Q1695	Skagerrak	Skagerrak	physical_geographic	84	Skager-Rack;Skagerak
+Q127031	Taiwan Strait	Markolo de Tajvano	physical_geographic	83	Taiwan Str.;Strait of Taiwan;Strait of Fujian;Strait of Formosa;Strait of Fokien;Fujian Strait;Fujian Str.;Formosa Strait;Formosa Str.;Fokien Strait;Fokien Str.;Black Ditch
+Q143650	Drake Passage	Drake-pasejo	physical_geographic	80	Hoces Sea;Drake Pass;Markolo de Drake;Maro de Hoces
+Q187890	Strait of Kerch	Kerĉa markolo	physical_geographic	80	Yenikale;Straits of Yenikale;Kerchenskiy Proliv;Kerch Strait;Cimmerian Bosporus;Kertch;Straits of Taman;Kimmerian Bosphorus
+Q1065	United Nations	Unuiĝintaj Nacioj	institutional	332	the UN;the U.N.;United Nations Organization;UNo
+Q458	European Union	Eŭropa Unio	institutional	288	
+Q7184	NATO	NATO	institutional	240	North Atlantic Treaty Organisation;North Atlantic Alliance;NATO Alliance;Nord-Atlantika Traktata Organizaĵo
+Q7817	World Health Organization	Monda Organizaĵo pri Sano	institutional	208	World Health Organization (WHO);World Health Organisation;MOS
+Q7159	African Union	Afrika Unio	institutional	176	Union Africaine;African union;The African Union;UA;AU;AU
+Q7768	Association of Southeast Asian Nations		institutional	166	Association of South-East Asian Nations;Asocio de Sud-Eost-Aziaj Nacioj;Asocio de Sud-Orient-Aziaj Nacioj
+Q7804	International Monetary Fund	Internacia Valuta Fonduso	institutional	158	International Monetary Fund, IMF;IMF;IMF
+Q7825	World Trade Organization	Monda Organizaĵo pri Komerco	institutional	153	
+Q7164	World Bank	Monda Banko	institutional	146	World Bank, WB;The World Bank;WB;MB
+Q7795	Organization of the Petroleum Exporting Countries	OPEL	institutional	143	Organizaĵo de Petrol-Eksportaj Landoj
+Q8908	Council of Europe	Konsilio de Eŭropo	institutional	128	CoE
+Q41550	Organization for Economic Cooperation and Development	Organizaĵo pri Ekonomiaj Kunlaboro kaj Evoluigo	institutional	105	Organisation for Economic Co-operation and Development;OECD;OECD;OEKE;Organizaĵo por Ekonomiaj Kunlaboro kaj Evoluigo;Organizo por Ekonomia Kunlaborado kaj Evoluo;Organizo por ekonomia kunlaboro kaj evoluo
+Q30	United States	Usono	institutional	424	Merica;Murica;the USA;the United States;US of America;US of A;U.S. of America;U. S. A.;U. S.;the US of America;the US of A;the US;the United States of America;the U.S.A.;the U.S. of America;the U.S. of A;the U.S.;the States;Unuiĝintaj Ŝtatoj;Unuiĝintaj Ŝtatoj de Ameriko;Unuiĝintaj Ŝtatoj de Usono;UŜA;Ameriko
+Q43	Turkey	Turkio	institutional	419	Republic of Türkiye;Republic of Turkey;Respubliko Turkio;Turkujo
+Q159	Russia	Rusio	institutional	418	Russian Federation;Federation of Russia;Rusia Federacio;Ruslando;Rusujo
+Q17	Japan	Japanio	institutional	415	Land of the Rising Sun;State of Japan;Nippon-koku;Nihon-koku;Land of Rising Sun;Iapon;Iapan;Japanujo;Nipono
+Q142	France	Francio	institutional	415	French Republic;Franca Respubliko;Francujo;Respubliko Francio
+Q38	Italy	Italio	institutional	406	Republic of Italy;Italian Republic;Itala Respubliko;Italujo;Respubliko Italio;Respubliko Italujo
+Q183	Germany	Germanio	institutional	403	Federal Republic of Germany;Federacia Respubliko Germanio;Germanujo
+Q33	Finland	Finnlando	institutional	401	Suomen tasavalta;Republiken Finland;Republic of Finland;Land of Thousand Lakes;Finnia;Suomi;fi;Finnio;Finnujo;Respubliko Finnlando;Respubliko Suomio;Suomio;Suomujo
+Q668	India	Barato	institutional	400	Republic of India;Indostan;Bharat Ganarajya;Tenjiku;Bharatvarsh;Al Hind;Hindoostan;Tianzhu;Bharata;Hindustan;Bharat;Hindio;Hindujo;Bharato;Hinda Unio
+Q96	Mexico	Meksiko	institutional	398	United States of Mexico;US of M;Mexican United States;Mexican Republic;MXN;mx;United Mexican States;Unuiĝintaj Meksikaj Ŝtatoj
+Q148	People's Republic of China	Ĉinio	institutional	397	The PRC;PR China;P.R.C.;China PR;Communist China;Red China;cn;RPC;China;the People's Republic of China;Ĉina Popola Respubliko;Popola Respubliko Ĉinio;PR Ĉinio;PRĈ
+Q408	Australia	Aŭstralio	institutional	396	'Straya;Nova Hollandia;Straya;New Holland;Commonwealth of Australia;Stria;Oz;Down Under;The Commonwealth of Australia;Stralia;New Hollandia;Aussieland
+Q29	Spain	Hispanio	institutional	395	Kingdom of Spain;Hispanujo;Hispana Ŝtato;Reĝlando Hispanio
+Q16	Canada	Kanado	institutional	394	Can
+Q145	United Kingdom	Unuiĝinta Reĝlando	institutional	393	United Kingdom of Great Britain and Northern Ireland;U K;Great Britain and Northern Ireland;G B;the United Kingdom;the UK;the United Kingdom of Great Britain and Northern Ireland;Great Britain;Britio;Britujo;Unuiĝinta Reĝlando de Granda Britio kaj Nord-Irlando;UR
+Q20	Norway	Norvegio	institutional	392	Kingdom of Norway;Reĝlando Norvegio;Norvegujo
+Q36	Poland	Pollando	institutional	389	Republic of Poland;Polio;Polujo
+Q79	Egypt	Egiptio	institutional	387	Rep. Egypt;Arab Republic of Egypt;Arab Rep. Egypt;Republic of Egypt;Misr;Respubliko Egiptio;Araba Respubliko Egiptio;Araba Respubliko Egiptujo;Egiptujo;Respubliko Egiptujo
+Q212	Ukraine	Ukrainio	institutional	387	Ukraïna;Ukr.;Ukraina;Ukrainia;Ukrainujo
+Q155	Brazil	Brazilo	institutional	385	Federative Republic of Brazil;Br;Federacia Respubliko Brazilo
+Q39	Switzerland	Svislando	institutional	384	Swiss Confederation;Confoederatio Helvetica;Swiss;Konfederacio Svislando;Svisio;Svisujo
+Q222	Albania	Albanio	institutional	384	Shqipërisë;Republika Popullore Socialiste e Shqiperise;Republika Popullore e Shqiperise;People's Socialist Republic of Albania;People's Republic of Albania;Republic of Albania
+Q298	Chile	Ĉilio	institutional	379	Republic of Chile;CHI;Respubliko Ĉilio
+Q41	Greece	Grekio	institutional	376	Hellas, Greece;Greek Republic;Ellada;Hellenic Republic;gr;el;Hellas;Grekujo;Helena Respubliko
+Q801	Israel	Israelo	institutional	376	Yisrael;il;ISR;State of Israel;Ŝtato Israelo
+Q31	Belgium	Belgio	institutional	375	Kingdom of Belgium;Belgujo;Reĝlando Belgio;Reĝlando Belgujo
+Q794	Iran	Irano	institutional	374	Islamic Republic of Iran;Islamic Rep. Iran;ir;IRI;Persia;IR Irano;Islama Respubliko Irano
+Q262	Algeria	Alĝerio	institutional	372	People's Democratic Republic of Algeria;Dzayer;Djazaïr;Popola kaj Demokratia Respubliko Alĝerio
+Q414	Argentina	Argentino	institutional	370	Republica Argentina;Republic of Argentina;Argentine Republic
+Q40	Austria	Aŭstrio	institutional	369	Republic of Austria;Aŭstrujo
+Q45	Portugal	Portugalio	institutional	369	Portuguese Republic;POR;PRT;Portugala Respubliko;Portugalujo
+Q34	Sweden	Svedio	institutional	368	Swedish Kingdom;se;Kingdom of Sweden;Reĝlando Svedio;Svedujo
+Q881	Vietnam	Vjetnamio	institutional	366	Việt Nam;Socialist Republic of Vietnam;Socialist Republic of Viet Nam;VIE;SRV;Viet Nam;VN;VNM;Vjetnamujo
+Q258	South Africa	Sud-Afriko	institutional	365	zaf;Republic of South Africa;R.S.A.;RSA;SA;RSA;Respubliko Sud-Afriko;Respubliko Sudafriko;Sudafriko
+Q739	Colombia	Kolombio	institutional	364	The Republic of Colombia;Republic of Colombia;Colombiá;Respubliko Kolombio
+Q252	Indonesia	Indonezio	institutional	362	Republic of Indonesia;id;Respubliko Indonezio
+Q219	Bulgaria	Bulgario	institutional	360	Republic of Bulgaria;Bulgarian Republic;🇧🇬;Bulgarujo;Respubliko Bulgario
+Q889	Afghanistan	Afganio	institutional	359	Afghaunistaun;Afghaunistan;Afghanisthan;Afghania;Affghaunistan;Affghanisthan;Affghanistan;Afganistano;Afganujo
+Q227	Azerbaijan	Azerbajĝano	institutional	359	Republic of Azerbaijan;Respubliko Azerbajĝano
+Q28	Hungary	Hungario	institutional	356	Hungarujo
+Q184	Belarus	Belorusio	institutional	356	White Ruthenia;Respublika Bielaruś;Respublika Belarus';Republic of Belarus;Byelorussia;Byeloruss;Bielorussia;Bielaruś;Belorussia;White Russia;by;Belarusujo;Belorusujo;by;Respubliko Belorusio
+Q213	Czech Republic	Ĉeĥio	institutional	354	Czechia;Ĉeĥa Respubliko;Ĉeĥujo
+Q224	Croatia	Kroatio	institutional	354	Republic of Croatia;HRV;RH;CRO;HR;HR;HRV;Kroatujo;Respubliko Kroatio
+Q843	Pakistan	Pakistano	institutional	353	Tây Hồi;Hồi Quốc;Republic of Pakistan;Islamic Republic of Pakistan;pk;PAK;Islama Respubliko Pakistano;pk
+Q189	Iceland	Islando	institutional	353	Republic of Iceland;Isl.;Icelandic republic;Ysland;Respubliko Islando
+Q191	Estonia	Estonio	institutional	353	Republic of Estonia;Eesti Vabariik;Estland;ee;Estonujo;Respubliko Estonio
+Q869	Thailand	Tajlando	institutional	352	th;Ratcha-anachak Thai;Prathet Thai;The Kingdom of Thailand;The Kingdom of Siam;Kingdom of Thailand;Kingdom of Siam;Thai;Siamo
+Q37	Lithuania	Litovio	institutional	351	Republic of Lithuania;Litovujo;Respubliko Litovio
+Q884	South Korea	Sud-Koreio	institutional	351	S. Korea;Rep. Korea;Korea Republic;Daehanminguk;Daehan Minguk;Hanguk;Korea (South);Choson;Silla;Republic of Korea;Respubliko Koreio
+Q403	Serbia	Serbio	institutional	350	Republic of Serbia;Respubliko Serbio
+Q399	Armenia	Armenio	institutional	349	Hayastan;Հայաստան;Republic of Armenia;Hayastani Hanrapetut’yun;Respubliko Armenio
+Q1033	Nigeria	Niĝerio	institutional	348	Naija;Federal Republic of Nigeria;Federacia Respubliko Niĝerio
+Q664	New Zealand	Nov-Zelando	institutional	347	Aotearoa New Zealand;Dominion of New Zealand;nz;Dominio Nov-Zelando;Aotearoo;Novzelando
+Q796	Iraq	Irako	institutional	347	iq;Republic of Iraq;Respubliko Irako
+Q232	Kazakhstan	Kazaĥio	institutional	347	Republic of Qazaqstan;Republic of Kazakhstan;Qazaqstan;kz;Kazaĥstano;Kazaĥujo;kz;Respubliko Kazaĥio
+Q851	Saudi Arabia	Sauda Arabio	institutional	346	KSA;Saudi;Kingdom of Saudi Arabia;Reĝlando Saud-Arabio;Saud-Arabio;Sauda Arabujo;Saudarabio;Reĝlando Saud-Arabujo;Saud-Arabujo;Saudarabujo
+Q218	Romania	Rumanio	institutional	346	România;Rumania;ro;Roumania
+Q115	Ethiopia	Etiopio	institutional	345	Federal Democratic Republic of Ethiopia;et;et;Federacia Demokratia Respubliko Etiopio
+Q230	Georgia	Kartvelio	institutional	344	Republic of Georgia;Sakartvelo;Georgia (country);Georgia (Sakartvelo);Respubliko Kartvelio
+Q902	Bangladesh	Bangladeŝo	institutional	343	Bangla Desh;bd;People's Republic of Bangladesh;Land of Bengal;Country of Bengal;Popola Respubliko Bangladeŝo
+Q717	Venezuela	Venezuelo	institutional	341	BR Venezuela;Bolivarian Republic of Venezuela;Republic of Venezuela;Bolivara Respubliko Venezuelo
+Q225	Bosnia and Herzegovina	Bosnio kaj Hercegovino	institutional	341	Bosnia-Herzegovina;Bosnia and Hercegovina;Bosnia & Herzegovina;ba;🇧🇦;BH;Bosnio-Hercegovino
+Q27	Ireland	Irlando	institutional	340	Irish Republic;Southern Ireland;Hibernia;Ejro;Respubliko Irlando
+Q833	Malaysia	Malajzio	institutional	338	Malaysia Federation;Federation of Malaysia;MAS;MAS;MYS;Federacio Malajzio;Malajzia Federacio;MY;🇲🇾
+Q214	Slovakia	Slovakio	institutional	338	Slovak Republic;SK;SVK;Respubliko Slovakio;SK;🇸🇰;Slovaka respubliko;Slovakujo;SVK
+Q237	Vatican City	Vatikano	institutional	338	Status Civitatis Vaticanae;Stato della Città del Vaticano;State of Vatican City;Città del Vaticano;Papal State;Holy See;The Vatican;Vatican;Vatican City State;Vatikanurbo
+Q211	Latvia	Latvio	institutional	335	Republic of Latvia;Leţmо̄ Vabāmо̄;Leţmо̄;Latvijas Republika;Latvija;Latvian Republic;Latvejas Republika;Latveja;lv;Latvujo;Respubliko Latvio
+Q32	Luxembourg	Luksemburgo	institutional	334	Grand Duchy of Luxembourg;grandduklando Luksemburgio;grandduklando Luksemburgo;lando Luksemburgo
+Q114	Kenya	Kenjo	institutional	334	Republic of Kenya;ke;Respubliko Kenjo
+Q858	Syria	Sirio	institutional	334	Syrian Arab Republic;Surya;Araba Respubliko Sirio
+Q419	Peru	Peruo	institutional	332	Republica del Peru;Republic of Peru;pe;per;Respubliko Peruo
+Q1049	Sudan	Sudano	institutional	332	Soudan;sd;Republic of the Sudan;Republic of Sudan;North Sudan;as-Sūdān;as-Sudan;al-Sudan;the Sudan;SUD;Nord-Sudano;Respubliko Sudano;SD
+Q215	Slovenia	Slovenio	institutional	331	slo;Republic of Slovenia;Slovenija;svn;si;Respubliko Slovenio;Respubliko Slovenujo;Slovenujo
+Q928	Philippines	Filipinoj	institutional	331	The Philippines;Philippine Islands;Republic of the Philippines;RP;Respubliko Filipinoj
+Q974	Democratic Republic of the Congo	Demokratia Respubliko Kongo	institutional	331	cd;COD;D.R.C.;DRC;DR Congo;Democratic Republic of Congo;Dem. Republic of the Congo;Dem. Republic of Congo;Dem. Rep. Congo;Congo (Kinshasa);Kongo-Kinŝaso;DRK
+Q1016	Libya	Libio	institutional	331	State of Libya;LBA;ly;LY;Ŝtato Libio
+Q1028	Morocco	Maroko	institutional	331	Marocco;Maroc;Lmaġrib;Kingdom of Morocco;al-Maġrib;Reĝlando Maroko
+Q228	Andorra	Andoro	institutional	330	Principality of the Valleys of Andorra;Principality of Andorra;Princlando Andoro
+Q424	Cambodia	Kamboĝo	institutional	329	Kampuchea;Kambodzha;Campuchia;Camboya;kh;Kingdom of Cambodia;Kamboja;Reĝlando Kamboĝo
+Q217	Moldova	Moldavio	institutional	329	Republica Moldova;Republic of Moldova;Moldavia;Moldava Respubliko;Respubliko Moldavio
+Q334	Singapore	Singapuro	institutional	328	S'pore;Republic of Singapore;Singapore City;Lion City;SGP;sg;SIN;SG;Garden City;Ĝardenurbo;SG;Leonurbo;Respubliko Singapuro;sg
+Q822	Lebanon	Libano	institutional	328	State of Lebanon;Republic of Lebanon;Lubnan;Lebanese Republic;lb;Libana Respubliko;Respubliko Libano
+Q948	Tunisia	Tunizio	institutional	327	Tunisian Republic;Republic of Tunisia;tn;Respubliko Tunizio
+Q233	Malta	Malto	institutional	326	Republic of Malta;Respubliko Malto
+Q221	North Macedonia	Nord-Makedonio	institutional	325	Republic of North Macedonia;Republic of Macedonia;FYROM;FYR Macedonia;Former Yugoslav Republic of Macedonia;Macedonia;Eks-Jugoslavia Respubliko Makedonio;mk;Nord-Makedonujo;Respubliko Makedonio;Respubliko Nord-Makedonio
+Q117	Ghana	Ganao	institutional	322	gh;Republic of Ghana;Respubliko Ganao
+Q229	Cyprus	Kipro	institutional	322	Greek Cypriot State;Greek Administration of Southern Cyprus;Republic of Cyprus;Respubliko Kipro
+Q236	Montenegro	Montenegro	institutional	322	ME;Nigramonto
+Q1045	Somalia	Somalio	institutional	322	Federal Republic of Somalia;Federacia Respubliko Somalio;SO;Somalujo
+Q77	Uruguay	Urugvajo	institutional	321	Oriental Republic of Uruguay;Eastern Republic of Uruguay;URU;uy;Orienta Respubliko Urugvajo
+Q837	Nepal	Nepalo	institutional	321	Ni-po-lo;Nercerri;Nepaul;Nepall;Népál;Nepál;Népaal;Nekpal;Nei-pal;Nehpal;Necbal;Ne-pel;Naipála;Naipala;Naipál;Federal Democratic Republic of Nepal;Balpo-yul;Balpo;Bal-yul;Bal-po'i yul;Bal-bo;Nekbal;Balbo;Palpa;Palpou;Paï-pou;Pai-pou;Pa-lo-pou;Pa-le-pou;Pa-eul-pou;Nipal;Niepal;Ni-po-louo;Federacia Demokratia Respubliko Nepalo
+Q916	Angola	Angolo	institutional	321	Republic of Angola;ao;Ngola;Respubliko Angolo
+Q235	Monaco	Monako	institutional	320	Principauté de Monaco;Prinçipatu de Mùnegu;Principatu de Mu̍negu;Principato di Monaco;Principality of Monaco;Principality and Diocese of Monaco;Mùnegu;Fort-Hercule;mc;Princlando Monako
+Q954	Zimbabwe	Zimbabvo	institutional	319	Republic of Zimbabwe;Zimbabwe Rhodesia;Southern Rhodesia;Rhodesia;Respubliko Zimbabvo
+Q1019	Madagascar	Madagaskaro	institutional	319	Republic of Madagascar;mg;Malagaskar;Malagascar;Respubliko Madagaskaro
+Q711	Mongolia	Mongolio	institutional	318	State of Mongolia;Mongol State;MN;Mongolujo;Ŝtato Mongolio;Ŝtato Mongolujo
+Q924	Tanzania	Tanzanio	institutional	317	United Republic of Tanganyika and Zanzibar;tza;tz;Tanzania, United Republic of;United Republic of Tanzania
+Q813	Kyrgyzstan	Kirgizio	institutional	316	Kyrgyz Republic;kg;Kirgizistano;Kirgizujo
+Q657	Chad	Ĉado	institutional	315	Republic of Chad;td;CHA;GUM;Ĉadio;Respubliko Ĉadio
+Q836	Myanmar	Birmo	institutional	315	Republic of the Union of Myanmar;Union of Burma;Burma;Unio Birmo;Mjamao;Respubliko Unio Birmo
+Q878	United Arab Emirates	Unuiĝintaj Arabaj Emirlandoj	institutional	315	U.A.E.;the UAE;the U.A.E.;the Emirates;the United Arab Emirates;ae;Emirates;Arabaj Emirlandoj;Emirlandoj;la Emirlandoj
+Q1030	Namibia	Namibio	institutional	315	Republic of Namibia;na;Respubliko Namibio
+Q347	Liechtenstein	Liĥtenŝtejno	institutional	315	Principality of Liechtenstein;FL;li
+Q736	Ecuador	Ekvadoro	institutional	314	Republic of Equator;The Ecuadorian State;Republic of the Equator;Republic of Ecuador;Respubliko Ekvadoro
+Q810	Jordan	Jordanio	institutional	313	State of Jordan;Kingdom of Jordan;ISO 3166-1:JO;Hashemite Kingdom of Jordan;Giordania;Yarden;HKJ;Reĝlando Jordanio
+Q819	Laos	Laoso	institutional	313	Lao People's Democratic Republic;Lao PDR;LAO;la;LA;Laŭio;Laŭujo;Popola Demokratia Respubliko Laoso
+Q865	Taiwan	Tajvano	institutional	313	Chinese Republic;China, Republic of;The ROC;Chunghwa Minkwo;Chunghwa Minkuo;Taiwan ROC;Free China;Nationalist China;Republic of China;TW;Republic of China (Taiwan);Formosa;TWN;Chinese Taipei;ROC;TPE;Respubliko Ĉinio
+Q963	Botswana	Bocvano	institutional	313	Republic of Botswana;Lefatshe la Botswana;bw;Respubliko Bocvano
+Q1009	Cameroon	Kameruno	institutional	313	Republic of Cameroon;Kamerunio;Respubliko Kamerunio;Respubliko Kameruno
+Q805	Yemen	Jemeno	institutional	312	Republic of Yemen;Rep. Yemen;ye;Respubliko Jemeno;ye;🇾🇪
+Q238	San Marino	San-Marino	institutional	312	Most Serene Republic of San Marino;sm;Plej Serena Respubliko San-Marino;Sanmarino
+Q912	Mali	Malio	institutional	312	Republic of Mali;ml
+Q750	Bolivia	Bolivio	institutional	311	Republic of Bolivia;Plurinational State of Bolivia;Bolivia (Plurinational State of);Plurnacia Ŝtato Bolivio;Respubliko Bolivio
+Q1036	Uganda	Ugando	institutional	311	Ugandah;ug;The Republic of Uganda;Republic of Uganda;Pearl of Africa;Ouganda;+256;Respubliko Ugando
+Q1008	Ivory Coast	Ebur-Bordo	institutional	310	The Ivory Coast;Republic of the Ivory Coast;Republic of Ivory Coast;Republic of Côte d'Ivoire;Republic of Cote d'Ivoire;Côte-d'Ivoire;Cote-d'Ivoire;Cote Ivoire;Côte d’Ivoire;Cote d'lvoire;Cote d'Ivoire;CIV;ci;Côte d'Ivoire;Eburbordo;Respubliko Ebur-Bordo
+Q423	North Korea	Nord-Koreio	institutional	309	N. Korea;DPRK;Democratic People's Republic of Korea;kp;DPR Korea;Dem. Pop. Resp. Koreio;Demokratia Popola Respubliko Koreio;DPRK;N. Koreio
+Q241	Cuba	Kubo	institutional	309	cu;Republic of Cuba;🇨🇺;Respubliko Kubo
+Q733	Paraguay	Paragvajo	institutional	308	Republic of Paraguay;Heart of South America;Respubliko Paragvajo
+Q265	Uzbekistan	Uzbekio	institutional	307	Republic of Uzbekistan;Uzbekistano;Uzbekujo
+Q854	Sri Lanka	Srilanko	institutional	307	lke;lk;Lanka, Sri;Democratic Socialist Republic of Sri Lanka;Srilanka;sri;Taprobane;Serendib;ce;Ceylan;SRI;Demokratia Socialisma Respubliko Srilanko
+Q965	Burkina Faso	Burkino	institutional	307	Republic of Upper Volta (-1984);Republic of Burkina Faso;bf;BF
+Q986	Eritrea	Eritreo	institutional	307	State of Eritrea;Iritriyā;Ertrā;er;Ŝtato Eritreo
+Q953	Zambia	Zambio	institutional	306	Republic of Zambia;zm;ZAM;Zed;Respubliko Zambio;ZM
+Q962	Benin	Benino	institutional	306	BEN;Republic of Benin;BJ;Dahomey;Respubliko Benino;BJ
+Q1041	Senegal	Senegalo	institutional	306	Republic of Senegal;Respubliko Senegalo;Senegalio
+Q863	Tajikistan	Taĝikio	institutional	305	tj;Republic of Tajikistan;Respubliko Taĝikio;Taĝikistano
+Q817	Kuwait	Kuvajto	institutional	304	State of Kuwait;kw;Ŝtato Kuvajto
+Q1025	Mauritania	Maŭritanio	institutional	304	Murutaane;Muritanya;mr;Moritani;Mauretania;Islamic Republic of Mauritania;Gànnaar;Gannaar;Agawej;Islama Respubliko Maŭritanio
+Q1037	Rwanda	Ruando	institutional	303	The Land of a Thousand Hills;Republic of Rwanda;Respubliko Ruando;RW
+Q398	Bahrain	Barejno	institutional	302	Mamlakat al-Baḥrayn;Kingdom of Bahrain;ISO 3166-1:BH;Dawlat al-Bahrain;Bahrein Islands;bh;Reĝlando Barejno
+Q917	Bhutan	Butano	institutional	302	Kingdom of Bhutan;BHU;bt;Reĝlando Butano
+Q1032	Niger	Niĝero	institutional	302	The Niger;Republic of the Niger;Republic of Niger;Republic Niger;ne;Niĝerlando;Respubliko Niĝerlando
+Q945	Togo	Togolando	institutional	301	Togolese Republic;tg;Togo;Respubliko Togolanda;Respubliko Togolo;Togolo
+Q1029	Mozambique	Mozambiko	institutional	301	República de Moçambique;Republic of Mozambique;MZ;mz;MOZ;Moçambique;MZ;Respubliko Mozambiko
+Q800	Costa Rica	Kostariko	institutional	300	Republic of Costa Rica;cr;Respubliko Kostariko
+Q804	Panama	Panamo	institutional	300	pa;Republic of Panama;PA;Respubliko Panamo
+Q929	Central African Republic	Centr-Afrika Respubliko	institutional	300	cf;Central Africa;Centr-Afriko;Centrafrika Respubliko;Centrafriko;Respubliko Centrafriko
+Q967	Burundi	Burundo	institutional	300	Republika y'Uburundi;Republic of Burundi;Gouvernement du Burundi;bi;Respubliko Burundo
+Q971	Republic of the Congo	Respubliko Kongo	institutional	300	République du Congo;Republique du Congo;Republic of Congo;Rep. Congo;Congo-Brazzaville;Congo Republic;Congo (Brazzaville);cg;CGO;Congo;Kongo Brazavila;CG;Kongo (Brazavila);Kongo-Brazavilo;Resp. Kongo
+Q1006	Guinea	Gvineo	institutional	300	Republic of Guinea;Guinea-Conakry;GUI;gn;Gvineo-Konakrio;Respubliko Gvineo
+Q1005	The Gambia	Gambio	institutional	299	Republic of the Gambia;Islamic Republic of the Gambia;Gambia;Islama Respubliko Gambio
+Q874	Turkmenistan	Turkmenio	institutional	297	TKM;Turkmenia;tm;Turkmenistano;Turkmenujo
+Q921	Brunei	Brunejo	institutional	297	Negara Brunei Darussalam;Nation of Brunei, the Abode of Peace;Brunei Darussalam;BRU;BRN;bn;Lando Brunejo, la Pacejo
+Q977	Djibouti	Ĝibutio	institutional	297	Republic of Djibouti;Jībūtī;Gabuuti;Jabuuti;dj;Respubliko Ĝibutio
+Q1007	Guinea-Bissau	Gvineo-Bisaŭo	institutional	297	Republic of Guinea-Bissau;gw;GBS;Gvineo Bisaŭa;Respubliko Gvineo-Bisaŭo
+Q842	Oman	Omano	institutional	295	Uman;Sultanate of Oman;omn;om;Sultanlando Omano;🇴🇲;OMA
+Q1020	Malawi	Malavio	institutional	295	Republic of Malawi;mw;MAW;MW;Respubliko Malavio
+Q783	Honduras	Honduro	institutional	294	Republic of Honduras;Honduran Republic;hn;HN;HND;HON;HN;Respubliko Honduro
+Q1000	Gabon	Gabono	institutional	294	République Gabonaise;Republique Gabonaise;Gabonese Republic;GAB;ga;GA;Gabona Respubliko;Respubliko Gabon;Respubliko Gabono
+Q1014	Liberia	Liberio	institutional	291	Republic of Liberia;lr;Liber;Respubliko Liberio
+Q1044	Sierra Leone	Sieraleono	institutional	291	SLE;sl;Republic of Sierra Leone;Respubliko Sieraleono;SL
+Q574	Timor-Leste	Orienta Timoro	institutional	289	Democratic Republic of Timor-Leste;TL;East Timor;TL;Demokratia Respubliko Orienta Timoro;Orient-Timoro
+Q790	Haiti	Haitio	institutional	289	Republic of Haiti;Haitian Republic;Ayiti;HAI;ht;Hayti;Respubliko Haitio
+Q826	Maldives	Maldivoj	institutional	287	Republic of Maldives;mv;MDV;MV;Respubliko de Maldivoj
+Q1011	Cape Verde	Kaboverdo	institutional	287	Republic of Cape Verde;Republic of Cabo Verde;Cape Verde Islands;🇨🇻;Kabo Verda;Kabo-Verda;Respubliko Kaboverdo;Verda Kabo;Verdakaba Respubliko
+Q730	Suriname	Surinamo	institutional	286	Surrinam;Republic of Suriname;Republic of Surinam;Dutch Guiana;Surinam;sr;Respubliko Surinamo
+Q792	El Salvador	Salvadoro	institutional	286	sv;ESA;Salvador;Republic of El Salvador;Respubliko Salvadoro
+Q846	Qatar	Kataro	institutional	286	State of Qatar;qa;qat;Ŝtato Kataro
+Q1050	Eswatini	Svazilando	institutional	286	Umbuso weSwatini;sz;Kingdom of Swaziland;Kingdom of Eswatini;eSwatini;Swaziland;Reĝlando Svazilando
+Q691	Papua New Guinea	Papuo-Nov-Gvineo	institutional	285	Independent State of Papua New Guinea;pg;PNG;PNG;Papu-Nov-Gvineo;pg;Sendependa Ŝtato Papu-Nov-Gvineo
+Q734	Guyana	Gujano	institutional	285	Republic of Guyana;Co-operative Republic of Guyana;gy;Koopera Respubliko Gujano;Respubliko Gujano
+Q983	Equatorial Guinea	Ekvatora Gvineo	institutional	283	Republic of Equatorial Guinea;gq;GEQ;Ekvator-Gvineo;Ekvatorgvineo;Respubliko Ekvatora Gvineo
+Q958	South Sudan	Sud-Sudano	institutional	281	Republic of South Sudan;Southern Sudan;SSD;ss;Respubliko Sud-Sudano
+Q970	Comoros	Komoroj	institutional	281	km;the Comoros;Union of the Comoros;Union des Comores;Udzima wa Komori;ouvoimoja wakomori;Massiwa ya komori;Juzur al-Qumur;Juzur al-Qamar;al-Ittiḥād al-Qumurī;Unio de Komoroj
+Q1246	Kosovo	Kosovo	institutional	281	XKX;RKS;Republic of Kosovo;Kosova;KV;XK;KOS;Respubliko Kosovo
+Q1027	Mauritius	Maŭricio	institutional	281	Republic of Mauritius;Moris;MU;MRI;Maurice
+Q774	Guatemala	Gvatemalo	institutional	280	Republic of Guatemala;gt;GTM;GT;GT;Respubliko Gvatemalo
+Q786	Dominican Republic	Dominika Respubliko	institutional	280	República Dominicana;Republica Dominicana;DomRep;Dominicana;RD;Domingo;Respubliko Domingo
+Q766	Jamaica	Jamajko	institutional	280	Commonwealth of Jamaica;JA
+Q811	Nicaragua	Nikaragvo	institutional	279	Republic of Nicaragua;ni;NIC;NI;NCA;NI;Respubliko Nikaragvo
+Q1013	Lesotho	Lesoto	institutional	279	The Mountain Kingdom;LES;Kingdom of Lesotho;ls;LS;Reĝlando Lesoto
+Q242	Belize	Belizo	institutional	279	bz
+Q712	Fiji	Fiĝioj	institutional	278	Republic of the Fiji Islands;Republic of Fiji;Matanitu Tugalala o Viti;Fijī Gaṇarājya;Fijī;fj;Viti
+Q778	The Bahamas	Bahamoj	institutional	278	Bahamas, The;Commonwealth of The Bahamas;Commonwealth of the Bahamas;Bahama Islands;bs;Bahamas
+Q1042	Seychelles	Sejŝeloj	institutional	276	SEY;sc;Republic of Seychelles;Respubliko de Sejŝeloj
+Q244	Barbados	Barbado	institutional	275	bb;Barbadoes;BAR
+Q1039	São Tomé and Príncipe	Santomeo kaj Principeo	institutional	271	st;São Tomé og Príncipe;Sao Tome & Principe;Democratic Republic of São Tomé and Príncipe;Sao Tome and Principe;Demokratia Respubliko Sao-Tomeo kaj Principeo
+Q781	Antigua and Barbuda	Antigvo kaj Barbudo	institutional	266	Antigua–Barbuda;Antigua & Barbuda;Antigua-Barbuda
+Q686	Vanuatu	Vanuatuo	institutional	263	vut;Republic of Vanuatu;vu;VAN;van;Respubliko Vanuatuo
+Q697	Nauru	Nauro	institutional	263	Republic of Nauru;Naoero;nr;Pleasant Island;NR;Respubliko Nauro
+Q784	Dominica	Dominiko	institutional	263	Wai‘tu kubuli;Wai'tu kubuli;The Commonwealth of Dominica;Island of Dominica;Commonwealth of Dominica;dm;DOM
+Q683	Samoa	Samoo	institutional	260	Independent State of Samoa;Western Samoa;SAM;ws;WS;Okcidenta Samoo;Sendependa Ŝtato Samoo
+Q678	Tonga	Tongo	institutional	259	Friendly Islands;Tonga Islands;Kingdom of Tonga;TGA;to;Reĝlando Tongo
+Q695	Palau	Palaŭo	institutional	257	Republic of Palau;Republic of Belau;Pelew islands;Pelew;Peeloo;Pellew;pw;Belau;PW;Respubliko Palaŭo
+Q672	Tuvalu	Tuvalo	institutional	250	Ellice Islands;TUV;tv;TV
+Q769	Grenada	Grenado	institutional	249	gd;GRN;GRN
+Q754	Trinidad and Tobago	Trinidado kaj Tobago	institutional	248	Trinidad & Tobago;tt;Republic of Trinidad and Tobago;TRI;TTO;TT;Respubliko de Trinidado kaj Tobago;Trinidado-Tobago
+Q710	Kiribati	Kiribato	institutional	247	Republic of Kiribati;ki;Respubliko Kiribato
+Q685	Solomon Islands	Salomonoj	institutional	245	sb;SOL;the Solomon Islands;SB
+Q763	Saint Kitts and Nevis	Sankta-Kito kaj Neviso	institutional	238	St. Kitts and Nevis;St. Kitts & Nevis;St Kitts and Nevis;St Kitts & Nevis;Saint Christopher and Nevis;Kitts and Nevis;Kitts & Nevis;Federation of Saint Kitts and Nevis;Federation of Saint Christopher and Nevis;SKN
+Q757	Saint Vincent and the Grenadines	Sankta Vincento kaj la Grenadinoj	institutional	237	vct;St. Vincent and the Grenadines;St Vincent and the Grenadines;vc;Saint Vincent;St Vincent;St. Vincent;VC
+Q709	Marshall Islands	Marŝala Insularo	institutional	236	Republic of the Marshall Islands;mh;Respubliko de Marŝalaj Insuloj;Respubliko Marŝala Insularo
+Q760	Saint Lucia	Sankta Lucio	institutional	234	lc;Iyonola;Hewanorra;lca;St. Lucia;St Lucia
+Q702	Federated States of Micronesia	Federacio de Mikronezio	institutional	222	Federated States of Micronesia, FSM;Fed. Sts. of Micronesia;Fed. Sts. Micronesia;fm;FSM;Micronesia;Mikronezio;Federacio Mikronezio;FM
+Q219060	Palestine	Palestino	institutional	222	Palestinian National Authority;Palestinian Authority;PSE;State of Palestine;Ŝtato Palestino
+Q34266	Russian Empire	Rusia Imperio	institutional	154	Tsarist Russia;Russia;Russia or Moscovy;Moscovy or Russia;Moscovy;Imperial Russia;Empire of Russia;Rossia;Rusia;Rusia Regno;Rusuja Imperio;Cara Rusio;Imperia Rusio;La Rusa Imperio;Rusa imperio
+Q29999	Kingdom of the Netherlands	Reĝlando de Nederlando	institutional	107	Kingdom of Netherlands;Nederlanden;the Netherlands;Netherlands
+Q756617	Kingdom of Denmark	Reĝlando Danio	institutional	54	Danish Commonwealth;Realm of Denmark;Kunngeqarfik Danmarki;Kongsríki Danmarkar;Kongeriget Danmark;Danmarks Rige;Danmarkip Naalagaaffik;Danmarkar Ríki;Danish Realm;Denmark
+Q105646554	Tschardakenhof		institutional	2	
+Q84	London	Londono	settlement	353	the Big Smoke;Lundenwic;Lundenburh;Lundenburgh;Loniniensi;London, UK;London UK;London U.K.;Londinion;Londiniensium;Londini;Loñ.;Lon.;Loñ;Llyn Dain;Llan Dian;Karelundein;Kaerlud;London, United Kingdom;Londinio;Lond.;London, England;Big Smoke;Trinovantum;Londinium;LDN;Lunden;Augusta
+Q334	Singapore	Singapuro	settlement	328	SGP;sg;SIN;SG;Garden City;S'pore;Republic of Singapore;Singapore City;Lion City;Ĝardenurbo;SG;Leonurbo;Respubliko Singapuro;sg
+Q60	New York City	Nov-Jorko	settlement	322	the five boroughs;The City So Nice They Named It Twice;NY, NY;New York, New York, USA;New York City, USA;New York City, United States of America;New York City, United States;New York City, NY;New York City, New York, United States;New York City (NYC);New York (NY);N. Y., N. Y.;city of New York;Caput Mundi;Capital of the World;New York City, New York;New York, N.Y.;New York (city);NY City;New York, NY;Center of the Universe;Empire City;City of New York;La Granda Pomo;Gotham;La urbo, kiu neniam dormas;Novjorko
+Q956	Beijing	Pekino	settlement	305	Yanking;Yan-ching;Shuntianfu;Shun-tien;Poh-cin;Pei-ping;Pei-ching;Pe-king;Pak-kiann;Chung-tu;Beeijing;Bākgīng;Shuntian Fu;Chungtu;Peiping;Peip'ing;Pei-p'ing;Beijing Shi;Shuntian;Jicheng;Yanjing;Beiping;Zhongdu;Shun-t'ien;Pekin;Ji;Khanbaliq;Khanbalik;Chi;BJ;Peking Shi;Bei Jing Shi;Chi-cheng;Chi-ch’êng;Chi-ch'eng
+Q8646	Hong Kong	Honkongo	settlement	299	Hong Kong Special Administrative Region of the People's Republic of China;Hong Kong Special Administrative Region;Hong Kong SAR, China;Hong Kong SAR;HKSAR;Hongkong;Hong Kong, China;HK;HKSAR;Hongkongo
+Q1218	Jerusalem	Jerusalemo	settlement	296	J'lem;Aelia Capitolina;Mint of Aelia Capitolina;Jeruŝalajim;Urŝalim al-Quds
+Q1757	Helsinki	Helsinko	settlement	291	Stadi;Helsingin kaupunki;Helsingia;Hesa;Helsingfors
+Q270	Warsaw	Varsovio	settlement	287	Varŝavo
+Q43387	Edirne	Edirne	settlement	284	Edirne City;Adrianopolis;Hadrianopolis;Adrianopolo;Andrianopolo
+Q727	Amsterdam	Amsterdamo	settlement	280	Amsterdam, North Holland;Amsterdam, NL;A'dam;Amsterdam, Netherlands;Mokum
+Q19689	Tirana	Tirano	settlement	279	Tiranë;Tirana;Tiranë
+Q1754	Stockholm	Stokholmo	settlement	275	STHLM;Sthlm
+Q1861	Bangkok	Bankoko	settlement	260	Sia-Yut'hia;Krungthepmahanakhon Amonrattanakosin Mahintharayutthaya Mahadilokphop Noppharatratchathaniburirom Udomratchaniwetmahasathan Amonphimanawatansathit Sakkathattiyawitsanukamprasit;Krung Thep Maha Nakhon;Krung Thep;Bangkok, Thailand;Bangkoko
+Q3130	Sydney	Sidnejo	settlement	260	Gadigal;Sydney, New South Wales, Australia;Emerald City;Greater Sydney;Gadi;Sydney, New South Wales;Eora;Port Jackson;Warrane;Sydney, NSW, Australia;Sydney, NSW;Sydney, N.S.W.;Sydney, N. S. W.;Sydney, Australia;Harbour City
+Q1854	Ho Chi Minh City	Ho-Ĉi-Min-urbo	settlement	256	HCM City;Thành-Phô Hồ Chí Minh;Thành Phố Hồ Chí Minh;Saïgon;Sai Gon;Prey Nokor;Hôchiminh Ville;Ho Chi Minh;HCMC;Gia Định;Saigon;Sài Gòn
+Q1489	Mexico City	Meksikurbo	settlement	255	Mexico D.F.;Mexico City, Mexico;City of Mexico;Mexico;Meksik-urbo
+Q174	São Paulo	San-Paŭlo	settlement	253	City of São Paulo;St. Paul;Saint Paul;Sanpaŭlurbo
+Q8684	Seoul	Seulo	settlement	252	Sŏul T'ŭkpyŏlsi;Seoul Special City;Namgyeong;Keijou;Hanseong;Wiryeseong;Keijō;Gyeongseong;Hanyang
+Q1492	Barcelona	Barcelono	settlement	245	City of Barcelona;Barcelona, Catalonia;Barcelona City;B'na;Barcelona, Spain
+Q1748	Copenhagen	Kopenhago	settlement	243	Kbh.;Köbenhavn;Kobenhavn;Hafn;Copenhagen, Denmark;KBH;København;CPH;Kopenhagen
+Q3766	Damascus	Damasko	settlement	240	Sham city;Jasmine city;Mint of Damascus
+Q3640	Ankara	Ankaro	settlement	238	
+Q3711	Belgrade	Beogrado	settlement	228	City of Belgrade;Belgrade, Serbia;Belgrado
+Q216	Vilnius	Vilno	settlement	228	Vilno;Viĺnia;Vilnė;Viļņa;Vilnia;Vilnyus;Wilna;Wilno;Vilna;Vilnius
+Q641	Venice	Venecio	settlement	227	Venexia;Serenissima;Venice, Italy;Venetia
+Q1156	Mumbai	Mumbajo	settlement	225	Bombay;Bombajo
+Q490	Milan	Milano	settlement	225	Milano, Italy;Milan, Lombardy;Milan, Italy;Mailand
+Q994	Tbilisi	Tbiliso	settlement	225	Tpilissi;Tpilisi;Tbilissi;Tbilisi, Georgia;Tiflis
+Q1780	Bratislava	Bratislavo	settlement	224	Presburg
+Q172	Toronto	Toronto	settlement	222	Toronto, Ontario;Toronto, ON;Toronto, Canada;The 416;T-O;City of Toronto;Hogtown;The Six;La 416
+Q1410	Gibraltar	Ĝibraltaro	settlement	222	Gib;gi;The Rock of Gibraltar
+Q1354	Dhaka	Dako	settlement	220	Dhaka City;Dacca
+Q5838	Kabul	Kabulo	settlement	220	Kaboul;Caubul;Cabool;Cabul;Kabol
+Q612	Dubai	Dubajo	settlement	219	Dubai, UAE;Dubai, Emirate of Dubai;Dubai city;Dubai (city);Dubai, United Arab Emirates;Dubajurbo
+Q2868	Lima	Limo	settlement	219	City of the Kings
+Q1533	Caracas	Karakaso	settlement	216	Santiago de León de Caracas;CCS;Carracas;Karako;Santiago de Leono de Karakaso
+Q11194	Sarajevo	Sarajevo	settlement	216	City of Sarajevo;Bosna-Serai
+Q1764	Reykjavík	Rejkjaviko	settlement	215	Reykjavíkurborg;Reykjavikurborg;Reykjavik
+Q3561	Algiers	Alĝero	settlement	214	
+Q1865	Kuala Lumpur	Kuala-Lumpuro	settlement	213	K.L.;Federal Territory of Kuala Lumpur;KL
+Q3114	Canberra	Kanbero	settlement	212	Canberra, Australian Capital Territory;Canberra, Australia
+Q3141	Melbourne	Melburno	settlement	207	Narrm;Melbs;Melbourne, Victoria, Australia;Melbourne, Victoria;Melbourne, VIC, Australia;Melbourne, VIC;Melbourne, Australia;Melbourne, AUS;Greater Melbourne;Naarm
+Q70	Bern	Berno	settlement	205	city of Bern;Berna;Berne;Bern
+Q2634	Naples	Napolo	settlement	205	Neapolis
+Q437	Ljubljana	Ljubljano	settlement	203	Lublana;Labacum;Ljubljana, Slovenia
+Q3624	Addis Ababa	Adis-Abebo	settlement	200	Finfinne;Addis Abäba;Addis Abeba;Adisabebo
+Q1563	Havana	Havano	settlement	198	La Habana;Havana, Cuba;Habana
+Q3761	Accra	Akrao	settlement	197	Akro
+Q3787	Abuja	Abuĝo	settlement	197	Federal Capital Territory;ABV;FCT;ABJ
+Q18808	Pyongyang	Pjongjango	settlement	197	Pyeongyang;P’yŏng-yang;Capital of Revolution;Ryugyong
+Q1867	Taipei	Tajpeo	settlement	195	Thoipet;Thòi-pet;Tâi-pak;Taipak;The City of Azaleas;Tanshoui;Taipei City;Taibei;Tai Pei;City of Taipei;Taihoku
+Q3037	Kathmandu	Katmanduo	settlement	194	Khatmandu;Katmandou;Katmandir;Kathmandu Metropolitan City;Káthmándú;Kasthamandap;Kadmendu;City of Temples;Catmeduour;Catmandir;Cadmendu;Kantipur;Yambu;Katmandu;Yen;Kathmandu Valley
+Q21197	Chișinău	Kiŝinevo	settlement	193	Kyshyniv;Kiszyniów;Kišinìv;Kişinev;Kishinëv;Kishinef;Kiscinev;Kischiniov;Khisinau;Keshinov;Chisinau;Kishinev;Kischinew;Chişinău;Keshenev;Chisnau;Chisinau;Chişinău;Chișinău
+Q3805	Amman	Amano	settlement	193	ʿAmmān;Mint of Philadelphia;Amman, Jordan;Aman;Ammon;Philadelphia
+Q269	Tashkent	Taŝkento	settlement	192	Toshkent;Tashkand;Shash;Choch;Binkath;Shosh;Chach
+Q23436	Edinburgh	Edinburgo	settlement	192	Edinburgh, Scotland;Athens of the North;City of Edinburgh;Modern Athens;Auld Reekie;Edina
+Q33935	Tel Aviv	Tel-Avivo	settlement	191	Tel-Aviv Yafo;Tel-Aviv Jaffa;Tel-Aviv;Tel-aviv;Tel Aviv, Israel;Tel Aviv-Yaffo;Tel Aviv-Jafo;Tel Aviv-Jaffa;Tel Aviv Jaffa;Tel Aviv City;Tel aviv;TLV;Tel Aviv-Yafo;Tel Aviv;Tel Avivo;Tel-Aviv;Telavivo
+Q196163	Łobez	Łobez	settlement	190	Lobez;Labes;Labes;Lobez
+Q1863	Andorra la Vella	Andoro Malnova	settlement	190	
+Q8673	Lagos	Lagoso	settlement	190	Lagos City
+Q23430	Ulaanbaatar	Ulanbatoro	settlement	189	Wulan Batuo;Örgöö;Niislel Hüree;Khüree;Khan of Urga;Ikh Khüree;Ih Huree;Hüree;East Hüree;Kulun;Ulan-Batoro;Ulanbatar
+Q23564	Podgorica	Podgorico	settlement	189	Podgoritza;Capital of Montenegro;Burguriçe;Podgoritsa;Titograd;Podgorica;Titogrado
+Q34647	Johannesburg	Johanesburgo	settlement	187	ZAJNB;Johannesburg, Gauteng, South Africa;Johannesburg, Gauteng;joburg;Jo'burg;eGoli;Johannesburg, South Africa;Jozi;Johannisburg;Johanesburg;Johannesburg;Johannesburgo
+Q3551	Rabat	Rabato	settlement	187	Rabbat
+Q3579	Tripoli	Tripolo	settlement	187	Tarabulus
+Q3897	Luanda	Luando	settlement	185	St. Paul of Luanda;St. Paul of Loanda;St Paul of Luanda;St Paul of Loanda;São Paulo, Angola;Sao Paulo, Angola;São Paulo de Loanda;Sao Paulo de Loanda;São Paulo da Assunção de Loanda;Saint Paul of Luanda;Saint Paul of Loanda;Luanda, Angola;Loanda, Angola;Loanda
+Q18125	Manchester	Manĉestro	settlement	185	Warehouse City;Manchester, UK;Manchester, Lancashire;Manchester, England;Madchester;Cottonopolis;Capital of the North
+Q1519	Abu Dhabi	Abudabio	settlement	184	Abudhabi;Abū Dhabi;Abu-Dabio
+Q23438	Ashgabat	Aŝĥabado	settlement	184	Konjikala;Ishqabat;Ishqabad;Askhabad;Askabad;Ashqabad;Ashkabat;Ashkabad;Ashgabad;Ashabad;Ašgabat;Asgabat;Aschchabad;Ak-Gaudan;`Ishqábád;`Ishqabad;'Ishqabad;Aşgabat;Ashkhabad;Poltoratsk;Aşgabat;Aŝgabato
+Q34001	Roubaix	Roubaix	settlement	184	Robeke;Robaais;Robaais;Robeke
+Q3894	Kampala	Kampalo	settlement	183	
+Q36600	The Hague	Hago	settlement	183	Haag
+Q1963	Khartoum	Kartumo	settlement	182	Khartum;Ĥartumo
+Q24826	Liverpool	Liverpool	settlement	182	Liverpool, UK;Liverpool, Merseyside;Liverpool, England;City of Liverpool;Liverpolo;Liverpulo
+Q2900	Quito	Kito	settlement	180	Quito, Ecuador;Kitu
+Q23800	Valletta	La-Valeto	settlement	179	La Valletta;La Valleta;Valleta;Valetta;Il-Belt Valletta;Città Umilissima;Citta Umilissima;Capital of Malta;Valletta;La Valeto;La Valletta
+Q1850	Phnom Penh	Pnompeno	settlement	179	
+Q2933	Asunción	Asunciono	settlement	177	Asuncion;Asu;Assumption
+Q3703	Bamako	Bamako	settlement	177	
+Q83285	Durrës	Duraso	settlement	176	Durres;Durrës
+Q9365	Dushanbe	Duŝanbeo	settlement	176	Dyushambe;Stalinabad
+Q87	Alexandria	Aleksandrio	settlement	176	Pearl of the Mediterranean;Mediterranean's Bride;Iskandariyya;Alexandria, Egypt;Al Iskandariya
+Q3921	Harare	Hararo	settlement	174	Salisbury, Zimbabwe;Salisbury, Rhodesia;Fort Salisbury;Harare
+Q1842	Luxembourg	Luksemburgo	settlement	174	Luxembourg City;City of Luxembourg;Luxemburg;Luksemburgurbo
+Q2656	Palermo	Palermo	settlement	174	Palermo, Italy
+Q3935	Windhoek	Vindhuko	settlement	174	ǀAi-ǁGams;Windhök;Otjomuise;Windhuk
+Q4093	Glasgow	Glasgovo	settlement	174	Glasgow, UK;Glasgow, Scotland
+Q3844	Brazzaville	Brazavilo	settlement	173	
+Q2471	Sanaa	Sanao	settlement	171	Ṣanʻāʼ;San'a';Sana'a;Ṣanʿāʾ;Sana
+Q3183	Perth	Perto	settlement	171	Perth, W.A.;Perth, AUS;Boorloo, Western Australia;Boorloo;Perth, Western Australia;Perth, Australia
+Q2079	Leipzig	Leipzig	settlement	170	Lepsiko
+Q2449	Mogadishu	Mogadiŝo	settlement	170	The Seat of the Shah;Mogadishu, Somalia;Maqadīshū;Xamar;Hamar
+Q34370	Rotterdam	Roterdamo	settlement	169	R'dam;Rotjeknor;Roffa
+Q35178	Kuwait City	Kuvajturbo	settlement	168	al-Kuwait;Al Kuwait;Kuwait;Kuvaito;Kuvajt-urbo;Kuvajto
+Q3739	Bissau	Bisaŭo	settlement	168	
+Q9270	Thimphu	Timbuo	settlement	168	ཐིམ་ཕུ་;Thimpu
+Q3882	Manama	Manamo	settlement	167	al-Manāmah
+Q40840	Tampere	Tampere	settlement	166	Tampere (municipality);Tammerfors;Tampereo
+Q3808	Yaoundé	Jaundo	settlement	165	Yaoundé, Cameroon;Yaounde, Cameroon;Ongola;Yaounde;Jaundeo
+Q5776	Bethlehem	Bet-Leĥemo	settlement	165	Beit Lahm;Bet-Leĥem
+Q34932	Brisbane	Brisbano	settlement	165	Meaanjin;Maganjin;Magandjin;Brisbane, QLD;Brisbane, Queensland;Meanjin;Brisbane
+Q3642	Asmara	Asmero	settlement	164	Asmera;Asmaro
+Q3881	Lusaka	Lusako	settlement	164	
+Q3889	Maputo	Maputo	settlement	164	Cam Phumo;Lourenço Marques
+Q586	Bonn	Bonno	settlement	163	Federal City of Bonn;Bonn, West Germany;Bonn, Germany;Bonn
+Q2256	Birmingham	Birmingham	settlement	163	Birmingham, West Midlands;Birmingham, UK;Birmingham, England
+Q3733	Conakry	Konakrio	settlement	163	
+Q3919	Gaborone	Gaberono	settlement	163	Motse-Mshate;Gaberones;Gabs
+Q588	Katowice	Katowice	settlement	162	Kattowitz;Kattowitz
+Q959	Vladivostok	Vladivostoko	settlement	162	Vladyvostok;Port-May;Haishenwei;Vladivostok
+Q3659	N'Djamena	Nĝameno	settlement	162	NDjamena;N'Djaména
+Q3674	Niamey	Niameo	settlement	162	
+Q3726	Banjul	Banĝulo	settlement	162	City of Banjul;Bathurst
+Q3792	Lomé	Lomeo	settlement	162	Lomé, Togo;Lome, Togo;Lome
+Q1355	Bengaluru	Bengaluro	settlement	161	Banglore;Silicon Valley of India;Bendakaaluru;Bangalore;Beṅgaḷūru
+Q9279	Bandar Seri Begawan	Bandar-Seri-Begavano	settlement	161	Brunei Town;Bandar Brunei;Seri Begawan;Bandar;BSB;BSB
+Q10690	Cardiff		settlement	161	Cardiff, Wales;Cardiff, United Kingdom;Cardiff, UK;Cardiff, South Glamorgan;Caerdydd;Caerdydd;Kardifo
+Q3748	Monrovia	Monrovio	settlement	161	
+Q10686	Belfast	Belfasto	settlement	161	Belfast, Northern Ireland;Béal Feirste;Beal Feirste
+Q3825	Libreville	Librevilo	settlement	160	Liberurbo
+Q1891	Bologna	Bolonjo	settlement	160	Bologna, Italy
+Q3001	Paramaribo	Paramaribo	settlement	160	Parbo
+Q37100	Auckland	Aŭklando	settlement	160	Auckland, New Zealand;Ākarana;Tāmaki Makaurau
+Q3306	Panama City	Panamurbo	settlement	159	Ciudad de Panamá;Ciudad de Panama;Panamá;Panama
+Q3799	Porto-Novo	Porto-Novo	settlement	159	Hogbonu;Ajashe
+Q5112	Adelaide	Adelajdo	settlement	159	Adelaide, SA;Adelaide, S. Aust.;Adelaide, Australia;Adelaide, South Australia
+Q34692	Kingston	Kingstono	settlement	159	Kingston, Surrey;Kingston, Jamaica
+Q3832	Bangui	Bango	settlement	158	
+Q1515	Abidjan	Abiĝano	settlement	157	
+Q3751	Praia	Prajo	settlement	157	
+Q25270	Pristina	Priŝtino	settlement	156	Priština;Prishtina;Priştina;Prishtinë;Priština
+Q3780	Freetown	Fritaŭno	settlement	156	
+Q3818	Malabo	Malabo	settlement	156	Port Clarence;Santa Isabel
+Q11736	Tianjin	Tjanĝino	settlement	155	Tientsin;Tien-tsin;Tianjin Municipality;Municipality of Tianjin;Tjenĝino
+Q3854	Bujumbura	Buĵumburo	settlement	155	Buja;Usumbura
+Q3876	Lilongwe	Lilongvo	settlement	155	
+Q9347	Malé	Maleo	settlement	155	Malé City
+Q37400	Naypyidaw	Nepjido	settlement	154	Naypyitaw;Nay Pyi Taw;Najpitavo;Pjinmano
+Q1555	Guatemala City	Gvatemalurbo	settlement	154	Nueva Guatemala de la Asunción;New Guatemala of Assumption;Guatemala (Guatemala);Guate;Ciudad de Guatemala;City of Guatemala;Guatemala
+Q3688	Nouakchott	Nuakŝoto	settlement	154	Nuwākshūṭ;Noukchott;Nouakchott, Mauritania;Nouakchot;Nawākshūṭ;Nawakshut;Capital of Mauritania
+Q13375	Pisa	Pizo	settlement	154	
+Q35493	Almaty	Almato	settlement	153	Gurban-almatu;Gurban Almatu;Almati;Vernyy;Verny;Zailiyskoe;Vyernyi;Vyernoye;Vyernoe;Vernoye;V́ernîy;Fort Zailiyskoe;Fort Vernyi;City of Almaty;Almáti;Alma Ata;Vernoe;Fort Verny;Fort Vernoe;Almata;Alma-Ata;Almaty;Alma Ata;Alma-Ata
+Q3929	Port Louis	Portluiso	settlement	153	Porlwi;Polwi;Port-Louis
+Q7903	Casablanca	Kazablanko	settlement	153	الدار البيضاء;Bedawa;ad-Dār al-Bayḍāʾ;Dar el-Beida;Anfa;White House
+Q34820	Santo Domingo	Sankta Domingo	settlement	152	Santo Domingo, Dominican Republic;Santo Domingo de Guzman;San Domingo;Sandomingo
+Q35381	Colombo	Kolombo	settlement	151	Colombo
+Q2907	Sucre	Sukro	settlement	151	The Illustrious and Heroic Sucre;Charcas;Chuquisaca;La Plata
+Q3909	Maseru	Maseruo	settlement	151	
+Q48278	Medellín	Medeĝino	settlement	150	Town of Our Lady of Candelaria of Medellín;Medellín, Special District of Science, Technology and Innovation;Municipality of Medellín;Special District of Science, Technology and Innovation of Medellín;City of Eternal Spring;Medeĵino;Medelino
+Q37995	Yangon	Jangono	settlement	149	Yangon Region;Yangon City;Rangoon City;Ranguno
+Q3070	San José	San-Joseo	settlement	149	San José, Costa Rica;San Jose
+Q34217	Oxford	Oksfordo	settlement	149	Oxford, England
+Q226	Nuuk	Nuko	settlement	148	Nuk;Nûk;Godthåb;Nuk;Godthåb;Nûk;Nuuk
+Q2211	Malmö	Malmö	settlement	148	Malmo;Malmo
+Q41183	Aleppo	Halepo	settlement	148	Aleppo, Syria;Aleppo, Mount Simeon;Aleppo, Aleppo;Aleppo City;Alep;Halab;Alebbo;Aleppo
+Q1947	Juba	Ĝubao	settlement	148	
+Q3604	Djibouti	Ĝibuto	settlement	148	Djibouti (city);Djibouti City
+Q1735	Innsbruck	Innsbruck	settlement	147	Landeshauptstadt Innsbruck;Innsbruck Stadt;Insbruko
+Q38511	Turku	Turku	settlement	147	Aboa;Abo;Åbo;Åbo
+Q36312	Calgary	Kalgario	settlement	146	Calgary, Canada;Calgary, Alberta;Calgary, AB;City of Calgary;Calgary;Kalgerio
+Q350	Cambridge	Kembriĝo	settlement	146	
+Q3043	Belmopan	Belmopano	settlement	146	The Planned City;City of Promise;The Garden City
+Q3519	Bari	Bari	settlement	146	Bare
+Q3940	Victoria	Viktorio	settlement	146	Victoria, Seychelles;Port Victoria
+Q393	Szczecin	Szczecin	settlement	145	Stettin;Ŝtetino
+Q26793	Bergen	Bergen	settlement	145	Bjørgvin;Bergen,Norvegio;Bergeno
+Q16520	Busan	Pusano	settlement	144	Pusang;Pusan Metropolitan City;Fuzan;Busan Metropolitan City;Busan;Busano
+Q36168	Bridgetown	Briĝurbo	settlement	144	Briĝtaŭno
+Q10717	Georgetown	Ĝorĝtaŭno	settlement	144	Georgetown, British Guiana;Garden City of the Caribbean
+Q23154	Bristol	Bristolo	settlement	143	Bristol, UK;Bristol, Gloucestershire;Bristol, England
+Q3904	Mbabane	Mbabano	settlement	142	Mbabané;Mababano
+Q4115712	Kaunas	Kaŭno	settlement	142	Kowno;Kovno;Kovne;Kovna;Kauen
+Q3901	Moroni	Moroni	settlement	142	Moroni, Comoros
+Q37701	Bloemfontein	Bloemfontein	settlement	142	
+Q1848	San Marino	San-Marino	settlement	141	City of San Marino;San-Marinurbo
+Q16666	Nanjing	Nankino	settlement	141	Nan-king;Kiangning;Kiang-ning;Nan Jing;Jiangning;Nankin;Nankingo
+Q11739	Lahore	Lahoro	settlement	141	LHR;Lahore
+Q1733	Magdeburg	Magdeburgo	settlement	141	MD
+Q1960	Dar es Salaam	Daresalamo	settlement	141	
+Q2028	Verona	Verono	settlement	141	
+Q2467	Nassau	Nasaŭo	settlement	141	City of Nassau
+Q376749	Chittagong	Ĉitagongo	settlement	140	Chattogram;Chattala;Chatga
+Q3932	São Tomé	Santomeo	settlement	140	
+Q36260	Apia	Apio	settlement	140	
+Q13666	Messina	Mesino	settlement	139	Messana;Missina
+Q39178	Port of Spain	Portospeno	settlement	139	Puerto España;Port-of-Spain;Cumucurapo
+Q25286	Uppsala	Upsalo	settlement	138	Upsala;Uppsala;Upsala
+Q38807	Suva	Suvo	settlement	138	Suva
+Q25282	Da Nang	Danango	settlement	138	Tourane;Da Nang City;Turon
+Q2096	Edmonton	Edmontono	settlement	137	Edmonton, AB;City of Edmonton;Edmonton, Alberta;Edmonton;Edmonton, AB;Edmonton, Alberta
+Q42800	Belo Horizonte	Belo Horizonte	settlement	137	White Horizon;Bel-Horizonto;Belo Horizonto
+Q42941	Agra	Agra	settlement	137	Agrah;Agra, India
+Q580	Łódź	Lodzo	settlement	136	Łodzi;Lodzh;Lodz';Lodž;Lodsch;Litzmannstadt;Lodz;Łódź
+Q159610	Vlorë	Vlora	settlement	136	Vlora;Vlore;Avlona;Vlore;Vlorë
+Q39121	Leeds	Leeds	settlement	136	
+Q5869	Lhasa	Lasao	settlement	135	Lla-Ssa;Lhassa;Lhasa, Tibet;Lhasa Prefecture-Level City;Lhasa Prefecture;Lhása;Lhasa City;Barantola;Lassa;Lasa
+Q6487	Antalya	Antalya	settlement	135	AYT;Adalia;Attalia;ANT
+Q15174	Shenzhen	Ŝenĵeno	settlement	135	Sham Chun
+Q36262	St. John's	Sankta Johano	settlement	135	St John's;Saint John's;St. John's City
+Q40738	Bursa	Bursa	settlement	135	Broussa
+Q40811	Sokhumi	Suĥumo	settlement	134	Suhum-Kale;Souchoum Kale;Sohumkale;Dioskourias;Dioscurias;Sebastopolis;Sukhumi;Soĥumi;Suĥum
+Q41621	Haifa	Ĥajfo	settlement	134	H̱aifa;Hefa;Hayfa;Haifa;Haifo;Hajfa;Hajfo
+Q546	Trieste	Triesto	settlement	134	Trst
+Q5468	Durban	Durbano	settlement	134	Durban, South Africa;Durban, KwaZulu-Natal;Durban, eThekwini
+Q37806	Port Vila	Portvilao	settlement	133	Port Vila
+Q79980	Varanasi	Varanasio	settlement	133	Benaras;Kashi;Banaras
+Q430776	Nazareth	Nazareto	settlement	133	Natzrat;Naṣrath;an-Nāṣira
+Q40191	Hobart	Hobarto	settlement	132	Hobart, Tas.;Hobart, Tasmania;Hobart Town;Hobarton;Greater Hobart;Hobart
+Q42956	Harbin	Harbino	settlement	132	Har-bin;Haerbin;Harbin;Ĥarbin;Ĥarbino
+Q11568	Darwin	Darvino	settlement	132	Garramilla;Darwin, Northern Territory, Australia;Darwin, Northern Territory;Darwin, Australia;Van Diemen's Land
+Q30002	Chengdu	Ĉengduo	settlement	131	Tchingtou;Tchengtou;Sindafu;Sin-din-fu;Chingtu-fu;Chengdou;Cheng-tu Shih;Cheng-tu;Baghshūr;Chengdu Shi;Chengtu
+Q39984	Cannes	Cannes	settlement	131	Canas
+Q628	Bergamo	Bergamo	settlement	130	City of Bergamo
+Q41547	St. George's	Sankta Georgo	settlement	130	St. George's, Grenada;St Georges, Granada;Saint Georges, Granada;Saint George's, Grenada;Saint Georges;Saint George's
+Q41699	Castries	Castries	settlement	130	
+Q33518	Dover	Dover	settlement	129	Dover, Delaware;Dover, DE;Dovero
+Q48344	Recife	Recife	settlement	129	Recifo
+Q6576	Irkutsk	Irkutsk	settlement	129	Erhüü;Erhuu
+Q906	Chelyabinsk	Ĉeljabinsk	settlement	128	Cheliabinsk;Čelâbinsk;Ĉelabinsk;Ĉelabinsko
+Q158119	Ramallah	Ramallah	settlement	128	Ramalaho
+Q42462	York	Jorko	settlement	128	Jórvík;Eburācum;Jorvik;York
+Q2751	Siena	Sieno	settlement	128	Sienna
+Q3138	Trier	Treviro	settlement	128	Triers;Augusta Treverorum
+Q9427	Timbuktu	Timbuktuo	settlement	128	Tumbutu;Timbuktoo;Timbuctoo;Tombouctou
+Q79990	Christchurch	Kristkirko	settlement	127	Christchurch, New Zealand;Garden City;Christ-Church
+Q36405	Aberdeen	Aberdeen	settlement	127	Obar Dheathain;Aiberdein;Aiberdeen;Aberdeen, Scotland;The Silver City;Granite City;Aiberdeen;Aiberdein;Obar Dheathain
+Q776965	Klaipėda	Klaipėda	settlement	127	
+Q1538	Pune	Puneo	settlement	127	Queen of the Deccan;Pune, India;Poonah;Oxford of the East;Poona
+Q3992	Liège	Lieĝo	settlement	127	Lîdje;Luuk;Luik;Lüttich
+Q5764	Bukhara	Buĥaro	settlement	127	Buxoro;Boukhara;Bokhàra;Bokhara;Bouchara
+Q38545	Adana	Adana	settlement	127	Adana City;Mint of Adana
+Q40921	Honiara	Honiaro	settlement	127	
+Q47492	Gaza City	Gaza-urbo	settlement	126	ʕazza;ʻazza;Ghazzah;Ġazzah;Azza;Gaza;Gazao;Gazao-urbo
+Q162279	Kuopio	Kuopio	settlement	126	
+Q3012	Ulm	Ulm	settlement	126	Ulm alb-Donau
+Q3437	Perugia	Peruĝo	settlement	126	
+Q13364	Ravenna	Raveno	settlement	126	
+Q16869	Constantinople	Konstantinopolo	settlement	126	Tzargrad;Tsarigrad;Tsargorod;Czargrad;The City of the World's Desire;Constantinopolis;Mint of Constantinople
+Q126148	Tangier	Tanĝero	settlement	125	Tingis;Tinigi;Ṭanjah;Ṭanja;Tangeri;Tánger;Tingi;Tanger;Tangiers;Tanger
+Q25804	Trondheim	Trondheim	settlement	125	Trondhjem;Trondhem;Kaupangen;Nidaros;Drontheim;Nidaros;Trondhejmo;Trondhjem
+Q43463	Fortaleza	Fortalezo	settlement	125	Ceara;Fortaleza;Fortalezo-Cearao
+Q36281	Roseau	Roseo	settlement	125	
+Q80985	Fez	Feso	settlement	124	Fez, Morocco;Fes, Morocco;Fès;Fez;Fes;Fèz
+Q13498	Taranto	Taranto	settlement	124	Tarentum;Taras
+Q100188	Cluj-Napoca	Kluĵo	settlement	123	Napoca;Muang Kuan;Muang Kone;Kolozvar;Kolozsvár;Kolozsvar;Kolozhvar;Kluzh;Kluž;Kluyzenburg;Klausenburg;Cluj;Claudiopolis;Cluj;Cluj-Napoca;Klausenburg;Koloĵvaro;Kolozsvar;Kolozsvár
+Q37333	Lublin	Lublino	settlement	123	Lyublin;Lublino;Lublin
+Q38380	Angers	Angers	settlement	123	Peu-de-Fonds;Gaie-Vallée;Fruits-Sucrés;Anĝero;Anĝevo
+Q2683	Parma	Parmo	settlement	123	
+Q12919	Majuro	Majuro	settlement	123	Majuro, Marshall Islands;Mājro
+Q38834	Nukuʻalofa	Nukualofo	settlement	123	Nuku'alofa
+Q40104	Ajaccio	Ajaccio	settlement	123	Aiaccio;Aghjacciu
+Q41295	Basseterre	Basseterre	settlement	123	
+Q114257	Elbasan	Elbasan	settlement	122	Skampis;City of Flowers;City of Education;Elbasano
+Q34126	Funafuti	Funafutio	settlement	122	Funafuti Island;Funafuti
+Q1709	Schwerin	Schwerin	settlement	122	
+Q42448	Sheffield	Sheffield	settlement	122	Sheffield, South Yorkshire;Sheffield, England
+Q41262	Nottingham	Nottingham	settlement	121	Nottingham, England;Nottingham, East Midlands;Nottingham, Nottinghamshire;Notinghamo
+Q44401	Cayenne	Cayenne	settlement	121	Cayenne, Franca Gviano;Kajeno
+Q45301	Trabzon	Trabzon	settlement	121	Tribisonde;Trebizonde;Trebesun;Trapizon;Trapisonda;Trapezounta;Trapesunta;Trabuzan;Trabizond;Terabesoun;Tarabossan;Trapezunt;Trapezus;Trapezous;Trebisonda;Trebizond;Trebizondo
+Q6221	Brescia	Breŝo	settlement	121	Lioness of Italy
+Q81033	Monterrey	Monterejo	settlement	120	Monterrey
+Q25475	Batumi	Batumi	settlement	120	Batoum;Batumo
+Q3415	Ancona	Ankono	settlement	120	
+Q42751	Palikir	Palikiro	settlement	120	
+Q2999	Würzburg	Würzburg	settlement	119	Wuerzburg;Wörtzburch;Kreisfreie Stadt Würzburg;Herbipolo;Vircburgo
+Q6397	Avignon	Avignon	settlement	119	Avinhon;Avignoun;Avignoun;Avinhon;Avinjono
+Q43453	Plzeň	Plzeň	settlement	119	Pilseno;Pilzeno;Plzen
+Q93338	Gaziantep	Gaziantep	settlement	119	Antep;Ain-Tab;Aintab
+Q8826	Palma	Palma de Majorko	settlement	119	Palma de Mallorca
+Q12994	Bruges	Bruĝo	settlement	119	Brugge
+Q13670	Syracuse	Sirakuzo	settlement	119	Syracuse, Sicily;Syracusae;Syracus;Siracusa;Syracusa
+Q80989	Bhopal	Bhopalo	settlement	118	Bhoopal;City of Lakes;Bhojpal;Bhupal;Bhopal
+Q83317	Mosul	Mosulo	settlement	118	Mosūl;Mosul
+Q1425428	Newcastle upon Tyne	Newcastle-upon-Tyne	settlement	118	Newcastle upon Tyne (parish);Novkastelo
+Q43433	Chandigarh	Ĉandigaro	settlement	118	The city beautiful;Ĉandigarh
+Q79848	Southampton	Southampton	settlement	118	Southampton, UK;Soton;Southampton, Hampshire
+Q1308	Como	Komo	settlement	118	
+Q5168	Makhachkala	Maĥaĉkala	settlement	118	Makhachkala, Russia;Makhachkala, Dagestan
+Q7024	Lugano	Lugano	settlement	118	Lugano TI
+Q23551	Mérida	Merido	settlement	118	Merida;Santiago de los Caballeros de Mérida;Santiago de los Caballeros de Merida;Mèrida;Mérida, Venezuela
+Q41474	Kingstown	Kingstaŭno	settlement	118	
+Q6454	Calais	Kalezo	settlement	117	Saint-Pierre-lès-Calais (réunie à Calais);Dampierre-les-Dunes;Calais
+Q225641	Mombasa	Mombasa	settlement	117	Mombaso
+Q47048	Oulu	Oulu	settlement	117	Uleåborg;Uleaborg;Oŭlo
+Q279	Modena	Modeno	settlement	117	
+Q1310	Arnhem	Arnhem	settlement	117	
+Q48338	Kayseri	Kayseri	settlement	116	Kaisariyah;Eusebia at the Argaeus;Caesarea Mazaca;Mazaka;Eusebia;Mazaca;Caesarea in Cappadocia;Caesarea;Caesarea Mazaca
+Q5788	Petra	Petra	settlement	116	Petra, Jordan;Mint of Petra
+Q13369	Rimini	Rimini	settlement	116	
+Q749	Groningen	Groningen	settlement	115	Groningeno;Groningo
+Q79857	Konya	Konya	settlement	115	Mint of Iconium;Konja;Konjao
+Q124739	Tijuana	Tijuana	settlement	115	Tijuana, Mexico;Tijuana, Baja California;Tiĥuano
+Q83065	Leicester	Leicester	settlement	115	Leicester, England
+Q170244	Berat	Berat	settlement	115	
+Q5582862	Cusco	Kusko	settlement	115	World heritage city;Rome of the Americas;Rome of America;Qosqo;Imperial City of the Cuzco;Imperial City of the Cusco;Imperial city of Cuzco;Imperial city of Cusco;Empire city of Cuzco;Empire city of Cusco;Cuzco World Heritage Site;Cusco World Heritage Site;Cultural heritage city of Peru;City of Cuzco;City of Cusco;Capital of the Inca empire;Qusqu
+Q6616	Poitiers	Poitiers	settlement	114	Potevo;Puatiero
+Q43509	Guayaquil	Guajakilo	settlement	114	Santiago de Guayaquil;GYE;Guayaquil;Gvajakilo;Santiago de Guayaquil
+Q51103	Cali	Santiago de Cali	settlement	114	Santiago de Cali;Kali;Cali, Columbia;Kalio;Kaliurbo
+Q80484	Patna	Patnao	settlement	114	Patnā;Pātaliputta;Pataliputta;Pātaliputra;Batana;Pataliputra;Patan
+Q6252	Monza	Monza	settlement	114	

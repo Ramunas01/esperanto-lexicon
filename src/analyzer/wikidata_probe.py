@@ -35,6 +35,7 @@ the network at import time.
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import json
 import sys
@@ -58,9 +59,17 @@ GUI_URL = "https://query.wikidata.org"
 _REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 NAMES_DIR = _REPO_ROOT / "data" / "analysis" / "names"
 
-MIN_REQUEST_INTERVAL_S = 60.0  # <= 1 request / minute while WDQS is throttled
+# The WMF SPARQL CDN edge hard-throttles (HTTP 429, Retry-After ~1000) any
+# request that omits an ``Accept-Encoding`` header -- an anti-scraper heuristic
+# that fires regardless of pacing. Sending ``Accept-Encoding: gzip`` returns 200
+# instantly on a healthy endpoint. (This artifact is very likely what an earlier
+# probe misread as a "1 req/min WDQS outage" -- see the memo, extraction
+# section.) With the header present the endpoint is fast, so we pace politely
+# rather than at 1/min, and keep exponential 429 backoff as a genuine-overload
+# safety net. Override the interval via QueryRunner(min_interval_s=...).
+POLITE_REQUEST_INTERVAL_S = 3.0  # polite gap between successful requests
 MAX_BACKOFF_S = 300.0  # cap exponential backoff at ~5 min per the brief
-MAX_RETRIES = 5
+MAX_RETRIES = 6
 
 SALIENCE_DEPTHS = (50, 200, 1000)
 
@@ -200,20 +209,42 @@ _STAR_QIDS = (
     "Q12167",  # Vega
 )
 # Major institutional orgs (curated; P31 supranational-union is too narrow for
-# NATO/UN which are not "unions"). Note this in the memo.
+# NATO/UN which are not "unions"). Note this in the memo. All QIDs verified by
+# label round-trip 2026-07-06 (an initial draft carried three drifted QIDs --
+# Q37230=CIA, Q1132=a German town, Q1043527=MIGA -- a caution the brief flagged).
 _ORG_QIDS = (
     "Q458",  # European Union
     "Q1065",  # United Nations
     "Q7184",  # NATO
-    "Q7768",  # ASEAN
+    "Q7768",  # ASEAN (genuinely has no eo label -- kept as a finding)
     "Q7159",  # African Union
-    "Q37230",  # World Trade Organization
+    "Q7825",  # World Trade Organization
     "Q7817",  # World Health Organization
-    "Q1132",  # International Monetary Fund
+    "Q7804",  # International Monetary Fund
     "Q7164",  # World Bank
     "Q8908",  # Council of Europe
     "Q41550",  # OECD
-    "Q1043527",  # OPEC
+    "Q7795",  # OPEC
+)
+# Curated major natural satellites. A bare `P31 wd:Q2537` filter is the WRONG
+# salience instrument here: it surfaces obscure provisional-designation moons
+# (S/2015 ...) directly typed as "natural satellite" and misses the famous moons
+# (typed as more specific subclasses), giving a misleading ~3% eo coverage. The
+# major moons that matter all carry eo labels. QIDs verified 2026-07-06.
+_MOON_QIDS = (
+    "Q405",  # Moon
+    "Q7547",  # Phobos
+    "Q7548",  # Deimos
+    "Q3123",  # Io
+    "Q3143",  # Europa
+    "Q3169",  # Ganymede
+    "Q3134",  # Callisto
+    "Q2565",  # Titan
+    "Q3303",  # Enceladus
+    "Q15034",  # Mimas
+    "Q17958",  # Iapetus
+    "Q3352",  # Miranda
+    "Q3359",  # Triton
 )
 
 SETS: tuple[SetDef, ...] = (
@@ -222,8 +253,10 @@ SETS: tuple[SetDef, ...] = (
            qids=_PLANET_QIDS, note="curated 8-planet QID list"),
     SetDef("sun", "The Sun", COARSE_CELESTIAL, 5,
            qids=_SUN_QID, note="curated single QID"),
-    SetDef("moons", "Major natural satellites", COARSE_CELESTIAL, 30,
-           p31="Q2537", note="P31 natural satellite, top-N by sitelinks"),
+    SetDef("moons", "Major natural satellites", COARSE_CELESTIAL, 15,
+           qids=_MOON_QIDS,
+           note="curated major moons; bare P31=natural-satellite mis-ranks "
+                "(see memo salience section)"),
     SetDef("stars", "Nearest / brightest named stars", COARSE_CELESTIAL, 10,
            qids=_STAR_QIDS, note="curated near-star list from the brief"),
     # --- physical geography (class filters) ---
@@ -356,33 +389,65 @@ def _split_concat(value: str) -> tuple[str, ...]:
     return tuple(out)
 
 
-def parse_rows(result_json: dict) -> list[Row]:
-    """Parse a SPARQL JSON result (API or GUI download) into Row objects.
+def _binding_value(binding: dict, field: str) -> str:
+    """Read one field from a single result row, tolerating both shapes.
 
-    Expects the standard ``{"results": {"bindings": [...]}}`` shape. Missing
-    OPTIONAL bindings (notably ``eo``) simply produce empty strings. Rows are
+    Two on-disk formats reach this parser:
+      * **SPARQL results JSON** (the API / "SPARQL endpoint" download):
+        ``{"item": {"type": "uri", "value": "http://.../Q42"}, ...}`` -- values
+        are wrapped objects with a ``value`` key.
+      * **GUI "Download -> JSON"** (the simplified default the browser offers):
+        ``{"item": "http://.../Q42", "en": "Earth", ...}`` -- values are plain
+        strings; absent OPTIONALs are simply missing keys.
+    Both are accepted so one parser serves manual pulls and API responses alike.
+    """
+    raw = binding.get(field)
+    if raw is None:
+        return ""
+    if isinstance(raw, dict):  # SPARQL results shape
+        return raw.get("value", "")
+    return str(raw)  # GUI simplified shape (plain string)
+
+
+def _iter_bindings(result_json) -> list[dict]:
+    """Return the row list from either the SPARQL object or the GUI array."""
+    if isinstance(result_json, list):  # GUI "Download -> JSON" simplified array
+        return result_json
+    if isinstance(result_json, dict):  # SPARQL results object
+        return result_json.get("results", {}).get("bindings", [])
+    raise ValueError(
+        f"expected a SPARQL JSON object or GUI array, got "
+        f"{type(result_json).__name__}"
+    )
+
+
+def parse_rows(result_json) -> list[Row]:
+    """Parse a Wikidata JSON result into Row objects (both formats accepted).
+
+    Handles the SPARQL results object (API) and the GUI "Download -> JSON"
+    simplified array (manual pulls) transparently -- see ``_binding_value``.
+    Missing OPTIONAL fields (notably ``eo``) produce empty strings. Rows are
     sorted by sitelinks descending so callers can slice salience depths without
     trusting the server's ORDER BY to survive a manual re-save.
     """
-    bindings = result_json.get("results", {}).get("bindings", [])
+    bindings = _iter_bindings(result_json)
     rows: list[Row] = []
     for b in bindings:
-        item_uri = b.get("item", {}).get("value", "")
+        item_uri = _binding_value(b, "item")
         if not item_uri:
             continue
         qid = _qid_from_uri(item_uri)
-        label_en = b.get("en", {}).get("value", "")
-        label_eo = b.get("eo", {}).get("value", "")
-        sitelinks_raw = b.get("sitelinks", {}).get("value", "0")
+        label_en = _binding_value(b, "en")
+        label_eo = _binding_value(b, "eo")
         try:
-            sitelinks = int(sitelinks_raw)
+            sitelinks = int(_binding_value(b, "sitelinks") or "0")
         except (TypeError, ValueError):
             sitelinks = 0
         type_qids = tuple(
-            _qid_from_uri(t) for t in _split_concat(b.get("types", {}).get("value", ""))
+            _qid_from_uri(t) for t in _split_concat(_binding_value(b, "types"))
         )
-        en_aliases = _split_concat(b.get("enAliases", {}).get("value", ""))
-        eo_aliases = _split_concat(b.get("eoAliases", {}).get("value", ""))
+        en_aliases = _split_concat(_binding_value(b, "enAliases"))
+        eo_aliases = _split_concat(_binding_value(b, "eoAliases"))
         rows.append(
             Row(
                 qid=qid,
@@ -502,7 +567,7 @@ class QueryRunner:
     def __init__(
         self,
         names_dir: Path = NAMES_DIR,
-        min_interval_s: float = MIN_REQUEST_INTERVAL_S,
+        min_interval_s: float = POLITE_REQUEST_INTERVAL_S,
     ) -> None:
         self.names_dir = names_dir
         self.cache_dir = names_dir / "_cache"
@@ -525,10 +590,15 @@ class QueryRunner:
             time.sleep(wait)
 
     def _fetch_api(self, query: str) -> dict:
-        """GET the endpoint with UA, pacing, and exponential 429 backoff."""
+        """GET the endpoint with UA, pacing, and exponential 429 backoff.
+
+        ``Accept-Encoding: gzip`` is mandatory: without it the WMF edge returns
+        429 regardless of pacing (see POLITE_REQUEST_INTERVAL_S note). urllib
+        does not auto-decompress, so we handle gzip explicitly.
+        """
         params = urllib.parse.urlencode({"query": query, "format": "json"})
         url = f"{SPARQL_ENDPOINT}?{params}"
-        backoff = self.min_interval_s
+        backoff = max(self.min_interval_s, 30.0)
         for attempt in range(1, MAX_RETRIES + 1):
             self._pace()
             req = urllib.request.Request(
@@ -536,12 +606,27 @@ class QueryRunner:
                 headers={
                     "User-Agent": USER_AGENT,
                     "Accept": "application/sparql-results+json",
+                    "Accept-Encoding": "gzip, deflate",
                 },
             )
             self._last_request_ts = time.monotonic()
             try:
                 with urllib.request.urlopen(req, timeout=90) as resp:
-                    return json.loads(resp.read().decode("utf-8"))
+                    raw = resp.read()
+                    if resp.headers.get("Content-Encoding") == "gzip":
+                        raw = gzip.decompress(raw)
+                    parsed = json.loads(raw.decode("utf-8"))
+                    if not isinstance(parsed, dict) or "results" not in parsed:
+                        # Rare transient malformed body (seen once under load);
+                        # do not cache it -- back off and retry.
+                        print(
+                            f"    malformed response (attempt {attempt}); retrying",
+                            flush=True,
+                        )
+                        time.sleep(backoff)
+                        backoff = min(backoff * 2, MAX_BACKOFF_S)
+                        continue
+                    return parsed
             except urllib.error.HTTPError as exc:
                 if exc.code == 429:
                     print(
@@ -726,11 +811,11 @@ def _cmd_run(args: argparse.Namespace) -> int:
         print(f"[{key}] fetching (limit={s.limit})...", flush=True)
         try:
             result, source = runner.get(key, query)
-        except RuntimeError as exc:
+            rows = parse_rows(result)
+        except (RuntimeError, ValueError, urllib.error.URLError) as exc:
             print(f"  BLOCKED: {exc}")
             report[key] = {"error": str(exc)}
             continue
-        rows = parse_rows(result)
         cov = coverage_at_depths(rows)
         en_alias, eo_alias = alias_coverage(rows)
         report[key] = {

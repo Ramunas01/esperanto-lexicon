@@ -24,7 +24,7 @@ way it logs the source per set.
 | --- | --- | --- | --- |
 | `planets` | Planets of the Solar System | 10 | `manual_pulls/planets.json` |
 | `sun` | The Sun | 5 | `manual_pulls/sun.json` |
-| `moons` | Major natural satellites | 30 | `manual_pulls/moons.json` |
+| `moons` | Major natural satellites | 15 | `manual_pulls/moons.json` |
 | `stars` | Nearest / brightest named stars | 10 | `manual_pulls/stars.json` |
 | `oceans` | Oceans | 10 | `manual_pulls/oceans.json` |
 | `continents` | Continents | 12 | `manual_pulls/continents.json` |

@@ -1,0 +1,28 @@
+[
+  {
+    "item": "http://www.wikidata.org/entity/Q2",
+    "en": "Earth",
+    "eo": "Tero",
+    "sitelinks": "367",
+    "types": "Q3504248",
+    "enAliases": "The Blue Planet|Mother Earth|World",
+    "eoAliases": ""
+  },
+  {
+    "item": "http://www.wikidata.org/entity/Q111",
+    "en": "Mars",
+    "eo": "Marso",
+    "sitelinks": "290",
+    "types": "Q844911|Q3504248",
+    "enAliases": "Red Planet",
+    "eoAliases": "ruĝa planedo"
+  },
+  {
+    "item": "http://www.wikidata.org/entity/Q319",
+    "en": "Jupiter",
+    "sitelinks": "280",
+    "types": "Q128944",
+    "enAliases": "",
+    "eoAliases": ""
+  }
+]
