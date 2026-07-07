@@ -1,0 +1,81 @@
+set_name	member_en	category	proposed_eo_anchor	corrected_eo_word	decision	note	eo_gloss	proposed_tier
+numbers_ordinal	sixth	closed	ses/sesa		ok		sixth	2
+numbers_ordinal	seventh	closed	sep/sepa		ok		seventh	2
+numbers_ordinal	eighth	closed	ok/oka		ok		eighth	2
+numbers_ordinal	ninth	closed	naŭ/naŭa		ok		ninth	2
+numbers_ordinal	tenth	closed	dek/deka		ok		tenth	2
+seasons	autumn	closed	aŭtun/aŭtuna		ok		autumn	1
+times_of_day	noon	closed	tagmez/tagmezo		ok		midday, noon	1
+times_of_day	dawn	closed	aŭror/aŭrori	aŭroro	fix	form: noun -o not verb -i (or tagiĝo)	to dawn	1
+times_of_day	dusk	closed	krepusk/krepusko		ok		dawn, dusk, twilight	1
+directions_cardinal	northeast	closed	nordorient/nordoriento		ok		the Northeast	2
+directions_cardinal	northwest	closed	nordokcident/nordokcidento		ok		northwest	2
+directions_cardinal	southeast	closed	sudorient/sudorienta	sudoriento	fix	form: noun -o, consistency	southeast	2
+directions_cardinal	southwest	closed	suduest/suduesto	sudokcidento	fix	consistency with the direction set	southwest, south west	2
+colors	grey	closed	griz/grizo		ok		grey	1
+shapes	triangle	closed	triangul/triangulo		ok		triangle	2
+shapes	rectangle	closed	ortangul/ortangulo		ok		rectangle	2
+shapes	oval	closed	oval/ovala		ok		oval	2
+shapes	sphere	closed	glob/globo	sfero	fix	globo=ball/globe; shape=sfero	ball, ball bearing, globe, billiard ball, sphere	2
+shapes	cube	closed	kub/kubo		ok		cube	2
+fingers	thumb	closed	poleks/polekso	dikfingro	fix	polekso valid but dikfingro more common/child-friendly	thumb	2
+fingers	index	closed	indic/indico	montrofingro	fix	indico=index/clue; index finger=montrofingro	index, indicant	2
+fingers	pinkie	closed		etfingro	fix	was blank; pinkie=etfingro		2
+family_extended	nephew	closed	nev/nevo		ok		nephew	2
+family_extended	niece	closed	nevin/nevino		ok		niece	2
+family_extended	grandson	closed	nep/nepo		ok		grandson	2
+family_extended	granddaughter	closed	nepin/nepino		ok		granddaughter	2
+meals	supper	closed	supe/supeo	vespermanĝo	fix	supeo malformed; supper=vespermanĝo	supper	1
+meals	snack	closed	lunĉ/lunĉo		ok		lunch, snack	1
+body_external	tummy	closed	ventr/ventro		ok		abdomen, stomach, belly, tummy	1
+body_external_detail	forehead	closed	frunt/frunto		ok		brow, forehead	2
+body_external_detail	cheek	closed	vang/vango		ok		cheek, jowl	2
+body_external_detail	chin	closed	menton/mentono		ok		chin	2
+body_external_detail	eyebrow	closed	brov/brovo		ok		brow, eyebrow	2
+body_external_detail	eyelash	closed	okulhar/okulharo		ok		eyelash	2
+body_external_detail	elbow	closed	kubut/kubuto		ok		elbow	2
+body_external_detail	wrist	closed	pojn/pojno		ok		wrist	2
+body_external_detail	knuckle	closed		fingrartiko	fix	was blank; knuckle=fingrartiko (finger-joint)		2
+body_external_detail	hip	closed	koks/kokso		ok		haunch, hip	2
+body_external_detail	thumb	closed	poleks/polekso	dikfingro	fix	polekso valid but dikfingro more common/child-friendly	thumb	2
+animals_farm	duck	semi-open	anas/anasa	anaso	fix	form: noun -o not adj -a	duck, duck-, duck’s, of a duck	1
+animals_farm	goat	semi-open	kapr/kapro		ok		goat	1
+animals_farm	rooster	semi-open	kok/koko	virkoko	fix	koko=chicken generally; rooster=virkoko	chicken, fowl, cock, rooster	1
+animals_farm	hen	semi-open	kokaĵ/kokaĵo	kokino	fix	kokaĵo=chicken meat; hen=kokino	chicken, hen	1
+animals_pet	rabbit	semi-open	lepor/leporo	kuniklo	fix	leporo=hare; pet rabbit=kuniklo	hare, rabbit	1
+animals_pet	hamster	semi-open	hamstr/hamstro		ok		hamster	1
+animals_wild	tiger	semi-open	tigr/tigro		ok		tiger	1
+animals_wild	giraffe	semi-open	ĝiraf/ĝirafo		ok		giraffe	1
+animals_wild	zebra	semi-open	zebr/zebro		ok		zebra	1
+animals_wild	wolf	semi-open	lup/lupo		ok		wolf	1
+animals_wild	fox	semi-open	vulp/vulpa	vulpo	fix	form: noun -o not adj -a	fox, vulpine	1
+animals_wild	deer	semi-open	cerv/cerva	cervo	fix	form: noun -o not adj -a	deer, deer-, of a deer	1
+animals_sea	shark	semi-open	ŝark/ŝarko		ok		shark	2
+animals_sea	whale	semi-open	balen/baleno		ok		whale	2
+animals_sea	dolphin	semi-open	delfen/delfeno		ok		dolphin	2
+animals_sea	crab	semi-open	krab/krabo		ok		crab	2
+animals_sea	octopus	semi-open	polp/polpo		ok		octopus	2
+animals_sea	jellyfish	semi-open	meduz/meduzo		ok		jellyfish	2
+insects	ant	semi-open	formik/formiko		ok		ant	1
+insects	butterfly	semi-open	papili/papilio		ok		butterfly	1
+insects	ladybug	semi-open	kokcinel/kokcinelo		ok		lady beetle, ladybird, ladybird beetle, ladybug	1
+insects	beetle	semi-open	skarab/skarabo		ok		beetle, scarabaeus, scarab	1
+fruits	grape	semi-open	uv/uvo	vinbero	fix	uvo archaic; grape=vinbero (matches merge)	grape	1
+fruits	strawberry	semi-open	frag/frago		ok		strawberry	1
+fruits	pear	semi-open	pir/piro		ok		pear	1
+fruits	peach	semi-open	persik/persiko		ok		nectarine, peach	1
+fruits	cherry	semi-open	ĉeriz/ĉerizo		ok		cherry	1
+fruits	watermelon	semi-open	akvomelon/akvomelono		ok		watermelon	1
+vegetables	pea	semi-open		pizo	fix	was blank; pea=pizo		1
+vegetables	broccoli	semi-open	brokol/brokolo		ok		broccoli	1
+vegetables	lettuce	semi-open	laktuk/laktuko		ok		lettuce, milt, roe	1
+vegetables	cucumber	semi-open	kukum/kukumo		ok		cucumber	1
+weather	fog	semi-open	nebul/nebulo		ok		fog, mist	1
+weather	thunder	semi-open	tondr/tondri	tondro	fix	form: noun -o not verb -i	to thunder	1
+weather	lightning	semi-open	fulm/fulma	fulmo	fix	form: noun -o not adj -a	lightning	1
+weather	rainbow	semi-open	pluvark/pluvarko	ĉielarko	fix	standard rainbow=ĉielarko (sky-bow)	rainbow	1
+emotions	jealous	semi-open	ĵaluz/ĵaluza		ok		jealous	1
+clothing	scarf	semi-open	skarp/skarpo	koltuko	fix	skarpo=sash/sling; neck scarf=koltuko	(woman’s) scarf; arm-sling, sash, stole	1
+verbs_motion	hop	semi-open	hop/hopi		ok		to hop	1
+verbs_motion	skip	semi-open	dancet/danceti	salteti	fix	danceti=dance-a-little; skip=salteti	to hop, skip	1
+verbs_motion	crawl	semi-open	ramp/rampi		ok		to crawl, creep, sneak	1
