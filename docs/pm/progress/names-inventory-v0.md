@@ -2,7 +2,7 @@
 
 **Session-restore record.**
 
-- **Brief:** [`../../PM_BRIEF_names_inventory_v0.md`](../../PM_BRIEF_names_inventory_v0.md)
+- **Brief:** [`../briefs/names-inventory-v0.md`](../briefs/names-inventory-v0.md)
 - **Branch:** `analysis/names-inventory-v0` (stacked on `analysis/names-wikidata-probe`,
   which carries the D7 sample TSV this loads).
 - **Status:** ✅ **COMPLETE — load committed (human-gated), PR open, not merged.**
