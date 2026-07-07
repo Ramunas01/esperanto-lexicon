@@ -1,0 +1,227 @@
+set	member	in_lexicon	proposed_eo_anchor	eo_gloss
+family	mother	Y		
+family	father	Y		
+family	mom	Y		
+family	dad	Y		
+family	mommy	N	panj/panjo	mom, mommy
+family	daddy	N	paĉj/paĉjo	dad, daddy, pa, papa
+family	parent	Y		
+family	sister	Y		
+family	brother	Y		
+family	sibling	N	frat/frato	brother, sibling
+family	grandmother	Y		
+family	grandfather	Y		
+family	grandma	N		
+family	grandpa	N	avĉj/avĉjo	grandpa, granddad
+family	aunt	Y		
+family	uncle	Y		
+family	cousin	Y		
+family	niece	N	nevin/nevino	niece
+family	nephew	N	nev/nevo	nephew
+family	son	Y		
+family	daughter	Y		
+family	child	Y		
+family	baby	Y		
+family	wife	Y		
+family	husband	Y		
+family	family	Y		
+body	head	Y		
+body	hair	Y		
+body	face	Y		
+body	eye	Y		
+body	ear	Y		
+body	nose	Y		
+body	mouth	Y		
+body	lip	Y		
+body	tooth	Y		
+body	tongue	Y		
+body	cheek	N	vang/vango	cheek, jowl
+body	chin	N	menton/mentono	chin
+body	neck	Y		
+body	shoulder	Y		
+body	arm	Y		
+body	elbow	N	kubut/kubuto	elbow
+body	hand	Y		
+body	wrist	N	pojn/pojno	wrist
+body	finger	Y		
+body	thumb	N	poleks/polekso	thumb
+body	palm	N	palm/palmo	palm, palm tree
+body	chest	Y		
+body	back	Y		
+body	stomach	Y		
+body	belly	N	ventr/ventro	abdomen, stomach, belly, tummy
+body	leg	Y		
+body	knee	Y		
+body	foot	Y		
+body	toe	Y		
+body	heel	Y		
+body	ankle	Y		
+body	hip	N	koks/kokso	haunch, hip
+body	skin	Y		
+body	bone	Y		
+body	forefinger	N		
+body	pinky	N	etfingr/etfingro	little finger, pinky (finger)
+colours	red	Y		
+colours	orange	Y		
+colours	yellow	Y		
+colours	green	Y		
+colours	blue	Y		
+colours	purple	Y		
+colours	pink	Y		
+colours	brown	Y		
+colours	black	Y		
+colours	white	Y		
+colours	grey	N	griz/grizo	grey
+colours	gray	Y		
+numbers	one	Y		
+numbers	two	Y		
+numbers	three	Y		
+numbers	four	Y		
+numbers	five	Y		
+numbers	six	Y		
+numbers	seven	Y		
+numbers	eight	Y		
+numbers	nine	Y		
+numbers	ten	Y		
+numbers	eleven	Y		
+numbers	twelve	Y		
+numbers	thirteen	Y		
+numbers	fourteen	Y		
+numbers	fifteen	Y		
+numbers	sixteen	Y		
+numbers	seventeen	Y		
+numbers	eighteen	Y		
+numbers	nineteen	Y		
+numbers	twenty	Y		
+numbers	thirty	Y		
+numbers	forty	Y		
+numbers	fifty	Y		
+numbers	sixty	Y		
+numbers	seventy	Y		
+numbers	eighty	Y		
+numbers	ninety	Y		
+numbers	hundred	Y		
+days	monday	Y		
+days	tuesday	Y		
+days	wednesday	Y		
+days	thursday	Y		
+days	friday	Y		
+days	saturday	Y		
+days	sunday	Y		
+months	january	Y		
+months	february	Y		
+months	march	Y		
+months	april	Y		
+months	may	Y		
+months	june	Y		
+months	july	Y		
+months	august	Y		
+months	september	Y		
+months	october	Y		
+months	november	Y		
+months	december	Y		
+weather	sun	Y		
+weather	rain	Y		
+weather	snow	Y		
+weather	wind	Y		
+weather	cloud	Y		
+weather	storm	Y		
+weather	fog	N	nebul/nebulo	fog, mist
+weather	ice	Y		
+weather	sunny	N	sun/sune	sunny
+weather	rainy	N	pluv/pluva	rain, of rain, rainy
+weather	cloudy	N	nub/nuba	cloudy, overcast, gloomy, obscure, unclear
+weather	windy	N	vent/venta	windy
+weather	hot	Y		
+weather	cold	Y		
+weather	warm	Y		
+weather	wet	Y		
+weather	dry	Y		
+weather	thunder	N	tondr/tondri	to thunder
+weather	lightning	N	fulm/fulma	lightning
+weather	rainbow	N	pluvark/pluvarko	rainbow
+animals	dog	Y		
+animals	cat	Y		
+animals	cow	Y		
+animals	horse	Y		
+animals	pig	Y		
+animals	sheep	Y		
+animals	goat	N	kapr/kapro	goat
+animals	chicken	Y		
+animals	duck	N	anas/anasa	duck, duck-, duck’s, of a duck
+animals	goose	N	anser/ansero	goose
+animals	rabbit	N	lepor/leporo	hare, rabbit
+animals	mouse	Y		
+animals	rat	N	rat/rato	rat
+animals	bird	Y		
+animals	fish	Y		
+animals	frog	Y		
+animals	bee	Y		
+animals	ant	N	formik/formiko	ant
+animals	spider	Y		
+animals	fox	N	vulp/vulpa	fox, vulpine
+animals	wolf	N	lup/lupo	wolf
+animals	bear	Y		
+animals	lion	Y		
+animals	tiger	N	tigr/tigro	tiger
+animals	elephant	Y		
+animals	monkey	Y		
+animals	giraffe	N	ĝiraf/ĝirafo	giraffe
+animals	zebra	N	zebr/zebro	zebra
+animals	deer	N	cerv/cerva	deer, deer-, of a deer
+animals	squirrel	N	sciur/sciuro	squirrel
+animals	owl	N	guf/gufo	(eagle) owl
+animals	snake	Y		
+animals	turtle	N	keloni/kelonio	turtle
+animals	whale	N	balen/baleno	whale
+animals	dolphin	N	delfen/delfeno	dolphin
+animals	shark	N	ŝark/ŝarko	shark
+animals	butterfly	N	papili/papilio	butterfly
+motion_verbs	go	Y		
+motion_verbs	come	Y		
+motion_verbs	run	Y		
+motion_verbs	walk	Y		
+motion_verbs	jump	Y		
+motion_verbs	hop	N	hop/hopi	to hop
+motion_verbs	skip	N	dancet/danceti	to hop, skip
+motion_verbs	climb	Y		
+motion_verbs	crawl	N	ramp/rampi	to crawl, creep, sneak
+motion_verbs	fly	Y		
+motion_verbs	swim	Y		
+motion_verbs	fall	Y		
+motion_verbs	sit	Y		
+motion_verbs	stand	Y		
+motion_verbs	turn	Y		
+motion_verbs	roll	Y		
+motion_verbs	slide	Y		
+motion_verbs	spin	N	ŝpin/ŝpini	to spin (thread)
+motion_verbs	dance	Y		
+motion_verbs	march	Y		
+motion_verbs	throw	Y		
+motion_verbs	catch	Y		
+motion_verbs	push	Y		
+motion_verbs	pull	Y		
+motion_verbs	carry	Y		
+motion_verbs	kick	Y		
+motion_verbs	ride	Y		
+emotions	happy	Y		
+emotions	sad	Y		
+emotions	angry	Y		
+emotions	mad	Y		
+emotions	scared	Y		
+emotions	afraid	Y		
+emotions	glad	Y		
+emotions	excited	Y		
+emotions	surprised	Y		
+emotions	worried	Y		
+emotions	proud	Y		
+emotions	jealous	N	ĵaluz/ĵaluza	jealous
+emotions	shy	Y		
+emotions	lonely	Y		
+emotions	calm	Y		
+emotions	upset	Y		
+emotions	cheerful	Y		
+emotions	curious	N	sciam/sciama	curious, inquisitive
+emotions	bored	Y		
+emotions	nervous	Y		
+emotions	brave	Y		
