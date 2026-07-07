@@ -6,7 +6,7 @@
 - **Programmer brief (execute this):** [`../programmer/tier3-awl-seed.md`](../programmer/tier3-awl-seed.md)
 - **Branch:** `analysis/tier3-awl-seed` (off `main`; the #5→#10 stack is now merged, so this
   branches directly from `main`, not stacked).
-- **Status:** 🟡 **SET UP — briefs filed, awaiting Programmer dispatch.**
+- **Status:** 🔧 **IN PROGRESS (Programmer, 2026-07-08) — Phases 1–2. STOP after P2 for Ramunas review.**
 
 ## The job
 Grow Tier 3 from **96** EN words to a domain-general formal core by translate-and-merge
@@ -37,3 +37,21 @@ derivation machinery. Never modify existing `tier`/`word`/`cefr_level`/`source`.
 - 2026-07-07 (PM): #5→#10 stack merged to `main`; branch + briefs set up; brief assumptions
   verified (T3=96, pipeline present, schema supports family model, `t3_anchor_density` present);
   family→one-concept design locked. Awaiting Programmer dispatch.
+- 2026-07-08 (Programmer): **Phases 1–2 COMPLETE — STOPPED at the human gate.** PR open, no merge.
+  - **AWL source** (Coxhead 2000) vendored to `data/awl/awl_coxhead.json` from
+    `github.com/lpmi-13/machine_readable_wordlists` (CC0; upstream = Victoria Univ. Wellington),
+    retrieved 2026-07-08; provenance `data/awl/SOURCE.md`. **Validated all published invariants
+    before use:** 570 families / 10 sublists / SL1=60 / 3,107 forms — all PASS (per Ramunas's
+    source-vetting instruction; structure-preserving with sublist carried through).
+  - **New code:** `src/lexicon/build_awl_worksheet.py` — reuses gap-fill `parse_espdic` /
+    `propose_anchor` / `load_existing_roots` + shared decomposer (no forked anchor pipeline).
+    Adds: AWL parser + junk gate, Unicode-hyphen normalisation, morphological POS tagger with
+    spaCy fallback (injectable), US-spelling anchor fallback, LINK/NEW+manual classifier,
+    worksheet writer. 38 tests (`tests/test_build_awl_worksheet.py`, no network/spaCy/real DB).
+    Full suite 796 passed.
+  - **Worksheet** `data/analysis/tier3/awl_worksheet.tsv` (570 rows, one per family):
+    3,107 forms (2,606 new / 501 already present). **ESPDIC recall 97.5%** (LINK 448 / NEW 111 /
+    manual 11; flags ok 550 / compound 6 / no_match 14). Memo: `docs/tier3/awl_seed_memo.md`.
+  - **NO DB writes.** Phase 4 (gated merge via `apply_gapfill_merge`, invariant audit) + Phase 5
+    (`t3_anchor_density` validation) deferred until the reviewed worksheet returns. → **[RAMUNAS]
+    review `awl_worksheet.tsv`: approve/hold/reject per family; fix anchors; then resume at P4.**
