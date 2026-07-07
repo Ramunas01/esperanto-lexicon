@@ -37,3 +37,6 @@ data/lexicon_db/eo_inventory.json
 # Esperanto inventory — generated at build time from ESPDIC (CC-BY-3.0)
 data/lexicon_db/eo_inventory.json
 data/lexicon_db/akademio_roots.txt
+
+# ESPDIC raw dictionary — regenerable (CC-BY-3.0), fetched by build/gapfill tools
+data/lexicon_db/espdic.txt
