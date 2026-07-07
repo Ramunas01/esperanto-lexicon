@@ -1,0 +1,35 @@
+{
+  "head": {
+    "vars": ["item", "en", "eo", "sitelinks", "types", "enAliases", "eoAliases"]
+  },
+  "results": {
+    "bindings": [
+      {
+        "item": {"type": "uri", "value": "http://www.wikidata.org/entity/Q2"},
+        "en": {"xml:lang": "en", "type": "literal", "value": "Earth"},
+        "eo": {"xml:lang": "eo", "type": "literal", "value": "Tero"},
+        "sitelinks": {"datatype": "http://www.w3.org/2001/XMLSchema#integer", "type": "literal", "value": "295"},
+        "types": {"type": "literal", "value": "Q3504248|Q128207"},
+        "enAliases": {"type": "literal", "value": "Blue Planet|Terra|Sol III"},
+        "eoAliases": {"type": "literal", "value": "Tero (planedo)"}
+      },
+      {
+        "item": {"type": "uri", "value": "http://www.wikidata.org/entity/Q111"},
+        "en": {"xml:lang": "en", "type": "literal", "value": "Mars"},
+        "eo": {"xml:lang": "eo", "type": "literal", "value": "Marso"},
+        "sitelinks": {"type": "literal", "value": "265"},
+        "types": {"type": "literal", "value": "Q3504248"},
+        "enAliases": {"type": "literal", "value": "Red Planet"},
+        "eoAliases": {"type": "literal", "value": ""}
+      },
+      {
+        "item": {"type": "uri", "value": "http://www.wikidata.org/entity/Q319"},
+        "en": {"xml:lang": "en", "type": "literal", "value": "Jupiter"},
+        "sitelinks": {"type": "literal", "value": "280"},
+        "types": {"type": "literal", "value": "Q128944"},
+        "enAliases": {"type": "literal", "value": ""},
+        "eoAliases": {"type": "literal", "value": ""}
+      }
+    ]
+  }
+}

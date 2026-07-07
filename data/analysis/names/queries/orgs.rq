@@ -1,0 +1,19 @@
+# Supranational unions / major orgs (orgs) -- coarse_type=institutional
+# curated; P31 supranational-union too narrow for UN/NATO
+# EO label is OPTIONAL: its absence is the coverage measurement.
+SELECT ?item ?en ?eo ?sitelinks
+  (GROUP_CONCAT(DISTINCT ?typeQid; SEPARATOR="|") AS ?types)
+  (GROUP_CONCAT(DISTINCT ?enAlias; SEPARATOR="|") AS ?enAliases)
+  (GROUP_CONCAT(DISTINCT ?eoAlias; SEPARATOR="|") AS ?eoAliases)
+WHERE {
+  VALUES ?item { wd:Q458 wd:Q1065 wd:Q7184 wd:Q7768 wd:Q7159 wd:Q7825 wd:Q7817 wd:Q7804 wd:Q7164 wd:Q8908 wd:Q41550 wd:Q7795 }
+  ?item wikibase:sitelinks ?sitelinks .
+  OPTIONAL { ?item rdfs:label ?en FILTER(LANG(?en)="en") }
+  OPTIONAL { ?item rdfs:label ?eo FILTER(LANG(?eo)="eo") }
+  OPTIONAL { ?item wdt:P31 ?type .
+    BIND(STRAFTER(STR(?type), "entity/") AS ?typeQid) }
+  OPTIONAL { ?item skos:altLabel ?enAlias FILTER(LANG(?enAlias)="en") }
+  OPTIONAL { ?item skos:altLabel ?eoAlias FILTER(LANG(?eoAlias)="eo") }
+}
+GROUP BY ?item ?en ?eo ?sitelinks
+ORDER BY DESC(?sitelinks)

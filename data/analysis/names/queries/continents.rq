@@ -1,0 +1,23 @@
+# Continents (continents) -- coarse_type=physical_geographic
+# P31 class filter, top-N by sitelinks
+# EO label is OPTIONAL: its absence is the coverage measurement.
+SELECT ?item ?en ?eo ?sitelinks
+  (GROUP_CONCAT(DISTINCT ?typeQid; SEPARATOR="|") AS ?types)
+  (GROUP_CONCAT(DISTINCT ?enAlias; SEPARATOR="|") AS ?enAliases)
+  (GROUP_CONCAT(DISTINCT ?eoAlias; SEPARATOR="|") AS ?eoAliases)
+WHERE {
+  {
+    SELECT ?item ?sitelinks WHERE {
+      ?item wdt:P31 wd:Q5107 .
+      ?item wikibase:sitelinks ?sitelinks .
+    } ORDER BY DESC(?sitelinks) LIMIT 12
+  }
+  OPTIONAL { ?item rdfs:label ?en FILTER(LANG(?en)="en") }
+  OPTIONAL { ?item rdfs:label ?eo FILTER(LANG(?eo)="eo") }
+  OPTIONAL { ?item wdt:P31 ?type .
+    BIND(STRAFTER(STR(?type), "entity/") AS ?typeQid) }
+  OPTIONAL { ?item skos:altLabel ?enAlias FILTER(LANG(?enAlias)="en") }
+  OPTIONAL { ?item skos:altLabel ?eoAlias FILTER(LANG(?eoAlias)="eo") }
+}
+GROUP BY ?item ?en ?eo ?sitelinks
+ORDER BY DESC(?sitelinks)
