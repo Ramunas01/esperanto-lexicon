@@ -522,12 +522,20 @@ def _tsv_escape(value: str) -> str:
 def rows_to_tsv_lines(rows_with_type: Iterable[tuple[Row, str]]) -> list[str]:
     """Render (Row, authoritative_coarse_type) pairs to TSV lines.
 
-    ``aliases`` column joins en+eo aliases with ';' (en first). The coarse_type
-    passed in is the set's authoritative intent, not the P31-derived guess.
+    The ``aliases`` column is lang-tagged so downstream loaders can populate a
+    language-typed alias table without guessing: each alias is emitted as
+    ``<lang>:<alias>`` (en aliases first, then eo), joined by ';' — e.g.
+    ``en:Red Planet;eo:ruĝa planedo``. The coarse_type passed in is the set's
+    authoritative intent, not the P31-derived guess.
     """
     lines = ["\t".join(TSV_HEADER)]
     for row, coarse_type in rows_with_type:
-        aliases = ";".join((*row.en_aliases, *row.eo_aliases))
+        aliases = ";".join(
+            (
+                *(f"en:{a}" for a in row.en_aliases),
+                *(f"eo:{a}" for a in row.eo_aliases),
+            )
+        )
         lines.append(
             "\t".join(
                 (
