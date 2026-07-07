@@ -200,13 +200,19 @@ _PLANET_QIDS = (
 )
 _SUN_QID = ("Q525",)  # the Sun
 # Nearest / brightest stars named in the brief.
+# Nearest / brightest stars. QIDs verified by label round-trip 2026-07-07 — an
+# earlier draft carried FIVE drifted QIDs (Q14001=malware, Q3037=Kathmandu,
+# Q11002=sugar, Q3033=Göttingen, Q12167=malnutrition) that slipped through the
+# D7 probe because they are real items *with* eo labels, so they falsely scored
+# as covered. Corrected here; Alpha Centauri (Q12176) is a star *system* and is
+# kept as-is.
 _STAR_QIDS = (
-    "Q14001",  # Proxima Centauri
-    "Q12176",  # Alpha Centauri
-    "Q3037",  # Sirius
-    "Q11002",  # Barnard's Star
-    "Q3033",  # Betelgeuse (bright, well-known control)
-    "Q12167",  # Vega
+    "Q14266",  # Proxima Centauri (eo: Proksima Centaŭro)
+    "Q12176",  # Alpha Centauri (star system; eo: Alfa Centaŭro)
+    "Q3409",  # Sirius (eo: Siriuso)
+    "Q14268",  # Barnard's Star (eo: Barnarda Stelo)
+    "Q12124",  # Betelgeuse (bright control; eo: Betelĝuzo)
+    "Q3427",  # Vega (eo: Vego)
 )
 # Major institutional orgs (curated; P31 supranational-union is too narrow for
 # NATO/UN which are not "unions"). Note this in the memo. All QIDs verified by

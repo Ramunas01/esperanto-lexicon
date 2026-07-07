@@ -69,7 +69,7 @@
     "eo_alias_pct": 23.1
   },
   "stars": {
-    "source": "manual",
+    "source": "cache",
     "n": 6,
     "coverage": {
       "50": [
@@ -88,8 +88,8 @@
         100.0
       ]
     },
-    "en_alias_pct": 83.3,
-    "eo_alias_pct": 33.3
+    "en_alias_pct": 100.0,
+    "eo_alias_pct": 50.0
   },
   "oceans": {
     "source": "cache",
