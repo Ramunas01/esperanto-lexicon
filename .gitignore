@@ -7,6 +7,10 @@ __pycache__/
 # Databases (large binary files - don't commit these)
 *.db
 *.sqlite
+# SQLite WAL-mode sidecar files
+*.db-shm
+*.db-wal
+*.db-journal
 
 # OS noise
 .DS_Store

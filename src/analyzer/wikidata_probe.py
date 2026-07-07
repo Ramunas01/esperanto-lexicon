@@ -200,13 +200,19 @@ _PLANET_QIDS = (
 )
 _SUN_QID = ("Q525",)  # the Sun
 # Nearest / brightest stars named in the brief.
+# Nearest / brightest stars. QIDs verified by label round-trip 2026-07-07 — an
+# earlier draft carried FIVE drifted QIDs (Q14001=malware, Q3037=Kathmandu,
+# Q11002=sugar, Q3033=Göttingen, Q12167=malnutrition) that slipped through the
+# D7 probe because they are real items *with* eo labels, so they falsely scored
+# as covered. Corrected here; Alpha Centauri (Q12176) is a star *system* and is
+# kept as-is.
 _STAR_QIDS = (
-    "Q14001",  # Proxima Centauri
-    "Q12176",  # Alpha Centauri
-    "Q3037",  # Sirius
-    "Q11002",  # Barnard's Star
-    "Q3033",  # Betelgeuse (bright, well-known control)
-    "Q12167",  # Vega
+    "Q14266",  # Proxima Centauri (eo: Proksima Centaŭro)
+    "Q12176",  # Alpha Centauri (star system; eo: Alfa Centaŭro)
+    "Q3409",  # Sirius (eo: Siriuso)
+    "Q14268",  # Barnard's Star (eo: Barnarda Stelo)
+    "Q12124",  # Betelgeuse (bright control; eo: Betelĝuzo)
+    "Q3427",  # Vega (eo: Vego)
 )
 # Major institutional orgs (curated; P31 supranational-union is too narrow for
 # NATO/UN which are not "unions"). Note this in the memo. All QIDs verified by
@@ -522,12 +528,20 @@ def _tsv_escape(value: str) -> str:
 def rows_to_tsv_lines(rows_with_type: Iterable[tuple[Row, str]]) -> list[str]:
     """Render (Row, authoritative_coarse_type) pairs to TSV lines.
 
-    ``aliases`` column joins en+eo aliases with ';' (en first). The coarse_type
-    passed in is the set's authoritative intent, not the P31-derived guess.
+    The ``aliases`` column is lang-tagged so downstream loaders can populate a
+    language-typed alias table without guessing: each alias is emitted as
+    ``<lang>:<alias>`` (en aliases first, then eo), joined by ';' — e.g.
+    ``en:Red Planet;eo:ruĝa planedo``. The coarse_type passed in is the set's
+    authoritative intent, not the P31-derived guess.
     """
     lines = ["\t".join(TSV_HEADER)]
     for row, coarse_type in rows_with_type:
-        aliases = ";".join((*row.en_aliases, *row.eo_aliases))
+        aliases = ";".join(
+            (
+                *(f"en:{a}" for a in row.en_aliases),
+                *(f"eo:{a}" for a in row.eo_aliases),
+            )
+        )
         lines.append(
             "\t".join(
                 (

@@ -1,0 +1,283 @@
+sitelinks_asof     : 2026-07-06
+raw permanent rows : 275  (3 duplicate-qid row(s) collapsed)
+distinct entities  : 272
+  celestial           : inserted   28   updated    0   total   28
+  physical_geographic : inserted  244   updated    0   total  244
+global_core (flag) : 13
+alias inserts/lang : {'en': 1213, 'eo': 221}
+
+full row list (qid | label | type | sitelinks | global_core):
+  Q46        Eŭropo                       physical_geographic    403  ★
+  Q15        Afriko                       physical_geographic    370  ★
+  Q2         Tero                         celestial              367   
+  Q525       Suno                         celestial              360   
+  Q48        Azio                         physical_geographic    359  ★
+  Q405       Luno                         celestial              356  ★
+  Q18        Sudameriko                   physical_geographic    337  ★
+  Q51        Antarkto                     physical_geographic    314  ★
+  Q49        Nordameriko                  physical_geographic    298  ★
+  Q111       Marso                        celestial              290   
+  Q55643     Oceanio                      physical_geographic    279  ★
+  Q313       Venuso                       celestial              277   
+  Q308       Merkuro                      celestial              271   
+  Q319       Jupitero                     celestial              269   
+  Q97        Atlantiko                    physical_geographic    269  ★
+  Q828       Ameriko                      physical_geographic    266   
+  Q98        Pacifiko                     physical_geographic    262  ★
+  Q193       Saturno                      celestial              260   
+  Q324       Urano                        celestial              259   
+  Q332       Neptuno                      celestial              250   
+  Q1239      Hinda Oceano                 physical_geographic    247  ★
+  Q3392      Nilo                         physical_geographic    241   
+  Q513       Ĉomolungmo                   physical_geographic    233   
+  Q788       Arkta Oceano                 physical_geographic    224  ★
+  Q6583      Saharo                       physical_geographic    221   
+  Q3783      Amazono                      physical_geographic    213   
+  Q1286      Alpoj                        physical_geographic    211   
+  Q5451      Himalajo                     physical_geographic    208   
+  Q5484      Kaspio                       physical_geographic    205   
+  Q1653      Danubo                       physical_geographic    196   
+  Q7354      Suda Oceano                  physical_geographic    194  ★
+  Q16635     Gvamo                        physical_geographic    193   
+  Q1693      Norda Maro                   physical_geographic    191   
+  Q23406     Ruĝa Maro                    physical_geographic    190   
+  Q5456      Andoj                        physical_geographic    189   
+  Q584       Rejno                        physical_geographic    187   
+  Q626       Volgo                        physical_geographic    187   
+  Q1247      Kariba Maro                  physical_geographic    181   
+  Q5513      Bajkalo                      physical_geographic    181   
+  Q1497      Misisipo                     physical_geographic    177   
+  Q5089      Gango                        physical_geographic    177   
+  Q23666     Britio                       physical_geographic    171   
+  Q3757      Javo                         physical_geographic    170   
+  Q22890     Irlando                      physical_geographic    168   
+  Q3503      Rivero Kongo                 physical_geographic    165   
+  Q5413      Jangzio                      physical_geographic    165   
+  Q14452     Paskinsulo                   physical_geographic    164   
+  Q5505      Viktoria lago                physical_geographic    160   
+  Q34675     Persa Golfo                  physical_geographic    159   
+  Q3492      Sumatro                      physical_geographic    159   
+  Q5463      Roka Montaro                 physical_geographic    159   
+  Q13353     Moncerato                    physical_geographic    158   
+  Q34374     Kreto                        physical_geographic    158   
+  Q7348      Induso                       physical_geographic    155   
+  Q13924     Adriatiko                    physical_geographic    154   
+  Q3542      Niĝero                       physical_geographic    154   
+  Q7355      Flava Rivero                 physical_geographic    154   
+  Q31063     Kristnaskinsulo              physical_geographic    153   
+  Q34575     Egea Maro                    physical_geographic    153   
+  Q5511      Tanganjiko                   physical_geographic    151   
+  Q34497     Sankta Heleno                physical_geographic    147   
+  Q36117     Borneo                       physical_geographic    147   
+  Q40285     Nov-Gvineo                   physical_geographic    147   
+  Q39231     monto Fuĵi                   physical_geographic    146   
+  Q37660     Sudĉina maro                 physical_geographic    143   
+  Q34589     Eŭfrato                      physical_geographic    141   
+  Q35600     Uralo                        physical_geographic    139   
+  Q3960      Aŭstralia kontinento         physical_geographic    136   
+  Q58705     Araba Maro                   physical_geographic    136   
+  Q13987     Kiuŝuo                       physical_geographic    135   
+  Q524       Vezuvio                      physical_geographic    134   
+  Q35342     Lago Titikako                physical_geographic    132   
+  Q36755     Sinajo                       physical_geographic    131   
+  Q12431     Pireneoj                     physical_geographic    130   
+  Q35000     Azova Maro                   physical_geographic    130   
+  Q13991     Ŝikokuo                      physical_geographic    129   
+  Q35591     Tigriso                      physical_geographic    129   
+  Q35958     Bosporo                      physical_geographic    129   
+  Q1471      Sejno                        physical_geographic    128   
+  Q19686     Tamizo                       physical_geographic    128   
+  Q79883     Ormuza markolo               physical_geographic    128   
+  Q34640     Manika Markolo               physical_geographic    127   
+  Q583       Blanka Monto                 physical_geographic    127   
+  Q3812      Sulaveso                     physical_geographic    126   
+  Q40855     Dnepro                       physical_geographic    126   
+  Q1288      Karpatoj                     physical_geographic    125   
+  Q40059     Jordano                      physical_geographic    124   
+  Q8828      Majorko                      physical_geographic    124   
+  Q36124     Ĝibraltara Markolo           physical_geographic    123   
+  Q42000     Tahitio                      physical_geographic    123   
+  Q1644      Elbo                         physical_geographic    122   
+  Q25277     Hispaniolo                   physical_geographic    122   
+  Q2565      Titano                       celestial              120   
+  Q125384    Luzono                       physical_geographic    119   
+  Q41179     Mekongo                      physical_geographic    118   
+  Q42070     Gobio                        physical_geographic    116   
+  Q43048     Rodoso                       physical_geographic    116   
+  Q5477      Kaŭkazo                      physical_geographic    116   
+  Q548       Vistulo                      physical_geographic    116   
+  Q7792      Saĥaleno                     physical_geographic    116   
+  Q7547      Fobo                         celestial              115   
+  Q3143      Eŭropo                       celestial              114   
+  Q6862      Amuro                        physical_geographic    114   
+  Q14056     Janmajeno                    physical_geographic    113   
+  Q39739     Akonkagvo                    physical_geographic    113   
+  Q43105     Elbruso                      physical_geographic    113   
+  Q44725     Beringa Maro                 physical_geographic    113   
+  Q11769     Beringa Markolo              physical_geographic    112   
+  Q3123      Ioo                          celestial              112   
+  Q41735     Irlanda Maro                 physical_geographic    112   
+  Q43512     K2                           physical_geographic    112   
+  Q45403     Bramaputro                   physical_geographic    112   
+  Q46841     Leno                         physical_geographic    112   
+  Q973       Obo                          physical_geographic    112   
+  Q1066      Supra Lago                   physical_geographic    111   
+  Q124873    Mindanao                     physical_geographic    111   
+  Q80240     Uralo                        physical_geographic    111   
+  Q3169      Ganimedo                     celestial              110   
+  Q38882     Tirena Maro                  physical_geographic    110   
+  Q72303     Ararato                      physical_geographic    110   
+  Q7548      Dejmo                        celestial              110   
+  Q1229      Don                          physical_geographic    109   
+  Q5419      Misuro                       physical_geographic    109   
+  Q643       Pado                         physical_geographic    108   
+  Q80344     Olimpo                       physical_geographic    108   
+  Q1169      Miĉigano                     physical_geographic    107   
+  Q1469      Luaro                        physical_geographic    107   
+  Q37960     Flava Maro                   physical_geographic    107   
+  Q552       Odro                         physical_geographic    107   
+  Q6514      Dardaneloj                   physical_geographic    107   
+  Q725591    Bazardüzü                    physical_geographic    107   
+  Q1062      Ontario                      physical_geographic    106   
+  Q14686     Finna golfo                  physical_geographic    106   
+  Q27527     Afrik-Eŭrazio                physical_geographic    106   
+  Q602       Rodano                       physical_geographic    106   
+  Q125309    Ĉada Lago                    physical_geographic    105   
+  Q1285      Apeninoj                     physical_geographic    105   
+  Q131210    Dnistro                      physical_geographic    105   
+  Q3409      Siriuso                      celestial              105   
+  Q48359     Malaka Markolo               physical_geographic    105   
+  Q5532      Malavia Lago                 physical_geographic    105   
+  Q134750    rivero Sankt-Laŭrenco        physical_geographic    104   
+  Q13712     Tibero                       physical_geographic    104   
+  Q33629     Karaa Maro                   physical_geographic    104   
+  Q47141     Atakama-Dezerto              physical_geographic    104   
+  Q47700     Kalaharo                     physical_geographic    104   
+  Q49364     Java Maro                    physical_geographic    104   
+  Q52631     Ibizo                        physical_geographic    104   
+  Q78707     Jenisejo                     physical_geographic    104   
+  Q1027830   Gotlando                     physical_geographic    103   
+  Q25528     Saba                         physical_geographic    103   
+  Q8493      Amudarjo                     physical_geographic    103   
+  Q23408     Buvet-Insulo                 physical_geographic    102   
+  Q26180     Sint Eustatius               physical_geographic    102   
+  Q3134      Kalisto                      celestial              102   
+  Q4648      Balio                        physical_geographic    102   
+  Q82019     Kangchenjunga                physical_geographic    102   
+  Q83067     Timoro                       physical_geographic    102   
+  Q5472      Hindukuŝo                    physical_geographic    101   
+  Q5492      Eria Lago                    physical_geographic    101   
+  Q1265      rivero Kolorado              physical_geographic    100   
+  Q130018    McKinley                     physical_geographic    100   
+  Q131792    Orinoko                      physical_geographic    100   
+  Q1383      Hurona Lago                  physical_geographic    100   
+  Q14294     Taĵo                         physical_geographic    100   
+  Q132726    Jamuna                       physical_geographic     99   
+  Q3359      Tritono                      celestial               99   
+  Q5469      Karakorumo                   physical_geographic     99   
+  Q130135    Atlasa Montaro               physical_geographic     98   
+  Q15288     Ladoga lago                  physical_geographic     98   
+  Q93332     Apalaĉaj Montoj              physical_geographic     98   
+  Q6383      Balatono                     physical_geographic     97   
+  Q645       Neva                         physical_geographic     97   
+  Q12176     Alfa Centaŭro                celestial               96   
+  Q128102    Irtiŝo                       physical_geographic     96   
+  Q161750    Pamiro                       physical_geographic     96   
+  Q162843    Negevo                       physical_geographic     96   
+  Q5474      Tjanŝano                     physical_geographic     96   
+  Q37040     Bafina Golfo                 physical_geographic     95   
+  Q83497     Monto Rushmore               physical_geographic     95   
+  Q159252    Ĉukĉa Maro                   physical_geographic     94   
+  Q163434    Orientsiberia Maro           physical_geographic     94   
+  Q33254     Tasmana Maro                 physical_geographic     94   
+  Q41986     Mozo                         physical_geographic     94   
+  Q483159    Sirdarjo                     physical_geographic     94   
+  Q48365     Magelana markolo             physical_geographic     94   
+  Q8197      Daŭgavo                      physical_geographic     94   
+  Q882739    Blua Nilo                    physical_geographic     94   
+  Q104437    Jukono                       physical_geographic     93   
+  Q131274    Beaufort-maro                physical_geographic     93   
+  Q132868    Gronlanda Maro               physical_geographic     93   
+  Q12124     Betelĝuzo                    celestial               92   
+  Q1374      Materhorno                   physical_geographic     92   
+  Q159621    Anapurno                     physical_geographic     92   
+  Q3303      Encelado                     celestial               92   
+  Q14266     Proksima Centaŭro            celestial               91   
+  Q159183    Filipina Maro                physical_geographic     91   
+  Q3140      Hudsono                      physical_geographic     91   
+  Q81499     Kelta Maro                   physical_geographic     91   
+  Q83318     Bab al-Mandab                physical_geographic     91   
+  Q130736    Nanga Parbat                 physical_geographic     90   
+  Q131418    Timora Maro                  physical_geographic     90   
+  Q132956    Taklamakano                  physical_geographic     90   
+  Q1670      Majno                        physical_geographic     90   
+  Q172702    Karakumo                     physical_geographic     90   
+  Q131377    Namibo                       physical_geographic     89   
+  Q134485    Balkaŝo                      physical_geographic     89   
+  Q165440    Dhaulagiri                   physical_geographic     89   
+  Q229107    Kailash                      physical_geographic     89   
+  Q125888    Albertlago                   physical_geographic     88   
+  Q167021    Zagros-montaro               physical_geographic     88   
+  Q169986    Makalu                       physical_geographic     88   
+  Q172070    Monto Kenja                  physical_geographic     88   
+  Q131230    Mauna Kea                    physical_geographic     87   
+  Q164466    Maro de Ross                 physical_geographic     87   
+  Q377485    Monto Sinajo                 physical_geographic     87   
+  Q42191     Isik-Köl                     physical_geographic     87   
+  Q6414      Garda-Lago                   physical_geographic     87   
+  Q130321    Athos                        physical_geographic     86   
+  Q178167    Monto Kosciuszko             physical_geographic     86   
+  Q131716    Kategato                     physical_geographic     85   
+  Q168702    Lhotse                       physical_geographic     85   
+  Q169274    Sargasa Maro                 physical_geographic     85   
+  Q14081     Monto Ĉimborazo              physical_geographic     84   
+  Q165100    Mozambika kanalo             physical_geographic     84   
+  Q166162    Onega                        physical_geographic     84   
+  Q1695      Skagerrak                    physical_geographic     84   
+  Q184189    Labradora Maro               physical_geographic     84   
+  Q3427      Vego                         celestial               84   
+  Q127031    Markolo de Tajvano           physical_geographic     83   
+  Q160194    Sula Maro                    physical_geographic     83   
+  Q170427    Balkana montaro              physical_geographic     83   
+  Q4527      Okcidentaj Ghatoj            physical_geographic     83   
+  Q125912    Kivuo                        physical_geographic     82   
+  Q172691    Dezerto Tar                  physical_geographic     82   
+  Q4675      Monto Saint Helens           physical_geographic     82   
+  Q15034     Mimaso                       celestial               81   
+  Q170089    Ĉo Oju                       physical_geographic     81   
+  Q484725    Elborz-Montaro               physical_geographic     81   
+  Q143650    Drake-pasejo                 physical_geographic     80   
+  Q150370    Floresa Maro                 physical_geographic     80   
+  Q170070    Manaslu                      physical_geographic     80   
+  Q187890    Kerĉa markolo                physical_geographic     80   
+  Q118388    Valo de Morto                physical_geographic     79   
+  Q40758     Damavando                    physical_geographic     79   
+  Q104674    Ben Nevis                    physical_geographic     78   
+  Q145165    Granda Viktoria-Dezerto      physical_geographic     77   
+  Q171510    Banda Maro                   physical_geographic     76   
+  Q17958     Japeto                       celestial               76   
+  Q3352      Mirando                      celestial               76   
+  Q185291    Moluka Maro                  physical_geographic     73   
+  Q204703    Skotiŝipa Maro               physical_geographic     73   
+  Q208299    Araba dezerto                physical_geographic     73   
+  Q184364    Kizilkumo                    physical_geographic     72   
+  Q199479    Salomona Maro                physical_geographic     72   
+  Q184355    Mojave-Dezerto               physical_geographic     70   
+  Q339162    Siria Dezerto                physical_geographic     70   
+  Q544914    Lakediva Maro                physical_geographic     70   
+  Q200712    Baleara Maro                 physical_geographic     69   
+  Q229269    Rub-al-Ĥalo                  physical_geographic     69   
+  Q189429    Sonora-Dezerto               physical_geographic     67   
+  Q277014    Balia Maro                   physical_geographic     66   
+  Q181528    Libia Dezerto                physical_geographic     65   
+  Q715269    Monda Oceano                 physical_geographic     64   
+  Q14268     Barnarda Stelo               celestial               57   
+  Q326896    Granda Sabla Dezerto         physical_geographic     55   
+  Q12355425  Suda Pacifiko                physical_geographic      8   
+  Q7856408   Testud-insulo                physical_geographic      7   
+  Q12353254  Norda Pacifiko               physical_geographic      3   
+  Q55614502  Insula Hindio                physical_geographic      3   
+  Q34765253  nordokcidenta Pacifiko       physical_geographic      1   
+  Q63860551  nord-orienta Pacifiko        physical_geographic      0   
+
+DRY-RUN — rolled back, nothing written.

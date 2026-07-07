@@ -88,8 +88,8 @@
         100.0
       ]
     },
-    "en_alias_pct": 83.3,
-    "eo_alias_pct": 33.3
+    "en_alias_pct": 100.0,
+    "eo_alias_pct": 50.0
   },
   "oceans": {
     "source": "cache",
@@ -138,7 +138,7 @@
     "eo_alias_pct": 33.3
   },
   "seas": {
-    "source": "cache",
+    "source": "manual",
     "n": 40,
     "coverage": {
       "50": [
@@ -161,7 +161,7 @@
     "eo_alias_pct": 42.5
   },
   "rivers": {
-    "source": "cache",
+    "source": "manual",
     "n": 50,
     "coverage": {
       "50": [
@@ -299,7 +299,7 @@
     "eo_alias_pct": 45.0
   },
   "straits": {
-    "source": "cache",
+    "source": "manual",
     "n": 15,
     "coverage": {
       "50": [

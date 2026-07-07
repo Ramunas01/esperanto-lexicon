@@ -301,7 +301,7 @@ def test_tsv_header_and_row_shape(planets_rows):
         "Tero",
         "celestial",
         "295",
-        "Blue Planet;Terra;Sol III;Tero (planedo)",
+        "en:Blue Planet;en:Terra;en:Sol III;eo:Tero (planedo)",
     ]
 
 

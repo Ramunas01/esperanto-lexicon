@@ -63,6 +63,74 @@ def create_common_lexicon_schema(conn: sqlite3.Connection) -> None:
     conn.commit()
 
 
+def create_named_entity_schema(conn: sqlite3.Connection) -> None:
+    """Create the named-entity inventory tables (v0: physically-permanent core).
+
+    A sibling table set co-located in ``lexicon_v2.db`` for free resolver joins,
+    but **strictly separate** from ``concept`` / ``concept_root`` / ``concept_lang``
+    — this function never touches those. Populated by
+    ``src/lexicon/load_named_entities.py`` from the D7 Wikidata sample.
+
+    Design rule (roadmap **R8**) — enforced here by omission: these entities do
+    **NOT** carry a stored ``tier``. Their tier is *derived later* against a
+    reference group, so the inventory records only sourced ``sitelinks`` salience
+    (dated via ``sitelinks_asof``). **Do not add a ``tier`` column to any of these
+    tables.** ``global_core`` is a group-*invariance* flag (truly reference-group-
+    independent entities: the Moon, oceans, continents) — it is NOT a tier and
+    carries no numeric level; it merely marks the entities a future tier-derivation
+    step will promote wholesale into the common set.
+    """
+    conn.executescript(
+        """
+        CREATE TABLE IF NOT EXISTS named_entity (
+            id             INTEGER PRIMARY KEY AUTOINCREMENT,
+            qid            TEXT NOT NULL UNIQUE,   -- Wikidata QID (CC0 provenance)
+            label_eo       TEXT,                   -- primary EO label (NULL for ~0.4%)
+            label_en       TEXT,                   -- EN label / documented fallback
+            sitelinks      INTEGER,                -- salience datum (sourced, not derived)
+            sitelinks_asof TEXT,                   -- ISO date the salience was captured
+            source         TEXT DEFAULT 'wikidata',
+            global_core    INTEGER NOT NULL DEFAULT 0,  -- group-invariance flag (NOT a tier)
+            status         TEXT DEFAULT 'active'
+            -- NO tier column, by design (R8). Do not add one.
+        );
+
+        -- Junction: an entity may hold >1 coarse type (rare in this physical
+        -- subset). validation = R6 regime; 'correspondence' for every row here
+        -- because all entities in the permanent-physical set have physical referents.
+        CREATE TABLE IF NOT EXISTS named_entity_type (
+            id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            entity_id  INTEGER NOT NULL REFERENCES named_entity(id) ON DELETE CASCADE,
+            ne_type    TEXT NOT NULL,   -- 'celestial' | 'physical_geographic'
+            validation TEXT NOT NULL,   -- R6 regime; 'correspondence' here
+            UNIQUE(entity_id, ne_type)
+        );
+
+        -- EO aliases where present (thin), plus the EN label carried as a
+        -- fallback alias for the handful of rows with no EO primary label.
+        CREATE TABLE IF NOT EXISTS named_entity_alias (
+            id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            entity_id  INTEGER NOT NULL REFERENCES named_entity(id) ON DELETE CASCADE,
+            alias      TEXT NOT NULL,
+            lang       TEXT NOT NULL,   -- 'eo' | 'en'
+            UNIQUE(entity_id, alias, lang)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_named_entity_label_eo
+            ON named_entity(label_eo);
+        CREATE INDEX IF NOT EXISTS idx_named_entity_label_en
+            ON named_entity(label_en);
+        CREATE INDEX IF NOT EXISTS idx_named_entity_type_entity
+            ON named_entity_type(entity_id);
+        CREATE INDEX IF NOT EXISTS idx_named_entity_alias_entity
+            ON named_entity_alias(entity_id);
+        CREATE INDEX IF NOT EXISTS idx_named_entity_alias_alias
+            ON named_entity_alias(alias);
+        """
+    )
+    conn.commit()
+
+
 def create_domain_schema(conn: sqlite3.Connection) -> None:
     """Create domain lexicon tables and indexes for a per-domain SQLite database."""
     conn.executescript(
