@@ -68,3 +68,15 @@ derivation machinery. Never modify existing `tier`/`word`/`cefr_level`/`source`.
   (17 pre-existing untouched), 0 dupe rows, 0 new eo_word collisions. 8 ambiguous multi-concept
   families flagged for review. → **[RAMUNAS] sign off on the dry-run to run the gated `--commit`;
   then Phase 5 `t3_anchor_density` validation.**
+- 2026-07-11 (Programmer): **Phase 4 COMMITTED + Phase 5 DONE. Initiative complete; PR #11 open,
+  not merged.** Gated `--commit` ran with DB backup + single txn + post-write audit (auto-rollback
+  armed). Persisted: **+127 concepts (4974→5101), +2,605 Tier-3 EN rows (96→2,701, source=awl_t3),
+  +129 concept_root.** Independent audit: **0 eo_root↔head mismatches** (whole DB). Special cases
+  verified in the live DB: `via`→LINK `per` (2578); Esperanto possessive `via` (2679='your')
+  untouched; `dynamic`→concept 4976 eo_root=`dinamik` (not `amik`). 8 AMBIG families accepted
+  as-is; `whereby` left deferred. **Phase 5 (one-time A/B, backup vs merged, same 29-text
+  proficiency corpus + 4 domain DBs):** coverage win — **−802 UNKNOWN tokens** (25.7%→22.0%),
+  Tier-3 recognition 4.5%→8.2%. `t3_anchor_density` rose in all strata but **expert/control
+  separation NARROWED 7.3×→3.3×** (AWL is domain-general → lifts controls too) — reported honestly
+  as neutral-to-slightly-negative for discrimination; T4 measures (cooccur_density ∞, t4_ratio 8.9×)
+  unaffected and remain the strong separators. Report: `data/analysis/tier3/t3_validation.md`.
