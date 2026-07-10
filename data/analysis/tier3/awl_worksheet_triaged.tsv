@@ -1,0 +1,571 @@
+sublist	family_head	decision	corrected_eo_word	note	action	current_eo_word	eo_gloss	flag
+2	administrate	fix	administri	to administer/manage [ESPDIC]				no_match
+3	constrain	fix	limigi	constrain/limit=limigi				no_match
+7	dynamic	fix	dinamika	decomposer split din+amik was wrong; dynamic=dinamika	NEW	dinamika	dynamic	compound
+5	enforce	fix	devigi	enforce=devigi (compel/apply)	LINK			no_match
+3	ensure	fix	certigi	ensure=certigi (make certain)	LINK			no_match
+10	forthcoming	fix	venonta	forthcoming/upcoming=venonta				no_match
+4	hence	fix	sekve	connective 'hence'=sekve (adv) — prime T3 connective			from here, hence	no_match
+6	incidence	fix	incidenco	incidence=incidenco (or ofteco=frequency)				no_match
+7	innovate	fix	novigi	innovate=novigi (or inovacii)				no_match
+10	nonetheless	fix	tamen	nonetheless=tamen — T3 connective				no_match
+10	ongoing	fix	daŭra	ongoing=daŭra (continuing)				no_match
+9	qualitative	fix	kvalita	kvalit+a; well-formed				no_match
+8	thereby	fix	tiel	thereby=tiel / per tio — T3 connective			thereby	no_match
+8	via	fix	per	via=per/tra; NB Esperanto 'via'='your' — do NOT use it	LINK			no_match
+10	whereby	fix	per kio	whereby=per kio — T3 connective			whereby	no_match
+8	abandon	approve			LINK	delasi	to abandon	ok
+6	abstract	approve			NEW	deteni	to abstract, restrain, detain, hold	ok
+5	academy	approve			LINK	akademio	academy	ok
+4	access	approve			LINK	aliro	access, approach	ok
+9	accommodate	approve			LINK	cedi	to cede, give in, yield, comply, concede, grant, accommodate	ok
+8	accompany	approve			LINK	kunludi	to accompany	ok
+8	accumulate	approve			NEW	akumuli	to accumulate, heap, pile up, stack, hoard	ok
+6	accurate	approve			LINK	fidela	accurate, exact, faithful, loyal, staunch, trusty, trustworthy	ok
+2	achieve	approve			LINK	fari	to achieve, act, do, make, perform, build	ok
+6	acknowledge	approve			LINK	agnoski	to acknowledge, recognize (as official)	ok
+2	acquire	approve			LINK	akiri	to achieve, acquire, attain, get, obtain	ok
+7	adapt	approve			LINK	adapti	to accommodate, adapt, adjust, attune, fix, fit, mount, place, tune	ok
+4	adequate	approve			LINK	sufiĉa	adequate, ample, enough, sufficient	ok
+10	adjacent	approve			LINK	apuda	adjacent, adjoining, contiguous, next to, neighboring	ok
+5	adjust	approve			LINK	pondi	to adjust	ok
+7	adult	approve			LINK	adolto	adult	ok
+7	advocate	approve			LINK	proponi	to propose, offer, advocate, suggest	ok
+2	affect	approve			LINK	emocii	to affect, move, stir	ok
+6	aggregate	approve			LINK	suma	aggregate	ok
+7	aid	approve			LINK	helpi	to accommodate, aid, assist, help	ok
+10	albeit	approve			LINK	kvankam	albeit, though, although, while	ok
+6	allocate	approve			LINK	okupi	to occupy, employ, engage, allocate	ok
+5	alter	approve			LINK	aliigi	to alter, change, turn, modify, transform (sth into sth)	ok
+3	alternative	approve			LINK	elekteco	alternative	ok
+8	ambiguous	approve			NEW	ambigua	ambiguous	ok
+5	amend	approve			LINK	ripari	to fix, repair, mend, redress, amend, restore, recover	ok
+9	analogy	approve			NEW	analogio	analogy	ok
+1	analyse	approve			LINK	analizi	to analyze, assay, construe, parse	ok
+4	annual	approve			LINK	jara	annual	ok
+9	anticipate	approve			LINK	anticipi	to anticipate, expect, think ahead	ok
+4	apparent	approve			LINK	ŝajna	apparent, seeming, illusive, illusory, sham, suspect	ok
+8	append	approve			LINK	aldoni	to add (to), append, supplement	ok
+8	appreciate	approve			LINK	ŝati	to appreciate, like, prize, value, esteem, think highly of, relish	ok
+1	approach	approve			LINK	aliri	to advance, approach, come on, access (database, disk)	ok
+2	appropriate	approve			LINK	buĝeti	to appropriate	ok
+4	approximate	approve			LINK	baldaŭa	approaching, approximate, nigh (time), speedy	ok
+8	arbitrary	approve			LINK	ajn	any kind of, whatsoever, arbitrary	ok
+1	area	approve			LINK	areo	area, selection, region	ok
+2	aspect	approve			LINK	fazo	phase, stage, aspect	ok
+10	assemble	approve			LINK	munti	to assemble, link, mount, set, build	ok
+1	assess	approve			LINK	taksi	to appraise, estimate, rate, assess, tax, value, evaluate	ok
+6	assign	approve			LINK	taski	to assign	ok
+2	assist	approve			LINK	helpi	to accommodate, aid, assist, help	ok
+1	assume	approve			LINK	supozi	to assume, guess, presume, suppose, surmise	ok
+9	assure	approve			LINK	asekuri	to assure, insure, underwrite	ok
+6	attach	approve			LINK	fiksi	to attach, determine, fasten, fix, affix, make fast, secure, freeze, latch	ok
+9	attain	approve			LINK	akiri	to achieve, acquire, attain, get, obtain	ok
+4	attitude	approve			LINK	teniĝo	attitude, bearing, deportment, posture	ok
+4	attribute	approve			NEW	eco	property, quality, attribute, qualification	ok
+6	author	approve			LINK	aŭtori	to author	ok
+1	authority	approve			LINK	rajto	entitlement, right, authority	ok
+8	automate	approve			LINK	aŭtomato	acceptor, automate, automaton	ok
+1	available	approve			LINK	havebla	available	ok
+5	aware	approve			LINK	konscia	aware, conscious	ok
+9	behalf	approve			LINK	parto	part, share, portion, section, quota, behalf	ok
+1	benefit	approve			LINK	gajno	benefit, gain, profit, boon	ok
+8	bias	approve			NEW	biaso	bias	ok
+6	bond	approve			LINK	ligilo	band, strap, bond, tie, leash, tether, linker, link (WWW)	ok
+6	brief	approve			LINK	lakona	brief, laconic, concise, succinct	ok
+9	bulk	approve			LINK	amasa	heavy, mass, massive, bulk	ok
+6	capable	approve			LINK	kapabla	able, capable, apt, qualified	ok
+5	capacity	approve			LINK	ofico	capacity, function, job, office, position, post, employment	ok
+2	category	approve			LINK	kategorio	category	ok
+9	cease	approve			LINK	ĉesi	to cease, stop, leave off, desist, quit, end	ok
+5	challenge	approve			LINK	defii	to challenge, defy	ok
+7	channel	approve			LINK	tubo	barrel, channel, pipe, tube, conduit, duct, stem	ok
+2	chapter	approve			LINK	sekcio	branch, chapter, section	ok
+8	chart	approve			LINK	abako	abacus, ball frame, counting frame, calculating frame, chart	ok
+7	chemical	approve			LINK	kemia	chemical	ok
+3	circumstance	approve			LINK	cirkonstanco	circumstance	ok
+6	cite	approve			LINK	citi	to cite, quote, mention	ok
+4	civil	approve			LINK	civila	civil, civilian, non-military, secular	ok
+8	clarify	approve			NEW	klarigi	to account for, clarify, explain, elucidate, make clear	ok
+7	classic	approve			LINK	klasika	classic, classical	ok
+5	clause	approve			LINK	klaŭzo	clause	ok
+4	code	approve			LINK	kodi	to code, encode	ok
+9	coherent	approve			NEW	kohera	coherent, connected, consistent, stuck together	ok
+9	coincide	approve			LINK	kongrui	to agree, be compatible, coincide, fit together, match, correspond (to)	ok
+10	collapse	approve			LINK	disfali	to collapse, fall to pieces	ok
+10	colleague	approve			LINK	kolego	associate, classmate, coworker, colleague, companion, comrade, schoolmate	ok
+9	commence	approve			NEW	ekigi	to begin, commence, start	ok
+3	comment	approve			LINK	komenta	comment	ok
+2	commission	approve			LINK	komisii	to appoint, assign, authorize, charge, entrust, instruct, commission	ok
+4	commit	approve			LINK	enmeti	to insert, put in, put away, stow, deposit, commit, check in	ok
+8	commodity	approve			LINK	varo	commodity, ware, good(s), merchandise	ok
+4	communicate	approve			LINK	kontaĝi	to communicate	ok
+2	community	approve			LINK	komunaĵo	common property, community, intersection (of sets), pool	ok
+9	compatible	approve			LINK	akorda	compatible, consistent	ok
+3	compensate	approve			NEW	redoni	to compensate, give back, return, render, restore, pay back, refund, repay, retaliate, return, reflect, reproduce	ok
+10	compile	approve			NEW	kompili	to compile	ok
+8	complement	approve			NEW	komplementi	to complement	ok
+2	complex	approve			LINK	artifika	contrived, sophisticated, complex, tricky	ok
+3	component	approve			LINK	ero	element, fragment, item, entry, particle, item, unit, piece, grain, component, segment; era	ok
+5	compound	approve			LINK	kombino	combination, compound	ok
+7	comprehensive	approve			LINK	ampleksa	ample, bulky, extensive, comprehensive	ok
+7	comprise	approve			LINK	enhavi	to comprise, contain, include, hold	ok
+2	compute	approve			LINK	kalkuli	to calculate, count, figure, work out, compute, reckon, enumerate	ok
+10	conceive	approve			NEW	koncipi	to become pregnant, conceive	ok
+4	concentrate	approve			LINK	centri	to center, centralize, concentrate	ok
+1	concept	approve			LINK	nocio	notion, concept	ok
+2	conclude	approve			LINK	fini	to end, finish, terminate, close, conclude	ok
+9	concurrent	approve			NEW	kunkura	concurrent	ok
+2	conduct	approve			LINK	gvidi	to conduct, direct, drive, guide, lead, show the way	ok
+4	confer	approve			LINK	doni	to give, administer, afford, allow, confer, grant, impart, provide, spare, yield	ok
+9	confine	approve			NEW	limigi	to abridge, confine, limit, restrict, circumscribe, delimit	ok
+7	confirm	approve			LINK	jesigi	to certify, confirm	ok
+5	conflict	approve			LINK	konflikto	clash, conflict, antagonism	ok
+8	conform	approve			NEW	konformi	to be in line with, conform, fit (in)	ok
+3	consent	approve			LINK	konsenti	to agree, consent, concur, admit, approve, be in accord (with), be in harmony with, comply with	ok
+2	consequent	approve			NEW	postsekva	consequent	ok
+3	considerable	approve			NEW	ega	considerable, major, great, enormous, intense, extreme	ok
+1	consist	approve			LINK	konsisti	to consist	ok
+3	constant	approve			LINK	daŭra	abiding, lasting, enduring, continuous, permanent, constant, persistent	ok
+1	constitute	approve			NEW	konstitui	to account for, constitute, make up	ok
+2	construct	approve			LINK	konstrui	to build, construct, craft, erect, establish	ok
+5	consult	approve			LINK	konsili	to advise, counsel, consult	ok
+2	consume	approve			LINK	elĉerpi	to ladle out, scoop out, exhaust, use up, consume	ok
+5	contact	approve			LINK	kontakti	to contact	ok
+8	contemporary	approve			LINK	aktuala	contemporary, current, present(-day) topical, up-to-date, live	ok
+1	context	approve			LINK	kadraĵo	box, cadre, context, frame, framework, level, official, parameters	ok
+1	contract	approve			LINK	kontrakto	agreement, compact, contract, treaty, deal, pact, covenant, pact	ok
+8	contradict	approve		valid compound; flag was a false alarm	NEW	kontraŭdiri	to contradict, gainsay	compound
+7	contrary	approve			LINK	mala	contrary, opposite, converse	ok
+4	contrast	approve			LINK	kontrasti	to contrast, exhibit contrast, show difference, stand out	ok
+3	contribute	approve			LINK	kotizi	to contribute, subscribe	ok
+9	controversy	approve			NEW	polemiko	controversy, polemic, dispute	ok
+3	convene	approve			LINK	kongresi	to convene, hold or attend a congress	ok
+9	converse	approve			LINK	mala	contrary, opposite, converse	ok
+7	convert	approve			LINK	konverti	to convert, proselytize, transform	ok
+10	convince	approve			LINK	konvinki	to convince, persuade	ok
+6	cooperate	approve			LINK	kunagi	to cooperate	ok
+3	coordinate	approve			NEW	kunordigi	to coordinate, merge, track (torrent)	ok
+3	core	approve			LINK	kerno	core, kernel, nucleus, pit, stone	ok
+3	corporate	approve			LINK	korporacia	corporate	ok
+3	correspond	approve			LINK	kongrui	to agree, be compatible, coincide, fit together, match, correspond (to)	ok
+7	couple	approve			LINK	duo	couple, pair	ok
+1	create	approve			LINK	krei	to compose, create, produce, make	ok
+2	credit	approve			LINK	agnosko	acknowledgment, credit	ok
+3	criteria	approve			LINK	kriterioj	criteria	ok
+8	crucial	approve			LINK	kerna	central, crucial, key	ok
+2	culture	approve			LINK	kulturo	culture	ok
+8	currency	approve			LINK	valuta	currency	ok
+4	cycle	approve			LINK	cikli	to cycle	ok
+1	data	approve			LINK	datao	data	ok
+4	debate	approve			LINK	debati	to beat off, knock off, strike off, debate	ok
+7	decade	approve			LINK	dekado	decade	ok
+5	decline	approve			LINK	defalo	decline, downfall, drop, fall	ok
+3	deduce	approve			NEW	dedukti	to deduce, gather	ok
+1	define	approve			LINK	difini	to allot, define, determine	ok
+7	definite	approve			LINK	nepri	to be absolute, definite	ok
+3	demonstrate	approve			LINK	pruvi	to demonstrate, prove, substantiate	ok
+8	denote	approve			NEW	montri	to indicate, point out, show, denote, expose, view	ok
+7	deny	approve			LINK	nei	to deny, say no, disown, repudiate, negate	ok
+10	depress	approve			LINK	premi	to press, oppress, squeeze, grasp, push, hold down, depress, hit (a key)	ok
+1	derive	approve			NEW	derivi	to derive, differentiate	ok
+2	design	approve			LINK	plano	design, diagram, plan, blueprint	ok
+4	despite	approve			LINK	spite	defiantly, despite, in spite of	ok
+8	detect	approve			LINK	detekti	to detect	ok
+8	deviate	approve			NEW	devii	to deviate, turn	ok
+9	device	approve			LINK	devizo	device, motto, watchword, slogan, rallying cry; draft on foreign bank	ok
+9	devote	approve			NEW	iĉi	to devote	ok
+7	differentiate	approve			NEW	derivi	to derive, differentiate	ok
+4	dimension	approve			LINK	grando	dimension, size, magnitude	ok
+9	diminish	approve			NEW	diminui	to diminish	ok
+5	discrete	approve			NEW	diskreta	discrete, countable, denumerable	ok
+6	discriminate	approve			NEW	distingi	to differentiate, discern, discriminate, distinguish, mark	ok
+8	displace	approve			NEW	deloki	to displace	ok
+6	display	approve			LINK	pompo	display, pomp, splendor	ok
+7	dispose	approve			NEW	destini	to assign, consign, designate, destine, dispose, earmark, ordain	ok
+2	distinct	approve			LINK	neta	cleanly cut, neat, precise, net (weight, etc.), distinct	ok
+9	distort	approve			NEW	misigi	to distort	ok
+1	distribute	approve			LINK	disdoni	to deal out, distribute, dispense, give out, share, dispatch	ok
+6	diverse	approve			LINK	diversa	different, diverse, varied, various, sundry, miscellaneous	ok
+3	document	approve			LINK	akto	act, certificate, diploma, (legal) document, deed	ok
+6	domain	approve			LINK	bieno	domain, estate, farm, property, ranch, land, ground(s)	ok
+4	domestic	approve			LINK	doma	domestic, of a house	ok
+3	dominate	approve			LINK	domini	to dominate	ok
+5	draft	approve			LINK	kambio	bill of exchange, draft, letter of exchange	ok
+8	drama	approve			LINK	dramo	drama, thriller	ok
+9	duration	approve			LINK	daŭro	duration, space (time), lapse (of time)	ok
+1	economy	approve			LINK	ŝparo	economy, saving	ok
+6	edit	approve			LINK	eldoni	to issue, publish, edit, release	ok
+2	element	approve			LINK	ero	element, fragment, item, entry, particle, item, unit, piece, grain, component, segment; era	ok
+7	eliminate	approve			NEW	elmeti	to eliminate, expose, show goods	ok
+4	emerge	approve			LINK	aperi	to appear, come into sight, emerge, materialize, perform, be published	ok
+3	emphasis	approve			LINK	emfazo	accent, emphasis	ok
+7	empirical	approve			NEW	empiria	empirical, objective	ok
+5	enable	approve			LINK	ŝalti	to switch (on), turn on, activate, enable	ok
+10	encounter	approve			LINK	trafi	to attain, catch, encounter, find, hit, run across, score, strike	ok
+5	energy	approve			LINK	energio	energy, spirit	ok
+6	enhance	approve			LINK	plibonigi	to ameliorate, improve, reform, enhance, upgrade	ok
+10	enormous	approve			LINK	ega	considerable, major, great, enormous, intense, extreme	ok
+5	entity	approve			LINK	aĵo	entity, thing	ok
+1	environment	approve			LINK	etoso	atmosphere, environment, ethos, mood, look-and-feel, skin, theme	ok
+2	equate	approve			NEW	egaligi	to equalize, even, level, match, equate	ok
+7	equip	approve			LINK	ekipi	to equip, outfit	ok
+5	equivalent	approve			LINK	ekvivalenta	equivalent	ok
+9	erode	approve			NEW	erozii	to erode	ok
+4	error	approve			LINK	eraro	aberration, error, mistake, erratum, fault, bug	ok
+1	establish	approve			LINK	fondi	to erect, establish, form, found, institute	ok
+6	estate	approve			LINK	bieno	domain, estate, farm, property, ranch, land, ground(s)	ok
+1	estimate	approve			LINK	taksi	to appraise, estimate, rate, assess, tax, value, evaluate	ok
+9	ethic	approve			LINK	etiko	ethic, ethics, morals	ok
+4	ethnic	approve			NEW	etna	ethnic	ok
+2	evaluate	approve			LINK	taksi	to appraise, estimate, rate, assess, tax, value, evaluate	ok
+8	eventual	approve			NEW	eventuala	contingent, eventual	ok
+1	evident	approve			LINK	evidenta	evident, obvious, manifest, unmistakable, clear	ok
+5	evolve	approve			NEW	evolui	to develop, evolve	ok
+6	exceed	approve			LINK	superi	to exceed, excel, prevail, surpass, outdo, top, be superior to	ok
+3	exclude	approve			NEW	eksigi	to discharge, dismiss, fire, sack, exclude, recall, prevent	ok
+8	exhibit	approve			LINK	ekzibi	to exhibit	ok
+5	expand	approve			LINK	dilati	to dilate, expand	ok
+6	expert	approve			LINK	lerta	able, adroit, clever, dexterous, skillful, expert, talented, handy	ok
+6	explicit	approve			LINK	klara	clear, distinct, plain, explicit, lucid, manifest	ok
+8	exploit	approve			NEW	misuzi	to abuse, misuse, exploit	ok
+1	export	approve			LINK	elporti	to bear, carry out, endure, put up with, suffer; to export	ok
+5	expose	approve			LINK	denudi	to expose	ok
+5	external	approve			LINK	ekstera	external, outer, outside	ok
+7	extract	approve			LINK	ĉerpi	to bail, draw (water), excerpt, extract, spoon	ok
+5	facilitate	approve			NEW	faciligi	to make easy, facilitate	ok
+1	factor	approve			LINK	faktoro	agent, factor, steward	ok
+2	feature	approve			LINK	eblo	possibility, feature, ability	ok
+6	federal	approve			LINK	federa	federal, federative	ok
+6	fee	approve		valid compound; flag was a false alarm	LINK	honorario	fee, honorarium, remuneration	compound
+7	file	approve			LINK	aro	collection, group, set, bunch, cluster, file, pool; are (100 square meters)	ok
+2	final	approve			LINK	fina	final	ok
+1	finance	approve			LINK	financi	to finance	ok
+7	finite	approve			NEW	finia	finite	ok
+6	flexible	approve			LINK	fleksa	flexible	ok
+8	fluctuate	approve			NEW	fluktui	to fluctuate	ok
+2	focus	approve			LINK	fokusi	to focus	ok
+9	format	approve			LINK	aranĝo	accommodation, adjustment, arrangement, layout, format	ok
+1	formula	approve			NEW	formula	formula	ok
+9	found	approve			LINK	fondi	to erect, establish, form, found, institute	ok
+7	foundation	approve			LINK	fundo	bottom, foundation, ground	ok
+3	framework	approve			LINK	framo	frame, framework, substructure, skeleton	ok
+1	function	approve			LINK	ofico	capacity, function, job, office, position, post, employment	ok
+3	fund	approve			LINK	fonduso	fund	ok
+5	fundamental	approve			LINK	fundamenta	foundational, fundamental, base, basis	ok
+6	furthermore	approve			LINK	plue	besides, furthermore, in addition, moreover, further	ok
+6	gender	approve			NEW	genro	gender, genus	ok
+5	generate	approve			LINK	naski	to bear, give birth to, bring forth, generate, spawn	ok
+5	generation	approve			LINK	generacio	generation	ok
+7	globe	approve			LINK	globo	ball, ball bearing, globe, billiard ball, sphere	ok
+4	goal	approve			LINK	celo	aim, goal, purpose, target, purpose, objective, aspiration	ok
+7	grade	approve			LINK	noto	annotation, note, grade, memorandum, bulletin, mark	ok
+4	grant	approve			LINK	cedi	to cede, give in, yield, comply, concede, grant, accommodate	ok
+7	guarantee	approve			LINK	avalo	guarantee (of payment), backing	ok
+8	guideline	approve		valid compound; flag was a false alarm	LINK	gvidlinio	guideline	compound
+7	hierarchy	approve			NEW	hierarkio	hierarchy	ok
+8	highlight	approve			LINK	marki	to mark, tag, highlight	ok
+4	hypothesis	approve			NEW	hipotezo	hypothesis	ok
+7	identical	approve			LINK	identa	identical	ok
+1	identify	approve			LINK	identigi	to identify	ok
+7	ideology	approve			NEW	ideologio	ideology	ok
+6	ignorant	approve			LINK	malklera	dull, stupid, ignorant, illiterate, uncultured, uneducated, simple	ok
+3	illustrate	approve			LINK	ilustri	to illustrate	ok
+5	image	approve			LINK	bildo	image, picture	ok
+3	immigrate	approve			LINK	enmigri	to immigrate	ok
+2	impact	approve			LINK	kunfrapo	impact	ok
+4	implement	approve			LINK	ilo	agent, means, tool, implement, instrument	ok
+4	implicate	approve			LINK	impliki	to entangle, implicate, infer	ok
+8	implicit	approve			LINK	implica	implicit, implicative	ok
+3	imply	approve			LINK	implici	to imply	ok
+4	impose	approve			LINK	trudi	to assert, coerce, force, impose, thrust	ok
+6	incentive	approve			LINK	kaŭzo	cause, reason, incentive, motive	ok
+10	incline	approve			LINK	klini	to bend, incline, tilt, lean, slope, tilt	ok
+1	income	approve			LINK	rento	annuity, dividend, income, return, revenue	ok
+6	incorporate	approve			NEW	enkorpigi	to embed, incorporate, embody	ok
+6	index	approve			LINK	indico	index, indicant	ok
+1	indicate	approve			LINK	signi	to indicate, point out, show	ok
+1	individual	approve			LINK	poa	individual	ok
+8	induce	approve			LINK	tenti	to entice, induce, tempt	ok
+8	inevitable	approve			LINK	fatala	fated, fateful, ill-fated, inevitable, ruinous	ok
+7	infer	approve			LINK	impliki	to entangle, implicate, infer	ok
+8	infrastructure	approve			NEW	infrstrukturo	infrastructure	ok
+9	inherent	approve			NEW	imanenta	immanent, indwelling, inherent (in), intrinsic	ok
+6	inhibit	approve			NEW	inhibi	to inhibit	ok
+3	initial	approve			LINK	parafi	to initial	ok
+6	initiate	approve			NEW	inici	to introduce to, let into, initiate	ok
+2	injure	approve			LINK	lezi	to harm, hurt, injure	ok
+6	input	approve			NEW	enigi	to enter, input, put in, insert	ok
+7	insert	approve			LINK	anigu	include, insert	ok
+9	insight	approve			LINK	elsciado	insight	ok
+8	inspect	approve			NEW	revizi	to audit, inspect, overhaul, revise	ok
+3	instance	approve			LINK	apero	apparition, appearance, occurrence, instance	ok
+2	institute	approve			LINK	fondi	to erect, establish, form, found, institute	ok
+6	instruct	approve			NEW	edukadi	to educate, instruct	ok
+9	integral	approve			LINK	plena	complete, full, integral, plenary, thorough, whole	ok
+4	integrate	approve			NEW	integri	to integrate	ok
+10	integrity	approve			NEW	rekteco	integrity, rectitude, uprightness	ok
+6	intelligent	approve			LINK	inteligenta	intelligent, sagacious	ok
+8	intense	approve			LINK	ega	considerable, major, great, enormous, intense, extreme	ok
+3	interact	approve			NEW	interagi	to interact	ok
+9	intermediate	approve			LINK	intera	intermediate	ok
+4	internal	approve			LINK	interna	back-end, internal, domestic, inner, inside	ok
+1	interpret	approve			LINK	traduki	to interpret, translate, compile	ok
+6	interval	approve			LINK	paŭzo	break, intermission, pause, recess, interval, rest, stop	ok
+7	intervene	approve			NEW	interveni	to interfere, intervene	ok
+10	intrinsic	approve			LINK	vera	genuine, intrinsic, true, veritable, authentic	ok
+2	invest	approve			LINK	plasi	to invest	ok
+4	investigate	approve			LINK	enketi	to inquire, investigate, make an inquiry, survey	ok
+10	invoke	approve			NEW	alvoki	to appeal to, invoke	ok
+1	involve	approve			LINK	engaĝi	to engage, involve	ok
+7	isolate	approve			NEW	izoli	to insulate, isolate, seclude	ok
+1	issue	approve			LINK	idaro	descendants, issue, offspring, posterity, progeny, young	ok
+2	item	approve			LINK	ano	member, supporter, item, entry	ok
+4	job	approve			LINK	ofico	capacity, function, job, office, position, post, employment	ok
+2	journal	approve			LINK	revuo	journal, magazine, periodical, review	ok
+3	justify	approve			LINK	kialigi	to explain, give reasons, explain motivations, justify	ok
+4	label	approve			LINK	marko	brand, marker, tag, label	ok
+1	labour	approve			NEW	akuŝi	to (be in) labor, be in the process of giving birth	ok
+3	layer	approve			LINK	lameno	lamina, layer, plate	ok
+6	lecture	approve			LINK	lekcii	to lecture	ok
+1	legal	approve			LINK	jura	legal	ok
+1	legislate	approve		valid compound; flag was a false alarm	NEW	leĝdoni	to legislate	compound
+10	levy	approve			NEW	pagigo	levy	ok
+5	liberal	approve			NEW	liberala	liberal	ok
+5	licence	approve			LINK	licenci	to authorize, license	ok
+10	likewise	approve			LINK	same	equally, likewise	ok
+3	link	approve			LINK	ligi	to bind, connect, join, tie (up), dock, link	ok
+3	locate	approve			LINK	loki	to locate, place	ok
+5	logic	approve			LINK	logiko	logic	ok
+2	maintain	approve			LINK	pluigi	to continue, extend, go on, maintain, proceed with, sustain	ok
+1	major	approve			LINK	ega	considerable, major, great, enormous, intense, extreme	ok
+8	manipulate	approve			NEW	manuzi	to handle, manipulate, use	ok
+9	manual	approve			LINK	mana	manual	ok
+5	margin	approve			NEW	marĝeno	margin	ok
+9	mature	approve			LINK	matura	mature, ripe, full-grown, mature	ok
+3	maximise	approve			NEW	maksimumigi	to maximize	ok
+4	mechanism	approve			LINK	mekanismo	action, mechanism	ok
+7	media	approve			LINK	prikomunikila	media, about media	ok
+9	mediate	approve			LINK	peri	to act as agent, act as go-between, mediate	ok
+5	medical	approve			LINK	kuraca	medical	ok
+9	medium	approve			LINK	meza	average, mean, middle, medium, central	ok
+5	mental	approve			LINK	mensa	mental	ok
+1	method	approve			LINK	metodo	method	ok
+6	migrate	approve			LINK	migri	to migrate, roam, wander, wander about, travel about	ok
+9	military	approve			LINK	armea	military	ok
+9	minimal	approve			NEW	plejeta	minimal	ok
+8	minimise	approve			NEW	plejetigi	to minimize	ok
+6	minimum	approve			LINK	minimuma	minimal, minimum	ok
+6	ministry	approve			NEW	ordino	holy order, ministry	ok
+3	minor	approve			LINK	ioma	slight, minor	ok
+7	mode	approve			LINK	modo	fashion, mode, mood	ok
+5	modify	approve			LINK	ŝanĝi	to change, turn, modify, make changes	ok
+5	monitor	approve			LINK	ekrano	display, monitor, screen, visual display unit	ok
+6	motive	approve			LINK	kaŭzo	cause, reason, incentive, motive	ok
+9	mutual	approve			LINK	mutuala	friendly, mutual	ok
+3	negate	approve			LINK	nei	to deny, say no, disown, repudiate, negate	ok
+5	network	approve			LINK	reto	net, network, web	ok
+6	neutral	approve			NEW	neŭtra	neuter, neutral	ok
+6	nevertheless	approve			LINK	tamen	but, however, nevertheless, yet, notwithstanding, still	ok
+9	norm	approve			LINK	normi	to standardize, norm	ok
+2	normal	approve			LINK	norma	normal, standard	ok
+5	notion	approve			LINK	nocio	notion, concept	ok
+10	notwithstanding	approve			NEW	tamen	but, however, nevertheless, yet, notwithstanding, still	ok
+8	nuclear	approve			LINK	nuklea	nuclear	ok
+5	objective	approve			LINK	celo	aim, goal, purpose, target, purpose, objective, aspiration	ok
+2	obtain	approve			LINK	akiri	to achieve, acquire, attain, get, obtain	ok
+4	obvious	approve			LINK	videbla	visible, apparent, obvious	ok
+4	occupy	approve			LINK	okupi	to occupy, employ, engage, allocate	ok
+1	occur	approve			LINK	agadi	to act, occur, take place	ok
+10	odd	approve			LINK	bizara	bizarre, odd, weird, eccentric, strange, odd	ok
+8	offset	approve			NEW	deiĝo	offset	ok
+4	option	approve			LINK	opcio	choice, option	ok
+5	orient	approve			LINK	orienti	to orient, orientate	ok
+3	outcome	approve			LINK	elveno	outcome	ok
+4	output	approve			NEW	eligi	to discharge, express, utter, output, give off, let out, take out, eject	ok
+4	overall	approve			LINK	tuta	all, entire, overall, whole, total, complete	ok
+9	overlap	approve			NEW	surmeteco	overlap	ok
+6	overseas	approve			LINK	fremdlanda	alien, foreign, offshore, overseas	ok
+10	panel	approve			LINK	panelo	board, panel, dashboard	ok
+7	paradigm	approve			NEW	paradigmo	paradigm	ok
+8	paragraph	approve			LINK	alineo	paragraph (text), indentation	ok
+4	parallel	approve			NEW	paralela	parallel	ok
+4	parameter	approve		valid compound; flag was a false alarm	NEW	parametro	parameter	compound
+2	participate	approve			LINK	partpreni	to participate	ok
+3	partner	approve			LINK	kunulo	associate, companion, consort, mate, partner	ok
+9	passive	approve			LINK	flegma	impassive, passive, stolid, indifferent, calm	ok
+2	perceive	approve			LINK	sensi	to perceive, sense	ok
+1	percent	approve			LINK	elcento	percent, percentage	ok
+1	period	approve			LINK	epoko	age, epoch, era, period	ok
+10	persist	approve			LINK	daŭri	to continue, endure, keep on, last, go on, persist	ok
+5	perspective	approve			LINK	perspektivo	perspective, prospect	ok
+4	phase	approve			LINK	fazo	phase, stage, aspect	ok
+7	phenomenon	approve			LINK	fenomeno	phenomenon	ok
+3	philosophy	approve			LINK	skolo	school (of art, philosophy, thought, etc)	ok
+3	physical	approve			LINK	korpa	bodily, body, corporal, corporeal, of the body, physical	ok
+8	plus	approve			LINK	plus	plus	ok
+1	policy	approve			LINK	poliso	policy, insurance policy	ok
+9	portion	approve			LINK	ono	portion, fraction, fragment, share, digit	ok
+10	pose	approve			LINK	pozi	to pose	ok
+2	positive	approve			LINK	konkreta	concrete, not abstract, perceptible, real, positive	ok
+2	potential	approve			LINK	poviga	potential	ok
+8	practitioner	approve			NEW	praktikanto	practitioner	ok
+6	precede	approve			LINK	antaŭi	to precede	ok
+5	precise	approve			LINK	neta	cleanly cut, neat, precise, net (weight, etc.), distinct	ok
+4	predict	approve			LINK	aŭguri	to augur, forecast, foretell, prophesy, foreshadow, predict	ok
+8	predominant	approve			LINK	precipa	chief, main, predominant, principal	ok
+9	preliminary	approve			LINK	prepara	preliminary, preparatory, prior	ok
+6	presume	approve			LINK	supozi	to assume, guess, presume, suppose, surmise	ok
+2	previous	approve			LINK	iama	of a time, former, previous, one-time	ok
+2	primary	approve			LINK	unua	first, foremost, premier, primary	ok
+5	prime	approve			LINK	prima	prime (number)	ok
+4	principal	approve			LINK	ĉefa	main, major, master, primary, cardinal, chief, principal, premier	ok
+1	principle	approve			LINK	leĝo	law, principle	ok
+4	prior	approve			LINK	antaŭa	advance, advanced, antecedent, anterior, earlier, former, forward, past, preceding, previous, prior	ok
+7	priority	approve			LINK	antaŭeco	precedence, priority	ok
+1	proceed	approve			NEW	procedi	to act, proceed	ok
+1	process	approve			LINK	trakti	to deal with, handle, treat, process	ok
+4	professional	approve			LINK	isto	professional	ok
+7	prohibit	approve			NEW	tabui	to make taboo, prohibit, outlaw	ok
+4	project	approve			LINK	elstari	to project, protrude	ok
+4	promote	approve			LINK	akceli	to accelerate, advance, further, hasten, promote, speed up	ok
+3	proportion	approve			NEW	rilatumo	proportion, rate, ratio	ok
+8	prospect	approve			LINK	ŝanco	chance, luck, prospect	ok
+9	protocol	approve			LINK	etiketo	code of conduct, etiquette, protocol, rules of behavior; label, tag	ok
+5	psychology	approve			LINK	psikologio	psychology	ok
+7	publication	approve			LINK	eldonaĵo	publication	ok
+3	publish	approve			LINK	afiŝi	to placard, post (up), publish	ok
+2	purchase	approve			LINK	aĉeti	to acquire, buy, purchase, take over	ok
+5	pursue	approve			LINK	ĉasi	to chase, hunt, pursue, seek after	ok
+7	quote	approve			LINK	citi	to cite, quote, mention	ok
+8	radical	approve			LINK	radiko	root, radical	ok
+8	random	approve			NEW	loteca	random	ok
+2	range	approve			LINK	gamo	gamut, key, (musical) scale, range	ok
+5	ratio	approve			NEW	rejŝo	ratio	ok
+6	rational	approve			LINK	racia	rational, sane, reasonable	ok
+3	react	approve			LINK	reagi	to react, respond	ok
+6	recover	approve			LINK	ripari	to fix, repair, mend, redress, amend, restore, recover	ok
+9	refine	approve			NEW	rafini	to refine	ok
+4	regime	approve			NEW	reĝimo	mode, regime, regimen	ok
+2	region	approve			LINK	areo	area, selection, region	ok
+3	register	approve			LINK	etato	account, inventory, report, list, register, return (financial), statement (financial), table (data)	ok
+2	regulate	approve			NEW	reguligi	to regulate, rule, put in order	ok
+8	reinforce	approve			LINK	armi	to arm (weapons), reinforce (concrete)	ok
+5	reject	approve			LINK	negi	to deny, reject	ok
+9	relax	approve			LINK	amuzi	to amuse, divert, entertain, unbend, relax	ok
+7	release	approve			LINK	lasi	to allow, leave, let, release, quit	ok
+2	relevant	approve			LINK	trafe	accurately, appropriately, graphically, relevant, on target, apt, to the point	ok
+10	reluctance	approve			NEW	nevolemo	reluctance	ok
+3	rely	approve			LINK	konfidi	to confide, have confidence in, trust, entrust, rely	ok
+3	remove	approve			LINK	viŝi	to delete, wipe, erase, remove	ok
+1	require	approve			LINK	bezoni	to need, require, want	ok
+1	research	approve			LINK	esplora	scientific, exploratory, research	ok
+2	reside	approve			LINK	loĝi	to dwell, live, inhabit, reside	ok
+4	resolve	approve			LINK	decidi	to choose, decide, determine, resolve, settle	ok
+2	resource	approve			LINK	risurco	resource	ok
+1	respond	approve			LINK	reagi	to react, respond	ok
+8	restore	approve			LINK	redoni	to compensate, give back, return, render, restore, pay back, refund, repay, retaliate, return, reflect, reproduce	ok
+9	restrain	approve			LINK	regi	to control, govern, restrain, rule, reign	ok
+2	restrict	approve			NEW	limigi	to abridge, confine, limit, restrict, circumscribe, delimit	ok
+4	retain	approve			LINK	teni	to hang onto, hold, keep, retain	ok
+6	reveal	approve			LINK	konigi	to divulge, let know, reveal	ok
+5	revenue	approve			LINK	rento	annuity, dividend, income, return, revenue	ok
+7	reverse	approve			LINK	inversa	inverse, inverted, reverse, reversed	ok
+8	revise	approve			LINK	revizi	to audit, inspect, overhaul, revise	ok
+9	revolution	approve			LINK	rivoluo	revolution	ok
+9	rigid	approve			LINK	rigida	inflexible, rigid, stiff	ok
+1	role	approve			LINK	rolo	character, part, role, rôle (acting)	ok
+9	route	approve			LINK	vojo	course, passage, path, pathway, road, route, way	ok
+9	scenario	approve			LINK	scenaro	scenario, screenplay, script	ok
+8	schedule	approve			LINK	plani	to organize, plan, schedule	ok
+3	scheme	approve			LINK	skemo	chart, diagram, outline, scheme, model, pattern	ok
+6	scope	approve			LINK	regiono	region, scope, district, tract (of land)	ok
+1	section	approve			LINK	fako	area of expertise, branch, compartment, department, section, specialty, subject, discipline	ok
+1	sector	approve			LINK	sektoro	industry, sector	ok
+2	secure	approve			LINK	fiksi	to attach, determine, fasten, fix, affix, make fast, secure, freeze, latch	ok
+2	seek	approve			LINK	peti	to ask (for), request, seek, bid, beg	ok
+2	select	approve			LINK	elekti	to choose, elect, pick (out), select	ok
+3	sequence	approve			LINK	ordo	order, ordering, sequence, arrangement	ok
+4	series	approve			LINK	serio	series, set	ok
+3	sex	approve			LINK	amoro	(sexual) love, sex	ok
+3	shift	approve			LINK	movi	to move, shift, stir, advance	ok
+1	significant	approve			LINK	signifa	significant	ok
+1	similar	approve			LINK	laŭa	similar, like; transverse, cross-	ok
+7	simulate	approve			NEW	simuli	to dissemble, feign, pretend, simulate	ok
+2	site	approve			LINK	sido	site, situation	ok
+10	so-called	approve			NEW	laŭdira	alleged, so-called	ok
+7	sole	approve			LINK	nura	mere, solitary, sole, pure	ok
+7	somewhat	approve			LINK	iom	a little, rather, some, somewhat, to some extent, a bit	ok
+1	source	approve			LINK	fonta	source	ok
+1	specific	approve			LINK	specifa	specific	ok
+3	specify	approve			LINK	specifi	to specify	ok
+9	sphere	approve			LINK	globo	ball, ball bearing, globe, billiard ball, sphere	ok
+5	stable	approve			LINK	firma	fast, firm, stable, staunch, unshaken	ok
+4	statistic	approve			LINK	statistikaĵo	statistic	ok
+4	status	approve			LINK	stato	condition, state, situation, station (of life), status	ok
+10	straightforward	approve			LINK	simpla	simple, straightforward, unaffected, unvarnished, plain, unpretending	ok
+2	strategy	approve			LINK	strategio	strategy	ok
+4	stress	approve			LINK	urĝo	craving, stress	ok
+1	structure	approve			LINK	strukturi	to structure, format (disk)	ok
+5	style	approve			LINK	stilo	style	ok
+7	submit	approve			LINK	sendi	to forward, remit, send, transmit, submit	ok
+9	subordinate	approve			LINK	suba	lower, bottom, under, subordinate	ok
+4	subsequent	approve			LINK	sekva	next, subsequent	ok
+6	subsidy	approve			NEW	subvencio	grant, subsidy	ok
+5	substitute	approve			NEW	antaŭigi	to substitute	ok
+7	successor	approve			NEW	tujaĵo	successor	ok
+3	sufficient	approve			LINK	sufiĉa	adequate, ample, enough, sufficient	ok
+4	sum	approve			LINK	sumi	to sum	ok
+4	summary	approve			LINK	resuma	summary, outline	ok
+9	supplement	approve			LINK	aldoni	to add (to), append, supplement	ok
+2	survey	approve			LINK	elvidi	to survey	ok
+7	survive	approve			LINK	travivi	to experience, live through, survive	ok
+9	suspend	approve			LINK	halteti	to sleep, suspend	ok
+5	sustain	approve			NEW	apogi	to back (up), bolster, buttress, lean, prop, rest, support, sustain, underpin, recline, uphold	ok
+5	symbol	approve			LINK	armorio	coat-of-arms, symbol	ok
+6	tape	approve			LINK	bendi	to tape	ok
+5	target	approve			LINK	celi	to aim (at, for), mean (to say), target, intend, aspire, strain after	ok
+3	task	approve			LINK	taska	task	ok
+9	team	approve			LINK	skipo	shift, team	ok
+3	technical	approve			LINK	teknika	technical	ok
+3	technique	approve			LINK	tekniko	technique, technology	ok
+3	technology	approve			LINK	tekniko	technique, technology	ok
+9	temporary	approve			LINK	duma	momentary, temporary, short-lived, transient	ok
+8	tense	approve			LINK	tempo	time, beat, tense	ok
+8	terminate	approve			LINK	fini	to end, finish, terminate, close, conclude	ok
+2	text	approve			LINK	teksta	text, textual	ok
+8	theme	approve			LINK	temo	theme, subject, topic	ok
+1	theory	approve			LINK	teorio	theory	ok
+7	thesis	approve			NEW	tezo	essay, thesis	ok
+7	topic	approve			LINK	temo	theme, subject, topic	ok
+6	trace	approve			NEW	paŭsi	to slavishly reproduce, trace	ok
+2	tradition	approve			LINK	tradicio	tradition	ok
+2	transfer	approve			LINK	ĝiri	to endorse, transfer	ok
+6	transform	approve			LINK	aliigi	to alter, change, turn, modify, transform (sth into sth)	ok
+5	transit	approve			NEW	pasado	passing, passing by, transit	ok
+7	transmit	approve			LINK	sendi	to forward, remit, send, transmit, submit	ok
+6	transport	approve			LINK	transigi	to pass, transmit, transport, transfer	ok
+5	trend	approve			LINK	tendenco	tendency, bias, trend	ok
+9	trigger	approve			LINK	ĉano	hammer (of a gun), trigger	ok
+7	ultimate	approve			LINK	lasta	hindermost, last, ultimate	ok
+10	undergo	approve			LINK	suferi	to abide, bear, endure, put up with, suffer, undergo	ok
+6	underlie	approve			NEW	subteni	to abet, support, sustain, maintain, shore up, underlie	ok
+4	undertake	approve			NEW	klopodi	to aim, attempt, endeavor, take steps, undertake, try	ok
+8	uniform	approve			LINK	livero	delivery, uniform	ok
+9	unify	approve			NEW	unuigi	to join, unite, unify	ok
+7	unique	approve			LINK	unika	unique	ok
+6	utilise	approve			NEW	utiligi	to make use of, turn to good account, utilize	ok
+3	valid	approve			LINK	leĝa	lawful, legal, valid	ok
+1	vary	approve			LINK	varii	to vary	ok
+8	vehicle	approve			LINK	vehiklo	carrier, vector, vehicle	ok
+5	version	approve			LINK	eldono	edition, issue (published item), release, version	ok
+9	violate	approve			NEW	atenci	to assault, violate, attempt (to kill someone)	ok
+8	virtual	approve			LINK	preskaŭa	near, virtual	ok
+7	visible	approve			NEW	videbla	visible, apparent, obvious	ok
+9	vision	approve			LINK	vido	sight, view, vision	ok
+8	visual	approve			LINK	vida	visual	ok
+3	volume	approve			LINK	dikeco	bulk, plumpness, stoutness, thickness, volume	ok
+7	voluntary	approve			NEW	laŭvola	free, freestyle, optional, voluntary	ok
+5	welfare	approve			LINK	bonfara	beneficent, beneficial, charitable, humanitarian, welfare	ok
+5	whereas	approve			LINK	dum	during, while, for, whereas, whilst	ok
+8	widespread	approve			LINK	vasta	extensive, spacious, vast, wide, immense, roomy, widespread	ok
