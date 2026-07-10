@@ -392,7 +392,14 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
     - 36 new tests (test\_area\_signature, test\_merge\_area\_candidates,
       TestProcessMergedRecord); 582 passing
 * \[ ] Statistical candidates review — pending human review
-* \[ ] Named entity layer — design deferred
+* \[~] Named-entity layer v0 — physical core built (PR #10): named_entity /
+  named_entity_type / named_entity_alias sibling tables in lexicon_v2.db
+  (schema.create_named_entity_schema; src/lexicon/load_named_entities.py;
+  src/lexicon/query_named_entities.py); 272 permanent-physical entities (28
+  celestial + 244 physical-geographic), strictly separate from concept*, NO tier
+  column (R8), dated sitelinks salience, global_core=13; seeded from the D7
+  Wikidata probe (99.6% EO coverage, PR #9). Deferred: institutions, settlements,
+  tier-derivation, discovery-from-documents.
 * [x] src/lexicon/build_root_inventory.py — downloads Baza Radikaro Oficiala
   (BRO) root inventory from Rieselhilfe/parseo (GPL-3.0) at build time.
   Produces data/lexicon_db/akademio_roots.txt (4,600 roots, one per line)
@@ -413,3 +420,14 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
   ESPDIC-derived (CC-BY-3.0, no GPL); 25,679 roots tiered by confidence
   (core 2,730 / extended 2,443 / tail 20,506); affix/correlative tables
   read from JSON; eo_inventory.json + akademio_roots.txt gitignored.
+* [x] Common gap-fill merge (src/lexicon/apply_gapfill_merge.py, PR #8) — 2,192
+  TinyStories/set-gap concepts merged into lexicon_v2.db (insert-only, backup +
+  transaction) + `number` demoted Tier-3→Tier-1 (anchor nombr/nombro, cefr kept).
+  TinyStories UNKNOWN 19.5%→8.3%, T1+T2 80.5%→91.7%. Invariant enforced:
+  concept.eo_root == concept_root head (0 mismatches).
+* [x] Tier 3 seeded from the AWL (src/lexicon/build_awl_worksheet.py +
+  apply_gapfill_merge.py --awl-triaged, PR #11) — ~2,605 EN forms, tier 3,
+  source=awl_t3; recognition 4.5%→8.2%. Phase-5 finding: a domain-general Tier-3
+  improves coverage but weakens t3_anchor_density as an expertise discriminator
+  (7.3×→3.3×) — it conflates formal-vocabulary use with expertise; expertise
+  routing stays on the T4/co-occurrence measures, which were unchanged.
