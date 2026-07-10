@@ -55,3 +55,16 @@ derivation machinery. Never modify existing `tier`/`word`/`cefr_level`/`source`.
   - **NO DB writes.** Phase 4 (gated merge via `apply_gapfill_merge`, invariant audit) + Phase 5
     (`t3_anchor_density` validation) deferred until the reviewed worksheet returns. → **[RAMUNAS]
     review `awl_worksheet.tsv`: approve/hold/reject per family; fix anchors; then resume at P4.**
+- 2026-07-11 (Programmer): **Phase 4 DRY-RUN complete — STOPPED before the gated commit** (PM
+  instruction). Reviewed worksheet `awl_worksheet_triaged.tsv` returned (555 approve / 15 fix /
+  0 reject) and committed for the audit trail. Extended `apply_gapfill_merge.py` (not forked) with
+  the AWL family merge (`--awl-triaged … --dry-run`): family = 1 concept + N EN rows @ tier=3,
+  source='awl_t3', insert-only. 19 new tests; full suite 815 passed. **Dry-run preview (nothing
+  written):** 569 families (LINK 442 / NEW 127), 127 new concepts, **2,605 T3 EN rows** (Tier-3
+  96 → 2,701), 501 skipped-present, 1 deferred (`whereby` = multiword `per kio`). **Special cases
+  handled:** `via`→LINK existing `per` concept 2578 (no NEW eo_word='via'); `dynamic`→NEW single
+  root `dinamik` (override, not din+amik). Single-letter-root guard also fixed `incidenco` and 6
+  fallbacks. **Post-write audit PASS:** 0 eo_root↔head mismatches (new), 0 degenerate new roots
+  (17 pre-existing untouched), 0 dupe rows, 0 new eo_word collisions. 8 ambiguous multi-concept
+  families flagged for review. → **[RAMUNAS] sign off on the dry-run to run the gated `--commit`;
+  then Phase 5 `t3_anchor_density` validation.**
