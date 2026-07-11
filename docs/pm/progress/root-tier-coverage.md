@@ -5,7 +5,7 @@
 - **Advisor/PM brief:** [`../briefs/root-tier-coverage.md`](../briefs/root-tier-coverage.md)
 - **Programmer brief (execute this):** [`../programmer/root-tier-coverage.md`](../programmer/root-tier-coverage.md)
 - **Branch:** `analysis/root-tier-coverage` (off `main`, not stacked).
-- **Status:** 🟡 **SET UP — briefs filed, awaiting Programmer dispatch.**
+- **Status:** 🔧 **IN PROGRESS (Programmer, 2026-07-11) — read-only diagnostic; PR, no merge.**
 
 ## The job
 Read-only, corpus-free diagnostic: join `eo_inventory.json` (26,447 ESPDIC roots + glosses)
@@ -43,3 +43,23 @@ a later human glance.
 - 2026-07-11 (PM): coverage arc closed (PR #13 merged); branch + briefs set up. Verified join
   (100% aligned), wordfreq available, shade-mismatch example (lepor/kunikl); previewed the buckets
   (~1,117 gap / ~832 shade) and caught the three gloss-scoring traps. Awaiting Programmer.
+- 2026-07-11 (Programmer, start): confirmed data — inventory roots=26,447 (core 2,626 / extended
+  2,402 / tail 21,414 / modern 5); covered T1–3 roots = 2,652 (by MIN tier: T1=764, T2=1,824,
+  T3=64; by ANY tier T3=447). wordfreq OK (to=7.43 — the trap). Validated gloss scorer on trap
+  cases: trap#1 `to`-strip works; trap#2 — `incens`="to burn incense" (2-word phrasal) slips a
+  min-zipf gate, so candidate_gap requires a **single content word** (phrasal→obscure); trap#3 —
+  normalize gloss word via spaCy lemma + `inflected_forms` + `uk_to_us` before the covered check.
+  Building `src/analyzer/root_tier_coverage.py` (pure scorer + join + bucket split) + tests.
+- 2026-07-11 (Programmer, end): **COMPLETE — PR open, not merged.** Code:
+  `src/analyzer/root_tier_coverage.py` (pure, 26 tests) + `build_root_coverage.py` (driver).
+  Deliverables in `data/analysis/root_coverage/` (root_tier_coverage.tsv, candidate_gaps.tsv,
+  shade_mismatches.tsv) + memo `docs/analysis/root_tier_coverage.md`. Full suite 922 passed.
+  **Beyond the 3 briefed traps I added a 4th (proper-noun/demonym exclusion — American/Google/Louis
+  dominated a naive run) + hyphen + stopword + tail-prior + a primary-vs-later-sense split for
+  shade.** Results: covered 2,648 / obscure 22,653 / **candidate_gap 666 (621 distinct; T3-weighted:
+  T1=1, T2=107, T3=558; Latinate-formal cluster)** / **shade_mismatch 480 (lepor-style granularity)**.
+  Coverage by ESPDIC tier: core 62.1% / extended 18.2% / tail 2.7%. **THE BET → Advisor decisively
+  closer:** T1 gap ~0% (Advisor <5% ✓, Ramunas 20% ✗), T2 5–6% (Advisor single-digit ✓, Ramunas 25%
+  ✗), T3 large (both, Advisor's direction). T1 gap = 1 root (damn) → no red flag. Noted residuals:
+  derivational adjectives (democratic/agricultural — base noun may be covered) + informal register.
+  Read-only; authored nothing.
