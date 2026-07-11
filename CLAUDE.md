@@ -431,3 +431,15 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
   improves coverage but weakens t3_anchor_density as an expertise discriminator
   (7.3×→3.3×) — it conflates formal-vocabulary use with expertise; expertise
   routing stays on the T4/co-occurrence measures, which were unchanged.
+* [x] Cross-corpus UNKNOWN inventory + D1 accounting (src/analyzer/unknown_classifier.py
+  + build_unknown_inventory.py + batch_coverage_report.py --classify-unknown, PR #12) —
+  read-only diagnostic, authored nothing. Pooled UNKNOWN over 4 corpora (TinyStories +
+  control/novice/expert), classified: named_entity 89% (the elephant, drained against the
+  v0 store → 936 name_candidates emitted) / domain_term / inflection_miss / junk / local /
+  common_gap / true_residual. **True-residual UNKNOWN = 0.006% (2 types) — the common
+  foundation is complete on the strict cross-corpus test.** One real leak found:
+  British/Commonwealth spellings (17 types / 1,097 tokens whose US form is already in the
+  lexicon; mum→mom, colourful, favourite…), hidden by single-corpus clustering — cheap
+  follow-up = extend the gap-fill uk_to_us fold. wordfreq zipf junk gate (added to
+  requirements.txt). Caveat: a few capitalized British common nouns misroute into
+  named_entity — watch when curating name_candidates.
