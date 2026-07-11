@@ -530,6 +530,17 @@ def main(argv: list[str] | None = None) -> None:
             "'relational'=adds co-occurrence stats; 'all'=everything."
         ),
     )
+    parser.add_argument(
+        "--classify-unknown",
+        action="store_true",
+        help=(
+            "AFTER the normal report, additionally classify the pooled UNKNOWN "
+            "tokens into buckets (junk/named_entity/inflection_miss/domain_term/"
+            "common_gap/true_residual) treating each stratum as a corpus. Does not "
+            "change the default output. Requires wordfreq. Name detection here is "
+            "store-match only; the standalone build_unknown_inventory.py adds casing."
+        ),
+    )
     args = parser.parse_args(argv)
 
     corpus = args.corpus.expanduser()
@@ -559,6 +570,7 @@ def main(argv: list[str] | None = None) -> None:
 
     rows: list[dict] = []
     unknown_counter: Counter[str] = Counter()
+    strata_unknown: dict[str, Counter] = defaultdict(Counter)  # for --classify-unknown
     excluded: list[str] = []
 
     for path in corpus.rglob("*.txt"):
@@ -578,6 +590,8 @@ def main(argv: list[str] | None = None) -> None:
             continue
         rows.append(row)
         unknown_counter.update(unknowns)
+        if args.classify_unknown:
+            strata_unknown[path.parent.name].update(unknowns)
 
     if excluded:
         print(f"Excluded from corpus root (not stratum data): {', '.join(excluded)}")
@@ -596,6 +610,45 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.measures in ("variety", "relational", "all"):
         print_comparison_block(rows, args.measures)
+
+    if args.classify_unknown:
+        _print_classified_unknown(strata_unknown, tier1, tier2, tier3, inflected, args.lexicon)
+
+
+def _print_classified_unknown(strata_unknown, tier1, tier2, tier3, inflected, lexicon) -> None:
+    """Optional classified-UNKNOWN breakdown (reuses the unknown_classifier)."""
+    try:
+        from wordfreq import zipf_frequency
+    except ImportError:
+        print("\n--classify-unknown needs wordfreq (pip install wordfreq); skipping.")
+        return
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "lexicon"))
+    from build_unknown_inventory import classify_from_counters
+    from unknown_classifier import summarise_buckets
+    try:
+        from query_named_entities import resolve as ne_resolve
+        conn = sqlite3.connect(f"file:{lexicon}?mode=ro", uri=True)
+        def store_resolve(t):
+            try:
+                return ne_resolve(conn, t) is not None
+            except Exception:
+                return False
+    except Exception:
+        def store_resolve(_t):
+            return False
+
+    known = set(tier1) | set(tier2) | set(tier3 or set()) | set((inflected or {}).keys())
+    domain_strata = {s for s in strata_unknown if any(
+        k in s.lower() for k in ("expert", "novice", "domain", "customs", "law", "tax"))}
+    records = classify_from_counters(
+        strata_unknown, domain_strata, known,
+        lambda t: zipf_frequency(t, "en"), store_resolve)
+    buckets = summarise_buckets(records)
+    print("\nCLASSIFIED UNKNOWN (--classify-unknown; strata as corpora, "
+          "store-match names only):")
+    for b, d in buckets.items():
+        print(f"  {b:16} types={d['types']:>6}  tokens={d['tokens']:>7}")
 
 
 if __name__ == "__main__":
