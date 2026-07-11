@@ -443,3 +443,17 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
   follow-up = extend the gap-fill uk_to_us fold. wordfreq zipf junk gate (added to
   requirements.txt). Caveat: a few capitalized British common nouns misroute into
   named_entity — watch when curating name_candidates.
+* [x] British-spelling fold (src/lexicon/apply_uk_spelling_fold.py + extended uk_to_us in
+  build_gapfill_worksheet.py, PR #13) — the UNKNOWN inventory's one leak closed as pure
+  normalization: 18 insert-only inflected_forms rows mapping British surface forms to their
+  existing US concepts (colour→color, favourite→favorite, aeroplane→airplane…), tier copied
+  from the US form. Data-driven from the inventory + guarded on US-form-present (rejects junk
+  like suprised→suprized; min-stem guard blocks pre→per). No new concepts, no edits to US
+  entries. TinyStories UNKNOWN 8.12%→8.04%; no British-spelling class remains. fertiliser
+  stays a genuine gap (fertilizer absent, not a spelling fix); stratum legitimately remains
+  (US=UK).
+* [x] **MILESTONE — T1–T3 common-vocabulary coverage complete across analyzed corpora**
+  (gap-fill → AWL Tier-3 → UNKNOWN accounting → British-spelling fold); residual UNKNOWN is
+  ~89% named entities. Reusable UNKNOWN classifier guards future corpora. Next chapter is the
+  names layer (open-world, QID-keyed, tier-relative — a different problem; start with D1
+  name-accounting).
