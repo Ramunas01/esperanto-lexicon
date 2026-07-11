@@ -1,0 +1,26 @@
+uk_form	us_form	total_freq	tier	us_in_lexicon	bucket
+colourful	colorful	79	1	1	local
+favourite	favorite	54	1	1	local
+colours	color	35	1	1	local
+coloured	colored	20	2	1	common_gap
+neighbour	neighbor	20	1	1	local
+colour	color	17	1	1	local
+neighbours	neighbor	15	1	1	local
+aeroplane	airplane	9	2	1	local
+behaviour	behavior	4	2	1	local
+theatre	theater	4	1	1	local
+rumour	rumor	3	2	1	local
+flavour	flavor	2	2	1	common_gap
+organised	organized	2	2	1	local
+organiser	organizer	2	2	1	local
+centres	center	1	1	1	local
+flavours	flavor	1	2	1	local
+pyjamas	pajama	1	2	1	local
+recognise	recognize	1	2	1	local
+fertiliser	fertilizer	10		0	true_residual
+apologised	apologized	4		0	local
+centimetres	centimeters	2		0	local
+capitalising	capitalizing	1		0	local
+equaliser	equalizer	1		0	local
+mesmerised	mesmerized	1		0	local
+suprised	suprized	1		0	local

@@ -1,0 +1,2359 @@
+token	bucket	subtype	universality	total_count	c_tinystories	c_control	c_novice	c_expert	zipf	is_propn	is_name_cased	lemma	lemma_resolves	store_match
+centre	named_entity	candidate	4	8	4	1	2	1	4.95	1	1		0	0
+sized	named_entity	candidate	4	6	1	1	1	3	4.27	0	1		0	0
+eu	named_entity	candidate	2	271	0	0	74	197	4.62	1	1		0	0
+customs	named_entity	candidate	2	177	0	0	5	172	4.19	1	1	custom	1	0
+fluffy	named_entity	candidate	2	175	174	1	0	0	3.59	1	1		0	0
+peter	named_entity	candidate	2	101	98	0	0	3	4.88	1	1		0	0
+tariff	named_entity	candidate	2	80	0	0	9	71	3.49	1	1		0	0
+classification	domain_term		2	72	0	0	1	71	4.18	0	0		0	0
+non	named_entity	candidate	2	64	0	0	11	53	5.29	1	1		0	0
+importer	named_entity	candidate	2	54	0	0	6	48	3.08	1	1		0	0
+maria	named_entity	candidate	2	51	49	0	0	2	4.34	1	1		0	0
+lithuania	named_entity	candidate	2	48	0	0	1	47	3.5	1	1		0	0
+compliance	named_entity	candidate	2	41	0	0	1	40	4.17	1	1		0	0
+taxes	named_entity	candidate	2	39	0	0	21	18	4.65	1	1	taxis	1	0
+european	named_entity	candidate	2	38	0	0	4	34	5.08	1	1		0	0
+preferential	named_entity	candidate	2	36	0	0	1	35	3.21	0	1		0	0
+states	named_entity	candidate	2	36	0	0	3	33	5.52	1	1	state	1	0
+clearance	named_entity	candidate	2	35	0	0	1	34	3.96	1	1		0	0
+territory	domain_term		2	35	0	0	1	34	4.6	0	0		0	0
+declaration	named_entity	candidate	2	31	0	0	6	25	4.1	1	1		0	0
+sharing	named_entity	candidate	2	27	25	0	0	2	4.66	1	1	share	1	0
+tariffs	named_entity	candidate	2	26	0	0	18	8	3.63	1	1	tariff	0	0
+canada	named_entity	candidate	2	22	0	0	8	14	4.97	1	1		0	0
+x	junk	structural	2	22	9	0	0	13	5.2	1	1		0	0
+logistics	named_entity	candidate	2	20	0	0	3	17	3.86	1	1	logistic	0	0
+vat	named_entity	candidate	2	20	0	0	11	9	3.54	1	1		0	0
+bulgaria	named_entity	candidate	2	19	0	0	1	18	3.9	1	1		0	0
+hs	named_entity	candidate	2	19	0	0	1	18	3.69	1	1		0	0
+vietnam	named_entity	candidate	2	18	0	0	3	15	4.31	1	1		0	0
+excise	named_entity	candidate	2	17	0	0	13	4	3.26	1	1		0	0
+smes	named_entity	candidate	2	16	0	0	1	15	3.07	1	1	sme	0	0
+daniel	named_entity	candidate	2	15	14	1	0	0	4.62	1	1		0	0
+african	named_entity	candidate	2	14	0	0	1	13	4.82	1	1		0	0
+ireland	named_entity	candidate	2	14	0	0	2	12	4.66	1	1		0	0
+shipping	named_entity	candidate	2	14	0	0	12	2	4.52	1	1	ship	1	0
+€	junk	structural	2	14	0	0	13	1	0.0	0	0		0	0
+certificates	domain_term		2	12	0	0	1	11	3.77	0	0	certificate	0	0
+david	named_entity	candidate	2	11	10	0	0	1	5.13	1	1		0	0
+jonas	named_entity	candidate	2	11	10	0	0	1	3.74	1	1		0	0
+stratum	true_residual		2	11	0	10	0	1	2.67	0	0		0	0
+canadian	named_entity	candidate	2	10	0	0	3	7	4.7	0	1		0	0
+fertiliser	true_residual		2	10	0	1	0	9	2.86	0	0		0	0
+jason	named_entity	candidate	2	10	5	0	0	5	4.46	1	1		0	0
+switzerland	named_entity	candidate	2	10	0	0	6	4	4.23	1	1		0	0
+anti	named_entity	candidate	2	9	0	0	2	7	5.01	1	1		0	0
+dhl	named_entity	candidate	2	9	0	0	4	5	2.73	1	1		0	0
+dumping	domain_term		2	9	0	0	3	6	3.67	0	0	dump	0	0
+matt	named_entity	candidate	2	9	8	0	0	1	4.55	1	1		0	0
+resale	domain_term		2	9	0	0	7	2	3.28	0	0		0	0
+china	named_entity	candidate	2	8	0	0	3	5	5.1	1	1		0	0
+shipments	domain_term		2	8	0	0	5	3	3.64	0	0	shipment	0	0
+storage	domain_term		2	8	0	0	1	7	4.57	0	0		0	0
+broker	domain_term		2	7	0	0	1	6	3.89	0	0		0	0
+kg	named_entity	candidate	2	7	0	0	5	2	4.08	1	1		0	0
+shipment	domain_term		2	7	0	0	5	2	3.76	0	0		0	0
+exemption	named_entity	candidate	2	6	0	0	2	4	3.65	0	1		0	0
+mexico	named_entity	candidate	2	6	0	0	4	2	4.75	1	1		0	0
+simon	named_entity	candidate	2	6	5	0	0	1	4.48	1	1		0	0
+singapore	named_entity	candidate	2	6	0	0	1	5	4.35	1	1		0	0
+watering	inflection_miss		2	6	4	2	0	0	3.57	1	0	water	1	0
+y	junk	structural	2	6	1	0	0	5	5.03	1	1		0	0
+compliant	domain_term		2	5	0	0	1	4	3.42	0	0		0	0
+latvia	named_entity	candidate	2	5	0	0	1	4	3.44	1	1		0	0
+pre	common_gap		2	5	1	0	0	4	4.95	0	0		0	0
+american	named_entity	candidate	2	4	0	0	3	1	5.49	1	1		0	0
+australia	named_entity	candidate	2	4	0	0	2	2	5.06	1	1		0	0
+b	junk	structural	2	4	0	0	2	2	5.35	1	1		0	0
+carrier	named_entity	candidate	2	4	0	0	2	2	4.29	1	0		0	0
+fulfilled	inflection_miss		2	4	1	0	0	3	3.77	0	0	fulfil	1	0
+incoterms	named_entity	candidate	2	4	0	0	2	2	1.24	1	1	incoterm	0	0
+invoices	named_entity	candidate	2	4	0	0	1	3	3.09	1	0	invoice	0	0
+manufacturer	common_gap		2	4	0	1	0	3	4.21	0	0		0	0
+respective	domain_term		2	4	0	0	1	3	4.19	0	0		0	0
+services	named_entity	candidate	2	4	0	0	3	1	5.31	1	1	service	1	0
+supplier	domain_term		2	4	0	0	1	3	3.84	0	0		0	0
+territories	domain_term		2	4	0	0	1	3	4.02	0	0	territory	0	0
+threshold	domain_term		2	4	0	0	3	1	4.03	0	0		0	0
+treaty	named_entity	candidate	2	4	0	0	2	2	4.31	1	1		0	0
+agricultural	domain_term		2	3	0	0	1	2	4.34	0	0		0	0
+baking	inflection_miss		2	3	1	2	0	0	3.92	0	0	bake	1	0
+ddp	named_entity	candidate	2	3	0	0	2	1	2.42	1	1		0	0
+g	junk	structural	2	3	1	0	2	0	5.0	1	1		0	0
+judgement	common_gap		2	3	1	0	0	2	3.86	0	0		0	0
+korea	named_entity	candidate	2	3	0	0	2	1	4.65	1	1		0	0
+meaningful	domain_term		2	3	0	0	1	2	4.14	0	0		0	0
+mixing	inflection_miss		2	3	2	0	0	1	4.11	0	0	mix	1	0
+myanmar	named_entity	candidate	2	3	0	0	1	2	3.81	1	1		0	0
+paperwork	named_entity	candidate	2	3	0	0	2	1	3.84	1	1		0	0
+penalty	common_gap		2	3	0	1	0	2	4.45	0	0		0	0
+planting	inflection_miss		2	3	1	2	0	0	3.81	0	0	plant	1	0
+regardless	domain_term		2	3	0	0	1	2	4.48	0	0		0	0
+thailand	named_entity	candidate	2	3	0	0	1	2	4.22	1	1		0	0
+u.s.	junk	structural	2	3	0	0	2	1	5.31	1	1		0	0
+usd	named_entity	candidate	2	3	0	0	2	1	3.97	1	1		0	0
+x.	junk	structural	2	3	2	0	0	1	5.2	1	1		0	0
+accountant	named_entity	candidate	2	2	0	0	1	1	3.76	1	1		0	0
+agreements	named_entity	candidate	2	2	0	0	1	1	4.12	1	1	agreement	1	0
+baked	common_gap		2	2	1	1	0	0	3.92	0	0		0	0
+brokerage	domain_term		2	2	0	0	1	1	3.37	0	0		0	0
+defence	named_entity	candidate	2	2	0	1	0	1	4.51	1	1		0	0
+hungary	named_entity	candidate	2	2	0	0	1	1	3.91	1	1		0	0
+improved	common_gap		2	2	1	1	0	0	4.61	0	0		0	0
+manufactured	domain_term		2	2	0	0	1	1	4.13	0	0	manufacture	0	0
+packaging	domain_term		2	2	0	0	1	1	3.96	0	0		0	0
+paid	named_entity	candidate	2	2	0	0	1	1	5.12	1	1	pay	1	0
+productive	common_gap		2	2	0	1	0	1	4.22	0	0		0	0
+smoother	common_gap		2	2	1	1	0	0	3.35	0	0		0	0
+starting	inflection_miss		2	2	1	0	0	1	5.07	0	0	start	1	0
+supranational	domain_term		2	2	0	0	1	1	2.46	0	0		0	0
+unwelcome	domain_term		2	2	0	0	1	1	3.14	0	0		0	0
+worn	common_gap		2	2	1	1	0	0	4.26	0	0		0	0
+lily	named_entity	candidate	1	4354	4354	0	0	0	3.95	1	1		0	0
+timmy	named_entity	candidate	1	1829	1829	0	0	0	3.31	1	1		0	0
+ben	named_entity	candidate	1	1631	1631	0	0	0	4.69	1	1		0	0
+tom	named_entity	candidate	1	1600	1600	0	0	0	4.83	1	1		0	0
+tim	named_entity	candidate	1	1201	1201	0	0	0	4.51	1	1		0	0
+jack	named_entity	candidate	1	1086	1086	0	0	0	4.82	1	1		0	0
+sam	named_entity	candidate	1	766	766	0	0	0	4.64	1	1		0	0
+john	named_entity	candidate	1	717	717	0	0	0	5.38	1	1		0	0
+lucy	named_entity	candidate	1	672	672	0	0	0	4.07	1	1		0	0
+anna	named_entity	candidate	1	648	648	0	0	0	4.37	1	1		0	0
+mum	named_entity	candidate	1	633	633	0	0	0	4.41	1	1		0	0
+jane	named_entity	candidate	1	500	500	0	0	0	4.42	1	1		0	0
+sara	named_entity	candidate	1	441	441	0	0	0	3.96	1	1		0	0
+mia	named_entity	candidate	1	435	435	0	0	0	3.87	1	1		0	0
+joe	named_entity	candidate	1	397	397	0	0	0	4.78	1	1		0	0
+molly	named_entity	candidate	1	385	385	0	0	0	3.87	1	1		0	0
+sue	named_entity	candidate	1	370	370	0	0	0	4.22	1	1		0	0
+sarah	named_entity	candidate	1	361	361	0	0	0	4.48	1	1		0	0
+sally	named_entity	candidate	1	314	314	0	0	0	3.97	1	1		0	0
+tommy	named_entity	candidate	1	289	289	0	0	0	4.16	1	1		0	0
+jill	named_entity	candidate	1	257	257	0	0	0	3.81	1	1		0	0
+grandma	named_entity	candidate	1	249	249	0	0	0	4.11	1	1		0	0
+mummy	named_entity	candidate	1	236	236	0	0	0	3.57	1	1		0	0
+amy	named_entity	candidate	1	235	235	0	0	0	4.2	1	1		0	0
+lila	named_entity	candidate	1	225	225	0	0	0	3.05	1	1		0	0
+billy	named_entity	candidate	1	221	221	0	0	0	4.33	1	1		0	0
+jimmy	named_entity	candidate	1	220	220	0	0	0	4.44	1	1		0	0
+mary	named_entity	candidate	1	197	197	0	0	0	4.78	1	1		0	0
+benny	named_entity	candidate	1	193	193	0	0	0	3.6	1	1		0	0
+emma	named_entity	candidate	1	165	165	0	0	0	4.23	1	1		0	0
+teddy	named_entity	candidate	1	146	146	0	0	0	3.88	1	1		0	0
+jenny	named_entity	candidate	1	129	129	0	0	0	3.89	1	1		0	0
+aeo	named_entity	candidate	1	126	0	0	0	126	1.85	1	1		0	0
+jake	named_entity	candidate	1	124	124	0	0	0	4.17	1	1		0	0
+emily	named_entity	candidate	1	121	121	0	0	0	4.14	1	1		0	0
+alice	named_entity	candidate	1	119	119	0	0	0	4.26	1	1		0	0
+pete	named_entity	candidate	1	109	109	0	0	0	4.12	1	1		0	0
+jim	named_entity	candidate	1	97	97	0	0	0	4.62	1	1		0	0
+ucc	named_entity	candidate	1	97	0	0	0	97	2.78	1	1		0	0
+sammy	named_entity	candidate	1	94	94	0	0	0	3.6	1	1		0	0
+bobby	named_entity	candidate	1	85	85	0	0	0	4.22	1	1		0	0
+susie	named_entity	candidate	1	85	85	0	0	0	3.24	1	1		0	0
+johnny	named_entity	candidate	1	83	83	0	0	0	4.35	1	1		0	0
+tweety	named_entity	candidate	1	83	83	0	0	0	2.45	1	1		0	0
+jen	named_entity	candidate	1	82	82	0	0	0	3.58	1	1		0	0
+t&c	junk	structural	1	81	0	0	0	81	5.08	1	1		0	0
+andy	named_entity	candidate	1	79	79	0	0	0	4.43	1	1		0	0
+valuation	named_entity	candidate	1	76	0	0	0	76	3.75	1	1		0	0
+relieved	inflection_miss		1	75	75	0	0	0	3.95	0	0	relieve	1	0
+playing	inflection_miss		1	73	73	0	0	0	5.37	0	0	play	1	0
+mr.	junk	structural	1	67	67	0	0	0	5.69	1	1		0	0
+alex	named_entity	candidate	1	64	64	0	0	0	4.62	1	1		0	0
+mrs.	junk	structural	1	64	64	0	0	0	4.89	1	1		0	0
+polly	named_entity	candidate	1	64	64	0	0	0	3.4	1	1		0	0
+lisa	named_entity	candidate	1	63	63	0	0	0	4.29	1	1		0	0
+james	named_entity	candidate	1	62	62	0	0	0	5.11	1	1	jam	1	0
+excitedly	named_entity	candidate	1	60	60	0	0	0	3.06	1	0		0	0
+toby	named_entity	candidate	1	57	57	0	0	0	3.67	1	1		0	0
+sophie	named_entity	candidate	1	56	56	0	0	0	3.91	1	1		0	0
+delighted	inflection_miss		1	55	55	0	0	0	4.09	0	0	delight	1	0
+joey	named_entity	candidate	1	54	54	0	0	0	3.92	1	1		0	0
+fred	named_entity	candidate	1	53	53	0	0	0	4.21	1	1		0	0
+george	named_entity	candidate	1	52	52	0	0	0	5.04	1	1		0	0
+lola	named_entity	candidate	1	52	52	0	0	0	3.45	1	1		0	0
+henry	named_entity	candidate	1	48	48	0	0	0	4.74	1	1		0	0
+rosie	named_entity	candidate	1	48	48	0	0	0	3.61	1	1		0	0
+mandy	named_entity	candidate	1	47	47	0	0	0	3.37	1	1		0	0
+bella	named_entity	candidate	1	46	46	0	0	0	3.74	1	1		0	0
+elly	named_entity	candidate	1	45	45	0	0	0	2.7	1	1		0	0
+danny	named_entity	candidate	1	44	44	0	0	0	4.25	1	1		0	0
+ducky	named_entity	candidate	1	44	44	0	0	0	2.68	1	1		0	0
+leo	named_entity	candidate	1	44	44	0	0	0	4.23	1	1		0	0
+ted	named_entity	candidate	1	43	43	0	0	0	4.26	1	1		0	0
+josh	named_entity	candidate	1	42	42	0	0	0	4.35	1	1		0	0
+rachel	named_entity	candidate	1	41	41	0	0	0	4.15	1	1		0	0
+dave	named_entity	candidate	1	40	40	0	0	0	4.44	1	1		0	0
+frank	named_entity	candidate	1	40	40	0	0	0	4.75	1	1		0	0
+frustrated	inflection_miss		1	40	40	0	0	0	4.08	0	0	frustrate	1	0
+remy	named_entity	candidate	1	40	40	0	0	0	3.27	1	1		0	0
+millie	named_entity	candidate	1	38	38	0	0	0	3.2	1	1		0	0
+mittens	named_entity	candidate	1	38	38	0	0	0	2.88	1	1	mitten	1	0
+importers	named_entity	candidate	1	37	0	0	0	37	2.95	1	1	importer	0	0
+lilly	named_entity	candidate	1	36	36	0	0	0	3.54	1	1		0	0
+r	junk	structural	1	36	0	0	0	36	5.35	1	1		0	0
+tony	named_entity	candidate	1	36	36	0	0	0	4.64	1	1		0	0
+betty	named_entity	candidate	1	35	35	0	0	0	3.92	1	1		0	0
+loved	inflection_miss		1	35	35	0	0	0	5.0	1	0	love	1	0
+doggy	named_entity	candidate	1	34	34	0	0	0	3.33	1	1		0	0
+kate	named_entity	candidate	1	34	34	0	0	0	4.34	1	1		0	0
+ncts	named_entity	candidate	1	34	0	0	0	34	1.02	1	1	nct	0	0
+paul	named_entity	candidate	1	34	34	0	0	0	5.03	1	1		0	0
+afcfta	named_entity	candidate	1	33	0	0	0	33	0.0	1	1		0	0
+charlie	named_entity	candidate	1	33	33	0	0	0	4.43	1	1		0	0
+freddy	named_entity	candidate	1	33	33	0	0	0	3.44	1	1		0	0
+maddy	named_entity	candidate	1	33	33	0	0	0	2.97	1	1		0	0
+ann	named_entity	candidate	1	32	32	0	0	0	4.35	1	1		0	0
+ella	named_entity	candidate	1	32	32	0	0	0	3.63	1	1		0	0
+mike	named_entity	candidate	1	32	32	0	0	0	4.8	1	1		0	0
+traders	named_entity	candidate	1	32	0	0	0	32	3.95	0	1	trader	0	0
+ukraine	named_entity	candidate	1	32	0	0	0	32	4.32	1	1		0	0
+blackboard	named_entity	candidate	1	31	31	0	0	0	3.02	1	0		0	0
+steve	named_entity	candidate	1	31	31	0	0	0	4.71	1	1		0	0
+annie	named_entity	candidate	1	30	30	0	0	0	3.94	1	1		0	0
+litres	domain_term		1	30	0	0	30	0	3.22	0	0	litre	0	0
+tilly	named_entity	candidate	1	30	30	0	0	0	2.94	1	1		0	0
+tweetie	named_entity	candidate	1	30	30	0	0	0	1.59	1	1		0	0
+disgusting	inflection_miss		1	29	29	0	0	0	4.23	0	0	disgust	1	0
+nora	named_entity	candidate	1	28	28	0	0	0	3.52	1	1		0	0
+ralph	named_entity	candidate	1	28	28	0	0	0	4.1	1	1		0	0
+troubled	inflection_miss		1	28	28	0	0	0	3.91	0	0	trouble	1	0
+grown	inflection_miss		1	27	27	0	0	0	4.67	0	0	grow	1	0
+maggie	named_entity	candidate	1	27	27	0	0	0	3.8	1	1		0	0
+aeos	named_entity	candidate	1	26	0	0	0	26	0.0	1	1	aeo	0	0
+cindy	named_entity	candidate	1	26	26	0	0	0	3.58	1	1		0	0
+gary	named_entity	candidate	1	26	26	0	0	0	4.39	1	1		0	0
+nemo	named_entity	candidate	1	26	26	0	0	0	3.17	1	1		0	0
+abigail	named_entity	candidate	1	25	25	0	0	0	3.38	1	1		0	0
+clara	named_entity	candidate	1	25	25	0	0	0	3.8	1	1		0	0
+emmy	named_entity	candidate	1	25	25	0	0	0	3.73	1	1		0	0
+gifted	inflection_miss		1	25	25	0	0	0	3.89	0	0	gift	1	0
+republic	named_entity	candidate	1	25	0	0	0	25	4.6	1	1		0	0
+yay	named_entity	candidate	1	25	25	0	0	0	3.92	1	1		0	0
+beth	named_entity	candidate	1	24	24	0	0	0	3.87	1	1		0	0
+cjeu	named_entity	candidate	1	24	0	0	0	24	1.85	1	1		0	0
+chirpy	named_entity	candidate	1	23	23	0	0	0	2.23	1	1		0	0
+cn	named_entity	candidate	1	23	0	0	0	23	3.38	1	1		0	0
+jerry	named_entity	candidate	1	23	23	0	0	0	4.26	1	1		0	0
+milly	named_entity	candidate	1	23	23	0	0	0	3.05	1	1		0	0
+rex	named_entity	candidate	1	23	23	0	0	0	3.89	1	1		0	0
+vroom	named_entity	candidate	1	23	23	0	0	0	2.72	0	1		0	0
+bobo	named_entity	candidate	1	22	22	0	0	0	3.01	1	1		0	0
+chloe	named_entity	candidate	1	22	22	0	0	0	3.75	1	1		0	0
+julia	named_entity	candidate	1	22	22	0	0	0	4.12	1	1		0	0
+claire	named_entity	candidate	1	21	21	0	0	0	3.98	1	1		0	0
+cooler	inflection_miss		1	21	21	0	0	0	3.96	0	0	cool	1	0
+declarations	domain_term		1	21	0	0	0	21	3.23	0	0	declaration	0	0
+israel	named_entity	candidate	1	21	0	0	0	21	4.77	1	1		0	0
+mimi	named_entity	candidate	1	21	21	0	0	0	3.31	1	1		0	0
+originating	domain_term		1	21	0	0	0	21	3.48	0	0	originate	0	0
+annex	named_entity	candidate	1	20	0	0	0	20	3.5	1	1		0	0
+buzzy	named_entity	candidate	1	20	20	0	0	0	2.46	1	1		0	0
+luna	named_entity	candidate	1	20	20	0	0	0	3.62	1	1		0	0
+suzy	named_entity	candidate	1	20	20	0	0	0	3.15	1	1		0	0
+tobacco	named_entity	candidate	1	20	0	0	20	0	4.19	1	1		0	0
+abbie	named_entity	candidate	1	19	19	0	0	0	2.93	1	1		0	0
+aeoc	named_entity	candidate	1	19	0	0	0	19	0.0	1	1		0	0
+betsy	named_entity	candidate	1	19	19	0	0	0	3.42	1	1		0	0
+binky	named_entity	candidate	1	19	19	0	0	0	2.36	1	1		0	0
+certificate	named_entity	candidate	1	19	0	0	0	19	4.29	1	0		0	0
+julie	named_entity	candidate	1	19	19	0	0	0	4.09	1	1		0	0
+simplifications	domain_term		1	19	0	0	0	19	2.13	0	0	simplification	0	0
+authorisation	domain_term		1	18	0	0	0	18	3.03	0	0		0	0
+e.g.	junk	structural	1	18	0	0	0	18	4.53	0	0		0	0
+hidden	inflection_miss		1	18	18	0	0	0	4.53	0	0	hide	1	0
+liz	named_entity	candidate	1	18	18	0	0	0	3.83	1	1		0	0
+pandy	named_entity	candidate	1	18	18	0	0	0	1.83	1	1		0	0
+todd	named_entity	candidate	1	18	18	0	0	0	4.09	1	1		0	0
+ukrainian	named_entity	candidate	1	18	0	0	0	18	4.18	1	1		0	0
+jacky	named_entity	candidate	1	17	17	0	0	0	2.82	1	1		0	0
+kelly	named_entity	candidate	1	17	17	0	0	0	4.44	1	1		0	0
+nana	named_entity	candidate	1	17	17	0	0	0	3.54	1	1		0	0
+super	named_entity	candidate	1	17	17	0	0	0	5.08	1	1		0	0
+tina	named_entity	candidate	1	17	17	0	0	0	3.76	1	1		0	0
+yum	named_entity	candidate	1	17	17	0	0	0	3.46	1	1		0	0
+lizzie	named_entity	candidate	1	16	16	0	0	0	3.34	1	1		0	0
+sparkling	inflection_miss		1	16	16	0	0	0	3.56	0	0	sparkle	1	0
+v.	junk	structural	1	16	0	0	0	16	5.06	0	0		0	0
+authorisations	named_entity	candidate	1	15	0	0	0	15	1.86	0	1	authorisation	0	0
+brazil	named_entity	candidate	1	15	0	0	0	15	4.58	1	1		0	0
+bun	named_entity	candidate	1	15	15	0	0	0	3.56	1	1		0	0
+circulation	domain_term		1	15	0	0	0	15	3.96	0	0		0	0
+getting	inflection_miss		1	15	15	0	0	0	5.57	0	0	get	1	0
+i.e.	junk	structural	1	15	0	0	0	15	4.52	0	0		0	0
+johnson	named_entity	candidate	1	15	15	0	0	0	4.72	1	1		0	0
+larry	named_entity	candidate	1	15	15	0	0	0	4.28	1	1		0	0
+lulu	named_entity	candidate	1	15	15	0	0	0	3.33	1	1		0	0
+robbie	named_entity	candidate	1	15	15	0	0	0	3.84	1	1		0	0
+counting	inflection_miss		1	14	14	0	0	0	4.27	0	0	count	1	0
+doug	named_entity	candidate	1	14	14	0	0	0	4.02	1	1		0	0
+goodnight	named_entity	candidate	1	14	14	0	0	0	3.64	1	1		0	0
+kim	named_entity	candidate	1	14	14	0	0	0	4.59	1	1		0	0
+rita	named_entity	candidate	1	14	14	0	0	0	3.75	1	1		0	0
+ryan	named_entity	candidate	1	14	14	0	0	0	4.59	1	1		0	0
+stuck	inflection_miss		1	14	14	0	0	0	4.68	0	0	stick	1	0
+suzie	named_entity	candidate	1	14	14	0	0	0	2.77	1	1		0	0
+abby	named_entity	candidate	1	13	13	0	0	0	3.56	1	1		0	0
+e	junk	structural	1	13	0	0	0	13	5.28	1	0		0	0
+judy	named_entity	candidate	1	13	13	0	0	0	3.79	1	1		0	0
+nina	named_entity	candidate	1	13	13	0	0	0	3.85	1	1		0	0
+stella	named_entity	candidate	1	13	13	0	0	0	3.7	1	1		0	0
+uk	named_entity	candidate	1	13	0	0	0	13	5.12	1	1		0	0
+wiggly	named_entity	candidate	1	13	13	0	0	0	2.49	1	1		0	0
+flo	named_entity	candidate	1	12	12	0	0	0	3.3	1	1		0	0
+importation	domain_term		1	12	0	0	0	12	3.05	0	0		0	0
+kayla	named_entity	candidate	1	12	12	0	0	0	3.11	1	1		0	0
+lithuanian	named_entity	candidate	1	12	0	0	0	12	3.2	1	1		0	0
+michelle	named_entity	candidate	1	12	12	0	0	0	4.16	1	1		0	0
+nomenclature	named_entity	candidate	1	12	0	0	0	12	3.21	1	1		0	0
+pam	named_entity	candidate	1	12	12	0	0	0	3.6	1	1		0	0
+rory	named_entity	candidate	1	12	12	0	0	0	3.72	1	1		0	0
+shannon	named_entity	candidate	1	12	12	0	0	0	3.76	1	1		0	0
+tabby	named_entity	candidate	1	12	12	0	0	0	2.79	1	1		0	0
+wto	named_entity	candidate	1	12	0	0	0	12	3.23	1	1		0	0
+becky	named_entity	candidate	1	11	11	0	0	0	3.63	1	1		0	0
+brownie	named_entity	candidate	1	11	11	0	0	0	3.21	1	1		0	0
+charles	named_entity	candidate	1	11	11	0	0	0	4.77	1	1		0	0
+denise	named_entity	candidate	1	11	11	0	0	0	3.57	1	1		0	0
+dina	named_entity	candidate	1	11	11	0	0	0	3.09	1	1		0	0
+dotty	named_entity	candidate	1	11	11	0	0	0	2.5	1	1		0	0
+ernie	named_entity	candidate	1	11	11	0	0	0	3.45	1	1		0	0
+exploring	inflection_miss		1	11	11	0	0	0	4.06	0	0	explore	1	0
+freight	named_entity	candidate	1	11	0	0	0	11	3.99	1	1		0	0
+heading	inflection_miss		1	11	0	0	0	11	4.48	0	0	head	1	0
+hub	named_entity	candidate	1	11	0	0	0	11	4.08	1	1		0	0
+louie	named_entity	candidate	1	11	11	0	0	0	3.38	1	1		0	0
+maya	named_entity	candidate	1	11	11	0	0	0	3.87	1	1		0	0
+mmm	named_entity	candidate	1	11	11	0	0	0	3.55	1	1		0	0
+nick	named_entity	candidate	1	11	11	0	0	0	4.59	1	1		0	0
+patrick	named_entity	candidate	1	11	11	0	0	0	4.37	1	1		0	0
+tess	named_entity	candidate	1	11	11	0	0	0	3.23	1	1		0	0
+trader	named_entity	candidate	1	11	0	0	0	11	3.77	1	1		0	0
+woof	named_entity	candidate	1	11	11	0	0	0	3.12	1	1		0	0
+angie	named_entity	candidate	1	10	10	0	0	0	3.35	1	1		0	0
+carla	named_entity	candidate	1	10	10	0	0	0	3.44	1	1		0	0
+ellie	named_entity	candidate	1	10	10	0	0	0	3.62	1	1		0	0
+grandbaby	named_entity	candidate	1	10	10	0	0	0	1.91	1	0		0	0
+hannah	named_entity	candidate	1	10	10	0	0	0	4.05	1	1		0	0
+isabel	named_entity	candidate	1	10	10	0	0	0	3.57	1	1		0	0
+jana	named_entity	candidate	1	10	10	0	0	0	3.06	1	1		0	0
+linda	named_entity	candidate	1	10	10	0	0	0	4.06	1	1		0	0
+liza	named_entity	candidate	1	10	10	0	0	0	3.28	1	1		0	0
+macy	named_entity	candidate	1	10	10	0	0	0	3.01	1	1		0	0
+mae	named_entity	candidate	1	10	10	0	0	0	3.65	1	1		0	0
+margaret	named_entity	candidate	1	10	10	0	0	0	4.23	1	1		0	0
+maxi	named_entity	candidate	1	10	10	0	0	0	3.26	1	1		0	0
+pippin	named_entity	candidate	1	10	10	0	0	0	2.78	1	1		0	0
+russel	named_entity	candidate	1	10	10	0	0	0	3.03	1	1		0	0
+sophia	named_entity	candidate	1	10	10	0	0	0	3.7	1	1		0	0
+timothy	named_entity	candidate	1	10	10	0	0	0	3.82	1	1		0	0
+yuck	named_entity	candidate	1	10	10	0	0	0	3.06	1	1		0	0
+accession	named_entity	candidate	1	9	0	0	0	9	3.4	1	1		0	0
+africa	named_entity	candidate	1	9	0	0	0	9	4.92	1	1		0	0
+ashley	named_entity	candidate	1	9	9	0	0	0	4.11	1	1		0	0
+authorised	named_entity	candidate	1	9	0	0	0	9	3.61	1	1	authorise	0	0
+ayla	named_entity	candidate	1	9	9	0	0	0	2.41	1	1		0	0
+bruce	named_entity	candidate	1	9	9	0	0	0	4.34	1	1		0	0
+cargo	named_entity	candidate	1	9	0	0	0	9	4.19	1	1		0	0
+cari	named_entity	candidate	1	9	9	0	0	0	2.38	1	1		0	0
+certification	domain_term		1	9	0	0	0	9	3.97	0	0		0	0
+chris	named_entity	candidate	1	9	9	0	0	0	4.81	1	1		0	0
+classified	domain_term		1	9	0	0	0	9	4.26	0	0	classify	0	0
+diana	named_entity	candidate	1	9	9	0	0	0	4.02	1	1		0	0
+emilda	named_entity	candidate	1	9	9	0	0	0	0.0	1	1		0	0
+ets	named_entity	candidate	1	9	0	0	0	9	2.95	1	1		0	0
+evfta	named_entity	candidate	1	9	0	0	0	9	0.0	1	1		0	0
+fertilisers	named_entity	candidate	1	9	0	0	0	9	2.42	1	1	fertiliser	0	0
+gavin	named_entity	candidate	1	9	9	0	0	0	3.74	1	1		0	0
+georgi	named_entity	candidate	1	9	0	0	0	9	2.63	1	1		0	0
+gracie	named_entity	candidate	1	9	9	0	0	0	3.24	1	1		0	0
+harry	named_entity	candidate	1	9	9	0	0	0	4.72	1	1		0	0
+hopping	inflection_miss		1	9	9	0	0	0	3.43	0	0	hop	1	0
+jean	named_entity	candidate	1	9	9	0	0	0	4.36	1	1		0	0
+jeff	named_entity	candidate	1	9	9	0	0	0	4.45	1	1		0	0
+maisy	named_entity	candidate	1	9	9	0	0	0	1.97	1	1		0	0
+martin	named_entity	candidate	1	9	9	0	0	0	4.74	1	1		0	0
+nancy	named_entity	candidate	1	9	9	0	0	0	4.14	1	1		0	0
+oliver	named_entity	candidate	1	9	9	0	0	0	4.22	1	1		0	0
+para	named_entity	candidate	1	9	0	0	0	9	3.85	1	0		0	0
+representation	domain_term		1	9	0	0	0	9	4.34	0	0		0	0
+roger	named_entity	candidate	1	9	9	0	0	0	4.39	1	1		0	0
+simplified	domain_term		1	9	0	0	0	9	3.69	0	0	simplify	0	0
+spoiled	inflection_miss		1	9	9	0	0	0	3.81	0	0	spoil	1	0
+sylvester	named_entity	candidate	1	9	9	0	0	0	3.25	1	1		0	0
+travellers	domain_term		1	9	0	0	9	0	3.68	0	0	traveller	0	0
+uh	named_entity	candidate	1	9	9	0	0	0	4.26	0	1		0	0
+zoomy	named_entity	candidate	1	9	9	0	0	0	1.25	1	1		0	0
+acceptor	named_entity	candidate	1	8	8	0	0	0	2.75	1	1		0	0
+adam	named_entity	candidate	1	8	8	0	0	0	4.57	1	1		0	0
+ali	named_entity	candidate	1	8	8	0	0	0	4.31	1	1		0	0
+beloved	local		1	8	8	0	0	0	4.17	0	0		0	0
+bluey	named_entity	candidate	1	8	8	0	0	0	2.21	1	1		0	0
+chirpie	named_entity	candidate	1	8	8	0	0	0	0.0	1	1		0	0
+dan	named_entity	candidate	1	8	8	0	0	0	4.51	1	1		0	0
+e.	junk	structural	1	8	0	0	0	8	5.28	1	0		0	0
+enjoyed	inflection_miss		1	8	8	0	0	0	4.59	0	0	enjoy	1	0
+exhausted	inflection_miss		1	8	8	0	0	0	4.08	0	0	exhaust	1	0
+gemma	named_entity	candidate	1	8	8	0	0	0	3.33	1	1		0	0
+harper	named_entity	candidate	1	8	8	0	0	0	4.04	1	1		0	0
+irish	named_entity	candidate	1	8	0	0	0	8	4.54	1	1		0	0
+israeli	named_entity	candidate	1	8	0	0	0	8	4.4	0	1		0	0
+jackie	named_entity	candidate	1	8	8	0	0	0	3.97	1	1		0	0
+janie	named_entity	candidate	1	8	8	0	0	0	2.76	1	1		0	0
+jenna	named_entity	candidate	1	8	8	0	0	0	3.54	1	1		0	0
+jennifer	named_entity	candidate	1	8	8	0	0	0	4.19	1	1		0	0
+jessica	named_entity	candidate	1	8	8	0	0	0	4.17	1	1		0	0
+katie	named_entity	candidate	1	8	8	0	0	0	3.96	1	1		0	0
+litre	domain_term		1	8	0	0	8	0	3.5	0	0		0	0
+lizzy	named_entity	candidate	1	8	8	0	0	0	3.06	1	1		0	0
+mazzy	named_entity	candidate	1	8	8	0	0	0	1.89	1	1		0	0
+meri	named_entity	candidate	1	8	8	0	0	0	2.68	1	1		0	0
+nan	named_entity	candidate	1	8	8	0	0	0	3.49	1	1		0	0
+pap	named_entity	candidate	1	8	8	0	0	0	3.28	1	1		0	0
+rulings	named_entity	candidate	1	8	0	0	0	8	3.39	1	1	ruling	0	0
+sal	named_entity	candidate	1	8	8	0	0	0	3.48	1	1		0	0
+spidey	named_entity	candidate	1	8	8	0	0	0	2.75	1	1		0	0
+t	junk	structural	1	8	8	0	0	0	5.43	1	1		0	0
+taxation	named_entity	candidate	1	8	0	0	0	8	3.81	1	1		0	0
+tca	named_entity	candidate	1	8	0	0	0	8	2.78	1	1		0	0
+tolerance	domain_term		1	8	0	0	0	8	4.06	0	0		0	0
+verification	domain_term		1	8	0	0	0	8	3.7	0	0		0	0
+wco	named_entity	candidate	1	8	0	0	0	8	1.58	1	1		0	0
+abolished	domain_term		1	7	0	0	0	7	3.62	0	0	abolish	0	0
+arts	named_entity	candidate	1	7	0	0	0	7	4.7	1	1	art	1	0
+baltic	named_entity	candidate	1	7	0	0	0	7	3.57	1	1		0	0
+bea	named_entity	candidate	1	7	7	0	0	0	3.34	1	1		0	0
+beartie	named_entity	candidate	1	7	7	0	0	0	0.0	1	1		0	0
+biggy	named_entity	candidate	1	7	7	0	0	0	2.0	1	1		0	0
+buggy	named_entity	candidate	1	7	7	0	0	0	3.32	1	1		0	0
+carriers	domain_term		1	7	0	0	0	7	4.02	0	0	carrier	0	0
+cherie	named_entity	candidate	1	7	7	0	0	0	2.84	1	1		0	0
+chirping	inflection_miss		1	7	7	0	0	0	2.87	0	0	chirp	1	0
+cif	named_entity	candidate	1	7	0	0	0	7	2.71	1	1		0	0
+clarice	named_entity	candidate	1	7	7	0	0	0	2.6	1	1		0	0
+competent	domain_term		1	7	0	0	0	7	3.92	0	0		0	0
+consignment	domain_term		1	7	0	0	0	7	3.0	0	0		0	0
+continental	named_entity	candidate	1	7	0	0	0	7	4.02	1	1		0	0
+elin	named_entity	candidate	1	7	7	0	0	0	2.53	1	1		0	0
+elle	named_entity	candidate	1	7	7	0	0	0	3.43	1	1		0	0
+eric	named_entity	candidate	1	7	7	0	0	0	4.49	1	1		0	0
+fortified	named_entity	candidate	1	7	0	0	7	0	3.43	0	1	fortify	0	0
+frankie	named_entity	candidate	1	7	7	0	0	0	3.65	1	1		0	0
+gabby	named_entity	candidate	1	7	7	0	0	0	3.16	1	1		0	0
+germany	named_entity	candidate	1	7	0	0	0	7	4.9	1	1		0	0
+gina	named_entity	candidate	1	7	7	0	0	0	3.58	1	1		0	0
+goranov	named_entity	candidate	1	7	0	0	0	7	1.02	1	1		0	0
+inward	named_entity	candidate	1	7	0	0	0	7	3.37	1	1		0	0
+jessi	named_entity	candidate	1	7	7	0	0	0	2.57	1	1		0	0
+jessie	named_entity	candidate	1	7	7	0	0	0	3.65	1	1		0	0
+juliet	named_entity	candidate	1	7	7	0	0	0	3.59	1	1		0	0
+jumping	inflection_miss		1	7	7	0	0	0	4.23	0	0	jump	1	0
+kaitlyn	named_entity	candidate	1	7	7	0	0	0	2.85	1	1		0	0
+karen	named_entity	candidate	1	7	7	0	0	0	4.09	1	1		0	0
+kari	named_entity	candidate	1	7	7	0	0	0	2.98	1	1		0	0
+katy	named_entity	candidate	1	7	7	0	0	0	3.65	1	1		0	0
+laughing	inflection_miss		1	7	7	0	0	0	4.61	0	0	laugh	1	0
+leticia	named_entity	candidate	1	7	7	0	0	0	2.44	1	1		0	0
+libby	named_entity	candidate	1	7	7	0	0	0	3.26	1	1		0	0
+maia	named_entity	candidate	1	7	7	0	0	0	2.98	1	1		0	0
+marlon	named_entity	candidate	1	7	7	0	0	0	3.21	1	1		0	0
+marvin	named_entity	candidate	1	7	7	0	0	0	3.66	1	1		0	0
+mona	named_entity	candidate	1	7	7	0	0	0	3.54	1	1		0	0
+noah	named_entity	candidate	1	7	7	0	0	0	3.93	1	1		0	0
+omer	named_entity	candidate	1	7	0	0	0	7	2.87	1	1		0	0
+patty	named_entity	candidate	1	7	7	0	0	0	3.58	1	1		0	0
+petey	named_entity	candidate	1	7	7	0	0	0	2.57	1	1		0	0
+piper	named_entity	candidate	1	7	7	0	0	0	3.68	1	1		0	0
+pixie	named_entity	candidate	1	7	7	0	0	0	3.15	1	1		0	0
+popper	local		1	7	7	0	0	0	2.95	0	0		0	0
+quackers	named_entity	candidate	1	7	7	0	0	0	1.56	1	1		0	0
+refreshing	inflection_miss		1	7	7	0	0	0	3.83	0	0	refresh	1	0
+ribbit	named_entity	candidate	1	7	7	0	0	0	1.83	1	1		0	0
+ricky	named_entity	candidate	1	7	7	0	0	0	3.91	1	1		0	0
+sabina	named_entity	candidate	1	7	7	0	0	0	2.72	1	1		0	0
+secretariat	named_entity	candidate	1	7	0	0	0	7	3.45	1	1		0	0
+sharon	named_entity	candidate	1	7	7	0	0	0	3.92	1	1		0	0
+solvency	named_entity	candidate	1	7	0	0	0	7	2.71	1	1		0	0
+spinning	inflection_miss		1	7	7	0	0	0	3.98	0	0	spin	1	0
+supreme	named_entity	candidate	1	7	0	0	0	7	4.69	1	1		0	0
+therese	named_entity	candidate	1	7	7	0	0	0	2.93	1	1		0	0
+thomas	named_entity	candidate	1	7	7	0	0	0	4.84	1	1		0	0
+toolkit	domain_term		1	7	0	0	0	7	3.08	0	0		0	0
+trembling	inflection_miss		1	7	7	0	0	0	3.27	0	0	tremble	1	0
+whistling	inflection_miss		1	7	7	0	0	0	3.21	0	0	whistle	1	0
+wholly	domain_term		1	7	0	0	0	7	3.83	0	0		0	0
+whoosh	named_entity	candidate	1	7	7	0	0	0	2.75	1	0		0	0
+willie	named_entity	candidate	1	7	7	0	0	0	3.89	1	1		0	0
+abi	named_entity	candidate	1	6	6	0	0	0	3.3	1	1		0	0
+amanda	named_entity	candidate	1	6	6	0	0	0	4.0	1	1		0	0
+ana	named_entity	candidate	1	6	6	0	0	0	3.89	1	1		0	0
+bobbie	named_entity	candidate	1	6	6	0	0	0	2.83	1	1		0	0
+caroline	named_entity	candidate	1	6	6	0	0	0	4.01	1	1		0	0
+ccrm	named_entity	candidate	1	6	0	0	0	6	0.0	1	1		0	0
+chad	named_entity	candidate	1	6	6	0	0	0	3.93	1	1		0	0
+cigars	named_entity	candidate	1	6	0	0	6	0	3.37	0	1	cigar	0	0
+connie	named_entity	candidate	1	6	6	0	0	0	3.47	1	1		0	0
+dairy	domain_term		1	6	0	0	6	0	4.09	0	0		0	0
+declarant	junk	low_freq	1	6	0	0	0	6	1.49	0	0		0	0
+dienests	junk	low_freq	1	6	0	0	0	6	0.0	0	0	dienest	0	0
+dippy	named_entity	candidate	1	6	6	0	0	0	2.23	1	1		0	0
+ellen	named_entity	candidate	1	6	6	0	0	0	4.05	1	1		0	0
+ep	named_entity	candidate	1	6	0	0	0	6	4.21	1	1		0	0
+fido	named_entity	candidate	1	6	6	0	0	0	2.64	1	1		0	0
+fob	named_entity	candidate	1	6	0	0	0	6	3.1	1	1		0	0
+formalities	named_entity	candidate	1	6	0	0	0	6	2.93	1	1	formality	0	0
+froggy	named_entity	candidate	1	6	6	0	0	0	2.47	1	1		0	0
+gmbh	named_entity	candidate	1	6	0	0	0	6	3.24	1	1		0	0
+ha	named_entity	candidate	1	6	6	0	0	0	4.58	0	1		0	0
+harmonized	named_entity	candidate	1	6	0	0	0	6	2.63	1	1		0	0
+ieņēmumu	junk	structural	1	6	0	0	0	6	0.0	0	0		0	0
+jacob	named_entity	candidate	1	6	6	0	0	0	4.23	1	1		0	0
+jamie	named_entity	candidate	1	6	6	0	0	0	4.17	1	1		0	0
+jasmine	named_entity	candidate	1	6	6	0	0	0	3.61	1	1		0	0
+jose	named_entity	candidate	1	6	6	0	0	0	4.21	1	1		0	0
+josie	named_entity	candidate	1	6	6	0	0	0	3.18	1	1		0	0
+kimmy	named_entity	candidate	1	6	6	0	0	0	2.81	1	1		0	0
+lacy	named_entity	candidate	1	6	6	0	0	0	3.23	1	1		0	0
+laura	named_entity	candidate	1	6	6	0	0	0	4.24	1	1		0	0
+lee	named_entity	candidate	1	6	6	0	0	0	4.73	1	1		0	0
+looking	inflection_miss		1	6	6	0	0	0	5.57	0	0	look	1	0
+marc	named_entity	candidate	1	6	6	0	0	0	4.03	1	1		0	0
+margo	named_entity	candidate	1	6	6	0	0	0	3.03	1	1		0	0
+marky	named_entity	candidate	1	6	6	0	0	0	2.49	1	1		0	0
+michael	named_entity	candidate	1	6	0	0	0	6	5.08	1	1		0	0
+mickey	named_entity	candidate	1	6	6	0	0	0	3.86	1	1		0	0
+minnie	named_entity	candidate	1	6	6	0	0	0	3.34	1	1		0	0
+missy	named_entity	candidate	1	6	6	0	0	0	3.26	1	1		0	0
+momchil	named_entity	candidate	1	6	0	0	0	6	0.0	1	1		0	0
+nathan	named_entity	candidate	1	6	6	0	0	0	4.13	1	1		0	0
+neenee	named_entity	candidate	1	6	6	0	0	0	0.0	1	1		0	0
+olly	named_entity	candidate	1	6	6	0	0	0	2.93	1	1		0	0
+p.	junk	structural	1	6	0	0	0	6	5.13	1	0		0	0
+paola	named_entity	candidate	1	6	6	0	0	0	2.7	1	1		0	0
+peculiarities	domain_term		1	6	0	0	0	6	2.73	0	0	peculiarity	0	0
+pinchy	named_entity	candidate	1	6	6	0	0	0	1.44	1	1		0	0
+riley	named_entity	candidate	1	6	6	0	0	0	3.9	1	1		0	0
+ruling	named_entity	candidate	1	6	0	0	0	6	4.29	1	1		0	0
+seth	named_entity	candidate	1	6	6	0	0	0	3.92	1	1		0	0
+shauna	named_entity	candidate	1	6	6	0	0	0	2.62	1	1		0	0
+sia	named_entity	candidate	1	6	0	0	0	6	3.11	1	1		0	0
+simone	named_entity	candidate	1	6	6	0	0	0	3.63	1	1		0	0
+spanish	named_entity	candidate	1	6	6	0	0	0	4.73	1	1		0	0
+splashing	inflection_miss		1	6	6	0	0	0	3.09	0	0	splash	1	0
+splitting	domain_term		1	6	0	0	0	6	3.78	0	0		0	0
+sweety	named_entity	candidate	1	6	6	0	0	0	2.62	1	1		0	0
+t&c.	junk	structural	1	6	0	0	0	6	5.08	1	1		0	0
+taxpayer	domain_term		1	6	0	0	0	6	3.86	0	0		0	0
+tock	local		1	6	6	0	0	0	2.75	0	0		0	0
+toni	named_entity	candidate	1	6	6	0	0	0	3.56	1	1		0	0
+ty	named_entity	candidate	1	6	6	0	0	0	3.73	1	1		0	0
+tyler	named_entity	candidate	1	6	6	0	0	0	4.17	1	1		0	0
+valsts	named_entity	candidate	1	6	0	0	0	6	0.0	1	1	valst	0	0
+zoey	named_entity	candidate	1	6	6	0	0	0	3.03	1	1		0	0
+accredited	domain_term		1	5	0	0	0	5	3.71	0	0	accredit	0	0
+alfie	named_entity	candidate	1	5	5	0	0	0	3.2	1	1		0	0
+alicia	named_entity	candidate	1	5	5	0	0	0	3.64	1	1		0	0
+alvin	named_entity	candidate	1	5	5	0	0	0	3.4	1	1		0	0
+andrew	named_entity	candidate	1	5	5	0	0	0	4.57	1	1		0	0
+anny	named_entity	candidate	1	5	5	0	0	0	2.19	1	1		0	0
+argentina	named_entity	candidate	1	5	0	0	0	5	4.22	1	1		0	0
+authorized	named_entity	candidate	1	5	0	0	0	5	4.12	1	1	authorize	0	0
+brad	named_entity	candidate	1	5	5	0	0	0	4.12	1	1		0	0
+brian	named_entity	candidate	1	5	5	0	0	0	4.47	1	1		0	0
+british	named_entity	candidate	1	5	0	0	0	5	5.18	0	1		0	0
+carl	named_entity	candidate	1	5	5	0	0	0	4.24	1	1		0	0
+certified	domain_term		1	5	0	0	0	5	4.23	0	0	certify	0	0
+choo	named_entity	candidate	1	5	5	0	0	0	3.28	1	0		0	0
+clarissa	named_entity	candidate	1	5	5	0	0	0	2.98	1	1		0	0
+co	named_entity	candidate	1	5	0	0	0	5	5.21	1	1		0	0
+da	named_entity	candidate	1	5	0	0	0	5	4.54	1	1		0	0
+de	named_entity	candidate	1	5	0	0	5	0	5.23	1	0		0	0
+digit	domain_term		1	5	0	0	0	5	3.77	0	0		0	0
+elsie	named_entity	candidate	1	5	5	0	0	0	3.09	1	1		0	0
+enrika	named_entity	candidate	1	5	0	0	0	5	0.0	1	1		0	0
+eur	named_entity	candidate	1	5	0	0	0	5	3.49	1	1		0	0
+g.	junk	structural	1	5	0	0	0	5	5.0	1	0		0	0
+garry	named_entity	candidate	1	5	5	0	0	0	3.31	1	0		0	0
+giggled	inflection_miss		1	5	5	0	0	0	2.89	1	0	giggle	1	0
+gigi	named_entity	candidate	1	5	5	0	0	0	3.19	1	1		0	0
+harmonised	named_entity	candidate	1	5	0	0	0	5	2.26	1	1	harmonise	0	0
+hauptzollamt	named_entity	candidate	1	5	0	0	0	5	0.0	1	1		0	0
+ia	named_entity	candidate	1	5	0	0	0	5	3.7	1	1		0	0
+ils	named_entity	candidate	1	5	0	0	0	5	2.75	1	1		0	0
+intrigued	local		1	5	5	0	0	0	3.47	0	0		0	0
+inviting	local		1	5	5	0	0	0	3.86	0	0		0	0
+invoice	domain_term		1	5	0	0	0	5	3.27	0	0		0	0
+jaqui	named_entity	candidate	1	5	5	0	0	0	1.08	1	1		0	0
+jay	named_entity	candidate	1	5	5	0	0	0	4.38	1	1		0	0
+joseph	named_entity	candidate	1	5	5	0	0	0	4.52	1	1		0	0
+lina	named_entity	candidate	1	5	5	0	0	0	3.06	1	1		0	0
+lux	named_entity	candidate	1	5	0	0	0	5	3.33	1	1		0	0
+mabel	named_entity	candidate	1	5	5	0	0	0	3.25	1	1		0	0
+marty	named_entity	candidate	1	5	5	0	0	0	3.64	1	1		0	0
+meg	named_entity	candidate	1	5	5	0	0	0	3.55	1	1		0	0
+mel	named_entity	candidate	1	5	5	0	0	0	3.8	1	1		0	0
+micky	named_entity	candidate	1	5	5	0	0	0	2.91	1	0		0	0
+minimis	named_entity	candidate	1	5	0	0	5	0	1.93	1	0		0	0
+moni	named_entity	candidate	1	5	5	0	0	0	2.42	1	1		0	0
+notes	named_entity	candidate	1	5	0	0	0	5	4.84	1	1	note	1	0
+overjoyed	inflection_miss		1	5	5	0	0	0	2.97	0	0	overjoy	1	0
+parliament	named_entity	candidate	1	5	0	0	0	5	4.74	1	1		0	0
+peggy	named_entity	candidate	1	5	5	0	0	0	3.57	1	1		0	0
+rang	inflection_miss		1	5	5	0	0	0	3.72	1	0	ring	1	0
+richie	named_entity	candidate	1	5	5	0	0	0	3.67	1	1		0	0
+roo	named_entity	candidate	1	5	0	0	0	5	3.1	1	1		0	0
+santa	named_entity	candidate	1	5	5	0	0	0	4.49	1	1		0	0
+shaun	named_entity	candidate	1	5	5	0	0	0	3.58	1	1		0	0
+simplification	named_entity	candidate	1	5	0	0	0	5	2.98	1	1		0	0
+sol	named_entity	candidate	1	5	5	0	0	0	3.69	1	1		0	0
+steven	named_entity	candidate	1	5	5	0	0	0	4.24	1	1		0	0
+sub	domain_term		1	5	0	0	0	5	4.66	0	0		0	0
+subheading	domain_term		1	5	0	0	0	5	1.91	0	0	subheade	0	0
+supervision	domain_term		1	5	0	0	0	5	3.94	0	0		0	0
+suppliers	domain_term		1	5	0	0	0	5	3.91	0	0	supplier	0	0
+sweetest	named_entity	candidate	1	5	5	0	0	0	3.41	1	0		0	0
+tara	named_entity	candidate	1	5	5	0	0	0	3.66	1	1		0	0
+torn	inflection_miss		1	5	5	0	0	0	4.08	0	0	tear	1	0
+warehouse	domain_term		1	5	0	0	0	5	4.08	0	0		0	0
+whee	named_entity	candidate	1	5	5	0	0	0	2.21	1	1		0	0
+z	junk	structural	1	5	0	0	0	5	4.47	1	1		0	0
+amelia	named_entity	candidate	1	4	4	0	0	0	3.55	1	1		0	0
+apologised	local		1	4	4	0	0	0	3.06	0	0	apologise	0	0
+articles	named_entity	candidate	1	4	0	0	0	4	4.71	1	1	article	1	0
+belgium	named_entity	candidate	1	4	0	0	0	4	4.15	1	1		0	0
+bizzy	named_entity	candidate	1	4	4	0	0	0	1.98	1	1		0	0
+braver	local		1	4	4	0	0	0	2.87	0	0		0	0
+brazilian	named_entity	candidate	1	4	0	0	0	4	4.23	0	1		0	0
+c-382/09	junk	structural	1	4	0	0	0	4	3.21	1	1		0	0
+calculations	domain_term		1	4	0	0	0	4	3.87	0	0	calculation	0	0
+cf	domain_term		1	4	0	0	0	4	3.85	0	0		0	0
+chilli	named_entity	candidate	1	4	4	0	0	0	3.29	1	0		0	0
+cigarillos	named_entity	candidate	1	4	0	0	4	0	1.75	1	1	cigarillo	0	0
+circular	domain_term		1	4	0	0	0	4	3.96	0	0		0	0
+cleaning	inflection_miss		1	4	4	0	0	0	4.39	0	0	clean	1	0
+co.	junk	structural	1	4	0	0	0	4	5.21	1	1		0	0
+coco	named_entity	candidate	1	4	4	0	0	0	3.49	1	1		0	0
+colombia	named_entity	candidate	1	4	0	0	0	4	3.95	1	1		0	0
+competence	domain_term		1	4	0	0	0	4	3.58	0	0		0	0
+consignee	domain_term		1	4	0	0	0	4	1.77	0	0		0	0
+consignments	domain_term		1	4	0	0	0	4	2.28	0	0	consignment	0	0
+cosy	local		1	4	4	0	0	0	3.31	0	0		0	0
+cumulation	named_entity	candidate	1	4	0	0	0	4	1.51	1	0		0	0
+cynthia	named_entity	candidate	1	4	4	0	0	0	3.65	1	1		0	0
+debby	named_entity	candidate	1	4	4	0	0	0	2.61	1	1		0	0
+delegated	domain_term		1	4	0	0	0	4	3.1	0	0	delegate	0	0
+disclosure	named_entity	candidate	1	4	0	0	0	4	4.0	0	1		0	0
+doctrine	domain_term		1	4	0	0	0	4	3.98	0	0		0	0
+donna	named_entity	candidate	1	4	4	0	0	0	3.84	1	1		0	0
+dory	named_entity	candidate	1	4	4	0	0	0	3.1	1	1		0	0
+dr	named_entity	candidate	1	4	0	0	0	4	5.24	1	1		0	0
+dreammaker	junk	low_freq	1	4	4	0	0	0	0.0	0	0		0	0
+efficiency	domain_term		1	4	0	0	0	4	4.38	0	0		0	0
+envisages	domain_term		1	4	0	0	0	4	2.45	0	0	envisage	0	0
+essentially	domain_term		1	4	0	0	0	4	4.42	0	0		0	0
+europe	named_entity	candidate	1	4	0	0	0	4	5.04	1	1		0	0
+felt	inflection_miss		1	4	4	0	0	0	5.13	0	0	feel	1	0
+finished	inflection_miss		1	4	4	0	0	0	4.94	0	0	finish	1	0
+firstly	named_entity	candidate	1	4	0	0	0	4	3.73	0	1		0	0
+freddie	named_entity	candidate	1	4	4	0	0	0	3.76	1	1		0	0
+gin	domain_term		1	4	0	0	4	0	3.68	0	0		0	0
+glowing	inflection_miss		1	4	4	0	0	0	3.75	0	0	glow	1	0
+halley	named_entity	candidate	1	4	4	0	0	0	2.71	1	1		0	0
+halloween	named_entity	candidate	1	4	4	0	0	0	4.16	1	1		0	0
+handed	inflection_miss		1	4	4	0	0	0	4.42	0	0	hand	1	0
+hereinafter	domain_term		1	4	0	0	0	4	2.95	0	0		0	0
+holder	domain_term		1	4	0	0	0	4	4.21	0	0		0	0
+intra	domain_term		1	4	0	0	0	4	3.32	0	0		0	0
+jemma	named_entity	candidate	1	4	4	0	0	0	2.55	1	1		0	0
+jogged	inflection_miss		1	4	4	0	0	0	2.57	0	0	jog	1	0
+jojo	named_entity	candidate	1	4	4	0	0	0	3.34	1	1		0	0
+ken	named_entity	candidate	1	4	4	0	0	0	4.21	1	1		0	0
+lading	named_entity	candidate	1	4	0	0	0	4	2.29	1	1		0	0
+leah	named_entity	candidate	1	4	4	0	0	0	3.47	1	1		0	0
+legitimate	domain_term		1	4	0	0	0	4	4.22	0	0		0	0
+liable	domain_term		1	4	0	0	0	4	3.89	0	0		0	0
+limitation	domain_term		1	4	0	0	0	4	3.71	0	0		0	0
+louise	named_entity	candidate	1	4	4	0	0	0	4.0	1	1		0	0
+matty	named_entity	candidate	1	4	4	0	0	0	3.21	1	1		0	0
+meant	inflection_miss		1	4	4	0	0	0	4.94	0	0	mean	1	0
+met	named_entity	candidate	1	4	0	0	0	4	5.09	1	1		0	0
+mister	named_entity	candidate	1	4	4	0	0	0	3.56	1	1		0	0
+momma	named_entity	candidate	1	4	4	0	0	0	3.41	1	1		0	0
+ms	named_entity	candidate	1	4	0	0	0	4	4.67	1	1		0	0
+mueca	named_entity	candidate	1	4	4	0	0	0	0.0	1	1		0	0
+operational	domain_term		1	4	0	0	0	4	4.21	0	0		0	0
+paige	named_entity	candidate	1	4	4	0	0	0	3.52	1	1		0	0
+pem	named_entity	candidate	1	4	0	0	0	4	2.21	1	1		0	0
+piggy	named_entity	candidate	1	4	4	0	0	0	3.3	1	0		0	0
+plopped	local		1	4	4	0	0	0	2.37	0	0	plop	0	0
+quieter	local		1	4	4	0	0	0	3.34	0	0		0	0
+randy	named_entity	candidate	1	4	4	0	0	0	3.92	1	1		0	0
+refreshed	inflection_miss		1	4	4	0	0	0	3.25	0	0	refresh	1	0
+riding	inflection_miss		1	4	4	0	0	0	4.49	0	0	rid	1	0
+ringing	inflection_miss		1	4	4	0	0	0	3.68	0	0	ring	1	0
+robby	named_entity	candidate	1	4	4	0	0	0	3.01	1	1		0	0
+saila	named_entity	candidate	1	4	4	0	0	0	1.02	1	1		0	0
+secondly	domain_term		1	4	0	0	0	4	3.85	0	0		0	0
+settlement	named_entity	candidate	1	4	0	0	0	4	4.49	1	1		0	0
+sherry	domain_term		1	4	0	0	4	0	3.4	0	0		0	0
+shone	local		1	4	4	0	0	0	3.23	0	0		0	0
+stan	named_entity	candidate	1	4	4	0	0	0	4.06	1	1		0	0
+stils	named_entity	candidate	1	4	0	0	0	4	0.0	1	1		0	0
+stipulates	domain_term		1	4	0	0	0	4	2.86	0	0	stipulate	0	0
+stretching	named_entity	candidate	1	4	4	0	0	0	3.85	1	1	stretch	1	0
+stuffing	inflection_miss		1	4	4	0	0	0	3.47	0	0	stuff	1	0
+thud	local		1	4	4	0	0	0	2.9	0	0		0	0
+toto	named_entity	candidate	1	4	4	0	0	0	3.15	1	1		0	0
+vocabulary	local		1	4	0	4	0	0	3.82	0	0		0	0
+vs	named_entity	candidate	1	4	0	0	0	4	4.85	1	1		0	0
+wagner	named_entity	candidate	1	4	0	0	0	4	3.71	1	1		0	0
+waiver	domain_term		1	4	0	0	0	4	3.53	0	0		0	0
+wally	named_entity	candidate	1	4	4	0	0	0	3.45	1	1		0	0
+wanna	local		1	4	4	0	0	0	5.04	0	0		0	0
+warehousing	domain_term		1	4	0	0	0	4	2.97	0	0		0	0
+wilbur	named_entity	candidate	1	4	4	0	0	0	3.24	1	1		0	0
+winnie	named_entity	candidate	1	4	4	0	0	0	3.32	1	1		0	0
+zones	named_entity	candidate	1	4	0	0	0	4	4.12	1	1	zone	1	0
+admission	domain_term		1	3	0	0	0	3	4.15	0	0		0	0
+align	domain_term		1	3	0	0	0	3	3.63	0	0		0	0
+ambitious	domain_term		1	3	0	0	0	3	3.95	0	0		0	0
+and/or	junk	structural	1	3	0	0	0	3	6.49	0	0		0	0
+antov	named_entity	candidate	1	3	0	0	0	3	0.0	1	1		0	0
+auditors	named_entity	candidate	1	3	0	0	0	3	3.25	1	1		0	0
+authenticity	domain_term		1	3	0	0	0	3	3.6	0	0		0	0
+balancing	inflection_miss		1	3	3	0	0	0	3.8	0	0	balance	1	0
+birdy	named_entity	candidate	1	3	3	0	0	0	2.6	1	1		0	0
+blew	inflection_miss		1	3	3	0	0	0	4.12	0	0	blow	1	0
+brokers	domain_term		1	3	0	0	0	3	3.67	0	0	broker	0	0
+bulgarian	named_entity	candidate	1	3	0	0	0	3	3.81	1	1		0	0
+burning	inflection_miss		1	3	3	0	0	0	4.5	0	0	burn	1	0
+buster	named_entity	candidate	1	3	3	0	0	0	3.47	1	1		0	0
+buzzing	inflection_miss		1	3	3	0	0	0	3.65	0	0	buzz	1	0
+calculation	domain_term		1	3	0	0	0	3	3.76	0	0		0	0
+canary	named_entity	candidate	1	3	0	0	3	0	3.44	1	1		0	0
+catalysers	junk	low_freq	1	3	0	0	0	3	0.0	0	0	catalyser	0	0
+christelle	named_entity	candidate	1	3	0	0	0	3	1.69	1	1		0	0
+classifying	domain_term		1	3	0	0	0	3	2.95	0	0	classify	0	0
+climbing	inflection_miss		1	3	3	0	0	0	4.12	0	0	climb	1	0
+comforting	inflection_miss		1	3	3	0	0	0	3.61	0	0	comfort	1	0
+compendium	named_entity	candidate	1	3	0	0	0	3	3.05	1	1		0	0
+computerized	named_entity	candidate	1	3	0	0	0	3	3.18	1	1		0	0
+consignor	domain_term		1	3	0	0	0	3	2.28	0	0		0	0
+continued	inflection_miss		1	3	3	0	0	0	4.96	0	0	continue	1	0
+contractual	domain_term		1	3	0	0	0	3	3.43	0	0		0	0
+creepy	named_entity	candidate	1	3	3	0	0	0	4.04	1	0		0	0
+daring	inflection_miss		1	3	3	0	0	0	3.7	0	0	dare	1	0
+ddu	named_entity	candidate	1	3	0	0	3	0	2.24	1	1		0	0
+dedicated	domain_term		1	3	0	0	0	3	4.58	0	0	dedicate	0	0
+deductive	domain_term		1	3	0	0	0	3	2.65	0	0		0	0
+delle	named_entity	candidate	1	3	0	0	0	3	2.78	1	0		0	0
+dense	local		1	3	0	3	0	0	3.98	0	0		0	0
+deployment	domain_term		1	3	0	0	0	3	3.91	0	0		0	0
+dogane	named_entity	candidate	1	3	0	0	0	3	0.0	1	1		0	0
+dreamed	inflection_miss		1	3	3	0	0	0	3.75	0	0	dream	1	0
+dsb	named_entity	candidate	1	3	0	0	0	3	2.3	1	1		0	0
+duckling	local		1	3	3	0	0	0	2.66	0	0	duckle	0	0
+duty‑free	junk	structural	1	3	0	0	3	0	4.66	0	0		0	0
+eduardo	named_entity	candidate	1	3	0	0	0	3	3.34	1	1		0	0
+efficiently	domain_term		1	3	0	0	0	3	3.79	0	0		0	0
+ethyl	named_entity	candidate	1	3	0	0	3	0	2.93	1	0		0	0
+everytime	named_entity	candidate	1	3	3	0	0	0	3.69	1	0		0	0
+ex	domain_term		1	3	0	0	0	3	4.81	0	0		0	0
+exportation	domain_term		1	3	0	0	0	3	2.4	0	0		0	0
+favourable	domain_term		1	3	0	0	0	3	3.53	0	0		0	0
+foldable	named_entity	candidate	1	3	0	3	0	0	2.62	1	1		0	0
+forwarders	domain_term		1	3	0	0	0	3	2.03	0	0	forwarder	0	0
+france	named_entity	candidate	1	3	0	0	0	3	4.94	1	1		0	0
+frowned	inflection_miss		1	3	3	0	0	0	3.24	0	0	frown	1	0
+fulfil	domain_term		1	3	0	0	0	3	3.55	0	0		0	0
+fulfilling	named_entity	candidate	1	3	0	0	0	3	3.71	0	1	fulfil	1	0
+hillcrest	named_entity	candidate	1	3	0	3	0	0	2.55	1	1		0	0
+homogeneous	domain_term		1	3	0	0	0	3	3.22	0	0		0	0
+hoo	named_entity	candidate	1	3	3	0	0	0	3.38	1	1		0	0
+hsens	named_entity	candidate	1	3	0	0	0	3	0.0	0	1	hsen	0	0
+i.	junk	structural	1	3	0	0	0	3	7.09	1	0		0	0
+igloos	named_entity	candidate	1	3	3	0	0	0	2.04	1	1	igloo	1	0
+infringement	domain_term		1	3	0	0	0	3	3.61	0	0		0	0
+intermediaries	domain_term		1	3	0	0	0	3	2.96	0	0	intermediary	0	0
+irregularities	domain_term		1	3	0	0	0	3	3.31	0	0	irregularity	0	0
+islands	named_entity	candidate	1	3	0	0	3	0	4.5	1	1	island	1	0
+iv	named_entity	candidate	1	3	0	0	0	3	4.38	1	1		0	0
+jimbo	named_entity	candidate	1	3	3	0	0	0	2.77	1	0		0	0
+jo	named_entity	candidate	1	3	3	0	0	0	4.03	1	1		0	0
+jody	named_entity	candidate	1	3	3	0	0	0	3.18	1	1		0	0
+jointly	domain_term		1	3	0	0	0	3	3.78	0	0		0	0
+juiciest	local		1	3	3	0	0	0	2.13	0	0		0	0
+leite	named_entity	candidate	1	3	0	0	0	3	1.96	1	1		0	0
+linguistic	domain_term		1	3	0	0	0	3	3.71	0	0		0	0
+lodge	domain_term		1	3	0	0	0	3	4.08	0	0		0	0
+manufacture	domain_term		1	3	0	0	0	3	3.98	0	0		0	0
+marked	inflection_miss		1	3	3	0	0	0	4.5	0	0	mark	1	0
+matilda	named_entity	candidate	1	3	3	0	0	0	3.26	1	1		0	0
+module	domain_term		1	3	0	0	0	3	3.89	0	0		0	0
+monika	named_entity	candidate	1	3	0	0	0	3	2.92	1	1		0	0
+mras	named_entity	candidate	1	3	0	0	0	3	1.84	1	1	mra	0	0
+neighbouring	inflection_miss		1	3	0	0	0	3	3.77	0	0	neighbour	1	0
+netherlands	named_entity	candidate	1	3	0	0	0	3	4.28	1	1		0	0
+nicer	local		1	3	3	0	0	0	3.65	0	0		0	0
+notably	domain_term		1	3	0	0	0	3	4.01	0	0		0	0
+notification	domain_term		1	3	0	0	0	3	3.92	0	0		0	0
+offence	domain_term		1	3	0	0	0	3	3.96	0	0		0	0
+operators	named_entity	candidate	1	3	0	0	0	3	4.19	1	1	operator	1	0
+organisation	named_entity	candidate	1	3	0	0	0	3	4.36	1	1		0	0
+originate	domain_term		1	3	0	0	0	3	3.37	0	0		0	0
+outing	inflection_miss		1	3	3	0	0	0	3.5	0	0	out	1	0
+percy	named_entity	candidate	1	3	3	0	0	0	3.66	1	1		0	0
+phew	named_entity	candidate	1	3	3	0	0	0	3.14	1	1		0	0
+portable	domain_term		1	3	0	0	3	0	3.97	0	0		0	0
+privileged	domain_term		1	3	0	0	0	3	3.81	0	0		0	0
+problematic	domain_term		1	3	0	0	0	3	3.87	0	0		0	0
+protective	domain_term		1	3	0	0	3	0	4.13	0	0		0	0
+provider	domain_term		1	3	0	0	0	3	4.1	0	0		0	0
+pwc	named_entity	candidate	1	3	0	0	0	3	2.88	1	1		0	0
+rcep	named_entity	candidate	1	3	0	0	3	0	1.54	1	1		0	0
+reporting	named_entity	candidate	1	3	0	0	0	3	4.54	0	1	report	1	0
+reputable	domain_term		1	3	0	0	0	3	3.41	0	0		0	0
+retroactive	domain_term		1	3	0	0	0	3	2.92	0	0		0	0
+revoked	domain_term		1	3	0	0	0	3	3.49	0	0	revoke	0	0
+roaring	inflection_miss		1	3	3	0	0	0	3.51	0	0	roar	1	0
+rolly	named_entity	candidate	1	3	3	0	0	0	2.27	1	1		0	0
+rudy	named_entity	candidate	1	3	3	0	0	0	3.62	1	1		0	0
+sabine	named_entity	candidate	1	3	0	0	0	3	3.22	1	1		0	0
+sanctions	domain_term		1	3	0	0	0	3	3.95	0	0	sanction	0	0
+sewing	inflection_miss		1	3	3	0	0	0	3.69	0	0	sew	1	0
+shaking	inflection_miss		1	3	3	0	0	0	4.08	0	0	shake	1	0
+shh	named_entity	candidate	1	3	3	0	0	0	3.01	1	1		0	0
+slithered	local		1	3	3	0	0	0	2.32	0	0	slither	0	0
+srl	named_entity	candidate	1	3	0	0	0	3	2.43	1	1		0	0
+startled	named_entity	candidate	1	3	3	0	0	0	3.31	1	0		0	0
+substantial	domain_term		1	3	0	0	0	3	4.33	0	0		0	0
+surveillance	named_entity	candidate	1	3	0	0	0	3	4.17	0	1		0	0
+susan	named_entity	candidate	1	3	3	0	0	0	4.24	1	1		0	0
+teasing	named_entity	candidate	1	3	3	0	0	0	3.55	0	1	tease	1	0
+teddies	local		1	3	3	0	0	0	2.07	0	0	teddy	0	0
+testing	inflection_miss		1	3	0	0	0	3	4.67	0	0	test	1	0
+transhipment	domain_term		1	3	0	0	0	3	1.64	0	0		0	0
+transshipment	domain_term		1	3	0	0	0	3	2.21	0	0		0	0
+traveller	domain_term		1	3	0	0	3	0	3.49	0	0		0	0
+uncertainty	domain_term		1	3	0	0	0	3	4.03	0	0		0	0
+undenatured	junk	low_freq	1	3	0	0	3	0	0.0	0	0		0	0
+unrelated	domain_term		1	3	0	0	0	3	3.8	0	0		0	0
+vassilis	named_entity	candidate	1	3	0	0	0	3	1.6	1	1		0	0
+vii	named_entity	candidate	1	3	0	0	0	3	3.84	1	1		0	0
+vodka	domain_term		1	3	0	0	3	0	3.83	0	0		0	0
+weronika	named_entity	candidate	1	3	0	0	0	3	1.16	1	1		0	0
+whoa	named_entity	candidate	1	3	3	0	0	0	3.82	1	1		0	0
+works	inflection_miss		1	3	0	0	0	3	5.29	0	0	work	1	0
+yep	named_entity	candidate	1	3	3	0	0	0	4.39	1	1		0	0
+zara	named_entity	candidate	1	3	3	0	0	0	3.3	1	1		0	0
+zizz	named_entity	candidate	1	3	3	0	0	0	0.0	1	1		0	0
+zooming	inflection_miss		1	3	3	0	0	0	2.91	0	0	zoom	1	0
+124(1)(b	junk	structural	1	2	0	0	0	2	3.72	0	0		0	0
+176(3	junk	structural	1	2	0	0	0	2	3.73	0	0		0	0
+181(4	junk	structural	1	2	0	0	0	2	3.73	0	0		0	0
+27(3	junk	structural	1	2	0	0	0	2	5.02	0	0		0	0
+57(3	junk	structural	1	2	0	0	0	2	4.7	1	0		0	0
+74(3	junk	structural	1	2	0	0	0	2	4.58	0	0		0	0
+a-261	junk	structural	1	2	0	0	0	2	3.5	1	1		0	0
+a-377	junk	structural	1	2	0	0	0	2	3.35	1	1		0	0
+abolition	domain_term		1	2	0	0	0	2	3.51	0	0		0	0
+accelerate	domain_term		1	2	0	0	0	2	3.66	0	0		0	0
+acceptance	domain_term		1	2	0	0	0	2	4.16	0	0		0	0
+achoo	named_entity	candidate	1	2	2	0	0	0	1.7	1	1		0	0
+added	named_entity	candidate	1	2	0	0	2	0	5.16	1	1	add	1	0
+additionally	domain_term		1	2	0	0	0	2	4.2	0	0		0	0
+admissibility	domain_term		1	2	0	0	0	2	2.26	0	0		0	0
+adoption	domain_term		1	2	0	0	0	2	4.17	0	0		0	0
+aduaneiras	named_entity	candidate	1	2	0	0	0	2	0.0	1	1		0	0
+advisable	domain_term		1	2	0	0	0	2	3.26	0	0		0	0
+affiliated	domain_term		1	2	0	0	0	2	3.96	0	0		0	0
+agents	named_entity	candidate	1	2	0	0	0	2	4.55	1	1	agent	1	0
+agenzia	named_entity	candidate	1	2	0	0	0	2	1.26	1	1		0	0
+agriculture	named_entity	candidate	1	2	0	0	0	2	4.37	1	1		0	0
+aha	named_entity	candidate	1	2	0	0	0	2	3.56	1	1		0	0
+ahhed	junk	low_freq	1	2	2	0	0	0	0.0	0	0	ahhe	0	0
+alloy	domain_term		1	2	0	0	0	2	3.61	0	0		0	0
+america	named_entity	candidate	1	2	0	0	0	2	5.22	1	1		0	0
+andean	named_entity	candidate	1	2	0	0	0	2	2.91	1	1		0	0
+anne	named_entity	candidate	1	2	2	0	0	0	4.32	1	1		0	0
+anyways	inflection_miss		1	2	2	0	0	0	4.04	0	0	anyway	1	0
+apparatus	domain_term		1	2	0	0	0	2	3.78	0	0		0	0
+appeals	named_entity	candidate	1	2	0	0	0	2	4.22	1	1	appeal	1	0
+argumentation	domain_term		1	2	0	0	0	2	2.65	0	0		0	0
+arrangements/	junk	structural	1	2	0	0	0	2	4.23	1	1		0	0
+asia	named_entity	candidate	1	2	0	0	0	2	4.65	1	1		0	0
+astounded	inflection_miss		1	2	2	0	0	0	2.94	0	0	astound	1	0
+au	named_entity	candidate	1	2	0	0	0	2	4.02	1	1		0	0
+audits	inflection_miss		1	2	0	0	0	2	3.29	0	0	audit	1	0
+avail	domain_term		1	2	0	0	0	2	3.59	0	0		0	0
+b.v.	junk	structural	1	2	0	0	0	2	2.6	1	1		0	0
+bangladesh	named_entity	candidate	1	2	0	0	0	2	3.96	1	1		0	0
+beware	named_entity	candidate	1	2	2	0	0	0	3.7	0	1		0	0
+bis	named_entity	candidate	1	2	0	0	0	2	3.34	1	1		0	0
+boney	named_entity	candidate	1	2	2	0	0	0	2.5	1	1		0	0
+bowling	inflection_miss		1	2	2	0	0	0	4.05	0	0	bowl	1	0
+bravo	named_entity	candidate	1	2	2	0	0	0	3.77	1	1		0	0
+brexit	named_entity	candidate	1	2	0	0	0	2	3.79	1	1		0	0
+brightness	local		1	2	0	2	0	0	3.57	0	0		0	0
+broadly	domain_term		1	2	0	0	0	2	3.82	0	0		0	0
+btis	named_entity	candidate	1	2	0	0	0	2	0.0	0	1	bti	0	0
+bubbles	named_entity	candidate	1	2	2	0	0	0	3.79	1	1	bubble	1	0
+bv	named_entity	candidate	1	2	0	0	0	2	3.0	1	1		0	0
+bvi	named_entity	candidate	1	2	0	0	0	2	2.18	1	1		0	0
+bvis	named_entity	candidate	1	2	0	0	0	2	0.0	0	1	bvi	0	0
+c	junk	structural	1	2	0	0	0	2	5.33	1	1		0	0
+c-12/92	junk	structural	1	2	0	0	0	2	4.38	1	1		0	0
+c-450/12	junk	structural	1	2	0	0	0	2	3.24	1	1		0	0
+caring	inflection_miss		1	2	2	0	0	0	4.2	0	0	car	1	0
+centimetres	local		1	2	0	2	0	0	2.99	0	0	centimetre	0	0
+ceta	named_entity	candidate	1	2	0	0	0	2	2.38	1	1		0	0
+cheering	inflection_miss		1	2	2	0	0	0	3.83	0	0	cheer	1	0
+christopher	named_entity	candidate	1	2	0	0	0	2	4.22	1	1		0	0
+chugged	local		1	2	2	0	0	0	2.26	0	0	chug	0	0
+chugging	local		1	2	2	0	0	0	2.82	0	0	chug	0	0
+circuits	domain_term		1	2	0	0	0	2	3.77	0	0	circuit	0	0
+classify	domain_term		1	2	0	0	0	2	3.39	0	0		0	0
+clem	named_entity	candidate	1	2	2	0	0	0	2.98	1	0		0	0
+clung	local		1	2	2	0	0	0	2.98	0	0		0	0
+comfortably	local		1	2	0	2	0	0	3.74	0	0		0	0
+coming	inflection_miss		1	2	2	0	0	0	5.4	0	0	come	1	0
+comparable	domain_term		1	2	0	0	0	2	4.08	0	0		0	0
+comparative	domain_term		1	2	0	0	0	2	3.77	0	0		0	0
+concrete	domain_term		1	2	0	0	0	2	4.44	0	0		0	0
+confidential	domain_term		1	2	0	0	0	2	3.9	0	0		0	0
+confidentiality	domain_term		1	2	0	0	0	2	3.45	0	0		0	0
+confiscation	domain_term		1	2	0	0	2	0	2.99	0	0		0	0
+correctness	domain_term		1	2	0	0	0	2	3.39	0	0		0	0
+cozier	local		1	2	2	0	0	0	2.02	0	0		0	0
+critter	local		1	2	2	0	0	0	2.77	0	0		0	0
+cross‑border	junk	structural	1	2	0	0	2	0	4.52	0	0		0	0
+crowell	named_entity	candidate	1	2	0	0	0	2	2.72	1	1		0	0
+crying	inflection_miss		1	2	2	0	0	0	4.56	0	0	cry	1	0
+cursos	named_entity	candidate	1	2	0	0	0	2	0.0	1	1		0	0
+customsclear	named_entity	candidate	1	2	0	0	0	2	0.0	1	1		0	0
+defer	domain_term		1	2	0	0	0	2	3.2	0	0		0	0
+deferral	domain_term		1	2	0	0	0	2	2.6	0	0		0	0
+designation	domain_term		1	2	0	0	0	2	3.76	0	0		0	0
+destined	domain_term		1	2	0	0	0	2	3.79	0	0	destine	0	0
+developed	inflection_miss		1	2	0	0	0	2	4.95	0	0	develop	1	0
+dg	named_entity	candidate	1	2	0	0	0	2	3.2	1	1		0	0
+di	named_entity	candidate	1	2	0	0	0	2	4.33	1	0		0	0
+directives	named_entity	candidate	1	2	0	0	0	2	3.21	0	1	directive	0	0
+dispensing	domain_term		1	2	0	0	0	2	3.09	0	0	dispense	0	0
+dr.	junk	structural	1	2	0	0	0	2	5.24	1	1		0	0
+dreaming	inflection_miss		1	2	2	0	0	0	3.94	0	0	dream	1	0
+duisburg	named_entity	candidate	1	2	0	0	0	2	2.19	1	1		0	0
+duties	named_entity	candidate	1	2	0	0	2	0	4.32	1	1	duty	1	0
+ea-304	junk	structural	1	2	0	0	0	2	3.22	1	0		0	0
+ea1671	junk	structural	1	2	0	0	0	2	0.0	1	1		0	0
+eating	inflection_miss		1	2	2	0	0	0	4.85	0	0	eat	1	0
+edmond	named_entity	candidate	1	2	0	0	0	2	3.1	1	1		0	0
+ee	named_entity	candidate	1	2	0	0	0	2	3.61	1	1		0	0
+eec	named_entity	candidate	1	2	0	0	0	2	2.7	1	1		0	0
+efta	named_entity	candidate	1	2	0	0	0	2	2.32	1	1		0	0
+eligible	domain_term		1	2	0	0	0	2	4.29	0	0		0	0
+endangered	domain_term		1	2	0	0	2	0	3.86	0	0		0	0
+energized	local		1	2	2	0	0	0	3.06	0	0		0	0
+envisaged	domain_term		1	2	0	0	0	2	3.11	0	0	envisage	0	0
+equitable	domain_term		1	2	0	0	0	2	3.36	0	0		0	0
+erika	named_entity	candidate	1	2	0	0	0	2	3.17	1	1		0	0
+erp	named_entity	candidate	1	2	0	0	0	2	3.02	1	1		0	0
+es	named_entity	candidate	1	2	2	0	0	0	3.93	1	0		0	0
+essence	domain_term		1	2	0	0	0	2	4.03	0	0		0	0
+eu4pfm	junk	structural	1	2	0	0	0	2	0.0	1	1		0	0
+evguenia	named_entity	candidate	1	2	0	0	0	2	0.0	1	1		0	0
+evidentiary	domain_term		1	2	0	0	0	2	2.6	0	0		0	0
+existent	domain_term		1	2	0	0	0	2	3.51	0	0		0	0
+expressly	domain_term		1	2	0	0	0	2	3.48	0	0		0	0
+extensive	domain_term		1	2	0	0	0	2	4.49	0	0		0	0
+factual	domain_term		1	2	0	0	0	2	3.61	0	0		0	0
+fallen	inflection_miss		1	2	2	0	0	0	4.39	0	0	fall	1	0
+familiarise	domain_term		1	2	0	0	0	2	2.23	0	0		0	0
+favour	domain_term		1	2	0	0	0	2	4.31	0	0		0	0
+fictitious	domain_term		1	2	0	0	0	2	3.25	0	0		0	0
+flavoring	inflection_miss		1	2	2	0	0	0	2.77	0	0	flavor	1	0
+footing	inflection_miss		1	2	2	0	0	0	3.5	0	0	foot	1	0
+forgot	inflection_miss		1	2	2	0	0	0	4.63	0	0	forget	1	0
+forma	domain_term		1	2	0	0	0	2	2.95	0	0		0	0
+formalisation	domain_term		1	2	0	0	0	2	1.54	0	0		0	0
+formally	domain_term		1	2	0	0	0	2	4.01	0	0		0	0
+forum	named_entity	candidate	1	2	0	0	0	2	4.38	1	1		0	0
+franca	domain_term		1	2	0	0	0	2	2.66	0	0		0	0
+french	named_entity	candidate	1	2	0	0	0	2	5.09	1	1		0	0
+froze	inflection_miss		1	2	2	0	0	0	3.42	0	0	freeze	1	0
+fta	named_entity	candidate	1	2	0	0	0	2	2.92	1	1		0	0
+gathering	inflection_miss		1	2	2	0	0	0	4.25	0	0	gather	1	0
+gatt	named_entity	candidate	1	2	0	0	0	2	2.32	1	1		0	0
+german	named_entity	candidate	1	2	0	0	0	2	4.95	0	1		0	0
+ghana	named_entity	candidate	1	2	0	0	0	2	3.9	1	1		0	0
+giddy	named_entity	candidate	1	2	2	0	0	0	3.22	1	1		0	0
+glimmering	inflection_miss		1	2	2	0	0	0	2.25	0	0	glimmer	1	0
+goalkeeper	local		1	2	0	2	0	0	3.79	0	0		0	0
+gone	inflection_miss		1	2	2	0	0	0	5.17	0	0	go	1	0
+gracias	named_entity	candidate	1	2	2	0	0	0	2.79	1	1	gracia	0	0
+granulated	local		1	2	0	2	0	0	2.54	0	0	granulate	0	0
+graph	domain_term		1	2	0	0	0	2	4.05	0	0		0	0
+gst	named_entity	candidate	1	2	0	0	2	0	3.38	1	1		0	0
+guessing	inflection_miss		1	2	2	0	0	0	3.94	0	0	guess	1	0
+haired	inflection_miss		1	2	2	0	0	0	3.7	0	0	hair	1	0
+handling	inflection_miss		1	2	0	0	0	2	4.39	0	0	handle	1	0
+hark	named_entity	candidate	1	2	0	0	0	2	2.81	1	1		0	0
+having	inflection_miss		1	2	2	0	0	0	5.59	0	0	have	1	0
+headings	domain_term		1	2	0	0	0	2	2.94	0	0	heading	0	0
+helped	inflection_miss		1	2	2	0	0	0	4.88	0	0	help	1	0
+highness	named_entity	candidate	1	2	2	0	0	0	3.34	1	1		0	0
+hinge	local		1	2	0	2	0	0	3.32	0	0		0	0
+historically	named_entity	candidate	1	2	0	0	2	0	4.08	0	1		0	0
+hooray	named_entity	candidate	1	2	2	0	0	0	3.2	1	1		0	0
+hotter	local		1	2	2	0	0	0	3.6	0	0		0	0
+hristina	named_entity	candidate	1	2	0	0	0	2	0.0	1	1		0	0
+hurdles	domain_term		1	2	0	0	0	2	3.54	0	0	hurdle	0	0
+huygen	named_entity	candidate	1	2	0	0	0	2	0.0	1	1		0	0
+identical/	junk	structural	1	2	0	0	0	2	4.21	0	0		0	0
+iii	named_entity	candidate	1	2	0	0	0	2	4.63	1	1		0	0
+ilona	named_entity	candidate	1	2	0	0	0	2	2.35	1	1		0	0
+impartial	domain_term		1	2	0	0	0	2	3.38	0	0		0	0
+incomprehensible	domain_term		1	2	0	0	0	2	3.17	0	0		0	0
+insofar	domain_term		1	2	0	0	0	2	3.06	0	0		0	0
+interfaces	domain_term		1	2	0	0	0	2	3.47	0	0	interface	0	0
+interim	domain_term		1	2	0	0	0	2	4.0	0	0		0	0
+invoicing	domain_term		1	2	0	0	0	2	2.41	0	0		0	0
+japan	named_entity	candidate	1	2	0	0	2	0	4.89	1	1		0	0
+jeopardise	domain_term		1	2	0	0	0	2	2.41	0	0		0	0
+journalism	local		1	2	0	2	0	0	4.12	0	0		0	0
+juan	named_entity	candidate	1	2	0	0	0	2	4.12	1	1		0	0
+judicial	domain_term		1	2	0	0	0	2	4.14	0	0		0	0
+kachelofenbau	named_entity	candidate	1	2	0	0	0	2	0.0	1	1		0	0
+kamin	named_entity	candidate	1	2	0	0	0	2	1.95	1	1		0	0
+kept	inflection_miss		1	2	2	0	0	0	5.0	0	0	keep	1	0
+kevin	named_entity	candidate	1	2	2	0	0	0	4.56	1	1		0	0
+lanzarote	named_entity	candidate	1	2	0	0	2	0	2.43	1	1		0	0
+lawnmower	local		1	2	2	0	0	0	2.7	0	0		0	0
+lea	named_entity	candidate	1	2	2	0	0	0	3.57	1	1		0	0
+lego	named_entity	candidate	1	2	2	0	0	0	3.83	1	1		0	0
+lens	local		1	2	2	0	0	0	4.17	0	0	len	0	0
+liam	named_entity	candidate	1	2	2	0	0	0	3.93	1	1		0	0
+lingua	domain_term		1	2	0	0	0	2	2.76	0	0		0	0
+louisa	named_entity	candidate	1	2	2	0	0	0	3.29	1	1		0	0
+loves	inflection_miss		1	2	2	0	0	0	4.66	0	0	love	1	0
+ltd	named_entity	candidate	1	2	0	0	0	2	4.47	1	1		0	0
+luke	named_entity	candidate	1	2	2	0	0	0	4.45	1	1		0	0
+lying	inflection_miss		1	2	2	0	0	0	4.67	0	0	lie	1	0
+ma'am	junk	structural	1	2	2	0	0	0	4.6	0	0		0	0
+mac	local		1	2	2	0	0	0	4.45	0	0		0	0
+managing	named_entity	candidate	1	2	0	0	0	2	4.4	1	1		0	0
+mandatory	domain_term		1	2	0	0	0	2	4.13	0	0		0	0
+mcqueen	named_entity	candidate	1	2	2	0	0	0	3.29	1	1		0	0
+meena	named_entity	candidate	1	2	2	0	0	0	2.64	1	0		0	0
+mexican	named_entity	candidate	1	2	0	0	2	0	4.41	0	1		0	0
+mi	named_entity	candidate	1	2	2	0	0	0	4.3	1	0		0	0
+mishchenko	named_entity	candidate	1	2	0	0	0	2	1.17	1	1		0	0
+mitchell	named_entity	candidate	1	2	0	0	0	2	4.24	1	1		0	0
+mitigating	domain_term		1	2	0	0	0	2	3.14	0	0	mitigate	0	0
+modules	domain_term		1	2	0	0	0	2	3.7	0	0	module	0	0
+moe	named_entity	candidate	1	2	2	0	0	0	3.5	1	1		0	0
+mower	local		1	2	2	0	0	0	3.1	0	0		0	0
+mra	named_entity	candidate	1	2	0	0	0	2	2.55	1	1		0	0
+naujoke	named_entity	candidate	1	2	0	0	0	2	0.0	1	1		0	0
+nearer	inflection_miss		1	2	2	0	0	0	3.38	0	0	near	1	0
+neville	named_entity	candidate	1	2	0	0	0	2	3.57	1	1		0	0
+novice	domain_term		1	2	0	0	0	2	3.41	0	0		0	0
+oecd	named_entity	candidate	1	2	0	0	0	2	3.44	1	1		0	0
+okoro	named_entity	candidate	1	2	0	2	0	0	1.73	1	1		0	0
+olaf	named_entity	candidate	1	2	0	0	0	2	3.14	1	1		0	0
+oohed	junk	low_freq	1	2	2	0	0	0	1.05	0	0	ooh	0	0
+opt	domain_term		1	2	0	0	0	2	3.9	0	0		0	0
+ordinance	named_entity	candidate	1	2	0	0	0	2	3.6	1	1		0	0
+orig	named_entity	candidate	1	2	0	0	0	2	2.8	1	1		0	0
+packing	inflection_miss		1	2	0	0	0	2	4.06	0	0	pack	1	0
+pakistan	named_entity	candidate	1	2	0	0	0	2	4.55	1	1		0	0
+panasonic	named_entity	candidate	1	2	0	0	0	2	3.18	1	1		0	0
+pests	domain_term		1	2	0	0	2	0	3.41	0	0	pest	0	0
+powdered	inflection_miss		1	2	0	0	2	0	3.31	0	0	powder	1	0
+practicality	domain_term		1	2	0	0	0	2	2.96	0	0		0	0
+prescribed	domain_term		1	2	0	0	0	2	3.91	0	0	prescribe	0	0
+prescribes	domain_term		1	2	0	0	0	2	2.72	0	0	prescribe	0	0
+prosecution	domain_term		1	2	0	0	2	0	4.06	0	0		0	0
+proving	inflection_miss		1	2	0	0	0	2	4.0	0	0	prove	1	0
+psrs	named_entity	candidate	1	2	0	0	0	2	0.0	1	1	psr	0	0
+pucker	local		1	2	2	0	0	0	2.52	0	0		0	0
+puzzled	local		1	2	2	0	0	0	3.28	0	0		0	0
+quantifiable	domain_term		1	2	0	0	0	2	2.65	0	0		0	0
+questionable	domain_term		1	2	0	0	0	2	3.78	0	0		0	0
+quota	domain_term		1	2	0	0	0	2	3.53	0	0		0	0
+quotas	domain_term		1	2	0	0	2	0	3.33	0	0	quota	0	0
+readiness	domain_term		1	2	0	0	0	2	3.59	0	0		0	0
+recs	named_entity	candidate	1	2	0	0	0	2	2.55	1	1		0	0
+regulative	domain_term		1	2	0	0	0	2	1.82	0	0		0	0
+replacement	domain_term		1	2	0	0	0	2	4.44	0	0		0	0
+resting	inflection_miss		1	2	2	0	0	0	3.89	0	0	rest	1	0
+retailer	domain_term		1	2	0	0	2	0	3.75	0	0		0	0
+rewarding	inflection_miss		1	2	2	0	0	0	3.74	0	0	reward	1	0
+rigorous	domain_term		1	2	0	0	0	2	3.68	0	0		0	0
+roasted	inflection_miss		1	2	2	0	0	0	3.73	0	0	roast	1	0
+robust	domain_term		1	2	0	0	0	2	3.94	0	0		0	0
+rustling	local		1	2	2	0	0	0	2.85	0	0		0	0
+sandra	named_entity	candidate	1	2	0	0	0	2	3.8	1	1		0	0
+sang	inflection_miss		1	2	2	0	0	0	4.1	0	0	sing	1	0
+sawing	inflection_miss		1	2	2	0	0	0	2.78	0	0	saw	1	0
+searching	inflection_miss		1	2	2	0	0	0	4.36	0	0	search	1	0
+shapey	named_entity	candidate	1	2	2	0	0	0	0.0	1	1		0	0
+shhh	named_entity	candidate	1	2	2	0	0	0	3.08	1	1		0	0
+shouting	inflection_miss		1	2	2	0	0	0	3.97	0	0	shout	1	0
+skipping	named_entity	candidate	1	2	2	0	0	0	3.57	0	1	skip	1	0
+soda	local		1	2	0	2	0	0	4.04	0	0		0	0
+spare	domain_term		1	2	0	0	0	2	4.28	0	0		0	0
+splat	local		1	2	2	0	0	0	2.7	0	0		0	0
+splish	local		1	2	2	0	0	0	2.06	0	0		0	0
+standards	named_entity	candidate	1	2	0	0	0	2	4.78	1	1	standard	1	0
+stark	domain_term		1	2	0	0	0	2	4.01	0	0		0	0
+starling	local		1	2	2	0	0	0	3.03	0	0		0	0
+stayed	inflection_miss		1	2	2	0	0	0	4.53	0	0	stay	1	0
+streamline	domain_term		1	2	0	0	0	2	3.18	0	0		0	0
+strictly	domain_term		1	2	0	0	0	2	4.16	0	0		0	0
+stringent	domain_term		1	2	0	0	0	2	3.43	0	0		0	0
+substantially	domain_term		1	2	0	0	0	2	3.96	0	0		0	0
+tailored	domain_term		1	2	0	0	0	2	3.56	0	0	tailor	0	0
+taiwan	named_entity	candidate	1	2	0	0	0	2	4.04	1	1		0	0
+taric	named_entity	candidate	1	2	0	0	0	2	1.31	1	1		0	0
+taxud	named_entity	candidate	1	2	0	0	0	2	0.0	1	1		0	0
+territorial	domain_term		1	2	0	0	0	2	3.91	0	0		0	0
+thrilled	inflection_miss		1	2	2	0	0	0	3.94	0	0	thrill	1	0
+timetable	domain_term		1	2	0	0	0	2	3.44	0	0		0	0
+tir	named_entity	candidate	1	2	0	0	0	2	2.43	1	1		0	0
+tiring	local		1	2	2	0	0	0	3.37	0	0		0	0
+tocked	junk	low_freq	1	2	2	0	0	0	0.0	0	0	tocke	0	0
+toed	inflection_miss		1	2	2	0	0	0	2.83	0	0	to	1	0
+tonne	domain_term		1	2	0	0	0	2	3.21	0	0		0	0
+tools	named_entity	candidate	1	2	0	0	0	2	4.59	1	1	tool	1	0
+transposed	domain_term		1	2	0	0	0	2	2.55	0	0	transpose	0	0
+treinamentos	named_entity	candidate	1	2	0	0	0	2	0.0	1	1		0	0
+trousers	local		1	2	2	0	0	0	3.7	0	0	trouser	0	0
+trusted	inflection_miss		1	2	0	0	0	2	4.2	0	0	trust	1	0
+twinning	named_entity	candidate	1	2	0	0	0	2	2.71	1	1		0	0
+und	named_entity	candidate	1	2	0	0	0	2	3.94	1	0		0	0
+undoubtedly	domain_term		1	2	0	0	0	2	3.88	0	0		0	0
+unitax	named_entity	candidate	1	2	0	0	0	2	0.0	1	1		0	0
+universal	domain_term		1	2	0	0	0	2	4.49	0	0		0	0
+upfront	domain_term		1	2	0	0	2	0	3.48	0	0		0	0
+upheld	domain_term		1	2	0	0	0	2	3.59	0	0	uphold	0	0
+usa	named_entity	candidate	1	2	0	0	0	2	4.79	1	1		0	0
+usage	domain_term		1	2	0	0	0	2	4.23	0	0		0	0
+verified	domain_term		1	2	0	0	0	2	3.94	0	0	verify	0	0
+verify	domain_term		1	2	0	0	0	2	3.88	0	0		0	0
+vs.	junk	structural	1	2	0	0	0	2	4.85	0	0		0	0
+vulnerabilities	domain_term		1	2	0	0	0	2	3.23	0	0	vulnerability	0	0
+warehouses	domain_term		1	2	0	0	0	2	3.43	0	0	warehouse	0	0
+warranties	domain_term		1	2	0	0	2	0	2.92	0	0	warranty	0	0
+welcoming	local		1	2	2	0	0	0	3.77	0	0		0	0
+whiskers	named_entity	candidate	1	2	2	0	0	0	2.99	1	1	whisker	1	0
+whooping	local		1	2	2	0	0	0	3.15	0	0	whoop	0	0
+wider	local		1	2	2	0	0	0	4.24	0	0		0	0
+windier	local		1	2	2	0	0	0	1.68	0	0		0	0
+winding	inflection_miss		1	2	2	0	0	0	3.71	0	0	wind	1	0
+wiser	named_entity	candidate	1	2	2	0	0	0	3.48	1	0		0	0
+woah	named_entity	candidate	1	2	2	0	0	0	3.58	0	1		0	0
+wording	inflection_miss		1	2	0	0	0	2	3.55	0	0	word	1	0
+workload	domain_term		1	2	0	0	0	2	3.45	0	0		0	0
+zoe	named_entity	candidate	1	2	2	0	0	0	3.66	1	1		0	0
+és	domain_term		1	2	0	0	0	2	2.24	0	0		0	0
+"""[7"	junk	structural	1	1	0	0	1	0	5.55	0	0		0	0
+$	junk	structural	1	1	1	0	0	0	0.0	0	0		0	0
+'bout	junk	structural	1	1	1	0	0	0	4.05	0	0		0	0
++	junk	structural	1	1	0	0	0	1	0.0	0	0		0	0
+102(2)(b	junk	structural	1	1	0	0	0	1	3.72	0	0		0	0
+102(4	junk	structural	1	1	0	0	0	1	3.73	0	0		0	0
+104(2	junk	structural	1	1	0	0	0	1	3.73	0	0		0	0
+109(2)(2nd	junk	structural	1	1	0	0	0	1	3.69	0	0		0	0
+110(2	junk	structural	1	1	0	0	0	1	3.73	0	0		0	0
+119(1	junk	structural	1	1	0	0	0	1	3.73	0	0		0	0
+120(1	junk	structural	1	1	0	0	0	1	3.73	0	0		0	0
+123(2)(c	junk	structural	1	1	0	0	0	1	3.72	0	0		0	0
+128(3a)(c	junk	structural	1	1	0	0	0	1	3.23	0	0		0	0
+144(1	junk	structural	1	1	0	0	0	1	3.73	0	0		0	0
+144(2	junk	structural	1	1	0	0	0	1	3.73	0	0		0	0
+159(2	junk	structural	1	1	0	0	0	1	3.73	1	0		0	0
+176(2	junk	structural	1	1	0	0	0	1	3.73	0	0		0	0
+18(3)(2nd	junk	structural	1	1	0	0	0	1	4.61	0	0		0	0
+187(2	junk	structural	1	1	0	0	0	1	3.73	0	0		0	0
+191(1)(c	junk	structural	1	1	0	0	0	1	3.72	0	0		0	0
+1990s	junk	structural	1	1	0	0	0	1	2.8	0	0	1990	0	0
+20(1)(c	junk	structural	1	1	0	0	0	1	4.86	0	0		0	0
+20(3)(e	junk	structural	1	1	0	0	0	1	4.83	0	0		0	0
+201(1	junk	structural	1	1	0	0	0	1	3.5	0	0		0	0
+21(1	junk	structural	1	1	0	0	0	1	5.03	0	0		0	0
+211(3)(b	junk	structural	1	1	0	0	0	1	3.5	0	0		0	0
+24(4	junk	structural	1	1	0	0	0	1	5.0	0	0		0	0
+25(3)(e	junk	structural	1	1	0	0	0	1	4.83	0	0		0	0
+25(3)(f	junk	structural	1	1	0	0	0	1	4.75	0	0		0	0
+25(7	junk	structural	1	1	0	0	0	1	4.96	0	0		0	0
+25a	junk	structural	1	1	0	0	0	1	2.17	0	0		0	0
+27(1	junk	structural	1	1	0	0	0	1	5.03	0	0		0	0
+27(1)(3rd	junk	structural	1	1	0	0	0	1	4.5	0	0		0	0
+27(6	junk	structural	1	1	0	0	0	1	4.97	0	0		0	0
+2–3%2	junk	structural	1	1	0	0	1	0	5.49	1	0		0	0
+3(a	junk	structural	1	1	0	0	0	1	5.89	0	0		0	0
+31(1	junk	structural	1	1	0	0	0	1	4.9	0	0		0	0
+38(6	junk	structural	1	1	0	0	0	1	4.85	0	0		0	0
+39(e	junk	structural	1	1	0	0	0	1	4.77	0	0		0	0
+3pl	junk	structural	1	1	0	0	0	1	1.85	1	0		0	0
+3ʳᵈ	junk	structural	1	1	0	0	0	1	0.0	0	0		0	0
+48(1	junk	structural	1	1	0	0	0	1	4.79	0	0		0	0
+59(3	junk	structural	1	1	0	0	0	1	4.7	1	0		0	0
+62(1	junk	structural	1	1	0	0	0	1	4.64	1	0		0	0
+670–700	junk	structural	1	1	0	0	1	0	2.75	0	0		0	0
+71(1)(e	junk	structural	1	1	0	0	0	1	4.5	0	0		0	0
+744.6(b	junk	structural	1	1	0	0	0	1	0.03	1	0		0	0
+82(2	junk	structural	1	1	0	0	0	1	4.52	1	0		0	0
+85(1	junk	structural	1	1	0	0	0	1	4.52	0	0		0	0
+86(3	junk	structural	1	1	0	0	0	1	4.52	1	0		0	0
+88(3)(a	junk	structural	1	1	0	0	0	1	4.52	0	0		0	0
+95(2	junk	structural	1	1	0	0	0	1	4.48	0	0		0	0
+96(1	junk	structural	1	1	0	0	0	1	4.48	1	0		0	0
+a-352	junk	structural	1	1	0	0	0	1	3.35	1	1		0	0
+a.	junk	structural	1	1	0	0	0	1	7.36	0	1		0	0
+abolish	domain_term		1	1	0	0	0	1	3.48	0	0		0	0
+abreast	domain_term		1	1	0	0	0	1	2.95	0	0		0	0
+abuse	domain_term		1	1	0	0	0	1	4.66	0	0		0	0
+abusive	domain_term		1	1	0	0	0	1	3.87	0	0		0	0
+accede	domain_term		1	1	0	0	0	1	2.5	0	0		0	0
+accelerating	domain_term		1	1	0	0	0	1	3.46	0	0	accelerate	0	0
+accepted	named_entity	candidate	1	1	0	0	0	1	4.67	0	1	accept	1	0
+accize	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+accord	domain_term		1	1	0	0	0	1	3.81	0	0		0	0
+accordingly	domain_term		1	1	0	0	0	1	4.02	0	0		0	0
+accountability	domain_term		1	1	0	0	0	1	3.91	0	0		0	0
+accountants	named_entity	candidate	1	1	0	0	0	1	3.47	1	1		0	0
+accra	named_entity	candidate	1	1	0	0	0	1	3.04	1	1		0	0
+acknowledgment	domain_term		1	1	0	0	0	1	3.11	0	0		0	0
+acquis	domain_term		1	1	0	0	0	1	1.72	0	0		0	0
+acting	named_entity	candidate	1	1	1	0	0	0	4.82	0	1	act	1	0
+activation	domain_term		1	1	0	0	0	1	3.83	0	0		0	0
+actively	domain_term		1	1	0	0	0	1	4.23	0	0		0	0
+add‑ons	junk	structural	1	1	0	0	1	0	3.55	0	0	add‑on	0	0
+adhered	domain_term		1	1	0	0	0	1	3.12	0	0	adhere	0	0
+adl	named_entity	candidate	1	1	0	0	0	1	2.76	1	1		0	0
+administered	domain_term		1	1	0	0	0	1	3.96	0	0	administer	0	0
+admissible	domain_term		1	1	0	0	0	1	2.87	0	0		0	0
+adopters	local		1	1	0	1	0	0	2.85	0	0	adopter	0	0
+adó-	junk	structural	1	1	0	0	0	1	0.0	0	1		0	0
+aeocs	named_entity	candidate	1	1	0	0	0	1	0.0	0	1	aeoc	0	0
+affidavit	domain_term		1	1	0	0	0	1	3.38	0	0		0	0
+ahchoo	named_entity	candidate	1	1	1	0	0	0	0.0	1	1		0	0
+ahh	named_entity	candidate	1	1	1	0	0	0	3.86	1	1		0	0
+ahhh	named_entity	candidate	1	1	1	0	0	0	3.47	0	1		0	0
+ahhhhhh	named_entity	candidate	1	1	1	0	0	0	2.25	1	1		0	0
+airtight	local		1	1	0	1	0	0	2.95	0	0		0	0
+akritidis	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+al	named_entity	candidate	1	1	0	0	0	1	5.16	1	0		0	0
+alia	named_entity	candidate	1	1	0	0	0	1	3.12	1	0		0	0
+aligning	domain_term		1	1	0	0	0	1	3.02	0	0	align	0	0
+alka	named_entity	candidate	1	1	0	0	0	1	2.43	1	1		0	0
+alleged	domain_term		1	1	0	0	0	1	4.37	0	0	allege	0	0
+alleviates	domain_term		1	1	0	0	0	1	2.3	0	0	alleviate	0	0
+alleys	local		1	1	0	1	0	0	3.06	0	0	alley	0	0
+alliance	named_entity	candidate	1	1	0	0	0	1	4.4	1	1		0	0
+amazon	named_entity	candidate	1	1	0	0	0	1	4.55	1	1		0	0
+ambiguously	domain_term		1	1	0	0	0	1	2.33	0	0		0	0
+amsterdam	named_entity	candidate	1	1	0	0	0	1	4.03	1	1		0	0
+analog	domain_term		1	1	0	0	0	1	3.73	0	0		0	0
+and/	junk	structural	1	1	0	0	0	1	7.41	1	0		0	0
+andjim	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+animation	local		1	1	0	1	0	0	4.18	0	0		0	0
+annette	named_entity	candidate	1	1	0	0	0	1	3.24	1	1		0	0
+anything-	junk	structural	1	1	1	0	0	0	5.55	0	0		0	0
+apologizer	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+apparel	domain_term		1	1	0	0	0	1	3.72	0	0		0	0
+appeared	inflection_miss		1	1	1	0	0	0	4.83	0	0	appear	1	0
+appointing	domain_term		1	1	0	0	0	1	3.33	0	0	appoint	0	0
+approx	domain_term		1	1	0	0	1	0	3.51	0	0		0	0
+arabic	named_entity	candidate	1	1	0	0	0	1	4.03	0	1		0	0
+argh	named_entity	candidate	1	1	1	0	0	0	2.95	1	1		0	0
+armenia	named_entity	candidate	1	1	0	0	0	1	3.56	1	1		0	0
+artificially	domain_term		1	1	0	0	1	0	3.44	0	0		0	0
+ascertained	domain_term		1	1	0	0	0	1	2.79	0	0		0	0
+asian	named_entity	candidate	1	1	0	0	0	1	4.69	0	1		0	0
+asking	inflection_miss		1	1	1	0	0	0	4.96	0	0	ask	1	0
+ata	named_entity	candidate	1	1	0	0	0	1	3.04	1	1		0	0
+athletic	named_entity	candidate	1	1	0	1	0	0	4.12	0	1		0	0
+aud	named_entity	candidate	1	1	0	0	1	0	3.16	1	1		0	0
+auditor	named_entity	candidate	1	1	0	0	1	0	3.48	1	1		0	0
+auspices	domain_term		1	1	0	0	0	1	3.22	0	0	auspex	0	0
+authorises	domain_term		1	1	0	0	0	1	2.11	0	0	authorise	0	0
+authorizations	domain_term		1	1	0	0	0	1	2.48	0	0	authorization	0	0
+autoritatea	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+avenues	domain_term		1	1	0	0	0	1	3.5	0	0	avenue	0	0
+avert	domain_term		1	1	0	0	0	1	3.14	0	0		0	0
+aviation	named_entity	candidate	1	1	0	0	0	1	4.17	1	1		0	0
+avoidance	domain_term		1	1	0	0	0	1	3.54	0	0		0	0
+aw	named_entity	candidate	1	1	0	0	0	1	4.13	1	1		0	0
+awb	named_entity	candidate	1	1	0	0	0	1	2.21	1	1		0	0
+awely	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+awoke	named_entity	candidate	1	1	1	0	0	0	3.15	1	0		0	0
+azerbaijan	named_entity	candidate	1	1	0	0	0	1	3.48	1	1		0	0
+b2c	junk	structural	1	1	0	0	1	0	2.45	1	1		0	0
+baaed	junk	low_freq	1	1	1	0	0	0	0.0	0	0	baa	1	0
+"back,""be"	junk	structural	1	1	1	0	0	0	5.97	0	0		0	0
+backdrop	domain_term		1	1	0	0	0	1	3.58	0	0		0	0
+backfiring	domain_term		1	1	0	0	1	0	2.38	0	0	backfire	0	0
+backing	inflection_miss		1	1	0	0	0	1	4.23	0	0	back	1	0
+backwardness	domain_term		1	1	0	0	0	1	2.28	0	0		0	0
+bahamas	named_entity	candidate	1	1	0	0	1	0	3.53	1	1		0	0
+bakers	domain_term		1	1	0	0	0	1	3.17	0	0	baker	0	0
+balancer	local		1	1	1	0	0	0	2.29	0	0		0	0
+balcony	local		1	1	0	1	0	0	3.78	0	0		0	0
+banner	domain_term		1	1	0	0	1	0	4.12	0	0		0	0
+barbosa	named_entity	candidate	1	1	0	0	0	1	2.55	1	1		0	0
+barking	inflection_miss		1	1	1	0	0	0	3.51	0	0	bark	1	0
+baseline	domain_term		1	1	0	0	0	1	3.7	0	0		0	0
+bathing	inflection_miss		1	1	1	0	0	0	3.68	0	0	bath	1	0
+beachs	junk	low_freq	1	1	1	0	0	0	0.0	0	0	beach	1	0
+beemsterboer	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+beginners	local		1	1	0	1	0	0	3.52	0	0	beginner	0	0
+belarus	named_entity	candidate	1	1	0	0	0	1	3.46	1	1		0	0
+benchmarks	domain_term		1	1	0	0	0	1	3.27	0	0	benchmark	0	0
+besuspariene	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+beverages	domain_term		1	1	0	0	1	0	3.6	0	0	beverage	0	0
+bicyles	junk	low_freq	1	1	1	0	0	0	0.0	0	0	bicyle	0	0
+biding	named_entity	candidate	1	1	0	0	0	1	2.5	1	1	bid	1	0
+bielskiene	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+bien	named_entity	candidate	1	1	1	0	0	0	3.1	1	0		0	0
+bilateral	domain_term		1	1	0	0	0	1	3.72	0	0		0	0
+bin-	junk	structural	1	1	1	0	0	0	4.22	0	0		0	0
+bippity	named_entity	candidate	1	1	1	0	0	0	1.52	1	1		0	0
+blackman	named_entity	candidate	1	1	0	0	0	1	2.89	1	1		0	0
+blocs	domain_term		1	1	0	0	0	1	2.68	0	0	bloc	0	0
+blooming	inflection_miss		1	1	1	0	0	0	3.33	0	0	bloom	1	0
+blowing	inflection_miss		1	1	1	0	0	0	4.2	0	0	blow	1	0
+bobbed	local		1	1	1	0	0	0	2.38	0	0		0	0
+boi	named_entity	candidate	1	1	0	0	0	1	3.4	1	1		0	0
+bois	named_entity	candidate	1	1	0	0	0	1	3.35	0	1	boi	0	0
+bolivia	named_entity	candidate	1	1	0	0	0	1	3.53	1	1		0	0
+bolster	domain_term		1	1	0	0	0	1	3.31	0	0		0	0
+bond-	junk	structural	1	1	1	0	0	0	4.59	0	0		0	0
+bonita	named_entity	candidate	1	1	1	0	0	0	2.76	1	0		0	0
+booming	inflection_miss		1	1	1	0	0	0	3.43	0	0	boom	1	0
+boppity	named_entity	candidate	1	1	1	0	0	0	1.44	1	1		0	0
+borrowing	inflection_miss		1	1	1	0	0	0	3.75	0	0	borrow	1	0
+bowing	inflection_miss		1	1	1	0	0	0	3.15	0	0	bow	1	0
+brainstorming	inflection_miss		1	1	1	0	0	0	2.92	0	0	brainstorm	1	0
+branches	named_entity	candidate	1	1	0	0	0	1	4.21	1	1	branch	1	0
+breakdown	domain_term		1	1	0	0	1	0	4.1	0	0		0	0
+brookfield	named_entity	candidate	1	1	0	1	0	0	2.95	1	1		0	0
+brunei	named_entity	candidate	1	1	0	0	1	0	3.19	1	1		0	0
+brushing	inflection_miss		1	1	1	0	0	0	3.5	0	0	brush	1	0
+brussels	named_entity	candidate	1	1	0	0	1	0	3.99	1	1		0	0
+bti	named_entity	candidate	1	1	0	0	0	1	1.99	1	1		0	0
+bucurești	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+bukowski	named_entity	candidate	1	1	0	0	0	1	2.51	1	1		0	0
+burdensome	domain_term		1	1	0	0	0	1	2.85	0	0		0	0
+bureau	named_entity	candidate	1	1	0	0	0	1	4.41	1	1		0	0
+c-199/09	junk	structural	1	1	0	0	0	1	3.46	1	1		0	0
+c-21/13	junk	structural	1	1	0	0	0	1	4.75	1	1		0	0
+c-286/15	junk	structural	1	1	0	0	0	1	3.49	1	1		0	0
+c-291/11	junk	structural	1	1	0	0	0	1	3.49	1	1		0	0
+c-293/04	junk	structural	1	1	0	0	0	1	3.32	1	1		0	0
+c-35/93	junk	structural	1	1	0	0	0	1	4.31	1	1		0	0
+c-416/15	junk	structural	1	1	0	0	0	1	3.24	1	1		0	0
+c-438/11	junk	structural	1	1	0	0	0	1	3.24	1	1		0	0
+c-635/13	junk	structural	1	1	0	0	0	1	3.08	0	1		0	0
+calculator	named_entity	candidate	1	1	0	0	1	0	3.56	1	1		0	0
+calming	inflection_miss		1	1	1	0	0	0	3.35	0	0	calm	1	0
+calmyou	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+cambodia	named_entity	candidate	1	1	0	0	1	0	3.71	1	1		0	0
+cameroon	named_entity	candidate	1	1	0	0	0	1	3.53	1	1		0	0
+capitalising	local		1	1	0	1	0	0	2.09	0	0	capitalise	0	0
+carnet	named_entity	candidate	1	1	0	0	0	1	1.83	1	1		0	0
+casual	local		1	1	0	1	0	0	4.23	0	0		0	0
+categorical	domain_term		1	1	0	0	0	1	2.88	0	0		0	0
+cater	domain_term		1	1	0	0	0	1	3.55	0	0		0	0
+cbam	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+cbsa	named_entity	candidate	1	1	0	0	1	0	2.02	1	1		0	0
+cc	named_entity	candidate	1	1	0	0	0	1	4.15	0	1		0	0
+cefta	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+celsius	named_entity	candidate	1	1	0	1	0	0	3.29	0	1		0	0
+centralisation	domain_term		1	1	0	0	0	1	2.36	0	0		0	0
+ceramics	local		1	1	0	1	0	0	3.44	0	0	ceramic	0	0
+certify	domain_term		1	1	0	0	0	1	3.08	0	0		0	0
+changer	domain_term		1	1	0	0	0	1	3.46	0	0		0	0
+charred	local		1	1	1	0	0	0	3.07	0	0		0	0
+chartered	named_entity	candidate	1	1	0	0	0	1	3.66	1	1		0	0
+chasing	local		1	1	1	0	0	0	4.12	0	0		0	0
+chd	named_entity	candidate	1	1	0	0	0	1	2.5	1	1		0	0
+checklist	local		1	1	0	1	0	0	3.45	0	0		0	0
+checkpoints	domain_term		1	1	0	0	0	1	3.13	0	0	checkpoint	0	0
+cherished	inflection_miss		1	1	1	0	0	0	3.41	0	0	cherish	1	0
+chewy	named_entity	candidate	1	1	0	1	0	0	2.94	1	1		0	0
+chile	named_entity	candidate	1	1	0	0	0	1	4.06	1	1		0	0
+chinese	named_entity	candidate	1	1	0	0	0	1	5.01	1	1		0	0
+christina	named_entity	candidate	1	1	0	0	0	1	3.82	1	1		0	0
+chug	local		1	1	1	0	0	0	2.92	0	0		0	0
+cif1	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+circuit	named_entity	candidate	1	1	0	0	0	1	4.47	1	1		0	0
+circulars	domain_term		1	1	0	0	0	1	2.32	0	0	circular	0	0
+circulate	domain_term		1	1	0	0	0	1	3.17	0	0		0	0
+circumvention	domain_term		1	1	0	0	0	1	2.3	0	0		0	0
+classifications	domain_term		1	1	0	0	0	1	3.18	0	0	classification	0	0
+cleaner	local		1	1	1	0	0	0	3.9	0	0		0	0
+cleverer	local		1	1	1	0	0	0	2.35	0	0		0	0
+clingin	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+closing	local		1	1	0	1	0	0	4.46	0	0		0	0
+cobbled	local		1	1	0	1	0	0	2.8	0	0		0	0
+code(s	junk	structural	1	1	0	0	1	0	5.01	1	1		0	0
+coefficients	domain_term		1	1	0	0	0	1	3.22	0	0	coefficient	0	0
+coercive	domain_term		1	1	0	0	0	1	2.98	0	0		0	0
+coexistence	domain_term		1	1	0	0	0	1	2.9	0	0		0	0
+colder	inflection_miss		1	1	1	0	0	0	3.54	0	0	cold	1	0
+coldstore	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+collector	named_entity	candidate	1	1	0	0	0	1	3.91	1	1		0	0
+collisions	domain_term		1	1	0	0	0	1	3.39	0	0	collision	0	0
+colombian	named_entity	candidate	1	1	0	0	0	1	3.57	0	1		0	0
+coloring	inflection_miss		1	1	1	0	0	0	3.59	0	0	color	1	0
+comeback	named_entity	candidate	1	1	0	1	0	0	4.05	1	1		0	0
+comforted	inflection_miss		1	1	1	0	0	0	3.12	0	0	comfort	1	0
+comical	domain_term		1	1	0	0	0	1	3.23	0	0		0	0
+commercially	domain_term		1	1	0	0	0	1	3.67	0	0		0	0
+como	local		1	1	1	0	0	0	3.2	0	0		0	0
+compacts	local		1	1	0	1	0	0	2.42	0	0	compact	0	0
+comparatively	domain_term		1	1	0	0	0	1	3.51	0	0		0	0
+completeness	domain_term		1	1	0	0	0	1	3.13	0	0		0	0
+complicates	domain_term		1	1	0	0	0	1	2.86	0	0	complicate	0	0
+complications	domain_term		1	1	0	0	0	1	3.98	0	0	complication	0	0
+complicity	domain_term		1	1	0	0	0	1	3.03	0	0		0	0
+comprehension	domain_term		1	1	0	0	0	1	3.57	0	0		0	0
+comprehensiveness	domain_term		1	1	0	0	0	1	1.97	0	0		0	0
+compulsory	domain_term		1	1	0	0	0	1	3.7	0	0		0	0
+computerisation	domain_term		1	1	0	0	0	1	1.61	0	0		0	0
+computerization	domain_term		1	1	0	0	0	1	2.0	0	0		0	0
+concessions	domain_term		1	1	0	0	0	1	3.65	0	0	concession	0	0
+conditional	named_entity	candidate	1	1	0	0	0	1	3.59	0	1		0	0
+confiscate	domain_term		1	1	0	0	0	1	2.93	0	0		0	0
+confiscated	domain_term		1	1	0	0	1	0	3.48	0	0	confiscate	0	0
+congratulations	named_entity	candidate	1	1	1	0	0	0	4.4	1	1	congratulation	1	0
+cons	domain_term		1	1	0	0	0	1	3.76	0	0	con	0	0
+consigned	domain_term		1	1	0	0	0	1	2.87	0	0		0	0
+consignees	junk	low_freq	1	1	0	0	0	1	1.28	0	0	consignee	0	0
+consolidated	domain_term		1	1	0	0	0	1	3.82	0	0		0	0
+consumer.[10	junk	structural	1	1	0	0	1	0	4.49	0	0		0	0
+consumers.[9	junk	structural	1	1	0	0	1	0	4.35	0	0		0	0
+containers	named_entity	candidate	1	1	0	1	0	0	3.86	1	1	container	1	0
+contamination	domain_term		1	1	0	0	0	1	3.7	0	0		0	0
+contra	domain_term		1	1	0	0	0	1	3.31	0	0		0	0
+cooing	inflection_miss		1	1	1	0	0	0	2.43	0	0	coo	1	0
+cooked	inflection_miss		1	1	1	0	0	0	4.11	0	0	cook	1	0
+cookies	named_entity	candidate	1	1	0	1	0	0	4.12	1	1	cooky	1	0
+cookware	domain_term		1	1	0	0	0	1	2.58	0	0		0	0
+copying	inflection_miss		1	1	0	0	0	1	3.68	0	0	copy	1	0
+corrections	domain_term		1	1	0	0	0	1	3.69	0	0	correction	0	0
+correlate	domain_term		1	1	0	0	0	1	3.2	0	0		0	0
+costa	named_entity	candidate	1	1	0	0	0	1	4.15	1	1		0	0
+counsel	named_entity	candidate	1	1	0	0	0	1	4.16	1	1		0	0
+counterpart	domain_term		1	1	0	0	0	1	3.7	0	0		0	0
+counterparties	domain_term		1	1	0	0	0	1	2.12	0	0	counterpartie	0	0
+counterparts	domain_term		1	1	0	0	0	1	3.75	0	0	counterpart	0	0
+cources	junk	low_freq	1	1	0	0	0	1	0.0	0	0	cource	0	0
+cpd	named_entity	candidate	1	1	0	0	0	1	2.8	1	1		0	0
+cpma	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+crease	local		1	1	0	1	0	0	3.31	0	0		0	0
+crisp	local		1	1	0	1	0	0	3.7	0	0		0	0
+critically	domain_term		1	1	0	0	0	1	3.88	0	0		0	0
+croatia	named_entity	candidate	1	1	0	0	1	0	3.74	1	1		0	0
+crossbar	local		1	1	0	1	0	0	2.79	0	0		0	0
+"cub---""be"	junk	structural	1	1	1	0	0	0	3.49	0	0		0	0
+cuba	named_entity	candidate	1	1	0	0	1	0	4.13	1	1		0	0
+cumbersome	domain_term		1	1	0	0	0	1	3.16	0	0		0	0
+custax	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+cutting	local		1	1	1	0	0	0	4.61	0	0		0	0
+d	junk	structural	1	1	0	0	0	1	5.46	1	0		0	0
+d'avocats	junk	structural	1	1	0	0	0	1	1.21	1	0		0	0
+d.	junk	structural	1	1	0	0	0	1	5.46	1	1		0	0
+database	named_entity	candidate	1	1	0	0	0	1	4.31	1	1		0	0
+dataline	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+davidson	named_entity	candidate	1	1	0	0	0	1	3.8	1	1		0	0
+daydreaming	inflection_miss		1	1	1	0	0	0	2.87	0	0	daydream	1	0
+deader	local		1	1	1	0	0	0	1.99	0	0		0	0
+dearth	domain_term		1	1	0	0	0	1	2.92	0	0		0	0
+debtor	domain_term		1	1	0	0	0	1	3.08	0	0		0	0
+declarants	junk	low_freq	1	1	0	0	0	1	0.0	0	0	declarant	0	0
+deducting	domain_term		1	1	0	0	0	1	2.51	0	0	deduct	0	0
+deepens	local		1	1	0	1	0	0	2.75	0	0	deepen	0	0
+default	domain_term		1	1	0	0	1	0	4.29	0	0		0	0
+defective	domain_term		1	1	0	0	0	1	3.57	0	0		0	0
+defensive	local		1	1	0	1	0	0	4.38	0	0		0	0
+deferment	domain_term		1	1	0	0	0	1	2.34	0	0		0	0
+deficit	domain_term		1	1	0	0	1	0	4.06	0	0		0	0
+deflection	local		1	1	0	1	0	0	3.22	0	0		0	0
+deforestation	domain_term		1	1	0	0	0	1	3.2	0	0		0	0
+deliberations	domain_term		1	1	0	0	0	1	3.17	0	0	deliberation	0	0
+delineating	domain_term		1	1	0	0	0	1	2.22	0	0	delineate	0	0
+delivered	named_entity	candidate	1	1	0	0	0	1	4.62	1	1	deliver	1	0
+dell’agenzia	junk	structural	1	1	0	0	0	1	0.0	1	0		0	0
+demanding	inflection_miss		1	1	0	0	0	1	4.13	0	0	demand	1	0
+denmark	named_entity	candidate	1	1	0	0	0	1	4.04	1	1		0	0
+deployed	domain_term		1	1	0	0	0	1	4.03	0	0	deploy	0	0
+deploying	domain_term		1	1	0	0	0	1	3.32	0	0	deploy	0	0
+depositaries	junk	low_freq	1	1	0	0	0	1	0.0	0	0	depositary	0	0
+depositories	named_entity	candidate	1	1	0	0	0	1	1.81	0	1	depository	0	0
+depriving	domain_term		1	1	0	0	0	1	3.02	0	0	deprive	0	0
+dereviankine	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+deterioration	domain_term		1	1	0	0	0	1	3.43	0	0		0	0
+developers	local		1	1	0	1	0	0	4.22	0	0	developer	0	0
+diagonal	domain_term		1	1	0	0	0	1	3.36	0	0		0	0
+differ	domain_term		1	1	0	0	0	1	4.03	0	0		0	0
+different--	junk	structural	1	1	1	0	0	0	5.59	1	0		0	0
+ding	local		1	1	1	0	0	0	3.63	0	0		0	0
+dinos	local		1	1	1	0	0	0	2.52	0	0		0	0
+directorate	named_entity	candidate	1	1	0	0	0	1	3.41	1	1		0	0
+direcţia	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+direcția	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+disapointed	local		1	1	1	0	0	0	1.87	0	0		0	0
+discharging	domain_term		1	1	0	0	0	1	2.97	0	0	discharge	0	0
+discontinue	domain_term		1	1	0	0	0	1	3.11	0	0		0	0
+discontinuing	domain_term		1	1	0	0	0	1	2.58	0	0	discontinue	0	0
+discouraged	local		1	1	1	0	0	0	3.62	0	0		0	0
+discrepancies	domain_term		1	1	0	0	0	1	3.19	0	0	discrepancy	0	0
+disgusted	inflection_miss		1	1	1	0	0	0	3.57	0	0	disgust	1	0
+dislocation	domain_term		1	1	0	0	1	0	2.87	0	0		0	0
+dispatched	domain_term		1	1	0	0	0	1	3.61	0	0	dispatch	0	0
+disruption	domain_term		1	1	0	0	0	1	3.71	0	0		0	0
+distinguishes	domain_term		1	1	0	0	0	1	3.16	0	0	distinguish	0	0
+disturbed	inflection_miss		1	1	1	0	0	0	3.8	0	0	disturb	1	0
+dogs	inflection_miss		1	1	1	0	0	0	4.77	1	0	dog	1	0
+dominican	named_entity	candidate	1	1	0	0	0	1	3.65	1	1		0	0
+donald	named_entity	candidate	1	1	0	0	1	0	4.46	1	1		0	0
+drainage	local		1	1	0	1	0	0	3.77	0	0		0	0
+drinking	inflection_miss		1	1	1	0	0	0	4.71	0	0	drink	1	0
+dubbed	domain_term		1	1	0	0	0	1	3.81	0	0	dub	0	0
+dubouchet	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+dunántúli	junk	low_freq	1	1	0	0	0	1	0.0	0	0		0	0
+duplication	domain_term		1	1	0	0	0	1	3.16	0	0		0	0
+durability	local		1	1	0	1	0	0	3.45	0	0		0	0
+dutiable	junk	low_freq	1	1	0	0	0	1	1.27	0	0		0	0
+duty/	junk	structural	1	1	0	0	0	1	4.71	0	0		0	0
+ea	named_entity	candidate	1	1	0	0	0	1	3.81	1	1		0	0
+eachother	local		1	1	1	0	0	0	3.24	0	0		0	0
+ec	named_entity	candidate	1	1	0	0	0	1	3.7	1	1		0	0
+ecosystem	local		1	1	0	1	0	0	3.78	0	0		0	0
+eeeew	named_entity	candidate	1	1	1	0	0	0	0.0	1	1		0	0
+effectiveness	domain_term		1	1	0	0	0	1	4.05	0	0		0	0
+efficiencies	domain_term		1	1	0	0	0	1	3.19	0	0	efficiency	0	0
+egypt	named_entity	candidate	1	1	0	0	0	1	4.45	1	1		0	0
+eh	named_entity	candidate	1	1	1	0	0	0	4.26	0	1		0	0
+eisbein	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+el	named_entity	candidate	1	1	1	0	0	0	4.56	1	0		0	0
+eligibility	domain_term		1	1	0	0	0	1	3.75	0	0		0	0
+empowerment	domain_term		1	1	0	0	0	1	3.54	0	0		0	0
+encompass	domain_term		1	1	0	0	0	1	3.27	0	0		0	0
+encyclopedia	named_entity	candidate	1	1	0	0	0	1	3.52	1	1		0	0
+engagement	domain_term		1	1	0	0	0	1	4.31	0	0		0	0
+eni	named_entity	candidate	1	1	0	0	0	1	2.49	1	1		0	0
+eni/2017/040	junk	structural	1	1	0	0	0	1	2.03	0	1		0	0
+enquiries	domain_term		1	1	0	0	0	1	3.36	0	0	enquiry	0	0
+enthusiasts	local		1	1	0	1	0	0	3.56	0	0	enthusiast	0	0
+entitlement	domain_term		1	1	0	0	0	1	3.55	0	0		0	0
+entitles	domain_term		1	1	0	0	0	1	2.72	0	0	entitle	0	0
+equaliser	local		1	1	0	1	0	0	2.86	0	0		0	0
+era	domain_term		1	1	0	0	0	1	4.67	0	0		0	0
+estas	local		1	1	1	0	0	0	2.1	0	0	esta	0	0
+estonia	named_entity	candidate	1	1	0	0	1	0	3.48	1	1		0	0
+et	named_entity	candidate	1	1	0	0	0	1	4.66	1	0		0	0
+eu/	junk	structural	1	1	0	0	0	1	4.62	0	1		0	0
+eur.1	junk	structural	1	1	0	0	0	1	3.49	0	1		0	0
+eurasian	named_entity	candidate	1	1	0	0	0	1	2.99	1	1		0	0
+evade	domain_term		1	1	0	0	0	1	3.39	0	0		0	0
+evenly	local		1	1	0	1	0	0	3.65	0	0		0	0
+eventhough	local		1	1	1	0	0	0	2.28	0	0		0	0
+evers	named_entity	candidate	1	1	0	0	0	1	2.74	1	1	ever	1	0
+eww	named_entity	candidate	1	1	1	0	0	0	2.87	1	1		0	0
+exacerbated	domain_term		1	1	0	0	0	1	3.22	0	0	exacerbate	0	0
+examined	named_entity	candidate	1	1	0	0	0	1	4.1	1	1	examine	1	0
+exceptional	domain_term		1	1	0	0	0	1	4.05	0	0		0	0
+exceptionally	domain_term		1	1	0	0	1	0	3.74	0	0		0	0
+excessively	domain_term		1	1	0	0	0	1	3.35	0	0		0	0
+executing	domain_term		1	1	0	0	0	1	3.54	0	0	execute	0	0
+execution	domain_term		1	1	0	0	0	1	4.29	0	0		0	0
+exempt	domain_term		1	1	0	0	0	1	3.78	0	0		0	0
+exemptions	domain_term		1	1	0	0	1	0	3.33	0	0	exemption	0	0
+exhaustive	domain_term		1	1	0	0	0	1	3.3	0	0		0	0
+expiry	domain_term		1	1	0	0	0	1	3.0	0	0		0	0
+explored	named_entity	candidate	1	1	1	0	0	0	3.9	1	1	explore	1	0
+export/	junk	structural	1	1	0	0	0	1	4.24	0	0		0	0
+extended	inflection_miss		1	1	0	1	0	0	4.64	0	0	extend	1	0
+extraterritorial	domain_term		1	1	0	0	0	1	2.23	0	0		0	0
+exw	named_entity	candidate	1	1	0	0	0	1	1.34	1	1		0	0
+eyed	local		1	1	1	0	0	0	3.96	0	0		0	0
+e‑commerce	junk	structural	1	1	0	0	1	0	4.32	0	0		0	0
+farthest	local		1	1	1	0	0	0	3.06	0	0	farth	0	0
+fasteners	domain_term		1	1	0	0	0	1	2.75	0	0	fastener	0	0
+federative	named_entity	candidate	1	1	0	0	0	1	1.91	1	1		0	0
+feeder	inflection_miss		1	1	1	0	0	0	3.46	0	0	feed	1	0
+financiën	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+finanţelor	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+firing	local		1	1	1	0	0	0	4.27	0	0		0	0
+fixation	domain_term		1	1	0	0	0	1	3.27	0	0		0	0
+flagship	named_entity	candidate	1	1	0	0	0	1	3.75	1	1		0	0
+flaky	local		1	1	0	1	0	0	2.87	0	0		0	0
+flaming	local		1	1	1	0	0	0	3.43	0	0		0	0
+flickering	inflection_miss		1	1	1	0	0	0	2.99	0	0	flicker	1	0
+flipper	local		1	1	1	0	0	0	2.8	0	0		0	0
+flippers	local		1	1	1	0	0	0	2.7	0	0	flipper	0	0
+flitting	local		1	1	1	0	0	0	2.35	0	0		0	0
+flowerbed	local		1	1	1	0	0	0	1.9	0	0	flowerbe	0	0
+fob2	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+foldables	junk	low_freq	1	1	0	1	0	0	0.0	0	0	foldable	0	0
+foremost	domain_term		1	1	0	0	0	1	3.78	0	0		0	0
+foreshadowing	inflection_miss		1	1	1	0	0	0	2.76	0	0	foreshadow	1	0
+formation	local		1	1	0	1	0	0	4.49	0	0		0	0
+forwarding	named_entity	candidate	1	1	0	0	0	1	3.21	1	1	forward	1	0
+framed	inflection_miss		1	1	1	0	0	0	3.9	0	0	frame	1	0
+frantic	local		1	1	0	1	0	0	3.33	0	0		0	0
+freeing	inflection_miss		1	1	1	0	0	0	3.4	0	0	free	1	0
+freezing	local		1	1	1	0	0	0	4.05	0	0		0	0
+frictionless	domain_term		1	1	0	0	0	1	2.3	0	0		0	0
+friedman	named_entity	candidate	1	1	0	0	1	0	3.47	1	1		0	0
+frogs	inflection_miss		1	1	1	0	0	0	3.56	1	0	frog	1	0
+frosting	inflection_miss		1	1	1	0	0	0	3.05	0	0	frost	1	0
+ftas	named_entity	candidate	1	1	0	0	0	1	1.97	0	1	fta	0	0
+fulfilment	domain_term		1	1	0	0	0	1	2.97	0	0		0	0
+funnest	local		1	1	1	0	0	0	2.28	0	0	funn	0	0
+funniest	local		1	1	1	0	0	0	3.59	0	0		0	0
+furthest	local		1	1	1	0	0	0	3.17	0	0	furth	0	0
+főigazgatósága	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+gaap	named_entity	candidate	1	1	0	0	0	1	3.05	0	1		0	0
+galați	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+gaming	local		1	1	0	1	0	0	4.36	0	0		0	0
+gathered	inflection_miss		1	1	1	0	0	0	4.27	0	0	gather	1	0
+gavier	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+gazing	local		1	1	1	0	0	0	3.21	0	0		0	0
+geese	inflection_miss		1	1	1	0	0	0	3.35	1	0	goose	1	0
+generalising	domain_term		1	1	0	0	0	1	1.92	0	0	generalise	0	0
+generală	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+generic	domain_term		1	1	0	0	0	1	4.11	0	0		0	0
+gentlly	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+georgia	named_entity	candidate	1	1	0	0	0	1	4.46	1	1		0	0
+giggling	named_entity	candidate	1	1	1	0	0	0	3.25	1	0		0	0
+glistening	inflection_miss		1	1	1	0	0	0	2.87	0	0	glisten	1	0
+gotcha	named_entity	candidate	1	1	1	0	0	0	3.38	1	1		0	0
+gottifredi	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+grams	domain_term		1	1	0	0	1	0	3.82	0	0	gram	0	0
+grandaughter	named_entity	candidate	1	1	1	0	0	0	1.66	1	0		0	0
+graphs	domain_term		1	1	0	0	0	1	3.55	0	0	graph	0	0
+greece	named_entity	candidate	1	1	0	0	1	0	4.28	1	1		0	0
+greens	named_entity	candidate	1	1	1	0	0	0	3.86	1	1	green	1	0
+greeting	inflection_miss		1	1	0	1	0	0	3.68	0	0	greet	1	0
+growling	inflection_miss		1	1	1	0	0	0	2.97	0	0	growl	1	0
+growth.[2][3][4][5][6	junk	structural	1	1	0	0	1	0	4.76	0	0		0	0
+grrr	local		1	1	1	0	0	0	2.63	0	0		0	0
+grumpiest	junk	low_freq	1	1	1	0	0	0	1.43	0	0		0	0
+guaranties	domain_term		1	1	0	0	0	1	1.56	0	0	guaranty	0	0
+guatemala	named_entity	candidate	1	1	0	0	0	1	3.62	1	1		0	0
+guided	named_entity	candidate	1	1	0	0	0	1	4.06	1	1		0	0
+gāze	junk	structural	1	1	0	0	0	1	0.0	0	0		0	0
+haha	named_entity	candidate	1	1	1	0	0	0	4.53	1	1		0	0
+handover	domain_term		1	1	0	0	0	1	2.96	0	0		0	0
+handset	local		1	1	0	1	0	0	3.07	0	0		0	0
+handsets	local		1	1	0	1	0	0	2.74	0	0	handset	0	0
+hannover	named_entity	candidate	1	1	0	0	0	1	2.78	1	1		0	0
+happenned	junk	low_freq	1	1	1	0	0	0	1.43	0	0	happenne	0	0
+harley	named_entity	candidate	1	1	0	0	0	1	3.72	1	1		0	0
+harmonisation	domain_term		1	1	0	0	0	1	2.28	0	0		0	0
+harmonise	domain_term		1	1	0	0	0	1	2.26	0	0		0	0
+harmonising	domain_term		1	1	0	0	0	1	1.98	0	0	harmonise	0	0
+harmonizing	domain_term		1	1	0	0	0	1	2.59	0	0	harmonize	0	0
+hazardous	domain_term		1	1	0	0	0	1	3.71	0	0		0	0
+header	named_entity	candidate	1	1	0	1	0	0	3.88	1	1		0	0
+heads	named_entity	candidate	1	1	0	0	0	1	4.67	1	1	head	1	0
+heard	inflection_miss		1	1	1	0	0	0	5.27	0	0	hear	1	0
+hearted	inflection_miss		1	1	1	0	0	0	3.77	0	0	heart	1	0
+hedgewit	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+heijmann	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+helpamy	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+heterogeneous	domain_term		1	1	0	0	0	1	3.08	0	0		0	0
+heterogenous	domain_term		1	1	0	0	0	1	1.86	0	0		0	0
+hfs	named_entity	candidate	1	1	0	0	0	1	2.26	1	1		0	0
+hid	named_entity	candidate	1	1	1	0	0	0	3.79	1	0		0	0
+highest	inflection_miss		1	1	0	0	1	0	4.86	1	0	high	1	0
+high‑tariff	junk	structural	1	1	0	0	1	0	3.49	1	1		0	0
+him-	junk	structural	1	1	1	0	0	0	6.11	0	0		0	0
+hitherto	named_entity	candidate	1	1	0	0	0	1	3.15	1	0		0	0
+hmm	named_entity	candidate	1	1	1	0	0	0	4.11	1	1		0	0
+hmmm	named_entity	candidate	1	1	1	0	0	0	3.61	1	1		0	0
+hola	named_entity	candidate	1	1	1	0	0	0	3.07	1	0		0	0
+hong	named_entity	candidate	1	1	0	0	0	1	4.53	1	1		0	0
+honour	domain_term		1	1	0	0	0	1	4.37	0	0		0	0
+hopped	inflection_miss		1	1	1	0	0	0	3.31	0	0	hop	1	0
+horgan	named_entity	candidate	1	1	0	0	0	1	2.32	1	1		0	0
+hristova	named_entity	candidate	1	1	0	0	0	1	1.09	1	1		0	0
+https://www.newworldencyclopedia.org/entry/tariff	junk	structural	1	1	0	0	0	1	0.0	0	0		0	0
+hubs	domain_term		1	1	0	0	0	1	3.4	0	0	hub	0	0
+humming	local		1	1	1	0	0	0	3.23	0	0		0	0
+hunkered	local		1	1	1	0	0	0	2.23	0	0	hunker	0	0
+hurray	named_entity	candidate	1	1	1	0	0	0	2.88	0	1		0	0
+hurried	inflection_miss		1	1	1	0	0	0	3.14	0	0	hurry	1	0
+hurrying	inflection_miss		1	1	1	0	0	0	2.73	0	0	hurry	1	0
+hydraulic	domain_term		1	1	0	0	0	1	3.72	0	0		0	0
+i'm	junk	structural	1	1	1	0	0	0	6.15	1	1		0	0
+icc	named_entity	candidate	1	1	0	0	0	1	3.64	1	1		0	0
+ics2	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+ideally	local		1	1	0	1	0	0	3.75	0	0		0	0
+ii	named_entity	candidate	1	1	0	0	0	1	5.02	1	1		0	0
+illicit	domain_term		1	1	0	0	0	1	3.43	0	0		0	0
+im	named_entity	candidate	1	1	0	0	0	1	4.69	1	1		0	0
+imagined	local		1	1	1	0	0	0	4.07	0	0		0	0
+immense	domain_term		1	1	0	0	0	1	3.88	0	0		0	0
+impart	domain_term		1	1	0	0	0	1	3.09	0	0		0	0
+importantly	domain_term		1	1	0	0	0	1	4.09	0	0		0	0
+importer/	junk	structural	1	1	0	0	0	1	3.08	0	0		0	0
+importer’s	junk	structural	1	1	0	0	0	1	0.0	0	0		0	0
+importing	named_entity	candidate	1	1	0	0	0	1	3.43	1	1	import	1	0
+impurities	domain_term		1	1	0	0	0	1	3.06	0	0	impurity	0	0
+incidental	domain_term		1	1	0	0	0	1	3.31	0	0		0	0
+incisive	domain_term		1	1	0	0	0	1	2.76	0	0		0	0
+inclusiveness	domain_term		1	1	0	0	0	1	2.61	0	0		0	0
+incoming	domain_term		1	1	0	0	0	1	3.93	0	0		0	0
+incorrectly	domain_term		1	1	0	0	0	1	3.57	0	0		0	0
+incurring	domain_term		1	1	0	0	0	1	2.88	0	0	incur	0	0
+independence	domain_term		1	1	0	0	0	1	4.58	0	0		0	0
+india	named_entity	candidate	1	1	0	0	0	1	5.04	1	1		0	0
+indonesia	named_entity	candidate	1	1	0	0	1	0	4.25	1	1		0	0
+industrialisation	domain_term		1	1	0	0	1	0	2.7	0	0		0	0
+industrializing	domain_term		1	1	0	0	1	0	1.93	0	0	industrialize	0	0
+industry.[1	junk	structural	1	1	0	0	1	0	5.13	0	0		0	0
+inefficient	domain_term		1	1	0	0	0	1	3.46	0	0		0	0
+inequality	domain_term		1	1	0	0	0	1	3.92	0	0		0	0
+infancy	domain_term		1	1	0	0	0	1	3.38	0	0		0	0
+ing	local		1	1	1	0	0	0	3.95	0	0		0	0
+inputs/	junk	structural	1	1	0	0	0	1	3.63	0	0		0	0
+inseperable	junk	low_freq	1	1	1	0	0	0	1.35	0	0		0	0
+inspector-2006	junk	structural	1	1	0	0	0	1	4.09	1	1		0	0
+installed	inflection_miss		1	1	0	0	0	1	4.4	0	0	instal	1	0
+instructional	local		1	1	0	1	0	0	3.51	0	0		0	0
+instrumental	domain_term		1	1	0	0	0	1	3.99	0	0		0	0
+insubstantial	domain_term		1	1	0	0	0	1	2.36	0	0		0	0
+inter	domain_term		1	1	0	0	0	1	4.16	0	0		0	0
+interchangeably	domain_term		1	1	0	0	0	1	2.9	0	0		0	0
+interconnected	domain_term		1	1	0	0	0	1	3.25	0	0	interconnect	0	0
+interconnection	domain_term		1	1	0	0	0	1	2.83	0	0		0	0
+interconnections	domain_term		1	1	0	0	0	1	2.39	0	0	interconnection	0	0
+interference	domain_term		1	1	0	0	0	1	3.99	0	0		0	0
+intermediary	domain_term		1	1	0	0	0	1	3.18	0	0		0	0
+internationaux	named_entity	candidate	1	1	0	0	0	1	1.34	1	1		0	0
+interrupting	inflection_miss		1	1	1	0	0	0	3.28	0	0	interrupt	1	0
+interruption	domain_term		1	1	0	0	0	1	3.36	0	0		0	0
+intro	domain_term		1	1	0	0	0	1	3.81	0	0		0	0
+invalidation	domain_term		1	1	0	0	0	1	2.23	0	0		0	0
+ironic	domain_term		1	1	0	0	0	1	3.8	0	0		0	0
+irrespective	domain_term		1	1	0	0	0	1	3.41	0	0		0	0
+irrespectively	junk	low_freq	1	1	0	0	0	1	1.16	0	0		0	0
+issuance	domain_term		1	1	0	0	0	1	3.34	0	0		0	0
+issuers	domain_term		1	1	0	0	0	1	2.91	0	0	issuer	0	0
+italia	named_entity	candidate	1	1	0	0	0	1	3.39	1	1		0	0
+items1	junk	structural	1	1	0	0	1	0	0.0	1	0		0	0
+iteration	domain_term		1	1	0	0	0	1	3.39	0	0		0	0
+jabbed	local		1	1	1	0	0	0	2.33	0	0	jab	0	0
+janey	named_entity	candidate	1	1	1	0	0	0	2.43	1	1		0	0
+javorcik	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+jewels	named_entity	candidate	1	1	1	0	0	0	3.59	1	1	jewel	1	0
+jogging	inflection_miss		1	1	1	0	0	0	3.38	0	0	jog	1	0
+joints	local		1	1	0	1	0	0	3.82	0	0	joint	0	0
+junctions	domain_term		1	1	0	0	0	1	3.1	0	0	junction	0	0
+jurisdictions	domain_term		1	1	0	0	0	1	3.6	0	0	jurisdiction	0	0
+jurisprudence	domain_term		1	1	0	0	0	1	3.14	0	0		0	0
+justo	local		1	1	1	0	0	0	2.22	0	0		0	0
+kayaker	local		1	1	1	0	0	0	2.1	0	0		0	0
+kayaking	inflection_miss		1	1	1	0	0	0	3.02	0	0	kayak	1	0
+keeping	inflection_miss		1	1	1	0	0	0	4.84	0	0	keep	1	0
+kenya	named_entity	candidate	1	1	0	0	0	1	4.13	1	1		0	0
+kft	named_entity	candidate	1	1	0	0	0	1	1.79	1	1		0	0
+kickstart	domain_term		1	1	0	0	0	1	2.78	0	0		0	0
+kiddo	named_entity	candidate	1	1	1	0	0	0	3.22	1	0		0	0
+kilograms	local		1	1	0	1	0	0	3.24	0	0	kilogram	0	0
+kneeling	inflection_miss		1	1	1	0	0	0	3.32	0	0	kneel	1	0
+kong	named_entity	candidate	1	1	0	0	0	1	4.49	1	1		0	0
+korean	named_entity	candidate	1	1	0	0	0	1	4.49	0	1		0	0
+krefeld	named_entity	candidate	1	1	0	0	0	1	1.85	1	1		0	0
+kyryievskyi	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+l.	junk	structural	1	1	0	0	0	1	5.18	1	1		0	0
+lagura	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+landed‑cost	junk	structural	1	1	0	0	1	0	4.2	1	0		0	0
+landlady	local		1	1	0	1	0	0	2.9	0	0		0	0
+lane	local		1	1	0	1	0	0	4.57	0	0		0	0
+laos	named_entity	candidate	1	1	0	0	1	0	3.34	1	1		0	0
+lastly	domain_term		1	1	0	0	0	1	3.69	0	0		0	0
+latvijas	named_entity	candidate	1	1	0	0	0	1	1.18	1	1		0	0
+laurinavičius	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+lawful	domain_term		1	1	0	0	0	1	3.62	0	0		0	0
+lawsuit	domain_term		1	1	0	0	0	1	4.09	0	0		0	0
+layouts	local		1	1	0	1	0	0	3.15	0	0	layout	0	0
+leapt	local		1	1	1	0	0	0	3.05	0	0		0	0
+leftovers	local		1	1	1	0	0	0	3.38	0	0	leftover	0	0
+lengthy	domain_term		1	1	0	0	0	1	3.85	0	0		0	0
+lesson-	junk	structural	1	1	1	0	0	0	4.47	0	0		0	0
+leverage	domain_term		1	1	0	0	1	0	3.88	0	0		0	0
+levying	inflection_miss		1	1	0	0	0	1	2.44	0	0	levy	1	0
+likelihood	domain_term		1	1	0	0	0	1	3.91	0	0		0	0
+lipped	local		1	1	1	0	0	0	2.78	0	0		0	0
+lit	local		1	1	1	0	0	0	4.19	0	0		0	0
+littler	local		1	1	1	0	0	0	2.41	0	0		0	0
+litttle	junk	low_freq	1	1	1	0	0	0	1.39	0	0		0	0
+loading	inflection_miss		1	1	0	0	0	1	4.1	0	0	load	1	0
+localization	domain_term		1	1	0	0	0	1	3.27	0	0		0	0
+localized	domain_term		1	1	0	0	0	1	3.4	0	0	localize	0	0
+locally	domain_term		1	1	0	0	1	0	4.11	0	0		0	0
+locked	inflection_miss		1	1	1	0	0	0	4.43	0	0	lock	1	0
+locker	local		1	1	1	0	0	0	3.95	0	0		0	0
+lodged	domain_term		1	1	0	0	0	1	3.49	0	0	lodge	0	0
+loops	inflection_miss		1	1	1	0	0	0	3.65	1	0	loop	1	0
+loosely	local		1	1	0	1	0	0	3.62	0	0		0	0
+losers	domain_term		1	1	0	0	0	1	3.82	0	0	loser	0	0
+loving	local		1	1	1	0	0	0	4.47	0	0		0	0
+low‑tariff	junk	structural	1	1	0	0	1	0	3.48	0	0		0	0
+lpp	named_entity	candidate	1	1	0	0	0	1	1.86	1	1		0	0
+luce	named_entity	candidate	1	1	1	0	0	0	2.99	1	1		0	0
+luckly	named_entity	candidate	1	1	1	0	0	0	1.42	1	0		0	0
+lucys	named_entity	candidate	1	1	1	0	0	0	1.22	1	0		0	0
+ma	named_entity	candidate	1	1	0	0	0	1	4.63	1	1		0	0
+maddie	named_entity	candidate	1	1	1	0	0	0	3.25	1	0		0	0
+magcally	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+magnifying	inflection_miss		1	1	1	0	0	0	3.0	0	0	magnify	1	0
+magnus	named_entity	candidate	1	1	0	0	0	1	3.46	1	1		0	0
+mainteaining	junk	low_freq	1	1	0	0	0	1	0.0	0	0	mainteaine	0	0
+making	inflection_miss		1	1	1	0	0	0	5.54	0	0	make	1	0
+malaysia	named_entity	candidate	1	1	0	0	1	0	4.28	1	1		0	0
+manufacturers	domain_term		1	1	0	0	0	1	4.35	0	0	manufacturer	0	0
+manufactures	domain_term		1	1	0	0	1	0	3.43	0	0	manufacture	0	0
+maritime	named_entity	candidate	1	1	0	0	0	1	3.96	1	1		0	0
+materialise	domain_term		1	1	0	0	0	1	2.49	0	0		0	0
+materials/	junk	structural	1	1	0	0	0	1	4.78	0	0		0	0
+mathematical	domain_term		1	1	0	0	0	1	4.04	0	0		0	0
+matrix	domain_term		1	1	0	0	0	1	4.07	0	0		0	0
+mauritius	named_entity	candidate	1	1	0	0	0	1	3.21	1	1		0	0
+mayer	named_entity	candidate	1	1	0	0	0	1	3.59	1	1		0	0
+meantime	domain_term		1	1	0	0	0	1	4.04	0	0		0	0
+measured	domain_term		1	1	0	0	0	1	4.25	0	0		0	0
+measuring	inflection_miss		1	1	1	0	0	0	4.07	0	0	measure	1	0
+medicines	named_entity	candidate	1	1	0	0	0	1	3.77	1	1	medicine	1	0
+mediterranean	named_entity	candidate	1	1	0	0	0	1	3.99	1	1		0	0
+melting	inflection_miss		1	1	1	0	0	0	3.8	0	0	melt	1	0
+members	named_entity	candidate	1	1	0	0	0	1	5.35	1	1	member	1	0
+meowing	inflection_miss		1	1	1	0	0	0	2.54	0	0	meow	1	0
+mercosur	named_entity	candidate	1	1	0	0	0	1	2.23	1	1		0	0
+mesmerised	local		1	1	1	0	0	0	2.27	0	0	mesmerise	0	0
+metrology	named_entity	candidate	1	1	0	0	0	1	2.5	1	1		0	0
+mewing	inflection_miss		1	1	1	0	0	0	1.92	0	0	mew	1	0
+meyer	named_entity	candidate	1	1	0	0	0	1	3.69	1	1		0	0
+micro	domain_term		1	1	0	0	0	1	4.08	0	0		0	0
+midfield	named_entity	candidate	1	1	0	1	0	0	3.62	1	0		0	0
+milano	named_entity	candidate	1	1	0	0	0	1	3.17	1	1		0	0
+milestones	domain_term		1	1	0	0	0	1	3.34	0	0	milestone	0	0
+milton	named_entity	candidate	1	1	0	0	1	0	3.84	1	1		0	0
+ministers	named_entity	candidate	1	1	0	0	0	1	4.34	1	1	minister	1	0
+mira	named_entity	candidate	1	1	1	0	0	0	3.27	1	1		0	0
+mitigate	domain_term		1	1	0	0	0	1	3.54	0	0		0	0
+mitigation	domain_term		1	1	0	0	0	1	3.46	0	0		0	0
+mmmm	named_entity	candidate	1	1	1	0	0	0	3.05	1	1		0	0
+moaned	inflection_miss		1	1	1	0	0	0	2.8	0	0	moan	1	0
+modalities	domain_term		1	1	0	0	0	1	2.9	0	0	modality	0	0
+modality	domain_term		1	1	0	0	0	1	2.81	0	0		0	0
+modelling	domain_term		1	1	0	0	0	1	3.7	0	0		0	0
+modernisation	domain_term		1	1	0	0	0	1	2.97	0	0		0	0
+modernise	domain_term		1	1	0	0	0	1	2.52	0	0		0	0
+modernising	domain_term		1	1	0	0	0	1	2.38	0	0	modernise	0	0
+moist	local		1	1	0	1	0	0	3.69	0	0		0	0
+moldova	named_entity	candidate	1	1	0	0	0	1	3.17	1	1		0	0
+momentum	local		1	1	0	1	0	0	4.07	0	0		0	0
+mommmyyyy	named_entity	candidate	1	1	1	0	0	0	0.0	1	1		0	0
+moring	named_entity	candidate	1	1	0	0	0	1	1.8	1	1		0	0
+"mother,""can"	junk	structural	1	1	1	0	0	0	5.21	0	0		0	0
+motorised	domain_term		1	1	0	0	1	0	2.53	0	0		0	0
+moulded	domain_term		1	1	0	0	0	1	3.0	0	0	mould	0	0
+moved	local		1	1	1	0	0	0	5.01	0	0		0	0
+mowers	local		1	1	1	0	0	0	2.6	0	0	mower	0	0
+multi	local		1	1	1	0	0	0	4.54	0	0		0	0
+multilateral	domain_term		1	1	0	0	0	1	3.1	0	0		0	0
+multinational	domain_term		1	1	0	0	0	1	3.56	0	0		0	0
+munching	inflection_miss		1	1	1	0	0	0	2.88	0	0	munch	1	0
+municipiului	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+muy	named_entity	candidate	1	1	1	0	0	0	2.46	1	1		0	0
+mygts	named_entity	candidate	1	1	0	0	1	0	0.0	0	1		0	0
+nafta	named_entity	candidate	1	1	0	0	1	0	3.14	1	1		0	0
+narciso	named_entity	candidate	1	1	0	0	0	1	2.1	1	1		0	0
+narrowly	domain_term		1	1	0	0	0	1	3.65	0	0		0	0
+nationality	domain_term		1	1	0	0	0	1	3.72	0	0		0	0
+naujokė	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+națională	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+necessity	domain_term		1	1	0	0	0	1	3.91	0	0		0	0
+needel	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+negotiated	domain_term		1	1	0	0	0	1	3.78	0	0	negotiate	0	0
+negotiating	domain_term		1	1	0	0	0	1	3.78	0	0	negotiate	0	0
+nemzeti	named_entity	candidate	1	1	0	0	0	1	1.06	1	1		0	0
+nettes`globaltrade	junk	structural	1	1	0	0	0	1	0.0	1	0		0	0
+niche	local		1	1	0	1	0	0	3.85	0	0		0	0
+nodding	local		1	1	1	0	0	0	3.19	0	0		0	0
+nomenclatures	junk	low_freq	1	1	0	0	0	1	1.42	0	0	nomenclature	0	0
+nonfinancial	domain_term		1	1	0	0	0	1	1.74	0	0		0	0
+nonfiscal	junk	low_freq	1	1	0	0	0	1	0.0	0	0		0	0
+nooooo	named_entity	candidate	1	1	1	0	0	0	2.63	1	1		0	0
+nope	named_entity	candidate	1	1	1	0	0	0	4.26	1	1		0	0
+notable	domain_term		1	1	0	0	0	1	4.07	0	0		0	0
+noteworthy	domain_term		1	1	0	0	0	1	3.49	0	0		0	0
+noticing	local		1	1	1	0	0	0	3.64	0	0		0	0
+novelty	domain_term		1	1	0	0	0	1	3.66	0	0		0	0
+nsbs	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+numbering	inflection_miss		1	1	0	0	0	1	3.27	0	0	number	1	0
+nyugat	named_entity	candidate	1	1	0	0	0	1	1.07	1	1		0	0
+o'clock	junk	structural	1	1	1	0	0	0	4.04	0	0		0	0
+obligatory	domain_term		1	1	0	0	0	1	3.39	0	0		0	0
+odesa	named_entity	candidate	1	1	0	0	0	1	1.58	1	1		0	0
+odessa	named_entity	candidate	1	1	0	0	0	1	3.2	1	1		0	0
+oink	local		1	1	1	0	0	0	2.3	0	0		0	0
+oleg	named_entity	candidate	1	1	0	0	0	1	3.14	1	1		0	0
+ooh	named_entity	candidate	1	1	1	0	0	0	3.76	1	1		0	0
+operating	domain_term		1	1	0	0	0	1	4.75	0	0		0	0
+operațiuni	junk	structural	1	1	0	0	0	1	0.0	1	0		0	0
+opted	domain_term		1	1	0	0	0	1	3.75	0	0	opt	0	0
+organisational	domain_term		1	1	0	0	0	1	3.2	0	0		0	0
+organisations	domain_term		1	1	0	0	0	1	4.16	0	0	organisation	0	0
+osenbrüggen	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+outgoing	domain_term		1	1	0	0	0	1	3.59	0	0		0	0
+outlaws	domain_term		1	1	0	0	0	1	3.16	0	0	outlaw	0	0
+outsite	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+outstretched	local		1	1	1	0	0	0	2.91	0	0	outstretche	0	0
+outward	named_entity	candidate	1	1	0	0	0	1	3.52	1	1		0	0
+outweigh	domain_term		1	1	0	0	0	1	3.27	0	0		0	0
+overarching	domain_term		1	1	0	0	0	1	3.15	0	0		0	0
+overheard	local		1	1	1	0	0	0	3.4	0	0		0	0
+overmix	junk	low_freq	1	1	0	1	0	0	1.09	0	0		0	0
+overstated	domain_term		1	1	0	0	0	1	2.93	0	0	overstate	0	0
+overwhelmed	inflection_miss		1	1	1	0	0	0	3.88	0	0	overwhelm	1	0
+pacific	named_entity	candidate	1	1	0	0	0	1	4.59	1	1		0	0
+panicked	local		1	1	1	0	0	0	3.4	0	0		0	0
+paperless	domain_term		1	1	0	0	0	1	2.43	0	0		0	0
+paradigmes	named_entity	candidate	1	1	0	0	0	1	0.0	1	1	paradigm	1	0
+paraguay	named_entity	candidate	1	1	0	0	0	1	3.23	1	1		0	0
+parchment	local		1	1	0	1	0	0	3.23	0	0		0	0
+partial	domain_term		1	1	0	0	0	1	4.17	0	0		0	0
+partially	domain_term		1	1	0	0	0	1	4.19	0	0		0	0
+particularities	domain_term		1	1	0	0	0	1	2.12	0	0	particularity	0	0
+passports	named_entity	candidate	1	1	0	0	0	1	3.52	1	1	passport	1	0
+pave	domain_term		1	1	0	0	0	1	3.21	0	0		0	0
+pavement	local		1	1	0	1	0	0	3.61	0	0		0	0
+pca	named_entity	candidate	1	1	0	0	0	1	2.88	1	1		0	0
+pedaling	inflection_miss		1	1	1	0	0	0	2.5	0	0	pedal	1	0
+penalise	domain_term		1	1	0	0	0	1	2.11	0	0		0	0
+penalize	domain_term		1	1	0	0	1	0	2.74	0	0		0	0
+pending	domain_term		1	1	0	0	0	1	4.02	0	0	pende	0	0
+pendulum	domain_term		1	1	0	0	0	1	3.27	0	0		0	0
+pentru	domain_term		1	1	0	0	0	1	2.05	0	0		0	0
+permissible	domain_term		1	1	0	0	0	1	3.2	0	0		0	0
+personnel	domain_term		1	1	0	0	0	1	4.56	0	0		0	0
+persons	named_entity	candidate	1	1	0	0	0	1	4.43	1	1	person	1	0
+peru	named_entity	candidate	1	1	0	0	0	1	3.89	1	1		0	0
+peters	named_entity	candidate	1	1	0	0	0	1	3.7	1	1		0	0
+phase.1	junk	structural	1	1	0	0	0	1	4.62	0	0		0	0
+phd	named_entity	candidate	1	1	0	0	0	1	4.07	0	1		0	0
+philippines	named_entity	candidate	1	1	0	0	1	0	4.29	1	1		0	0
+pillars	domain_term		1	1	0	0	0	1	3.62	0	0	pillar	0	0
+pitching	inflection_miss		1	1	1	0	0	0	3.75	0	0	pitch	1	0
+pitter	local		1	1	1	0	0	0	2.17	0	0		0	0
+playoff	local		1	1	0	1	0	0	4.13	0	0		0	0
+plaything	local		1	1	1	0	0	0	2.51	0	0		0	0
+pleading	inflection_miss		1	1	1	0	0	0	3.53	0	0	plead	1	0
+pleeease	junk	low_freq	1	1	1	0	0	0	1.48	0	0		0	0
+poland	named_entity	candidate	1	1	0	0	1	0	4.24	1	1		0	0
+polishing	inflection_miss		1	1	1	0	0	0	3.28	0	0	polish	1	0
+poof	local		1	1	1	0	0	0	2.94	0	0		0	0
+poorly	local		1	1	0	1	0	0	4.1	0	0		0	0
+portal	domain_term		1	1	0	0	0	1	4.0	0	0		0	0
+portuguese	named_entity	candidate	1	1	0	0	0	1	4.03	1	1		0	0
+postal	domain_term		1	1	0	0	0	1	3.94	0	0		0	0
+pow	named_entity	candidate	1	1	1	0	0	0	3.44	1	1		0	0
+powerhouse	domain_term		1	1	0	0	0	1	3.44	0	0		0	0
+practicig	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+prax	named_entity	candidate	1	1	0	0	0	1	1.58	1	1		0	0
+preclude	domain_term		1	1	0	0	0	1	3.03	0	0		0	0
+precondition	domain_term		1	1	0	0	0	1	2.63	0	0		0	0
+preconditions	domain_term		1	1	0	0	0	1	2.63	0	0	precondition	0	0
+preheat	named_entity	candidate	1	1	0	1	0	0	2.9	0	1		0	0
+premier	domain_term		1	1	0	0	0	1	4.56	0	0		0	0
+premise	domain_term		1	1	0	0	0	1	3.82	0	0		0	0
+premium	local		1	1	0	1	0	0	4.33	0	0		0	0
+preservation	domain_term		1	1	0	0	0	1	4.01	0	0		0	0
+presto	local		1	1	1	0	0	0	2.92	0	0		0	0
+prevails	domain_term		1	1	0	0	0	1	3.09	0	0	prevail	0	0
+prevalent	domain_term		1	1	0	0	0	1	3.78	0	0		0	0
+prices	named_entity	candidate	1	1	0	0	0	1	4.88	0	1	price	1	0
+proactively	domain_term		1	1	0	0	0	1	2.82	0	0		0	0
+problems	named_entity	candidate	1	1	0	0	0	1	5.19	0	1	problem	1	0
+procedure(s	junk	structural	1	1	0	0	0	1	4.42	0	0		0	0
+processor	local		1	1	0	1	0	0	3.87	0	0		0	0
+procure	domain_term		1	1	0	0	0	1	3.16	0	0		0	0
+products	named_entity	candidate	1	1	0	0	0	1	5.04	1	1	product	1	0
+profitability	domain_term		1	1	0	0	0	1	3.5	0	0		0	0
+progressively	domain_term		1	1	0	0	0	1	3.48	0	0		0	0
+prone	local		1	1	0	1	0	0	3.93	0	0		0	0
+propāna	junk	structural	1	1	0	0	0	1	0.0	0	0		0	0
+protectionism	domain_term		1	1	0	0	1	0	2.81	0	0		0	0
+protein	domain_term		1	1	0	0	0	1	4.53	0	0		0	0
+provisional	domain_term		1	1	0	0	0	1	3.66	0	0		0	0
+provisionally	domain_term		1	1	0	0	0	1	2.79	0	0		0	0
+publice	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+publicised	domain_term		1	1	0	0	0	1	2.68	0	0	publicise	0	0
+purely	domain_term		1	1	0	0	1	0	4.1	0	0		0	0
+pursuant	domain_term		1	1	0	0	0	1	3.56	0	0		0	0
+puzzles	named_entity	candidate	1	1	1	0	0	0	3.55	1	1	puzzle	1	0
+puzzling	local		1	1	1	0	0	0	3.13	0	0		0	0
+puzzlw	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+pénzügyőri	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+quicker	local		1	1	1	0	0	0	3.92	0	0		0	0
+quit3	junk	structural	1	1	1	0	0	0	0.0	1	0		0	0
+quivering	inflection_miss		1	1	1	0	0	0	2.74	0	0	quiver	1	0
+rainwater	local		1	1	1	0	0	0	3.0	0	0		0	0
+rating	inflection_miss		1	1	0	1	0	0	4.45	0	0	rat	1	0
+rationale	domain_term		1	1	0	0	1	0	3.53	0	0		0	0
+rauch	named_entity	candidate	1	1	0	0	0	1	2.32	1	1		0	0
+ravens	named_entity	candidate	1	1	1	0	0	0	3.66	1	1	raven	1	0
+reasoning	inflection_miss		1	1	0	0	0	1	4.01	0	0	reason	1	0
+rebut	domain_term		1	1	0	0	0	1	2.6	0	0		0	0
+rebuttal	domain_term		1	1	0	0	0	1	3.1	0	0		0	0
+rebutted	domain_term		1	1	0	0	0	1	2.37	0	0	rebut	0	0
+recalculate	domain_term		1	1	0	0	0	1	2.16	0	0		0	0
+recalibration	domain_term		1	1	0	0	0	1	2.14	0	0		0	0
+recipients	domain_term		1	1	0	0	0	1	3.82	0	0	recipient	0	0
+recognisable	domain_term		1	1	0	0	0	1	2.97	0	0		0	0
+reconsider	domain_term		1	1	0	0	0	1	3.63	0	0		0	0
+recourses	domain_term		1	1	0	0	0	1	1.69	0	0	recourse	0	0
+rectify	domain_term		1	1	0	0	1	0	3.17	0	0		0	0
+redesigned	local		1	1	0	1	0	0	3.3	0	0	redesign	0	0
+redex	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+reduced	inflection_miss		1	1	0	0	0	1	4.64	0	0	reduce	1	0
+reflexively	domain_term		1	1	0	0	0	1	2.48	0	0		0	0
+refund	domain_term		1	1	0	0	0	1	3.94	0	0		0	0
+refunded	domain_term		1	1	0	0	0	1	3.18	0	0	refund	0	0
+refunds	domain_term		1	1	0	0	0	1	3.37	0	0	refund	0	0
+refute	domain_term		1	1	0	0	0	1	3.14	0	0		0	0
+regională	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+regionális	named_entity	candidate	1	1	0	0	0	1	0.0	1	0		0	0
+reiser	named_entity	candidate	1	1	0	0	0	1	2.21	1	1		0	0
+reiterated	domain_term		1	1	0	0	0	1	3.28	0	0	reiterate	0	0
+reloading	domain_term		1	1	0	0	0	1	2.77	0	0		0	0
+remained	inflection_miss		1	1	1	0	0	0	4.62	0	0	remain	1	0
+remanded	domain_term		1	1	0	0	0	1	3.21	0	0	remand	0	0
+remedies	named_entity	candidate	1	1	0	0	0	1	3.83	1	1		0	0
+renewed	domain_term		1	1	0	0	0	1	4.04	0	0	renew	0	0
+repeatly	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+repeats	inflection_miss		1	1	1	0	0	0	3.55	1	0	repeat	1	0
+"replied:""oh"	junk	structural	1	1	1	0	0	0	4.25	0	0		0	0
+reputational	domain_term		1	1	0	0	0	1	2.34	0	0		0	0
+requisite	domain_term		1	1	0	0	0	1	3.24	0	0		0	0
+rescinded	domain_term		1	1	0	0	0	1	3.02	0	0	rescind	0	0
+resell	domain_term		1	1	0	0	0	1	2.93	0	0		0	0
+reseller	domain_term		1	1	0	0	0	1	2.79	0	0		0	0
+resilience	domain_term		1	1	0	0	0	1	3.58	0	0		0	0
+resistance	local		1	1	0	1	0	0	4.55	0	0		0	0
+respectively	domain_term		1	1	0	0	0	1	4.45	0	0		0	0
+retaliatory	domain_term		1	1	0	0	1	0	2.85	0	0		0	0
+rethink	domain_term		1	1	0	0	0	1	3.47	0	0		0	0
+retreated	local		1	1	0	1	0	0	3.38	0	0	retreat	0	0
+retying	junk	low_freq	1	1	1	0	0	0	0.0	0	0	retye	0	0
+reusable	domain_term		1	1	0	0	0	1	3.21	0	0		0	0
+reused	domain_term		1	1	0	0	0	1	3.09	0	0	reuse	0	0
+reverse-	junk	structural	1	1	1	0	0	0	4.37	0	0		0	0
+reversinng	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+reviewers	local		1	1	0	1	0	0	3.47	0	0	reviewer	0	0
+rica	named_entity	candidate	1	1	0	0	0	1	3.75	1	1		0	0
+rightly	domain_term		1	1	0	0	0	1	3.73	0	0		0	0
+rinnert	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+rode	local		1	1	1	0	0	0	3.91	0	0		0	0
+rohm	named_entity	candidate	1	1	0	0	0	1	2.0	1	1		0	0
+rollout	domain_term		1	1	0	0	0	1	3.06	0	0		0	0
+romania	named_entity	candidate	1	1	0	0	1	0	3.78	1	1		0	0
+românia	named_entity	candidate	1	1	0	0	0	1	1.15	1	1		0	0
+rotterdam	named_entity	candidate	1	1	0	0	0	1	3.19	1	1		0	0
+rounded	inflection_miss		1	1	0	1	0	0	3.98	0	0	round	1	0
+roundest	junk	low_freq	1	1	1	0	0	0	1.33	0	0		0	0
+routiers	named_entity	candidate	1	1	0	0	0	1	1.2	1	1		0	0
+rovetta	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+rowing	inflection_miss		1	1	1	0	0	0	3.39	0	0	row	1	0
+royalties	domain_term		1	1	0	0	0	1	3.44	0	0	royalty	0	0
+rraaaaaaaawr	named_entity	candidate	1	1	1	0	0	0	0.0	1	1		0	0
+rrrr	named_entity	candidate	1	1	1	0	0	0	1.56	1	1		0	0
+rubbing	inflection_miss		1	1	1	0	0	0	3.71	0	0	rub	1	0
+runnning	junk	low_freq	1	1	1	0	0	0	1.27	0	0	runnne	0	0
+russia	named_entity	candidate	1	1	0	0	0	1	4.93	1	1		0	0
+rwanda	named_entity	candidate	1	1	0	0	0	1	3.53	1	1		0	0
+s	junk	structural	1	1	1	0	0	0	5.86	0	1		0	0
+sa	named_entity	candidate	1	1	0	0	0	1	4.3	1	1		0	0
+safeguard	domain_term		1	1	0	0	1	0	3.55	0	0		0	0
+safeguards	domain_term		1	1	0	0	0	1	3.38	0	0	safeguard	0	0
+"said,""if"	junk	structural	1	1	1	0	0	0	5.88	0	0		0	0
+"said,""okay"	junk	structural	1	1	1	0	0	0	5.01	1	0		0	0
+"said,""this"	junk	structural	1	1	1	0	0	0	5.95	0	0		0	0
+"said:""mummy"	junk	structural	1	1	1	0	0	0	3.57	1	0		0	0
+sakalauskas	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+sake	domain_term		1	1	0	0	0	1	4.4	0	0		0	0
+sat	inflection_miss		1	1	1	0	0	0	4.64	0	0	sit	1	0
+satisfactory	domain_term		1	1	0	0	0	1	3.57	0	0		0	0
+savannah	named_entity	candidate	1	1	1	0	0	0	3.62	1	0		0	0
+sawdust	domain_term		1	1	0	0	0	1	2.85	0	0		0	0
+sc	named_entity	candidate	1	1	0	0	0	1	4.18	1	1		0	0
+scaredy	local		1	1	1	0	0	0	2.24	0	0		0	0
+scerni	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+schenker	named_entity	candidate	1	1	0	0	0	1	2.08	1	1		0	0
+scootered	junk	low_freq	1	1	1	0	0	0	0.0	0	0	scootere	1	0
+scootering	junk	low_freq	1	1	1	0	0	0	1.35	0	0	scootere	1	0
+scoring	local		1	1	0	1	0	0	4.36	0	0		0	0
+"screamed,""help"	junk	structural	1	1	1	0	0	0	3.72	0	0		0	0
+scrolling	local		1	1	0	1	0	0	3.48	0	0		0	0
+scrutiny	domain_term		1	1	0	0	0	1	3.74	0	0		0	0
+scurrying	inflection_miss		1	1	1	0	0	0	2.6	0	0	scurry	1	0
+se	domain_term		1	1	0	0	0	1	4.29	0	0		0	0
+seals	named_entity	candidate	1	1	0	1	0	0	3.85	1	1	seal	1	0
+seasoning	inflection_miss		1	1	1	0	0	0	3.28	0	0	season	1	0
+secex	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+sectors,[8	junk	structural	1	1	0	0	1	0	4.05	0	0		0	0
+seedling	local		1	1	0	1	0	0	2.75	0	0	seedle	0	0
+sees	inflection_miss		1	1	1	0	0	0	4.59	0	0	see	1	0
+selena	named_entity	candidate	1	1	0	0	0	1	3.25	1	1		0	0
+selling	inflection_miss		1	1	1	0	0	0	4.81	0	0	sell	1	0
+semiconductor	named_entity	candidate	1	1	0	0	0	1	3.53	1	1		0	0
+semiconductors	domain_term		1	1	0	0	0	1	2.93	0	0	semiconductor	0	0
+seminars	domain_term		1	1	0	0	0	1	3.5	0	0	seminar	0	0
+semisweet	junk	low_freq	1	1	0	1	0	0	1.49	0	0		0	0
+sentiment	domain_term		1	1	0	0	0	1	4.03	0	0		0	0
+separately	domain_term		1	1	0	0	1	0	4.08	0	0		0	0
+separation	domain_term		1	1	0	0	0	1	4.13	0	0		0	0
+serbia	named_entity	candidate	1	1	0	0	0	1	3.71	1	1		0	0
+servicing	named_entity	candidate	1	1	0	0	0	1	3.44	0	1		0	0
+shared	inflection_miss		1	1	1	0	0	0	4.68	0	0	share	1	0
+sheltered	inflection_miss		1	1	1	0	0	0	3.48	0	0	shelter	1	0
+shimmering	inflection_miss		1	1	1	0	0	0	2.97	0	0	shimmer	1	0
+shrinker	junk	low_freq	1	1	1	0	0	0	1.36	0	0		0	0
+shrinking	inflection_miss		1	1	1	0	0	0	3.44	0	0	shrink	1	0
+shutter	local		1	1	0	1	0	0	3.48	0	0		0	0
+sida	named_entity	candidate	1	1	0	0	0	1	2.15	1	1		0	0
+siemens	named_entity	candidate	1	1	0	0	0	1	3.33	1	1		0	0
+sighting	inflection_miss		1	1	1	0	0	0	3.3	0	0	sight	1	0
+sillyness	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+simmi	named_entity	candidate	1	1	1	0	0	0	1.53	1	1		0	0
+simplifications/	junk	structural	1	1	0	0	0	1	2.13	0	0		0	0
+simplifying	domain_term		1	1	0	0	0	1	3.05	0	0	simplify	0	0
+sis	named_entity	candidate	1	1	1	0	0	0	3.63	1	1		0	0
+sitting	local		1	1	1	0	0	0	4.86	0	0		0	0
+slithering	local		1	1	1	0	0	0	2.39	0	0	slither	0	0
+slotted	local		1	1	0	1	0	0	3.07	0	0	slot	0	0
+slovakia	named_entity	candidate	1	1	0	0	1	0	3.4	1	1		0	0
+smelly-	junk	structural	1	1	1	0	0	0	3.29	0	0		0	0
+smugglers	domain_term		1	1	0	0	0	1	3.1	0	0	smuggler	0	0
+snached	junk	low_freq	1	1	1	0	0	0	0.0	0	0	snache	0	0
+snarling	inflection_miss		1	1	1	0	0	0	2.72	0	0	snarl	1	0
+snoozing	local		1	1	1	0	0	0	2.39	0	0		0	0
+socio	domain_term		1	1	0	0	0	1	3.58	0	0		0	0
+sofishticated	named_entity	candidate	1	1	1	0	0	0	0.0	0	1	sofishticate	0	0
+softened	inflection_miss		1	1	0	1	0	0	3.24	0	0	soften	1	0
+solver	local		1	1	1	0	0	0	2.82	0	0		0	0
+soooooo	local		1	1	1	0	0	0	2.83	0	0		0	0
+soothing	local		1	1	1	0	0	0	3.45	0	0		0	0
+"sound,""thought"	junk	structural	1	1	1	0	0	0	5.02	0	0		0	0
+sound-	junk	structural	1	1	1	0	0	0	5.15	0	0		0	0
+spa	named_entity	candidate	1	1	0	0	0	1	3.96	0	1		0	0
+spain	named_entity	candidate	1	1	0	0	0	1	4.59	1	1		0	0
+sparkles	named_entity	candidate	1	1	1	0	0	0	2.9	1	1	sparkle	1	0
+specialised	domain_term		1	1	0	0	0	1	3.45	0	0		0	0
+specialized	domain_term		1	1	0	0	1	0	4.07	0	0	specialize	0	0
+speeding	inflection_miss		1	1	1	0	0	0	3.68	0	0	speed	1	0
+spirits	named_entity	candidate	1	1	0	0	1	0	4.16	1	1	spirit	1	0
+splashed	inflection_miss		1	1	1	0	0	0	3.03	0	0	splash	1	0
+spot-	junk	structural	1	1	1	0	0	0	4.89	0	0		0	0
+sprinked	junk	low_freq	1	1	1	0	0	0	0.0	0	0	sprinke	0	0
+ss	named_entity	candidate	1	1	0	0	0	1	4.1	1	1		0	0
+staatssecretaris	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+staged	local		1	1	0	1	0	0	3.83	0	0	stag	0	0
+stainless	domain_term		1	1	0	0	0	1	3.76	0	0		0	0
+stake	local		1	1	0	1	0	0	4.15	0	0		0	0
+stakeholder	domain_term		1	1	0	0	0	1	3.01	0	0		0	0
+standardising	domain_term		1	1	0	0	0	1	1.79	0	0	standardise	0	0
+standing	inflection_miss		1	1	1	0	0	0	4.86	0	0	stand	1	0
+statute	domain_term		1	1	0	0	0	1	3.83	0	0		0	0
+steering	inflection_miss		1	1	1	0	0	0	3.93	0	0	steer	1	0
+stimulate	domain_term		1	1	0	0	1	0	3.67	0	0		0	0
+stirrer	local		1	1	1	0	0	0	2.22	0	0		0	0
+stoppage	local		1	1	0	1	0	0	3.22	0	0		0	0
+streaming	inflection_miss		1	1	0	0	0	1	4.22	0	0	stream	1	0
+streamlined	domain_term		1	1	0	0	0	1	3.27	0	0		0	0
+streamlining	domain_term		1	1	0	0	0	1	2.86	0	0	streamline	0	0
+strengthen	domain_term		1	1	0	0	0	1	4.04	0	0		0	0
+strengthens	domain_term		1	1	0	0	0	1	3.28	0	0	strengthen	0	0
+stricter	named_entity	candidate	1	1	0	0	1	0	3.23	1	0		0	0
+striker	local		1	1	0	1	0	0	3.9	0	0		0	0
+studying	inflection_miss		1	1	1	0	0	0	4.42	0	0	study	1	0
+stuffed	inflection_miss		1	1	1	0	0	0	3.96	0	0	stuff	1	0
+stuttgart	named_entity	candidate	1	1	0	0	0	1	3.2	1	1		0	0
+su	named_entity	candidate	1	1	1	0	0	0	3.92	1	0		0	0
+subdivision	domain_term		1	1	0	0	0	1	3.63	0	0		0	0
+subdivisions	domain_term		1	1	0	0	0	1	3.26	0	0	subdivision	0	0
+subheadings	domain_term		1	1	0	0	0	1	1.86	0	0	subheading	0	0
+substantiate	domain_term		1	1	0	0	0	1	2.83	0	0		0	0
+substantiates	domain_term		1	1	0	0	0	1	1.88	0	0	substantiate	0	0
+suitableness	junk	low_freq	1	1	0	0	0	1	0.0	0	0		0	0
+suited	inflection_miss		1	1	0	1	0	0	4.03	0	0	suit	1	0
+sunbathing	local		1	1	1	0	0	0	2.78	0	0		0	0
+sundays	named_entity	candidate	1	1	1	0	0	0	3.75	1	1	sunday	1	0
+sunnier	local		1	1	1	0	0	0	2.2	0	0		0	0
+suprised	local		1	1	1	0	0	0	2.63	0	0	suprise	0	0
+surprised-	junk	structural	1	1	1	0	0	0	4.68	0	0		0	0
+suspension/	junk	structural	1	1	0	0	0	1	4.24	0	0		0	0
+suspensive	junk	low_freq	1	1	0	0	0	1	1.44	0	0		0	0
+swedish	named_entity	candidate	1	1	0	0	0	1	4.21	1	1		0	0
+sweeping	inflection_miss		1	1	1	0	0	0	3.79	0	0	sweep	1	0
+sweeter	local		1	1	1	0	0	0	3.32	0	0		0	0
+swinging	inflection_miss		1	1	1	0	0	0	3.79	0	0	swing	1	0
+swirling	inflection_miss		1	1	1	0	0	0	3.17	0	0	swirl	1	0
+swiss	named_entity	candidate	1	1	0	0	1	0	4.21	1	1		0	0
+swordfighting	junk	low_freq	1	1	1	0	0	0	1.37	0	0	swordfighte	0	0
+symposiums	domain_term		1	1	0	0	0	1	2.17	0	0	symposium	0	0
+synonymously	domain_term		1	1	0	0	1	0	2.02	0	0		0	0
+systematic	domain_term		1	1	0	0	0	1	3.87	0	0		0	0
+systematically	domain_term		1	1	0	0	0	1	3.52	0	0		0	0
+sàrl	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+t&cs	junk	structural	1	1	0	0	0	1	3.89	0	1		0	0
+t1	junk	structural	1	1	0	0	0	1	3.31	1	1		0	0
+t1ua	junk	structural	1	1	0	0	0	1	0.0	0	1		0	0
+tablespoons	local		1	1	0	1	0	0	3.18	0	0	tablespoon	0	0
+tailor	domain_term		1	1	0	0	0	1	3.61	0	0		0	0
+taipei	named_entity	candidate	1	1	0	0	0	1	3.32	1	1		0	0
+takin	local		1	1	1	0	0	0	3.21	0	0		0	0
+talking	inflection_miss		1	1	1	0	0	0	5.29	0	0	talk	1	0
+tanzania	named_entity	candidate	1	1	0	0	0	1	3.57	1	1		0	0
+tariffs.[11][12	junk	structural	1	1	0	0	1	0	3.61	1	0		0	0
+tasting	local		1	1	1	0	0	0	3.65	0	0		0	0
+tax‑free	junk	structural	1	1	0	0	1	0	5.02	0	0		0	0
+tc	named_entity	candidate	1	1	0	0	0	1	3.52	1	1		0	0
+teasier	junk	low_freq	1	1	1	0	0	0	0.0	0	0	teasi	0	0
+tech	local		1	1	0	1	0	0	4.69	0	0		0	0
+telecommunication	domain_term		1	1	0	0	0	1	3.16	0	0		0	0
+tempting	inflection_miss		1	1	1	0	0	0	3.65	0	0	tempt	1	0
+tendency	domain_term		1	1	0	0	0	1	3.96	0	0		0	0
+terrace	local		1	1	0	1	0	0	3.88	0	0		0	0
+terrified	inflection_miss		1	1	1	0	0	0	3.94	0	0	terrify	1	0
+terrifying	inflection_miss		1	1	1	0	0	0	3.95	0	0	terrify	1	0
+testament	domain_term		1	1	0	0	0	1	4.07	0	0		0	0
+textile	domain_term		1	1	0	0	0	1	3.75	0	0		0	0
+theend	named_entity	candidate	1	1	1	0	0	0	1.3	1	0		0	0
+thereon	domain_term		1	1	0	0	0	1	2.77	0	0		0	0
+theyse	named_entity	candidate	1	1	1	0	0	0	0.0	1	1		0	0
+things-	junk	structural	1	1	1	0	0	0	5.74	0	0		0	0
+thinkin	local		1	1	1	0	0	0	3.34	0	0		0	0
+thirdly	domain_term		1	1	0	0	0	1	3.06	0	0		0	0
+threatened	inflection_miss		1	1	1	0	0	0	4.36	0	0	threaten	1	0
+throwing	inflection_miss		1	1	1	0	0	0	4.4	0	0	throw	1	0
+thwarting	domain_term		1	1	0	0	0	1	2.7	0	0	thwart	0	0
+tidying	inflection_miss		1	1	1	0	0	0	2.69	0	0	tidy	1	0
+tighter	local		1	1	1	0	0	0	3.58	0	0		0	0
+timeframe	domain_term		1	1	0	0	0	1	3.16	0	0		0	0
+tinged	local		1	1	1	0	0	0	3.08	0	0	ting	0	0
+tnt	named_entity	candidate	1	1	0	0	0	1	3.31	1	1		0	0
+tollkit	junk	low_freq	1	1	0	0	0	1	0.0	0	0		0	0
+tore	local		1	1	1	0	0	0	3.71	0	0		0	0
+touchline	local		1	1	0	1	0	0	2.35	0	0		0	0
+tracking	inflection_miss		1	1	0	0	0	1	4.25	0	0	track	1	0
+travelling	inflection_miss		1	1	1	0	0	0	4.16	0	0	travel	1	0
+treasue	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+treasured	local		1	1	1	0	0	0	3.12	0	0		0	0
+treaties	domain_term		1	1	0	0	1	0	3.71	0	0	treaty	0	0
+trump	named_entity	candidate	1	1	0	0	1	0	4.93	1	1		0	0
+tsenov	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+tunisia	named_entity	candidate	1	1	0	0	0	1	3.57	1	1		0	0
+twofold	domain_term		1	1	0	0	1	0	2.84	0	0		0	0
+ufficio	named_entity	candidate	1	1	0	0	0	1	1.47	1	1		0	0
+unanimous	domain_term		1	1	0	0	1	0	3.68	0	0		0	0
+unavailability	domain_term		1	1	0	0	0	1	2.54	0	0		0	0
+uncertain	domain_term		1	1	0	0	0	1	3.99	0	0		0	0
+uncertainties	domain_term		1	1	0	0	0	1	3.39	0	0	uncertainty	0	0
+unchecked	local		1	1	0	1	0	0	3.15	0	0		0	0
+unclear	domain_term		1	1	0	0	0	1	3.93	0	0		0	0
+uncommon	domain_term		1	1	0	0	1	0	3.87	0	0		0	0
+uncompetitive	domain_term		1	1	0	0	0	1	2.33	0	0		0	0
+underbaked	junk	low_freq	1	1	0	1	0	0	0.0	0	0		0	0
+underestimation	domain_term		1	1	0	0	0	1	2.2	0	0		0	0
+underlined	domain_term		1	1	0	0	0	1	3.1	0	0	underline	0	0
+underlines	domain_term		1	1	0	0	0	1	2.76	0	0	underline	0	0
+understated	domain_term		1	1	0	0	0	1	3.11	0	0	understate	0	0
+undervaluation	domain_term		1	1	0	0	0	1	1.62	0	0		0	0
+undervaluations	junk	low_freq	1	1	0	0	0	1	0.0	0	0	undervaluation	0	0
+undocumented	domain_term		1	1	0	0	0	1	3.44	0	0		0	0
+undying	local		1	1	1	0	0	0	2.91	0	0		0	0
+unequally	domain_term		1	1	0	0	1	0	2.29	0	0		0	0
+uneven	domain_term		1	1	0	0	0	1	3.55	0	0		0	0
+unfairly	domain_term		1	1	0	0	1	0	3.36	0	0		0	0
+unfold	domain_term		1	1	0	0	0	1	3.45	0	0		0	0
+unhurried	local		1	1	0	1	0	0	2.15	0	0	unhurrie	0	0
+unlimited	domain_term		1	1	0	0	0	1	4.1	0	0		0	0
+unloading	inflection_miss		1	1	0	0	0	1	3.24	0	0	unload	1	0
+unpackinng	junk	low_freq	1	1	1	0	0	0	0.0	0	0		0	0
+unpaid	named_entity	candidate	1	1	0	0	1	0	3.73	1	1		0	0
+unreasonably	domain_term		1	1	0	0	0	1	2.92	0	0		0	0
+unsalted	local		1	1	0	1	0	0	2.52	0	0		0	0
+untapped	domain_term		1	1	0	0	0	1	2.94	0	0		0	0
+unveiled	local		1	1	0	1	0	0	3.76	0	0	unveil	0	0
+upcoming	domain_term		1	1	0	0	0	1	4.34	0	0		0	0
+upgraded	domain_term		1	1	0	0	0	1	3.93	0	0	upgrade	0	0
+uruguay	named_entity	candidate	1	1	0	0	0	1	3.7	1	1		0	0
+usmca	named_entity	candidate	1	1	0	0	1	0	1.59	1	1		0	0
+v	junk	structural	1	1	0	0	0	1	5.06	0	0		0	0
+v5	junk	structural	1	1	0	0	0	1	2.56	1	0		0	0
+vacated	domain_term		1	1	0	0	0	1	3.3	0	0	vacate	0	0
+vague	domain_term		1	1	0	0	0	1	3.87	0	0		0	0
+valantiejus	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+vamale	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+vermulst	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+vermögensverwaltung	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+verona	named_entity	candidate	1	1	0	0	0	1	3.13	1	1		0	0
+versus	domain_term		1	1	0	0	0	1	4.32	0	0		0	0
+viability	domain_term		1	1	0	0	0	1	3.44	0	0		0	0
+volley	local		1	1	0	1	0	0	3.24	0	0		0	0
+vulnerability	domain_term		1	1	0	0	0	1	3.7	0	0		0	0
+vytautas	named_entity	candidate	1	1	0	0	0	1	1.57	1	1		0	0
+vám-	junk	structural	1	1	0	0	0	1	1.04	0	1		0	0
+vámhivatal	named_entity	candidate	1	1	0	0	0	1	0.0	1	1		0	0
+vămilor	junk	structural	1	1	0	0	0	1	0.0	1	1		0	0
+wanting	inflection_miss		1	1	1	0	0	0	4.49	0	0	want	1	0
+waterlogged	local		1	1	0	1	0	0	2.57	0	0	waterlogge	0	0
+waterway	domain_term		1	1	0	0	0	1	3.18	0	0		0	0
+waybills	junk	low_freq	1	1	0	0	1	0	1.15	0	0	waybill	0	0
+weakening	inflection_miss		1	1	1	0	0	0	3.4	0	0	weaken	1	0
+webinar	named_entity	candidate	1	1	0	0	0	1	3.25	1	1		0	0
+welcomed	local		1	1	1	0	0	0	3.96	0	0		0	0
+whew	named_entity	candidate	1	1	1	0	0	0	3.24	0	1		0	0
+whiskey	domain_term		1	1	0	0	1	0	3.78	0	0		0	0
+whooped	local		1	1	1	0	0	0	2.53	0	0	whoop	0	0
+whooshed	local		1	1	1	0	0	0	1.68	0	0	whoosh	0	0
+wildflowers	local		1	1	1	0	0	0	2.79	0	0	wildflower	0	0
+winger	local		1	1	0	1	0	0	3.57	0	0		0	0
+withdraw	domain_term		1	1	0	0	0	1	4.05	0	0		0	0
+withdrawing	domain_term		1	1	0	0	0	1	3.42	0	0	withdraw	0	0
+withdrawn	domain_term		1	1	0	0	0	1	3.9	0	0	withdraw	0	0
+withheld	domain_term		1	1	0	0	0	1	3.36	0	0	withhold	0	0
+workaround	domain_term		1	1	0	0	0	1	2.71	0	0		0	0
+worrying	inflection_miss		1	1	1	0	0	0	4.12	0	0	worry	1	0
+worthwhile	domain_term		1	1	0	0	0	1	3.74	0	0		0	0
+wrangling	domain_term		1	1	0	0	0	1	2.66	0	0	wrangle	0	0
+wrapping	local		1	1	1	0	0	0	3.58	0	0		0	0
+wrongly	domain_term		1	1	0	0	0	1	3.46	0	0		0	0
+xhe	named_entity	candidate	1	1	1	0	0	0	1.28	1	0		0	0
+y.	junk	structural	1	1	0	0	0	1	5.03	1	1		0	0
+ya	local		1	1	1	0	0	0	4.67	0	0		0	0
+yea	named_entity	candidate	1	1	1	0	0	0	4.26	1	1		0	0
+yelling	inflection_miss		1	1	1	0	0	0	4.04	0	0	yell	1	0
+yip	local		1	1	1	0	0	0	2.82	0	0		0	0
+yippee	named_entity	candidate	1	1	1	0	0	0	2.41	1	1		0	0
+yummies--	junk	structural	1	1	1	0	0	0	1.53	1	0		0	0
+z.	junk	structural	1	1	0	0	0	1	4.47	1	1		0	0
+zandra	named_entity	candidate	1	1	0	0	0	1	1.8	1	1		0	0
+zealand	named_entity	candidate	1	1	0	0	1	0	4.5	1	1		0	0
+zipping	inflection_miss		1	1	1	0	0	0	2.62	0	0	zip	1	0
+®	junk	structural	1	1	0	0	0	1	4.08	0	0		0	0
+și	junk	structural	1	1	0	0	0	1	1.22	1	0		0	0
+с-291/15	junk	structural	1	1	0	0	0	1	2.92	0	1		0	0

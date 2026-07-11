@@ -83,19 +83,40 @@ WORKSHEET_COLUMNS = [
 
 # British -> American spelling folds. Applied to the whole surface form; a fold
 # only counts as a "spelling variant" (routed out of the concept queue) when it
-# actually changes the word. Ordered longest-suffix-first within each family.
+# actually changes the word. Entries are (uk_suffix, us_suffix, min_stem_len),
+# tried longest-suffix-first; ``min_stem_len`` is the minimum number of chars that
+# must precede the suffix (guards short-word false folds, e.g. ``pre``->``per``,
+# ``tore``->``toer`` under the generic ``-re``->``-er`` rule). This is a *candidate
+# generator*: it may over-produce (``surprise``->``surprize``); every caller must
+# guard the result against the lexicon/ESPDIC before trusting it.
 _UK_US_SUFFIX = [
-    ("ourite", "orite"),   # favourite -> favorite
-    ("ourful", "orful"),   # colourful -> colorful
-    ("ouring", "oring"),   # colouring -> coloring
-    ("oured", "ored"),     # coloured -> colored
-    ("ours", "ors"),       # colours -> colors
-    ("our", "or"),         # colour -> color, favour -> favor
-    ("tres", "ters"),      # centres -> centers
-    ("tre", "ter"),        # centre -> center, metre -> meter
-    ("ising", "izing"),    # realising -> realizing
-    ("ised", "ized"),      # realised -> realized
-    ("isation", "ization"),
+    # -our family (colour, favour, honour, ...)
+    ("ourite", "orite", 1),  # favourite -> favorite
+    ("ourful", "orful", 1),  # colourful -> colorful
+    ("ouring", "oring", 1),  # colouring -> coloring
+    ("oured", "ored", 1),    # coloured -> colored
+    ("ours", "ors", 1),      # colours -> colors
+    ("our", "or", 1),        # colour -> color, favour -> favor
+    # -ise / -ize family (organise, recognise, apologise, ...)
+    ("isations", "izations", 1),
+    ("isation", "ization", 1),  # organisation -> organization
+    ("isers", "izers", 1),
+    ("iser", "izer", 1),     # organiser -> organizer
+    ("ising", "izing", 1),   # realising -> realizing
+    ("ised", "ized", 1),     # realised -> realized
+    ("ises", "izes", 1),
+    ("ise", "ize", 1),       # recognise -> recognize
+    # -yse / -yze family (analyse, paralyse, ...)
+    ("ysing", "yzing", 1),
+    ("ysed", "yzed", 1),
+    ("yses", "yzes", 1),
+    ("yser", "yzer", 1),
+    ("yse", "yze", 1),       # analyse -> analyze
+    # -tre / -ter and the generic -re / -er (centre, theatre, metre, fibre, ...)
+    ("tres", "ters", 1),     # centres -> centers
+    ("tre", "ter", 1),       # centre -> center, metre -> meter
+    ("res", "ers", 4),       # centres -> centers (non -tre); stem >= 4 (guards cares->caers)
+    ("re", "er", 3),         # theatre -> theater, fibre -> fiber; stem >= 3 (guards pre/tore/acre)
 ]
 _UK_US_EXPLICIT = {
     "grey": "gray",
@@ -208,11 +229,17 @@ def reclaim_proper_nouns(
 
 
 def uk_to_us(word: str) -> str:
-    """Fold a British spelling to its American form (unchanged if not British)."""
+    """Fold a British spelling to its American form (unchanged if not British).
+
+    A surface-only candidate generator (no lexicon knowledge): it may over-produce
+    non-words (``surprise``->``surprize``, ``genre``->``gener``); callers must guard
+    the result against the lexicon/ESPDIC. The ``min_stem_len`` on each rule blocks
+    the shortest false folds (``pre``, ``tore``, ``acre`` under ``-re``->``-er``).
+    """
     if word in _UK_US_EXPLICIT:
         return _UK_US_EXPLICIT[word]
-    for uk, us in _UK_US_SUFFIX:
-        if word.endswith(uk) and len(word) > len(uk):
+    for uk, us, min_stem in _UK_US_SUFFIX:
+        if word.endswith(uk) and len(word) - len(uk) >= min_stem:
             return word[: -len(uk)] + us
     return word
 
