@@ -40,7 +40,8 @@ def create_common_lexicon_schema(conn: sqlite3.Connection) -> None:
             lemma            TEXT NOT NULL,
             lang             TEXT NOT NULL,
             form_description TEXT,
-            tier             INTEGER
+            tier             INTEGER,
+            UNIQUE (inflected_word, lemma, lang)
         );
 
         -- Ordered set of content roots making up each concept's eo_word.

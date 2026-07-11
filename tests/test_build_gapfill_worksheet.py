@@ -9,6 +9,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src" / "lexicon"))
 
 from build_gapfill_worksheet import (  # noqa: E402
@@ -141,6 +143,39 @@ class TestBritish:
         assert uk_to_us("centre") == "center"
         assert uk_to_us("grey") == "gray"
         assert uk_to_us("dog") == "dog"  # unchanged
+
+    @pytest.mark.parametrize(
+        "uk,us",
+        [
+            # -our family (incl. inflections)
+            ("colour", "color"), ("colours", "colors"), ("coloured", "colored"),
+            ("colouring", "coloring"), ("neighbour", "neighbor"), ("favour", "favor"),
+            # -ise / -ize family
+            ("recognise", "recognize"), ("organised", "organized"),
+            ("organiser", "organizer"), ("capitalising", "capitalizing"),
+            ("apologise", "apologize"), ("organisation", "organization"),
+            # -yse / -yze family
+            ("analyse", "analyze"), ("paralyse", "paralyze"),
+            # -re / -er family
+            ("centre", "center"), ("theatre", "theater"), ("metre", "meter"),
+            ("litre", "liter"), ("fibre", "fiber"), ("centres", "centers"),
+            # explicit irregulars
+            ("mum", "mom"), ("mummy", "mommy"), ("aeroplane", "airplane"),
+            ("pyjamas", "pajamas"), ("plough", "plow"), ("grey", "gray"),
+        ],
+    )
+    def test_uk_to_us_every_class(self, uk, us) -> None:
+        assert uk_to_us(uk) == us
+
+    @pytest.mark.parametrize(
+        "word",
+        # Short -re words the generic -re->-er rule must NOT mangle: 'pre'->'per'
+        # would be a real-word false hit the lexicon guard can't catch. min_stem=3
+        # leaves all of these unchanged. Plus a plain non-British control.
+        ["pre", "tore", "acre", "are", "more", "here", "core", "ogre", "dog"],
+    )
+    def test_uk_to_us_guards_short_words(self, word) -> None:
+        assert uk_to_us(word) == word  # unchanged — no false fold
 
     def test_split_routes_variant_and_folds_frequency(self) -> None:
         lemmas = {"colour": 92, "dog": 5}

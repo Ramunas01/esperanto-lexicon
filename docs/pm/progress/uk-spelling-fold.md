@@ -5,7 +5,7 @@
 - **Advisor/PM brief:** [`../briefs/uk-spelling-fold.md`](../briefs/uk-spelling-fold.md) (Part A = task; Part B = names framing note)
 - **Programmer brief (execute this):** [`../programmer/uk-spelling-fold.md`](../programmer/uk-spelling-fold.md)
 - **Branch:** `analysis/uk-spelling-fold` (off `main`, not stacked).
-- **Status:** 🟡 **SET UP — briefs filed, awaiting Programmer dispatch.**
+- **Status:** 🔧 **IN PROGRESS (Programmer, 2026-07-11) — insert-only inflected_forms; PR, no merge.**
 
 ## The job
 Resolve the British/Commonwealth-spelling cluster (the last known common-vocab leak, found by
@@ -41,3 +41,25 @@ contamination; that's the next initiative). No edits to existing US entries. No 
   the fold mechanism (inflected_forms), measured real fold coverage (~11 clean; fertiliser is a
   genuine US-absent gap — brief's DoD corrected), locked insert-only inflected_forms design.
   Awaiting Programmer.
+- 2026-07-11 (Programmer, start): explored data-driven. Two refinements found vs the naive map:
+  (1) `-re→-er` needs a **min-stem guard** (else `pre`→`per`, `tore`→`toer` — junk that the
+  US-present guard can't catch when the mangled form is a real word like `per`); (2) British
+  **plurals/inflections** (`colours`,`neighbours`,`centres`) must fold to the concept **lemma**
+  (`color`,`neighbor`,`center`) via de-inflection — the lexicon stores base forms, not `colors`.
+  With both: **18 folds / 270 tokens** (all US lemmas Tier-1/2 — good, since the resolver's
+  inflected path only checks T1/T2), **7 US-absent gaps** (`fertiliser`,`apologised`,`centimetres`,
+  `capitalising`,`equaliser`,`mesmerised` genuine; `suprised` a typo, correctly rejected). Building
+  extended `uk_to_us` + `apply_uk_spelling_fold.py` (insert-only inflected_forms, backup+txn+audit).
+- 2026-07-11 (Programmer, end): **COMPLETE — PR open, not merged.** Extended `uk_to_us` (all
+  classes: -ise/-iser, -yse, -re/-er w/ min-stem guard, irregulars) + `apply_uk_spelling_fold.py`
+  (data-driven from the inventory, fold→concept-lemma guard). **Committed 18 inflected_forms
+  `british_spelling` rows** (49→67; backup + txn + audit PASS: concept/concept_lang unchanged,
+  0 dupes). Also fixed a schema.py drift (inflected_forms was missing the UNIQUE the live DB has).
+  **Before/after (UNKNOWN classifier re-run):** TinyStories UNKNOWN 8.12%→8.04% (−268); pooled
+  34,077→33,805; `local` 560→311, `common_gap` 47→25; all 18 folds resolve; no British class left.
+  **true_residual unchanged = `stratum` (US=UK) + `fertiliser` (US-absent gap)** — genuine single
+  words, not a systematic hole. 7 `us_form_absent` gaps reported (fertiliser + 5 real + `suprised`
+  typo). `mum`/`mummy`/`organisation` (misrouted to named_entity) deferred to the name-candidate
+  regeneration initiative per the brief. Full suite 896 passed. Deliverables: `british_folds.tsv`,
+  `after/` inventory, memo `docs/analysis/uk_spelling_fold.md`. **T1–T3 common-vocab coverage arc
+  formally closed.**
