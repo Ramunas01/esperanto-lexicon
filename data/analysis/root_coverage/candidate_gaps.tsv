@@ -1,0 +1,667 @@
+root	gloss_head	gloss_zipf	suggested_tier	inv_tier	prod	gloss
+damn	damn	5.09	1	extended	2	damn
+homoseksual	gay	4.9	2	core	3	gay, homosexual, queer
+demokrat	democratic	4.73	2	extended	2	democratic
+demokrati	democratic	4.73	2	core	4	democratic
+respublik	republican	4.7	2	core	3	republican
+detalkomerc	retail	4.55	2	extended	2	retail
+karbon	carbon	4.55	2	extended	2	carbon
+prezident	presidential	4.52	2	extended	2	presidential
+profundaĝ	aged	4.5	2	extended	2	aged
+travad	ford	4.5	2	core	3	to ford
+cirkvit	circuit	4.47	2	extended	2	circuit
+leŭtenant	lieutenant	4.44	2	core	3	lieutenant
+mamsuĉ	suck	4.42	2	extended	2	to suck, suckle
+suĉ	suck	4.42	2	core	4	to suck
+kolonel	colonel	4.41	2	extended	2	colonel
+rugbe	rugby	4.4	2	extended	2	rugby
+terkultiv	agriculture	4.37	2	extended	2	agriculture
+opinisond	poll	4.35	2	extended	2	to poll
+virg	virgin	4.35	2	core	4	virgin, virginal
+agrikultur	agricultural	4.34	2	extended	2	agricultural
+agrokultur	agricultural	4.34	2	extended	2	agricultural
+agronomi	agricultural	4.34	2	extended	2	agricultural
+genetik	genetic	4.34	2	extended	2	genetic
+flot	fleet	4.33	2	core	3	fleet
+meĥanik	mechanical	4.33	2	core	3	mechanical
+fakult	faculty	4.32	2	extended	2	faculty
+filmitaĵ	footage	4.31	2	extended	2	footage
+kolektiv	collective	4.3	2	core	5	collective, joint
+petskrib	petition	4.3	2	extended	2	petition
+ras	racial	4.3	2	core	3	racial
+invalid	disabled	4.29	2	extended	2	disabled
+dual	dual	4.28	2	core	3	dual
+filtr	filter	4.28	2	core	4	to filter
+aŭkci	auction	4.27	2	core	3	at auction
+segment	segment	4.26	2	extended	2	to segment
+alf	alpha	4.25	2	extended	2	alpha
+ĥan	khan	4.25	2	core	4	khan
+aŭtorrajt	copyright	4.24	2	extended	2	copyright
+kopirajt	copyright	4.24	2	extended	2	copyright
+mararme	naval	4.24	2	extended	2	naval
+nobel	noble	4.24	2	core	6	noble
+promoci	upgrade	4.24	2	core	5	upgrade
+toks	toxic	4.24	2	core	3	toxic
+grafik	graphic	4.23	2	core	5	graphic
+nemilit	civilian	4.23	2	extended	2	civilian
+ĉart	charter	4.23	2	core	4	to charter
+amator	amateur	4.22	2	core	4	amateur
+pensi	pension	4.22	2	core	5	to pension
+imperi	imperial	4.21	2	core	6	imperial
+bronz	bronze	4.2	2	core	3	bronze
+eminent	distinguished	4.2	2	core	5	distinguished, eminent, prominent
+kronik	chronic	4.2	2	extended	2	chronic, lingering
+bok	ram	4.19	2	core	3	ram, vaulting-horse
+cens	census	4.19	2	core	3	to census, inventory
+tabak	tobacco	4.19	2	core	5	tobacco
+ŝipŝarĝ	cargo	4.19	2	extended	2	ship’s cargo
+animaci	animation	4.18	2	extended	2	animation
+krad	grid	4.18	2	core	3	grid
+parlament	parliamentary	4.18	2	core	3	parliamentary
+patent	patent	4.18	2	core	3	patent
+anonim	anonymous	4.17	2	core	3	anonymous, nameless
+magenet	magnetic	4.17	2	extended	2	magnetic
+propagand	propaganda	4.17	2	core	5	propaganda
+ikon	icon	4.16	2	core	3	icon
+ŝerif	sheriff	4.16	2	extended	2	sheriff
+podkast	podcast	4.15	2	extended	2	podcast
+korupt	corrupt	4.14	2	core	5	corrupt
+tatu	tattoo	4.14	2	extended	2	to tattoo
+breĉ	breach	4.13	2	core	4	to breach
+kancelier	chancellor	4.13	2	core	3	chancellor
+rektor	chancellor	4.13	2	extended	2	chancellor, rector (school)
+feminist	feminist	4.12	2	extended	2	feminist
+diplomat	diplomatic	4.11	2	extended	2	diplomatic
+diplomati	diplomatic	4.11	2	extended	2	diplomatic
+fig	fig	4.1	2	extended	2	fig
+kapromp	fatal	4.1	2	extended	2	fatal
+dumping	dump	4.08	2	extended	2	to dump
+fabl	fabulous	4.08	2	extended	2	fabulous
+provinc	provincial	4.08	2	core	3	provincial
+provincial	provincial	4.08	2	extended	2	provincial
+subtil	subtle	4.08	2	core	3	subtle
+tragedi	tragic	4.08	2	core	3	tragic
+tragik	tragic	4.08	2	extended	2	tragic
+alianc	allied	4.07	2	core	5	allied
+kvantum	quantum	4.07	2	extended	2	quantum
+matric	matrix	4.07	2	extended	2	matrix
+optik	optical	4.07	2	extended	2	optical
+fibr	fiber	4.06	2	core	3	fiber
+kompakt	compact	4.06	2	core	4	compact, dense
+eliĝ	withdraw	4.05	2	extended	2	to withdraw
+grafe	graph	4.05	2	core	3	graph
+spam	spam	4.05	2	core	5	to spam
+statik	static	4.05	2	extended	2	static
+aŭtent	authentic	4.04	2	core	4	authentic
+aŭtentik	authentic	4.04	2	core	3	authentic, genuine
+ĉur	cum	4.04	2	extended	2	to cum, ejaculate
+kapel	chapel	4.03	2	extended	2	chapel
+trib	tribal	4.03	2	core	4	tribal
+ego	ego	4.02	2	core	3	ego
+estetik	aesthetic	4.02	2	extended	2	aesthetic
+hidrarg	mercury	4.02	2	extended	2	mercury, quicksilver
+pram	ferry	4.02	2	core	3	to ferry
+orkestr	orchestra	4.01	2	core	5	orchestra
+admiral	admiral	4.0	2	core	5	of an admiral, of an admiralty
+akut	acute	4.0	2	core	3	acute, penetrating
+civit	civic	4.0	2	extended	2	civic
+eskort	escort	4.0	2	extended	2	to escort
+sagac	acute	4.0	2	extended	2	acute, astute, shrewd, ingenious, shrewd
+fosili	fossil	3.99	3	extended	2	fossil, fossilized
+intertrakt	negotiate	3.99	3	core	4	to negotiate
+karg	freight	3.99	3	core	3	to freight
+vektor	vector	3.99	3	core	3	vector, vectorial
+arkiv	archive	3.98	3	core	4	archive, record(s), file(s)
+atom	atomic	3.98	3	core	8	atomic
+forest	absent	3.98	3	core	3	absent
+forestant	absent	3.98	3	core	4	absent
+pogrand	wholesale	3.97	3	extended	2	wholesale
+taktik	tactical	3.97	3	extended	2	tactical
+antaŭprezent	preview	3.96	3	extended	2	to preview
+antaŭrigard	preview	3.96	3	extended	2	preview
+artileri	artillery	3.96	3	core	3	artillery, ordnance
+arĥitektur	architectural	3.96	3	extended	2	architectural
+infanteri	infantry	3.96	3	extended	2	infantry
+kare	curry	3.96	3	extended	2	curry
+tab	tab	3.96	3	core	6	tab, tab-delimited
+vivipov	viable	3.96	3	extended	2	viable
+absurd	absurd	3.95	3	core	3	absurd
+brems	brake	3.95	3	core	5	to brake
+ekzekuci	execute	3.95	3	extended	2	to execute
+marĉand	bargain	3.95	3	core	3	to bargain, haggle
+sekular	secular	3.95	3	core	6	secular
+suveren	sovereign	3.95	3	extended	2	sovereign
+vegan	vegan	3.95	3	extended	2	vegan
+anal	anal	3.94	3	extended	2	anal
+anus	anal	3.94	3	extended	2	anal
+idol	idol	3.94	3	core	4	idol
+linĉ	lynch	3.94	3	extended	2	to lynch
+zombi	zombie	3.94	3	extended	2	zombie
+akre	acre	3.93	3	core	3	acre
+aŭtomobil	automotive	3.93	3	core	4	automotive
+enven	incoming	3.93	3	extended	2	incoming, inbound
+gild	guild	3.93	3	extended	2	guild
+neklar	unclear	3.93	3	core	3	unclear
+ortodoks	orthodox	3.93	3	core	4	orthodox
+regiment	regiment	3.93	3	extended	2	regiment
+surtabl	desktop	3.93	3	extended	2	desktop
+bibli	biblical	3.92	3	extended	2	biblical
+demografi	demographic	3.92	3	extended	2	demographic
+nova	nova	3.92	3	extended	2	nova
+amasbuĉ	massacre	3.91	3	extended	2	to massacre, slaughter
+antem	anthem	3.91	3	extended	2	anthem
+ekzot	exotic	3.91	3	extended	2	exotic
+ekzotik	exotic	3.91	3	extended	2	exotic
+furi	fury	3.91	3	extended	2	fury, goddess of vengeance
+himn	anthem	3.91	3	core	3	anthem, hymn, canticle
+masakr	massacre	3.91	3	extended	2	to massacre
+verb	verbal	3.91	3	extended	2	verbal
+grif	griffin	3.9	3	extended	2	griffin, vulture
+iluzi	misleading	3.9	3	extended	2	misleading
+partikl	particle	3.9	3	extended	2	particle
+partikul	particle	3.9	3	extended	2	particle
+ĉampan	champagne	3.9	3	extended	2	champagne, of champagne
+advers	adverse	3.89	3	extended	2	adverse
+bastard	bastard	3.89	3	core	3	bastard
+moru	cod	3.89	3	extended	2	cod, codfish
+karm	karma	3.88	3	extended	2	karma
+mapig	mapping	3.88	3	extended	2	mapping
+milic	militia	3.88	3	extended	2	militia
+fiag	abusive	3.87	3	extended	2	abusive
+fiuz	abusive	3.87	3	extended	2	abusive
+procesor	processor	3.87	3	core	3	processor
+legi	legion	3.86	3	extended	2	legion
+urani	uranium	3.85	3	extended	2	uranium
+volejbal	volleyball	3.85	3	extended	2	volleyball
+egzil	exile	3.84	3	extended	2	exile
+monopol	monopoly	3.84	3	extended	2	monopoly
+diferencial	differential	3.83	3	core	3	differential
+mafi	mafia	3.83	3	core	3	mafia
+malign	vicious	3.83	3	extended	2	vicious
+prototip	prototype	3.83	3	extended	2	prototype
+arkiepiskop	archbishop	3.82	3	extended	2	archbishop
+debut	maiden	3.82	3	extended	2	maiden
+geologi	geological	3.82	3	extended	2	geological
+tinktur	dye	3.82	3	extended	2	to dye, tint
+bojkot	boycott	3.81	3	extended	2	to boycott
+ensorb	absorb	3.81	3	core	3	to absorb
+privilegi	privileged	3.81	3	core	4	privileged
+ŝah	shah	3.81	3	extended	2	shah
+kavaleri	cavalry	3.8	3	extended	2	cavalry
+konfront	confront	3.8	3	extended	2	to confront
+rajdistar	cavalry	3.8	3	extended	2	cavalry
+bulten	bulletin	3.79	3	extended	2	bulletin, newsletter
+probabl	probable	3.79	3	extended	2	probable
+subjekt	subjective	3.79	3	extended	2	subjective
+subjektiv	subjective	3.79	3	core	3	subjective
+vetlud	gamble	3.79	3	extended	2	to gamble
+aborigen	aboriginal	3.78	3	extended	2	aboriginal
+alergi	allergic	3.78	3	core	3	allergic
+ekologi	ecological	3.78	3	core	3	ecological
+imun	exempt	3.78	3	core	3	exempt, immune
+ponard	stab	3.78	3	extended	2	to stab
+vegetar	vegetarian	3.78	3	core	4	vegetarian
+greg	herd	3.77	3	extended	2	herd
+seminari	seminar	3.77	3	extended	2	seminar
+silik	flint	3.77	3	extended	2	flint, gravel
+teologi	theological	3.77	3	extended	2	theological
+cedr	cedar	3.76	3	extended	2	cedar, of a cedar
+depeŝ	dispatch	3.76	3	extended	2	to dispatch
+erik	heath	3.76	3	extended	2	heath, heather (plant)
+fotograf	photographic	3.76	3	core	5	photographic
+neŭr	neural	3.76	3	extended	2	neural
+arke	ark	3.75	3	extended	2	ark
+kunfand	merge	3.75	3	core	4	merge
+nan	dwarf	3.75	3	extended	2	dwarf, midget
+arog	arrogant	3.74	3	core	4	arrogant
+ceramik	ceramic	3.74	3	core	3	ceramic
+fold	groove	3.74	3	extended	2	to groove, slot
+torĉ	torch	3.74	3	extended	2	torch
+bankrot	bankrupt	3.73	3	core	4	bankrupt
+prokur	proxy	3.73	3	core	3	proxy
+miniatur	miniature	3.72	3	extended	2	miniature
+mot	motto	3.72	3	extended	2	motto
+radioaktiv	radioactive	3.72	3	core	3	radioactive
+samseksam	homosexual	3.72	3	extended	2	homosexual, gay, queer
+samseksemul	homosexual	3.72	3	extended	2	homosexual
+digest	digest	3.71	3	core	5	to digest
+kaldron	boiler	3.71	3	core	4	boiler, cauldron, kettle
+lingvoscienc	linguistic	3.71	3	extended	2	linguistic
+makro	macro	3.71	3	extended	2	macro
+spontan	spontaneous	3.71	3	extended	2	spontaneous
+spontane	spontaneous	3.71	3	extended	2	spontaneous
+vertic	apex	3.71	3	extended	2	apex, node, vertex
+ambaŭseks	bisexual	3.7	3	core	3	bisexual
+cinam	cinnamon	3.7	3	extended	2	cinnamon
+deleg	delegate	3.7	3	extended	2	to delegate
+end	compulsory	3.7	3	core	3	to be compulsory
+konfederaci	confederate	3.7	3	extended	2	to confederate
+metilernant	apprentice	3.7	3	core	3	apprentice
+monarĥ	monarch	3.69	3	core	4	monarch
+mustard	mustard	3.69	3	extended	2	mustard
+tindr	tinder	3.69	3	extended	2	tinder, punk, touchwood
+arkeologi	archaeological	3.68	3	extended	2	archaeological, archeological
+arĥeologi	archaeological	3.68	3	extended	2	archaeological, archeological
+ekslojaliĝ	defect	3.68	3	extended	2	to defect
+klon	clone	3.68	3	core	4	to clone
+provlud	rehearsal	3.68	3	extended	2	rehearsal
+rigor	rigorous	3.68	3	extended	2	rigorous, stringent
+skeptik	skeptical	3.68	3	core	3	skeptical
+unuanim	unanimous	3.68	3	extended	2	unanimous
+inaŭgur	inaugural	3.67	3	extended	2	inaugural
+kosmetik	cosmetics	3.67	3	extended	2	cosmetics
+propriet	proprietary	3.67	3	core	3	proprietary
+akuŝ	maternity	3.66	3	core	7	maternity
+ordon	imperative	3.66	3	core	3	imperative
+periferi	peripheral	3.66	3	extended	2	peripheral
+duel	duel	3.65	3	extended	2	to duel
+nekompetent	incompetent	3.65	3	extended	2	incompetent
+zink	zinc	3.65	3	core	3	zinc, zincic
+dubl	dub	3.64	3	core	5	to dub
+informpet	query	3.64	3	extended	2	query
+kamel	camel	3.64	3	extended	2	camel
+skarlat	scarlet	3.64	3	extended	2	scarlet
+taktbaston	baton	3.64	3	extended	2	baton
+vinagr	vinegar	3.64	3	extended	2	vinegar
+aneks	accessory	3.63	3	core	5	accessory
+brank	gill	3.63	3	core	3	gill
+faks	fax	3.63	3	core	4	to fax
+gag	gag	3.63	3	extended	2	gag
+kaŝmemor	cache	3.63	3	extended	2	cache, caching
+kunkulp	accessory	3.63	3	core	3	accessory
+neaktiv	inactive	3.63	3	extended	2	inactive
+telefaks	fax	3.63	3	core	3	to fax
+varp	warp	3.63	3	extended	2	to warp
+viz	endorse	3.63	3	core	6	to endorse
+alp	alpine	3.62	3	core	7	alpine
+ate	atheist	3.62	3	core	4	atheist
+densig	compressed	3.62	3	core	3	compressed, compression, condensed (font)
+fekund	fertile	3.62	3	core	5	fertile
+fruktodon	fertile	3.62	3	extended	2	fertile, fruitful
+karavan	caravan	3.62	3	extended	2	caravan
+kiras	armored	3.62	3	extended	2	armored
+kojn	wedge	3.62	3	extended	2	to wedge
+mezkamp	midfield	3.62	3	extended	2	midfield
+meĉ	fuse	3.62	3	extended	2	fuse, wick
+rektangul	rectangular	3.62	3	extended	2	rectangular
+aloj	alloy	3.61	3	extended	2	to alloy
+fiziologi	physiology	3.61	3	extended	2	physiology
+fraŭd	fraudulent	3.61	3	extended	2	fraudulent
+handikap	handicap	3.61	3	core	4	to handicap
+lantern	lantern	3.61	3	extended	2	lantern
+rasapartig	apartheid	3.61	3	extended	2	apartheid, segregation
+substantiv	noun	3.61	3	extended	2	noun, substantive
+erudici	scholarly	3.6	3	extended	2	scholarly
+kast	caste	3.6	3	core	4	caste
+konsul	consul	3.6	3	core	3	consul
+nominal	nominal	3.6	3	extended	2	nominal
+produktiv	prolific	3.6	3	extended	2	prolific
+prosper	prosperous	3.6	3	core	6	prosperous
+cinik	cynical	3.59	3	core	5	cynical
+fetiĉ	fetish	3.59	3	core	3	fetish
+furz	fart	3.59	3	extended	2	to fart
+geometri	geometric	3.59	3	extended	2	geometric
+krucmilit	crusade	3.59	3	extended	2	crusade
+nereal	unreal	3.59	3	extended	2	unreal
+redund	redundant	3.59	3	extended	2	redundant
+adolesk	adolescent	3.58	3	core	7	adolescent
+amovendist	prostitute	3.58	3	extended	2	prostitute, whore, gigolo
+ananas	pineapple	3.58	3	extended	2	pineapple
+braĝ	charcoal	3.58	3	extended	2	charcoal
+dikt	dictate	3.58	3	core	4	to dictate
+elektromagnet	electromagnetic	3.58	3	extended	2	electromagnetic
+lignokarb	charcoal	3.58	3	extended	2	charcoal
+orf	orphan	3.58	3	core	5	orphan
+prostitu	prostitute	3.58	3	core	6	to prostitute
+cigar	cigar	3.57	3	core	4	cigar
+kased	cartridge	3.57	3	extended	2	cartridge, cassette
+manskrib	handwriting	3.57	3	core	3	handwriting
+jugland	walnut	3.56	3	extended	2	walnut
+lukr	lucrative	3.56	3	core	4	lucrative
+plurmedi	multimedia	3.56	3	extended	2	multimedia
+porcelan	porcelain	3.56	3	extended	2	porcelain
+psalm	psalm	3.56	3	core	3	psalm
+skizofreni	schizophrenia	3.56	3	extended	2	schizophrenia
+embusk	ambush	3.55	3	core	3	to ambush
+enboat	onboard	3.55	3	extended	2	onboard
+karate	karate	3.55	3	extended	2	karate
+mesi	messiah	3.55	3	extended	2	messiah
+plural	plural	3.55	3	core	3	plural
+bufed	buffet	3.54	3	core	4	buffet
+klaresprim	articulate	3.54	3	extended	2	articulate
+konfes	admittedly	3.54	3	core	9	admittedly
+neŭrologi	neurological	3.54	3	extended	2	neurological
+stimul	stimulating	3.54	3	core	3	stimulating, stimulative
+vojmontr	pioneering	3.54	3	extended	2	pioneering
+duonkonduk	semiconductor	3.53	3	core	3	semiconductor
+evaku	evacuate	3.53	3	extended	2	to evacuate
+interfer	interfering	3.53	3	extended	2	interfering
+manovr	maneuver	3.53	3	extended	2	to maneuver
+mono	mono	3.53	3	extended	2	mono
+balsalon	ballroom	3.52	3	extended	2	ballroom
+civiliz	civilized	3.52	3	core	5	civilized
+dulingv	bilingual	3.52	3	core	3	bilingual
+erekt	erect	3.52	3	extended	2	to erect
+ros	dew	3.52	3	extended	2	dew
+vertikal	erect	3.52	3	extended	2	erect, vertical, upright
+brand	brandy	3.51	3	extended	2	brandy
+konjekt	speculative	3.51	3	extended	2	speculative
+proskripci	outlaw	3.51	3	extended	2	to outlaw, proscribe
+barĝ	barge	3.5	3	core	3	barge
+eparki	diocese	3.5	3	extended	2	diocese
+episkopland	diocese	3.5	3	extended	2	diocese
+fianĉin	bridal	3.5	3	core	3	bridal
+korelativ	correlated	3.5	3	core	3	correlated, correlative
+kripl	crippled	3.5	3	core	4	crippled, infirm, handicapped
+prevent	preventive	3.5	3	core	4	preventive
+sinonim	synonymous	3.5	3	extended	2	synonymous
+alk	elk	3.49	3	core	5	elk, moose
+botanik	botanical	3.49	3	extended	2	botanical
+fingroprem	fingerprint	3.49	3	extended	2	fingerprint
+hered	hereditary	3.49	3	core	9	hereditary
+ŝelk	braces	3.49	3	extended	2	braces, suspenders
+abol	abolish	3.48	3	core	5	to abolish, abrogate
+abolici	abolish	3.48	3	core	3	to abolish, abrogate
+balistik	ballistic	3.48	3	extended	2	ballistic
+histeri	hysterical	3.48	3	core	3	hysterical
+infanŝtel	kidnap	3.48	3	extended	2	to kidnap
+lama	lama	3.48	3	extended	2	lama
+surter	terrestrial	3.48	3	core	5	terrestrial, earthly
+ald	alto	3.47	3	core	5	alto, contralto (voice); viola
+glos	gloss	3.47	3	core	3	to gloss
+greft	graft	3.47	3	core	4	to graft, transplant
+oks	ox	3.47	3	core	3	ox
+turbul	turbulent	3.47	3	extended	2	turbulent
+diskriminaci	discriminatory	3.46	3	extended	2	discriminatory
+hontig	humiliating	3.46	3	extended	2	humiliating
+humilig	humiliating	3.46	3	core	3	humiliating
+litr	liter	3.46	3	extended	2	liter
+martir	martyr	3.46	3	core	4	martyr
+opi	opium	3.46	3	extended	2	opium
+cic	nipple	3.45	3	core	3	nipple
+diabet	diabetic	3.45	3	extended	2	diabetic
+kramp	clamp	3.45	3	core	3	to clamp, staple
+markiz	marquis	3.45	3	extended	2	marquis
+simplanim	candid	3.45	3	extended	2	candid, artless
+baptopatr	godfather	3.44	3	extended	2	godfather
+duagrad	indifferent	3.44	3	core	3	indifferent, mediocre
+fleb	seam	3.44	3	extended	2	seam, vein
+jubile	jubilee	3.44	3	extended	2	jubilee
+kapreol	roe	3.44	3	extended	2	roe, roebuck
+mit	mythical	3.44	3	core	5	mythical
+rompŝtel	burglary	3.44	3	extended	2	burglary
+solvent	solvent	3.44	3	extended	2	solvent
+ĉantaĝ	blackmail	3.44	3	extended	2	to blackmail, extort
+esprimplen	expressive	3.43	3	extended	2	expressive
+kliŝ	stereotype	3.43	3	core	3	to stereotype
+klor	chlorine	3.43	3	extended	2	chlorine
+lirik	lyrical	3.43	3	core	3	lyrical
+lunatik	lunatic	3.43	3	core	3	lunatic
+steril	sterile	3.43	3	core	3	sterile
+enkarniĝ	incarnation	3.42	3	extended	2	incarnation
+forkonduk	divert	3.42	3	extended	2	to divert
+kamufl	camouflage	3.42	3	core	3	to camouflage
+mansak	handbag	3.42	3	extended	2	handbag
+piedvest	footwear	3.42	3	extended	2	footwear
+proton	proton	3.42	3	extended	2	proton
+facilmov	agile	3.41	3	extended	2	agile
+monstr	monstrous	3.41	3	core	3	monstrous
+novic	novice	3.41	3	core	4	novice
+aritmetik	arithmetic	3.4	3	core	3	arithmetic
+brulkrim	arson	3.4	3	extended	2	arson
+burokrat	bureaucratic	3.4	3	core	4	bureaucratic
+burĝ	bourgeois	3.4	3	extended	2	bourgeois, middleclass
+tenor	tenor	3.4	3	core	3	tenor
+aliseksem	heterosexual	3.39	3	extended	2	heterosexual
+diakon	deacon	3.39	3	core	4	deacon
+ekrankopi	snapshot	3.39	3	extended	2	snapshot
+fortigil	tonic	3.39	3	extended	2	tonic, restorative
+konglomer	conglomerate	3.39	3	core	4	to conglomerate
+abrupt	abrupt	3.38	3	core	4	abrupt
+aden	gland	3.38	3	core	4	gland, ade-
+alkrement	incremental	3.38	3	extended	2	incremental
+brusk	abrupt	3.38	3	extended	2	abrupt, blunt, brusque
+diverĝ	divergent	3.38	3	extended	2	divergent
+fraj	spawn	3.38	3	extended	2	to spawn
+retorik	rhetorical	3.38	3	extended	2	rhetorical
+surogat	surrogate	3.38	3	extended	2	surrogate
+ĵurdeklar	affidavit	3.38	3	core	4	affidavit
+analfabet	illiterate	3.37	3	core	4	illiterate
+eklektik	eclectic	3.37	3	core	3	eclectic
+opak	opaque	3.37	3	extended	2	opaque
+rustik	rustic	3.37	3	extended	2	rustic
+arkaik	archaic	3.36	3	core	4	archaic, obsolete
+diagonal	diagonal	3.36	3	core	4	diagonal, transverse
+feŭd	feudal	3.36	3	core	4	feudal
+feŭdal	feudal	3.36	3	core	3	feudal
+idiot	idiotic	3.36	3	core	6	idiotic
+patologi	pathological	3.36	3	extended	2	pathological
+preztromp	fleece	3.36	3	core	3	to fleece
+satir	satirical	3.36	3	extended	2	satirical
+gramatik	grammatical	3.35	3	core	3	grammatical
+inkvizici	inquisition	3.35	3	extended	2	inquisition
+klerik	clerical	3.35	3	core	3	clerical
+klerikal	clerical	3.35	3	extended	2	clerical, clericalist
+sik	sikh	3.35	3	extended	2	sikh
+ebon	ebony	3.34	3	core	3	ebony
+nevol	involuntary	3.34	3	extended	2	involuntary, unwilling
+adici	additive	3.33	3	core	4	additive
+degener	degenerate	3.33	3	core	5	to degenerate, degrade, deteriorate
+enloĝ	inhabit	3.33	3	core	8	to inhabit, move in (dwelling)
+fars	farce	3.33	3	extended	2	farce
+optimumig	optimize	3.33	3	core	3	to optimize, tweak
+penetr	penetrating	3.33	3	core	3	penetrating
+pamflet	pamphlet	3.32	3	extended	2	pamphlet, lampoon, satire
+ascend	ascending	3.31	3	extended	2	ascending
+hidr	hydra	3.31	3	core	3	hydra
+hipokrit	hypocritical	3.31	3	core	6	hypocritical
+indig	indigo	3.31	3	extended	2	indigo
+muzel	muzzle	3.31	3	extended	2	muzzle, snout
+nekaŝ	overt	3.31	3	core	3	overt
+sopran	soprano	3.31	3	core	3	soprano
+stagn	stagnant	3.31	3	extended	2	stagnant
+epidemiologi	epidemiology	3.3	3	extended	2	epidemiology
+neegal	unequal	3.3	3	core	3	unequal
+okult	occult	3.29	3	core	3	occult
+pediatri	pediatrics	3.29	3	extended	2	pediatrics
+sangoverŝ	bloodshed	3.29	3	extended	2	bloodshed
+vinkt	clinch	3.29	3	extended	2	to clinch, staple
+violonĉel	cello	3.29	3	extended	2	cello, violoncello
+degrad	degrade	3.28	3	core	3	to degrade, demote, downgrade
+difuz	diffuse	3.28	3	extended	2	diffuse
+dign	dignified	3.28	3	core	4	dignified
+epitom	epitome	3.28	3	extended	2	epitome, abridgment
+fervor	ardent	3.28	3	core	6	ardent, fervent, full of zeal, zealous
+grotesk	grotesque	3.28	3	extended	2	grotesque, ludicrous
+jor	skid	3.28	3	core	3	to skid
+titr	assay	3.28	3	extended	2	to assay, titrate
+topografi	topography	3.28	3	extended	2	topography
+bonodorfum	incense	3.27	3	core	4	incense
+impuls	impulsive	3.27	3	extended	2	impulsive
+lucid	lucid	3.27	3	extended	2	lucid
+parazit	parasitic	3.27	3	extended	2	parasitic
+sekt	sectarian	3.27	3	core	4	sectarian
+antaŭplan	foreground	3.26	3	extended	2	foreground
+heliks	helix	3.26	3	extended	2	helix
+letargi	apathy	3.26	3	extended	2	apathy, drowsiness, inertness, lethargy, stupor, torpidity
+orb	orb	3.26	3	extended	2	orb
+sociologi	sociological	3.26	3	extended	2	sociological
+variol	smallpox	3.26	3	extended	2	smallpox, variola
+alkal	alkaline	3.25	3	extended	2	alkaline
+alun	alum	3.25	3	core	3	alum
+arteri	arterial	3.25	3	extended	2	arterial
+balzam	balm	3.25	3	core	6	balm, balsam, balmy, balsamic
+inhal	inhale	3.25	3	core	4	to inhale
+klaĉgazet	tabloid	3.25	3	extended	2	tabloid
+saŭn	sauna	3.25	3	extended	2	sauna
+vekri	lament	3.25	3	extended	2	to lament, wail, yammer
+ŝvitban	sauna	3.25	3	extended	2	sauna
+antaŭfinal	semifinal	3.24	3	extended	2	semifinal
+duonpatr	stepfather	3.24	3	extended	2	stepfather
+insid	insidious	3.24	3	core	4	insidious, treacherous
+kirlovent	whirlwind	3.24	3	extended	2	whirlwind
+konscienc	conscientious	3.24	3	extended	2	conscientious, scrupulous, faithful, upright, honorable
+orl	hem	3.24	3	extended	2	to hem
+patriark	patriarchal	3.24	3	core	3	patriarchal
+plekt	braid	3.24	3	core	5	to braid, plait, twine, wreathe
+turnvent	whirlwind	3.24	3	extended	2	whirlwind
+angil	eel	3.23	3	extended	2	eel
+aristokrat	aristocratic	3.23	3	core	4	aristocratic
+arsen	arsenic	3.23	3	core	5	arsenic, arsenical
+konverg	converge	3.23	3	extended	2	to converge
+kript	cryptic	3.23	3	core	5	cryptic
+mikroprogram	firmware	3.23	3	extended	2	firmware, microprogram
+petolemul	imp	3.23	3	extended	2	imp, scamp
+prefiks	prefix	3.23	3	extended	2	to prefix
+sled	sled	3.23	3	core	3	to sled
+subtitolig	subtitle	3.23	3	extended	2	to subtitle
+abrad	abrasive	3.22	3	extended	2	abrasive
+frivol	frivolous	3.22	3	core	4	frivolous
+frotpurig	abrasive	3.22	3	extended	2	abrasive
+homogen	homogeneous	3.22	3	core	3	homogeneous
+metafizik	metaphysical	3.22	3	extended	2	metaphysical
+meteologi	meteorology	3.22	3	extended	2	meteorology
+meteorologi	meteorology	3.22	3	extended	2	meteorology
+remŝip	galley	3.22	3	extended	2	galley
+anatomi	anatomical	3.21	3	extended	2	anatomical
+apostol	apostolic	3.21	3	extended	2	apostolic
+bioĥemi	biochemical	3.21	3	extended	2	biochemical
+elokvent	eloquent	3.21	3	core	3	eloquent, fluent, rhetorical
+ermit	hermit	3.21	3	extended	2	hermit, recluse
+panoram	panoramic	3.21	3	extended	2	panoramic
+retroakumul	backlog	3.21	3	extended	2	to backlog
+sept	septic	3.21	3	extended	2	septic
+simetri	symmetric	3.21	3	core	4	symmetric, symmetrical
+horloĝdirekt	clockwise	3.2	3	extended	2	clockwise
+korelaci	correlate	3.2	3	extended	2	to correlate
+korprem	distressing	3.2	3	core	3	distressing, oppressing
+mikrob	germ	3.2	3	extended	2	germ, microbe
+oblikv	oblique	3.2	3	core	3	oblique, slanting
+surĉeval	equestrian	3.2	3	extended	2	equestrian
+aerobi	aerobic	3.19	3	extended	2	aerobic, aerobiotic
+algebr	algebraic	3.19	3	core	3	algebraic
+aŭgment	augment	3.19	3	extended	2	augment
+jod	iodine	3.19	3	extended	2	iodine
+pervers	perverse	3.19	3	extended	2	perverse
+profet	prophetic	3.19	3	core	4	prophetic
+radiologi	radiology	3.19	3	extended	2	radiology
+deport	deport	3.18	3	extended	2	to deport
+facet	facet	3.18	3	extended	2	to facet
+hortikultur	horticulture	3.18	3	extended	2	horticulture
+mobiliz	mobilize	3.18	3	core	5	to mobilize
+onan	masturbate	3.18	3	core	3	to masturbate
+pornografi	pornographic	3.18	3	extended	2	pornographic
+sulf	sulphur	3.18	3	extended	2	sulphur
+anekdot	anecdotal	3.17	3	core	3	anecdotal
+aŭtoimun	autoimmune	3.17	3	extended	2	autoimmune
+esoter	esoteric	3.17	3	core	3	esoteric
+rektif	rectify	3.17	3	extended	2	to rectify
+dinam	dynamo	3.16	3	core	3	dynamo
+inciz	incision	3.16	3	core	3	incision
+aks	axial	3.15	3	core	4	axial
+farmakologi	pharmacology	3.15	3	extended	2	pharmacology
+morus	mulberry	3.15	3	extended	2	mulberry
+pacgard	peacekeeping	3.15	3	core	3	peacekeeping
+serp	sickle	3.15	3	extended	2	sickle
+surbord	embankment	3.15	3	core	3	embankment, quay
+utopi	utopian	3.15	3	core	8	utopian
+deĉifr	decipher	3.14	3	extended	2	to decipher, decode, decrypt
+hejmsid	sedentary	3.14	3	extended	2	sedentary
+inflam	inflamed	3.14	3	core	3	inflamed
+primas	primate	3.14	3	core	3	primate
+barlist	blacklist	3.13	3	extended	2	blacklist
+homevit	antisocial	3.13	3	core	3	antisocial
+indulg	lenient	3.13	3	core	6	lenient
+toksologi	toxicology	3.13	3	extended	2	toxicology
+abandon	relinquish	3.12	3	extended	2	to relinquish
+adjutant	adjutant	3.12	3	extended	2	adjutant, aide
+arkeolog	archaeologist	3.12	3	extended	2	archaeologist
+cist	cyst	3.12	3	extended	2	cyst
+filantrop	philanthropist	3.12	3	extended	2	philanthropist
+indignig	aggravating	3.12	3	extended	2	aggravating
+ĉifr	cipher	3.12	3	core	6	to cipher, encipher, encrypt, encode
+handbal	handball	3.11	3	extended	2	handball
+imunologi	immunology	3.11	3	extended	2	immunology
+kontraband	smuggle	3.11	3	core	4	to smuggle
+korod	corrosive	3.11	3	core	4	corrosive
+lut	solder	3.11	3	core	3	to solder
+manpilk	handball	3.11	3	extended	2	handball
+mant	mantis	3.11	3	extended	2	mantis
+mops	pug	3.11	3	extended	2	pug
+burlesk	burlesque	3.1	3	core	3	burlesque
+degn	condescending	3.1	3	extended	2	condescending
+monaĥ	monastic	3.1	3	core	8	monastic
+ogr	ogre	3.1	3	extended	2	ogre
+tempopasig	pastime	3.1	3	extended	2	pastime
+travesti	burlesque	3.1	3	extended	2	to burlesque, parody
+akordion	accordion	3.09	3	extended	2	accordion
+inert	inert	3.09	3	extended	2	inert
+lumb	lumbar	3.09	3	extended	2	lumbar
+propag	propagate	3.09	3	extended	2	to propagate
+totem	totem	3.09	3	extended	2	totem
+heterogen	heterogeneous	3.08	3	extended	2	heterogeneous
+irit	irritate	3.08	3	extended	2	to irritate
+pantofl	slipper	3.08	3	extended	2	slipper
+vidbend	videotape	3.08	3	extended	2	videotape
+apotek	drugstore	3.07	3	extended	2	drugstore, pharmacy, chemist
+celkonform	purposeful	3.07	3	extended	2	purposeful, intentional
+kondens	compress	3.07	3	core	5	to compress
+pedagogi	pedagogical	3.07	3	extended	2	pedagogical
+poligami	polygamy	3.07	3	extended	2	polygamy
+popl	poplar	3.07	3	core	3	poplar
+pub	pubic	3.07	3	core	3	pubic
+alo	aloe	3.06	3	core	3	aloe
+anestez	anesthetic	3.06	3	core	5	anesthetic
+hepat	hepatic	3.06	3	core	3	hepatic
+inkognit	incognito	3.06	3	extended	2	incognito
+ksenofobi	xenophobic	3.06	3	extended	2	xenophobic
+mim	mime	3.06	3	extended	2	to mime
+mitologi	mythological	3.06	3	extended	2	mythological
+sumo	sumo	3.06	3	extended	2	sumo
+tiraljor	skirmish	3.06	3	extended	2	to skirmish
+tumult	tumultuous	3.06	3	core	3	tumultuous, turbulent, riotous
+unit	unitary	3.06	3	extended	2	unitary
+asimil	assimilate	3.05	3	core	3	to assimilate, localize
+bet	beet	3.05	3	core	6	beet, of a beet, of beetroot; beta (β)
+bigot	bigoted	3.05	3	core	4	bigoted, fanatical
+emir	emir	3.05	3	extended	2	emir
+frakci	fractional	3.05	3	extended	2	fractional
+incendi	incendiary	3.05	3	extended	2	incendiary
+kanibal	cannibal	3.05	3	extended	2	cannibal
+parok	parochial	3.05	3	core	3	parochial
+paroĥ	parochial	3.05	3	core	7	parochial
+akupunktur	acupuncture	3.04	3	extended	2	acupuncture
+dekadenc	decadent	3.04	3	core	3	decadent
+genealogi	genealogical	3.04	3	extended	2	genealogical
+haĝ	hajj	3.04	3	extended	2	hajj
+impotent	impotent	3.04	3	core	3	impotent
+kunekzist	coexist	3.04	3	extended	2	to coexist
+vinĉ	winch	3.04	3	extended	2	to winch
+hidrat	hydrate	3.03	3	extended	2	hydrate
+infanvart	babysit	3.03	3	core	4	to babysit
+kebab	kebab	3.03	3	extended	2	kebab
+konfigur	configure	3.03	3	extended	2	configure
+multlingv	multilingual	3.03	3	core	3	multilingual
+plurlingv	multilingual	3.03	3	core	3	multilingual
+vidv	widower	3.03	3	core	5	widower
+agnostik	agnostic	3.02	3	core	4	agnostic
+fanatik	fanatical	3.02	3	core	4	fanatical
+inkandesk	incandescent	3.02	3	core	3	incandescent
+neerarebl	infallible	3.02	3	extended	2	infallible
+neĝtabul	snowboard	3.01	3	core	4	to snowboard
+numer	numeric	3.01	3	core	5	numeric, numerical
+palpebr	eyelid	3.01	3	extended	2	eyelid
+puritan	puritan	3.01	3	extended	2	puritan
+rapsodi	rhapsody	3.01	3	extended	2	rhapsody
+aŭster	austere	3.0	3	extended	2	austere, Spartan
+blaz	blister	3.0	3	extended	2	blister
+car	czar	3.0	3	core	5	of a czar, of a tsar
+dukland	duchy	3.0	3	extended	2	duchy, dukedom
+ensem	instill	3.0	3	extended	2	to instill, sow
+kalik	chalice	3.0	3	extended	2	chalice, goblet, tankard, grail
+pantomim	pantomime	3.0	3	extended	2	to pantomime
+severmor	austere	3.0	3	extended	2	austere
+sinkron	synchronous	3.0	3	core	3	synchronous
+spor	spore	3.0	3	extended	2	spore
+teolog	theologian	3.0	3	extended	2	theologian
+vimen	wicker	3.0	3	extended	2	wicker
