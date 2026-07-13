@@ -21,6 +21,7 @@ from src.lexicon.eo_root_decomposer import (
     KIND_UNRESOLVED,
     TIER_CORE,
     TIER_EXTENDED,
+    TIER_MODERN,
     TIER_TAIL,
     ContentRoot,
     Decomposer,
@@ -83,6 +84,9 @@ def _build_inventory() -> dict:
             "foo":      _root("foo head", TIER_CORE, prod=3),
             "sin":      _root("sin tail", TIER_CORE, prod=3),
             "foosin":   _root("foosin singleton", TIER_TAIL, prod=1),
+            # Modern-tier supplement entry — must be treated like extended
+            # (kept whole by Rule 1, never a low-confidence singleton).
+            "dvd":      _root("DVD", TIER_MODERN, prod=-1),
         },
         "suffixes": ["ist", "ej", "ul", "in", "et", "ar", "o", "a", "e"],
         "prefixes": ["mal", "re", "ekster", "inter", "laŭ"],
@@ -587,3 +591,30 @@ def test_no_eo_compounds_jsonl_emitted(
     )
     assert not (out_dir / "eo_compounds.jsonl").exists()
     assert (out_dir / "eo_unresolved_stems.jsonl").exists()
+
+
+# ---------------------------------------------------------------------------
+# tier=modern protection (Part A)
+# ---------------------------------------------------------------------------
+
+
+def test_modern_tier_root_is_kept_whole_by_rule_1(decomposer: Decomposer) -> None:
+    """A supplement entry (tier=modern, prod=-1) is treated like extended:
+    Rule 1 short-circuits and returns SINGLE_ROOT without exploring
+    decompositions. This prevents a modern borrowing like ``dvd`` from
+    being misanalysed as a suffix-strip just because its productivity
+    is unmeasured."""
+    d = decomposer.decompose("dvd")
+    assert d.kind == KIND_SINGLE_ROOT
+    assert d.head.root == "dvd"
+    assert d.head.tier == TIER_MODERN
+    assert d.prefixes == ()
+    assert d.suffixes == ()
+
+
+def test_modern_tier_in_tier_rank_ties_with_extended() -> None:
+    """``TIER_MODERN`` carries the same selection rank as ``TIER_EXTENDED``
+    so that a supplement root never loses to a tail singleton in a
+    decomposition tie-break."""
+    from src.lexicon.eo_root_decomposer import TIER_RANK
+    assert TIER_RANK[TIER_MODERN] == TIER_RANK[TIER_EXTENDED]
