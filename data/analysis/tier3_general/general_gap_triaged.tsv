@@ -1,0 +1,622 @@
+decision	review_flag	en_word	fold	anchor_root	all_roots	root_detail	eo_word	proposed_tier	gloss_zipf	gloss	note
+split	two distinct concepts merged — author separately	chancellor	standalone	kancelier	kancelier,rektor	kancelier=chancellor || rektor=chancellor, rector (scho	kanceliero	3	4.13	chancellor	2 roots collapsed: kancelier, rektor
+split	two distinct concepts merged — author separately	acute	standalone	akut	akut,sagac	akut=acute, penetrating || sagac=acute, astute, shrewd, i	akuto	3	4.0	acute, penetrating	2 roots collapsed: akut, sagac
+split	two distinct concepts merged — author separately	accessory	standalone	aneks	aneks,kunkulp	aneks=accessory || kunkulp=accessory	anekso	3	3.63	accessory	2 roots collapsed: aneks, kunkulp
+split	two distinct concepts merged — author separately	erect	standalone	erekt	erekt,vertikal	erekt=to erect || vertikal=erect, vertical, upright	erekti	3	3.52	to erect	2 roots collapsed: erekt, vertikal
+approve	R9-park (Effort B)	lieutenant	standalone	leŭtenant	leŭtenant		leŭtenanto	2	4.44	lieutenant	
+approve	R9-park (Effort B)	colonel	standalone	kolonel	kolonel		kolonelo	3	4.41	colonel	
+approve	R9-park (Effort B)	agriculture	standalone	terkultiv	terkultiv		terkultivo	3	4.37	agriculture	
+hold	R9-park (Effort B)	agricultural	derived_adj	agronomi	agronomi,agrikultur,agrokultur	agronomi=agricultural || agrikultur=agricultural || agrokultur=agricultural	agronomia		4.34	agricultural	3 roots collapsed: agronomi, agrikultur, agrokultur; derived adjective — confirm noun anchor / eo_word
+approve	R9-park (Effort B)	genetic	derived_adj	genetik	genetik		genetika	3	4.34	genetic	derived adjective — confirm noun anchor / eo_word
+approve	R9-park (Effort B)	naval	derived_adj	mararme	mararme		mararmea	3	4.24	naval	derived adjective — confirm noun anchor / eo_word
+approve	R9-park (Effort B)	imperial	derived_adj	imperi	imperi		imperia	2	4.21	imperial	derived adjective — confirm noun anchor / eo_word
+approve	R9-park (Effort B)	parliamentary	derived_adj	parlament	parlament		parlamenta	2	4.18	parliamentary	derived adjective — confirm noun anchor / eo_word
+approve	R9-park (Effort B)	magnetic	derived_adj	magenet	magenet		mageneta	2	4.17	magnetic	derived adjective — confirm noun anchor / eo_word
+approve	R9-park (Effort B)	diplomatic	derived_adj	diplomat	diplomat,diplomati	diplomat=diplomatic || diplomati=diplomatic	diplomata	2	4.11	diplomatic	2 roots collapsed: diplomat, diplomati; derived adjective — confirm noun anchor / eo_word
+approve	R9-park (Effort B)	admiral	derived_adj	admiral	admiral		admirala	2	4.0	of an admiral, of an admiralty	derived adjective — confirm noun anchor / eo_word
+approve	R9-park (Effort B)	atomic	derived_adj	atom	atom		atoma	2	3.98	atomic	derived adjective — confirm noun anchor / eo_word
+approve	R9-park (Effort B)	artillery	standalone	artileri	artileri		artilerio	2	3.96	artillery, ordnance	
+approve	R9-park (Effort B)	infantry	standalone	infanteri	infanteri		infanterio	2	3.96	infantry	
+approve	R9-park (Effort B)	regiment	standalone	regiment	regiment		regimento	3	3.93	regiment	
+approve	R9-park (Effort B)	cavalry	standalone	kavaleri	kavaleri,rajdistar	kavaleri=cavalry || rajdistar=cavalry	kavalerio	2	3.8	cavalry	2 roots collapsed: kavaleri, rajdistar
+approve	R9-park (Effort B)	anatomical	derived_adj	anatomi	anatomi		anatomia	2	3.21	anatomical	derived adjective — confirm noun anchor / eo_word
+approve	R9-park (Effort B)	damn	standalone	damn	damn		damno	3	5.09	damn	
+approve	R9-park (Effort B)	gay	standalone	homoseksual	homoseksual		homoseksualo	2	4.9	gay, homosexual, queer	
+approve	R9-park (Effort B)	bastard	standalone	bastard	bastard		bastardo	3	3.89	bastard	
+approve	R9-park (Effort B)	homosexual	derived_adj	samseksam	samseksam,samseksemul	samseksam=homosexual, gay, queer || samseksemul=homosexual	samseksama	3	3.72	homosexual, gay, queer	2 roots collapsed: samseksam, samseksemul; derived adjective — confirm noun anchor / eo_word
+approve	R9-park (Effort B)	fart	standalone	furz	furz		furzi	2	3.59	to fart	
+approve	R9-park (Effort B)	prostitute	standalone	prostitu	prostitu,amovendist	prostitu=to prostitute || amovendist=prostitute, whore, gigol	prostitui	3	3.58	to prostitute	2 roots collapsed: prostitu, amovendist
+approve	R9-park (Effort B)	archaic	derived_adj	arkaik	arkaik		arkaika	3	3.36	archaic, obsolete	derived adjective — confirm noun anchor / eo_word
+approve	merge-borderline (glance)	anthem	standalone	himn	himn,antem	himn=anthem, hymn, canticle || antem=anthem	himno	2	3.91	anthem, hymn, canticle	2 roots collapsed: himn, antem
+approve	merge-borderline (glance)	fertile	standalone	fekund	fekund,fruktodon	fekund=fertile || fruktodon=fertile, fruitful	fekundo	2	3.62	fertile	2 roots collapsed: fekund, fruktodon
+approve	merge-borderline (glance)	charcoal	derived_adj	braĝ	braĝ,lignokarb	braĝ=charcoal || lignokarb=charcoal	braĝa	3	3.58	charcoal	2 roots collapsed: braĝ, lignokarb; derived adjective — confirm noun anchor / eo_word
+approve	merge-borderline (glance)	sauna	standalone	saŭn	saŭn,ŝvitban	saŭn=sauna || ŝvitban=sauna	saŭno	3	3.25	sauna	2 roots collapsed: saŭn, ŝvitban
+approve	merge-borderline (glance)	abrasive	derived_adj	abrad	abrad,frotpurig	abrad=abrasive || frotpurig=abrasive	abrada	3	3.22	abrasive	2 roots collapsed: abrad, frotpurig; derived adjective — confirm noun anchor / eo_word
+approve	merge-borderline (glance)	burlesque	standalone	burlesk	burlesk,travesti	burlesk=burlesque || travesti=to burlesque, parody	burlesko	3	3.1	burlesque	2 roots collapsed: burlesk, travesti
+approve	standalone adj (your rule)	democratic	derived_adj	demokrati	demokrati,demokrat	demokrati=democratic || demokrat=democratic	demokratia	2	4.73	democratic	2 roots collapsed: demokrati, demokrat; derived adjective — confirm noun anchor / eo_word
+approve		republican	standalone	respublik	respublik		respubliko	2	4.7	republican	
+approve		carbon	standalone	karbon	karbon		karbono	2	4.55	carbon	
+approve		retail	standalone	detalkomerc	detalkomerc		detalkomerco	2	4.55	retail	
+approve	standalone adj (your rule)	presidential	derived_adj	prezident	prezident		prezidenta	2	4.52	presidential	derived adjective — confirm noun anchor / eo_word
+approve		aged	standalone	profundaĝ	profundaĝ		profundaĝa	2	4.5	aged	
+approve		ford	standalone	travad	travad		travadi	2	4.5	to ford	
+approve		circuit	standalone	cirkvit	cirkvit		cirkvito	3	4.47	circuit	
+approve		suck	standalone	suĉ	suĉ,mamsuĉ	suĉ=to suck || mamsuĉ=to suck, suckle	suĉi	3	4.42	to suck	2 roots collapsed: suĉ, mamsuĉ
+approve		rugby	standalone	rugbe	rugbe		rugbeo	3	4.4	rugby	
+approve		poll	standalone	opinisond	opinisond		opinisondi	3	4.35	to poll	
+approve		virgin	standalone	virg	virg		virgo	3	4.35	virgin, virginal	
+approve		fleet	standalone	flot	flot		floto	3	4.33	fleet	
+approve	standalone adj (your rule)	mechanical	derived_adj	meĥanik	meĥanik		meĥanika	3	4.33	mechanical	derived adjective — confirm noun anchor / eo_word
+approve		faculty	standalone	fakult	fakult		fakulto	3	4.32	faculty	
+approve		footage	standalone	filmitaĵ	filmitaĵ		filmitaĵo	3	4.31	footage	
+approve	standalone adj (your rule)	collective	derived_adj	kolektiv	kolektiv		kolektiva	3	4.3	collective, joint	derived adjective — confirm noun anchor / eo_word
+approve		petition	standalone	petskrib	petskrib		petskribo	3	4.3	petition	
+approve	standalone adj (your rule)	racial	derived_adj	ras	ras		rasa	3	4.3	racial	derived adjective — confirm noun anchor / eo_word
+approve		disabled	standalone	invalid	invalid		invalida	3	4.29	disabled	
+approve		dual	standalone	dual	dual		dualo	3	4.28	dual	
+approve		filter	standalone	filtr	filtr		filtri	3	4.28	to filter	
+approve		auction	standalone	aŭkci	aŭkci		aŭkcio	3	4.27	at auction	
+approve		segment	standalone	segment	segment		segmenti	3	4.26	to segment	
+approve		alpha	standalone	alf	alf		alfo	2	4.25	alpha	
+approve		khan	standalone	ĥan	ĥan		ĥano	3	4.25	khan	
+approve		copyright	standalone	kopirajt	kopirajt,aŭtorrajt	kopirajt=copyright || aŭtorrajt=copyright	kopirajto	3	4.24	copyright	2 roots collapsed: kopirajt, aŭtorrajt
+approve		noble	standalone	nobel	nobel		nobelo	3	4.24	noble	
+approve	standalone adj (your rule)	toxic	derived_adj	toks	toks		toksa	2	4.24	toxic	derived adjective — confirm noun anchor / eo_word
+approve		upgrade	standalone	promoci	promoci		promocio	3	4.24	upgrade	
+approve		charter	standalone	ĉart	ĉart		ĉarti	3	4.23	to charter	
+approve	standalone adj (your rule)	civilian	derived_adj	nemilit	nemilit		nemilita	3	4.23	civilian	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	graphic	derived_adj	grafik	grafik		grafika	3	4.23	graphic	derived adjective — confirm noun anchor / eo_word
+approve		amateur	standalone	amator	amator		amatoro	3	4.22	amateur	
+approve		pension	standalone	pensi	pensi		pensii	3	4.22	to pension	
+approve		bronze	standalone	bronz	bronz		bronzo	2	4.2	bronze	
+approve	standalone adj (your rule)	chronic	derived_adj	kronik	kronik		kronika	3	4.2	chronic, lingering	derived adjective — confirm noun anchor / eo_word
+approve		distinguished	standalone	eminent	eminent		eminenta	3	4.2	distinguished, eminent, prominent	
+approve		cargo	standalone	ŝipŝarĝ	ŝipŝarĝ		ŝipŝarĝo	3	4.19	ship’s cargo	
+approve		census	standalone	cens	cens		censi	3	4.19	to census, inventory	
+approve		ram	standalone	bok	bok		boko	3	4.19	ram, vaulting-horse	
+approve		tobacco	standalone	tabak	tabak		tabako	2	4.19	tobacco	
+approve		animation	standalone	animaci	animaci		animacio	2	4.18	animation	
+approve		grid	standalone	krad	krad		krado	2	4.18	grid	
+approve		patent	standalone	patent	patent		patento	3	4.18	patent	
+approve	standalone adj (your rule)	anonymous	derived_adj	anonim	anonim		anonima	2	4.17	anonymous, nameless	derived adjective — confirm noun anchor / eo_word
+approve		propaganda	standalone	propagand	propagand		propagando	2	4.17	propaganda	
+approve		icon	standalone	ikon	ikon		ikono	3	4.16	icon	
+approve		sheriff	standalone	ŝerif	ŝerif		ŝerifo	2	4.16	sheriff	
+approve		podcast	standalone	podkast	podkast		podkasto	2	4.15	podcast	
+approve		corrupt	standalone	korupt	korupt		korupto	2	4.14	corrupt	
+approve		tattoo	standalone	tatu	tatu		tatui	2	4.14	to tattoo	
+approve		breach	standalone	breĉ	breĉ		breĉi	3	4.13	to breach	
+approve		feminist	standalone	feminist	feminist		feministo	2	4.12	feminist	
+approve	standalone adj (your rule)	fatal	derived_adj	kapromp	kapromp		kaprompa	3	4.1	fatal	derived adjective — confirm noun anchor / eo_word
+approve		fig	standalone	fig	fig		figo	3	4.1	fig	
+approve		dump	standalone	dumping	dumping		dumpingi	3	4.08	to dump	
+approve	standalone adj (your rule)	fabulous	derived_adj	fabl	fabl		fabla	3	4.08	fabulous	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	provincial	derived_adj	provinc	provinc,provincial	provinc=provincial || provincial=provincial	provinca	3	4.08	provincial	2 roots collapsed: provinc, provincial; derived adjective — confirm noun anchor / eo_word
+approve		subtle	standalone	subtil	subtil		subtilo	3	4.08	subtle	
+approve	standalone adj (your rule)	tragic	derived_adj	tragedi	tragedi,tragik	tragedi=tragic || tragik=tragic	tragedia	2	4.08	tragic	2 roots collapsed: tragedi, tragik; derived adjective — confirm noun anchor / eo_word
+approve		allied	standalone	alianc	alianc		alianca	3	4.07	allied	
+approve		matrix	standalone	matric	matric		matrico	2	4.07	matrix	
+approve	standalone adj (your rule)	optical	derived_adj	optik	optik		optika	3	4.07	optical	derived adjective — confirm noun anchor / eo_word
+approve		quantum	standalone	kvantum	kvantum		kvantumo	2	4.07	quantum	
+approve		compact	standalone	kompakt	kompakt		kompakto	2	4.06	compact, dense	
+approve		fiber	standalone	fibr	fibr		fibro	3	4.06	fiber	
+approve		graph	standalone	grafe	grafe		grafeo	2	4.05	graph	
+approve		spam	standalone	spam	spam		spami	2	4.05	to spam	
+approve	standalone adj (your rule)	static	derived_adj	statik	statik		statika	2	4.05	static	derived adjective — confirm noun anchor / eo_word
+approve		withdraw	standalone	eliĝ	eliĝ		eliĝi	2	4.05	to withdraw	
+approve	standalone adj (your rule)	authentic	derived_adj	aŭtent	aŭtent,aŭtentik	aŭtent=authentic || aŭtentik=authentic, genuine	aŭtenta	3	4.04	authentic	2 roots collapsed: aŭtent, aŭtentik; derived adjective — confirm noun anchor / eo_word
+approve		cum	standalone	ĉur	ĉur		ĉuri	2	4.04	to cum, ejaculate	
+approve		chapel	standalone	kapel	kapel		kapelo	3	4.03	chapel	
+approve	standalone adj (your rule)	tribal	derived_adj	trib	trib		triba	2	4.03	tribal	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	aesthetic	derived_adj	estetik	estetik		estetika	2	4.02	aesthetic	derived adjective — confirm noun anchor / eo_word
+approve		ego	standalone	ego	ego		egoo	3	4.02	ego	
+approve		ferry	standalone	pram	pram		prami	3	4.02	to ferry	
+approve		mercury	standalone	hidrarg	hidrarg		hidrargo	2	4.02	mercury, quicksilver	
+approve		orchestra	standalone	orkestr	orkestr		orkestro	2	4.01	orchestra	
+approve	standalone adj (your rule)	civic	derived_adj	civit	civit		civita	3	4.0	civic	derived adjective — confirm noun anchor / eo_word
+approve		escort	standalone	eskort	eskort		eskorti	2	4.0	to escort	
+approve		fossil	standalone	fosili	fosili		fosilio	2	3.99	fossil, fossilized	
+approve		freight	standalone	karg	karg		kargi	3	3.99	to freight	
+approve		negotiate	standalone	intertrakt	intertrakt		intertrakti	2	3.99	to negotiate	
+approve		vector	standalone	vektor	vektor		vektoro	2	3.99	vector, vectorial	
+approve		absent	standalone	forestant	forestant,forest	forestant=absent || forest=absent	forestanto	2	3.98	absent	2 roots collapsed: forestant, forest
+approve	standalone adj (your rule)	archive	derived_adj	arkiv	arkiv		arkiva	3	3.98	archive, record(s), file(s)	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	tactical	derived_adj	taktik	taktik		taktika	3	3.97	tactical	derived adjective — confirm noun anchor / eo_word
+approve		wholesale	standalone	pogrand	pogrand		pogrando	3	3.97	wholesale	
+approve	standalone adj (your rule)	architectural	derived_adj	arĥitektur	arĥitektur		arĥitektura	2	3.96	architectural	derived adjective — confirm noun anchor / eo_word
+approve		curry	standalone	kare	kare		kareo	3	3.96	curry	
+approve		preview	standalone	antaŭrigard	antaŭrigard,antaŭprezent	antaŭrigard=preview || antaŭprezent=to preview	antaŭrigardo	3	3.96	preview	2 roots collapsed: antaŭrigard, antaŭprezent
+approve		tab	standalone	tab	tab		tabo	2	3.96	tab, tab-delimited	
+approve		viable	standalone	vivipov	vivipov		vivipovo	3	3.96	viable	
+approve		absurd	standalone	absurd	absurd		absurdo	3	3.95	absurd	
+approve		bargain	standalone	marĉand	marĉand		marĉandi	3	3.95	to bargain, haggle	
+approve		brake	standalone	brems	brems		bremsi	3	3.95	to brake	
+approve		execute	standalone	ekzekuci	ekzekuci		ekzekucii	2	3.95	to execute	
+approve		secular	standalone	sekular	sekular		sekularo	3	3.95	secular	
+approve		sovereign	standalone	suveren	suveren		suvereno	2	3.95	sovereign	
+approve		vegan	standalone	vegan	vegan		vegano	2	3.95	vegan	
+approve		anal	standalone	anal	anal,anus	anal=anal || anus=anal	analo	2	3.94	anal	2 roots collapsed: anal, anus
+approve		idol	standalone	idol	idol		idolo	3	3.94	idol	
+approve		lynch	standalone	linĉ	linĉ		linĉi	3	3.94	to lynch	
+approve		zombie	standalone	zombi	zombi		zombio	2	3.94	zombie	
+approve		acre	standalone	akre	akre		akreo	3	3.93	acre	
+approve	standalone adj (your rule)	automotive	derived_adj	aŭtomobil	aŭtomobil		aŭtomobila	2	3.93	automotive	derived adjective — confirm noun anchor / eo_word
+approve		desktop	standalone	surtabl	surtabl		surtablo	2	3.93	desktop	
+approve		guild	standalone	gild	gild		gildo	3	3.93	guild	
+approve		incoming	standalone	enven	enven		envena	3	3.93	incoming, inbound	
+approve		orthodox	standalone	ortodoks	ortodoks		ortodokso	3	3.93	orthodox	
+approve		unclear	standalone	neklar	neklar		neklaro	2	3.93	unclear	
+approve	standalone adj (your rule)	biblical	derived_adj	bibli	bibli		biblia	3	3.92	biblical	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	demographic	derived_adj	demografi	demografi		demografia	3	3.92	demographic	derived adjective — confirm noun anchor / eo_word
+approve		nova	standalone	nova	nova		novao	3	3.92	nova	
+approve	standalone adj (your rule)	exotic	derived_adj	ekzot	ekzot,ekzotik	ekzot=exotic || ekzotik=exotic	ekzota	2	3.91	exotic	2 roots collapsed: ekzot, ekzotik; derived adjective — confirm noun anchor / eo_word
+approve		fury	standalone	furi	furi		furio	2	3.91	fury, goddess of vengeance	
+approve		massacre	standalone	masakr	masakr,amasbuĉ	masakr=to massacre || amasbuĉ=to massacre, slaughter	masakri	3	3.91	to massacre	2 roots collapsed: masakr, amasbuĉ
+approve	standalone adj (your rule)	verbal	derived_adj	verb	verb		verba	2	3.91	verbal	derived adjective — confirm noun anchor / eo_word
+approve		champagne	standalone	ĉampan	ĉampan		ĉampano	2	3.9	champagne, of champagne	
+approve		griffin	standalone	grif	grif		grifo	3	3.9	griffin, vulture	
+approve		misleading	standalone	iluzi	iluzi		iluzia	3	3.9	misleading	
+approve		particle	standalone	partikl	partikl,partikul	partikl=particle || partikul=particle	partiklo	2	3.9	particle	2 roots collapsed: partikl, partikul
+approve		adverse	standalone	advers	advers		adverso	3	3.89	adverse	
+approve		cod	standalone	moru	moru		moruo	3	3.89	cod, codfish	
+approve		karma	standalone	karm	karm		karmo	2	3.88	karma	
+approve		mapping	standalone	mapig	mapig		mapiga	3	3.88	mapping	
+approve		militia	standalone	milic	milic		milico	3	3.88	militia	
+approve	standalone adj (your rule)	abusive	derived_adj	fiag	fiag,fiuz	fiag=abusive || fiuz=abusive	fiaga	2	3.87	abusive	2 roots collapsed: fiag, fiuz; derived adjective — confirm noun anchor / eo_word
+approve		processor	standalone	procesor	procesor		procesoro	2	3.87	processor	
+approve		legion	standalone	legi	legi		legio	2	3.86	legion	
+approve		uranium	standalone	urani	urani		uranio	2	3.85	uranium	
+approve		volleyball	standalone	volejbal	volejbal		volejbalo	2	3.85	volleyball	
+approve		exile	standalone	egzil	egzil		egzilo	3	3.84	exile	
+approve		monopoly	standalone	monopol	monopol		monopolo	2	3.84	monopoly	
+approve	standalone adj (your rule)	differential	derived_adj	diferencial	diferencial		diferenciala	3	3.83	differential	derived adjective — confirm noun anchor / eo_word
+approve		mafia	standalone	mafi	mafi		mafio	2	3.83	mafia	
+approve		prototype	standalone	prototip	prototip		prototipo	3	3.83	prototype	
+approve	standalone adj (your rule)	vicious	derived_adj	malign	malign		maligna	2	3.83	vicious	derived adjective — confirm noun anchor / eo_word
+approve		archbishop	standalone	arkiepiskop	arkiepiskop		arkiepiskopo	3	3.82	archbishop	
+approve		dye	standalone	tinktur	tinktur		tinkturi	3	3.82	to dye, tint	
+approve	standalone adj (your rule)	geological	derived_adj	geologi	geologi		geologia	2	3.82	geological	derived adjective — confirm noun anchor / eo_word
+approve		maiden	standalone	debut	debut		debuto	2	3.82	maiden	
+approve		absorb	standalone	ensorb	ensorb		ensorbi	2	3.81	to absorb	
+approve		boycott	standalone	bojkot	bojkot		bojkoti	2	3.81	to boycott	
+approve		privileged	standalone	privilegi	privilegi		privilegia	2	3.81	privileged	
+approve		shah	standalone	ŝah	ŝah		ŝaho	2	3.81	shah	
+approve		confront	standalone	konfront	konfront		konfronti	2	3.8	to confront	
+approve		bulletin	standalone	bulten	bulten		bulteno	3	3.79	bulletin, newsletter	
+approve		gamble	standalone	vetlud	vetlud		vetludi	2	3.79	to gamble	
+approve		probable	standalone	probabl	probabl		probablo	3	3.79	probable	
+approve	standalone adj (your rule)	subjective	derived_adj	subjektiv	subjektiv,subjekt	subjektiv=subjective || subjekt=subjective	subjektiva	3	3.79	subjective	2 roots collapsed: subjektiv, subjekt; derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	aboriginal	derived_adj	aborigen	aborigen		aborigena	3	3.78	aboriginal	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	allergic	derived_adj	alergi	alergi		alergia	2	3.78	allergic	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	ecological	derived_adj	ekologi	ekologi		ekologia	2	3.78	ecological	derived adjective — confirm noun anchor / eo_word
+approve		exempt	standalone	imun	imun		imuno	2	3.78	exempt, immune	
+approve		stab	standalone	ponard	ponard		ponardi	2	3.78	to stab	
+approve	standalone adj (your rule)	vegetarian	derived_adj	vegetar	vegetar		vegetara	2	3.78	vegetarian	derived adjective — confirm noun anchor / eo_word
+approve		flint	standalone	silik	silik		siliko	2	3.77	flint, gravel	
+approve		herd	standalone	greg	greg		grego	2	3.77	herd	
+approve		seminar	standalone	seminari	seminari		seminario	3	3.77	seminar	
+approve	standalone adj (your rule)	theological	derived_adj	teologi	teologi		teologia	3	3.77	theological	derived adjective — confirm noun anchor / eo_word
+approve		cedar	standalone	cedr	cedr		cedro	3	3.76	cedar, of a cedar	
+approve		dispatch	standalone	depeŝ	depeŝ		depeŝi	3	3.76	to dispatch	
+approve		heath	standalone	erik	erik		eriko	3	3.76	heath, heather (plant)	
+approve	standalone adj (your rule)	neural	derived_adj	neŭr	neŭr		neŭra	3	3.76	neural	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	photographic	derived_adj	fotograf	fotograf		fotografa	2	3.76	photographic	derived adjective — confirm noun anchor / eo_word
+approve		ark	standalone	arke	arke		arkeo	2	3.75	ark	
+approve		dwarf	standalone	nan	nan		nano	2	3.75	dwarf, midget	
+approve		merge	standalone	kunfand	kunfand		kunfando	3	3.75	merge	
+approve		arrogant	standalone	arog	arog		arogo	2	3.74	arrogant	
+approve	standalone adj (your rule)	ceramic	derived_adj	ceramik	ceramik		ceramika	2	3.74	ceramic	derived adjective — confirm noun anchor / eo_word
+approve		groove	standalone	fold	fold		foldi	3	3.74	to groove, slot	
+approve		torch	standalone	torĉ	torĉ		torĉo	3	3.74	torch	
+approve		bankrupt	standalone	bankrot	bankrot		bankroto	3	3.73	bankrupt	
+approve		proxy	standalone	prokur	prokur		prokuro	3	3.73	proxy	
+approve		miniature	standalone	miniatur	miniatur		miniaturo	3	3.72	miniature	
+approve		motto	standalone	mot	mot		moto	3	3.72	motto	
+approve	standalone adj (your rule)	radioactive	derived_adj	radioaktiv	radioaktiv		radioaktiva	2	3.72	radioactive	derived adjective — confirm noun anchor / eo_word
+approve		apex	standalone	vertic	vertic		vertico	3	3.71	apex, node, vertex	
+approve		boiler	standalone	kaldron	kaldron		kaldrono	2	3.71	boiler, cauldron, kettle	
+approve		digest	standalone	digest	digest		digesti	3	3.71	to digest	
+approve	standalone adj (your rule)	linguistic	derived_adj	lingvoscienc	lingvoscienc		lingvoscienca	3	3.71	linguistic	derived adjective — confirm noun anchor / eo_word
+approve		macro	standalone	makro	makro		makroo	3	3.71	macro	
+approve	standalone adj (your rule)	spontaneous	derived_adj	spontan	spontan,spontane	spontan=spontaneous || spontane=spontaneous	spontana	3	3.71	spontaneous	2 roots collapsed: spontan, spontane; derived adjective — confirm noun anchor / eo_word
+approve		apprentice	standalone	metilernant	metilernant		metilernanto	3	3.7	apprentice	
+approve	standalone adj (your rule)	bisexual	derived_adj	ambaŭseks	ambaŭseks		ambaŭseksa	2	3.7	bisexual	derived adjective — confirm noun anchor / eo_word
+approve		cinnamon	standalone	cinam	cinam		cinamo	2	3.7	cinnamon	
+approve		compulsory	standalone	end	end		endi	2	3.7	to be compulsory	
+approve		confederate	standalone	konfederaci	konfederaci		konfederacii	3	3.7	to confederate	
+approve		delegate	standalone	deleg	deleg		delegi	3	3.7	to delegate	
+approve		monarch	standalone	monarĥ	monarĥ		monarĥo	2	3.69	monarch	
+approve		mustard	standalone	mustard	mustard		mustardo	3	3.69	mustard	
+approve		tinder	standalone	tindr	tindr		tindro	3	3.69	tinder, punk, touchwood	
+approve	standalone adj (your rule)	archaeological	derived_adj	arkeologi	arkeologi,arĥeologi	arkeologi=archaeological, archeolo || arĥeologi=archaeological, archeolo	arkeologia	2	3.68	archaeological, archeological	2 roots collapsed: arkeologi, arĥeologi; derived adjective — confirm noun anchor / eo_word
+approve		clone	standalone	klon	klon		kloni	2	3.68	to clone	
+approve		defect	standalone	ekslojaliĝ	ekslojaliĝ		ekslojaliĝi	2	3.68	to defect	
+approve	standalone adj (your rule)	rehearsal	derived_adj	provlud	provlud		provluda	2	3.68	rehearsal	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	rigorous	derived_adj	rigor	rigor		rigora	3	3.68	rigorous, stringent	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	skeptical	derived_adj	skeptik	skeptik		skeptika	2	3.68	skeptical	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	unanimous	derived_adj	unuanim	unuanim		unuanima	2	3.68	unanimous	derived adjective — confirm noun anchor / eo_word
+approve		cosmetics	standalone	kosmetik	kosmetik		kosmetiko	2	3.67	cosmetics	
+approve	standalone adj (your rule)	inaugural	derived_adj	inaŭgur	inaŭgur		inaŭgura	3	3.67	inaugural	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	proprietary	derived_adj	propriet	propriet		proprieta	2	3.67	proprietary	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	imperative	derived_adj	ordon	ordon		ordona	3	3.66	imperative	derived adjective — confirm noun anchor / eo_word
+approve		maternity	standalone	akuŝ	akuŝ		akuŝo	2	3.66	maternity	
+approve	standalone adj (your rule)	peripheral	derived_adj	periferi	periferi		periferia	2	3.66	peripheral	derived adjective — confirm noun anchor / eo_word
+approve		duel	standalone	duel	duel		dueli	2	3.65	to duel	
+approve		incompetent	standalone	nekompetent	nekompetent		nekompetento	2	3.65	incompetent	
+approve		zinc	standalone	zink	zink		zinko	2	3.65	zinc, zincic	
+approve		baton	standalone	taktbaston	taktbaston		taktbastono	3	3.64	baton	
+approve		camel	standalone	kamel	kamel		kamelo	2	3.64	camel	
+approve		dub	standalone	dubl	dubl		dubli	3	3.64	to dub	
+approve		query	standalone	informpet	informpet		informpeto	2	3.64	query	
+approve		scarlet	standalone	skarlat	skarlat		skarlato	3	3.64	scarlet	
+approve		vinegar	standalone	vinagr	vinagr		vinagro	2	3.64	vinegar	
+approve		cache	standalone	kaŝmemor	kaŝmemor		kaŝmemoro	2	3.63	cache, caching	
+approve		endorse	standalone	viz	viz		vizi	3	3.63	to endorse	
+approve		fax	standalone	faks	faks,telefaks	faks=to fax || telefaks=to fax	faksi	3	3.63	to fax	2 roots collapsed: faks, telefaks
+approve		gag	standalone	gag	gag		gago	2	3.63	gag	
+approve		gill	standalone	brank	brank		branko	3	3.63	gill	
+approve	standalone adj (your rule)	inactive	derived_adj	neaktiv	neaktiv		neaktiva	2	3.63	inactive	derived adjective — confirm noun anchor / eo_word
+approve		warp	standalone	varp	varp		varpi	3	3.63	to warp	
+approve		alpine	standalone	alp	alp		alpo	3	3.62	alpine	
+approve		armored	standalone	kiras	kiras		kirasa	2	3.62	armored	
+approve		atheist	standalone	ate	ate		ateo	2	3.62	atheist	
+approve		caravan	standalone	karavan	karavan		karavano	2	3.62	caravan	
+approve		compressed	standalone	densig	densig		densiga	2	3.62	compressed, compression, condensed (font)	
+approve		fuse	standalone	meĉ	meĉ		meĉo	3	3.62	fuse, wick	
+approve		midfield	standalone	mezkamp	mezkamp		mezkampo	3	3.62	midfield	
+approve		rectangular	standalone	rektangul	rektangul		rektangulo	2	3.62	rectangular	
+approve		wedge	standalone	kojn	kojn		kojni	3	3.62	to wedge	
+approve		alloy	standalone	aloj	aloj		aloji	2	3.61	to alloy	
+approve		apartheid	standalone	rasapartig	rasapartig		rasapartigo	3	3.61	apartheid, segregation	
+approve		fraudulent	standalone	fraŭd	fraŭd		fraŭdo	2	3.61	fraudulent	
+approve		handicap	standalone	handikap	handikap		handikapi	2	3.61	to handicap	
+approve		lantern	standalone	lantern	lantern		lanterno	2	3.61	lantern	
+approve		noun	standalone	substantiv	substantiv		substantivo	3	3.61	noun, substantive	
+approve		physiology	standalone	fiziologi	fiziologi		fiziologio	3	3.61	physiology	
+approve		caste	standalone	kast	kast		kasto	2	3.6	caste	
+approve		consul	standalone	konsul	konsul		konsulo	2	3.6	consul	
+approve	standalone adj (your rule)	nominal	derived_adj	nominal	nominal		nominala	3	3.6	nominal	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	prolific	derived_adj	produktiv	produktiv		produktiva	3	3.6	prolific	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	prosperous	derived_adj	prosper	prosper		prospera	2	3.6	prosperous	derived adjective — confirm noun anchor / eo_word
+approve		scholarly	standalone	erudici	erudici		erudicio	2	3.6	scholarly	
+approve		crusade	standalone	krucmilit	krucmilit		krucmilito	2	3.59	crusade	
+approve	standalone adj (your rule)	cynical	derived_adj	cinik	cinik		cinika	2	3.59	cynical	derived adjective — confirm noun anchor / eo_word
+approve		fetish	standalone	fetiĉ	fetiĉ		fetiĉo	3	3.59	fetish	
+approve	standalone adj (your rule)	geometric	derived_adj	geometri	geometri		geometria	2	3.59	geometric	derived adjective — confirm noun anchor / eo_word
+approve		redundant	standalone	redund	redund		redundo	2	3.59	redundant	
+approve	standalone adj (your rule)	unreal	derived_adj	nereal	nereal		nereala	2	3.59	unreal	derived adjective — confirm noun anchor / eo_word
+approve		adolescent	standalone	adolesk	adolesk		adolesko	2	3.58	adolescent	
+approve		dictate	standalone	dikt	dikt		dikti	2	3.58	to dictate	
+approve	standalone adj (your rule)	electromagnetic	derived_adj	elektromagnet	elektromagnet		elektromagneta	3	3.58	electromagnetic	derived adjective — confirm noun anchor / eo_word
+approve		orphan	standalone	orf	orf		orfo	2	3.58	orphan	
+approve		pineapple	standalone	ananas	ananas		ananaso	2	3.58	pineapple	
+approve		cartridge	standalone	kased	kased		kasedo	2	3.57	cartridge, cassette	
+approve		cigar	standalone	cigar	cigar		cigaro	2	3.57	cigar	
+approve		handwriting	standalone	manskrib	manskrib		manskriba	2	3.57	handwriting	
+approve	standalone adj (your rule)	lucrative	derived_adj	lukr	lukr		lukra	2	3.56	lucrative	derived adjective — confirm noun anchor / eo_word
+approve		multimedia	standalone	plurmedi	plurmedi		plurmedio	2	3.56	multimedia	
+approve		porcelain	standalone	porcelan	porcelan		porcelano	2	3.56	porcelain	
+approve		psalm	standalone	psalm	psalm		psalmo	2	3.56	psalm	
+approve		schizophrenia	standalone	skizofreni	skizofreni		skizofrenio	2	3.56	schizophrenia	
+approve		walnut	standalone	jugland	jugland		juglando	2	3.56	walnut	
+approve		ambush	standalone	embusk	embusk		embuski	2	3.55	to ambush	
+approve		karate	standalone	karate	karate		karateo	2	3.55	karate	
+approve		messiah	standalone	mesi	mesi		mesio	2	3.55	messiah	
+approve		onboard	standalone	enboat	enboat		enboato	2	3.55	onboard	
+approve	standalone adj (your rule)	plural	derived_adj	plural	plural		plurala	2	3.55	plural	derived adjective — confirm noun anchor / eo_word
+approve		admittedly	standalone	konfes	konfes		konfeso	3	3.54	admittedly	
+approve		articulate	standalone	klaresprim	klaresprim		klaresprimo	2	3.54	articulate	
+approve		buffet	standalone	bufed	bufed		bufedo	2	3.54	buffet	
+approve	standalone adj (your rule)	neurological	derived_adj	neŭrologi	neŭrologi		neŭrologia	3	3.54	neurological	derived adjective — confirm noun anchor / eo_word
+approve		pioneering	standalone	vojmontr	vojmontr		vojmontra	2	3.54	pioneering	
+approve		stimulating	standalone	stimul	stimul		stimula	2	3.54	stimulating, stimulative	
+approve		evacuate	standalone	evaku	evaku		evakui	2	3.53	to evacuate	
+approve		interfering	standalone	interfer	interfer		interfera	2	3.53	interfering	
+approve		maneuver	standalone	manovr	manovr		manovri	2	3.53	to maneuver	
+approve		mono	standalone	mono	mono		monoo	3	3.53	mono	
+approve		semiconductor	standalone	duonkonduk	duonkonduk		duonkonduko	2	3.53	semiconductor	
+approve		ballroom	standalone	balsalon	balsalon		balsalono	2	3.52	ballroom	
+approve	standalone adj (your rule)	bilingual	derived_adj	dulingv	dulingv		dulingva	2	3.52	bilingual	derived adjective — confirm noun anchor / eo_word
+approve		civilized	standalone	civiliz	civiliz		civiliza	2	3.52	civilized	
+approve		dew	standalone	ros	ros		roso	3	3.52	dew	
+approve		brandy	standalone	brand	brand		brando	2	3.51	brandy	
+approve		outlaw	standalone	proskripci	proskripci		proskripcii	3	3.51	to outlaw, proscribe	
+approve	standalone adj (your rule)	speculative	derived_adj	konjekt	konjekt		konjekta	2	3.51	speculative	derived adjective — confirm noun anchor / eo_word
+approve		barge	standalone	barĝ	barĝ		barĝo	3	3.5	barge	
+approve	standalone adj (your rule)	bridal	derived_adj	fianĉin	fianĉin		fianĉina	2	3.5	bridal	derived adjective — confirm noun anchor / eo_word
+approve		correlated	standalone	korelativ	korelativ		korelativa	2	3.5	correlated, correlative	
+approve		crippled	standalone	kripl	kripl		kripla	2	3.5	crippled, infirm, handicapped	
+approve		diocese	standalone	eparki	eparki,episkopland	eparki=diocese || episkopland=diocese	eparkio	3	3.5	diocese	2 roots collapsed: eparki, episkopland
+approve	standalone adj (your rule)	preventive	derived_adj	prevent	prevent		preventa	2	3.5	preventive	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	synonymous	derived_adj	sinonim	sinonim		sinonima	2	3.5	synonymous	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	botanical	derived_adj	botanik	botanik		botanika	2	3.49	botanical	derived adjective — confirm noun anchor / eo_word
+approve		braces	standalone	ŝelk	ŝelk		ŝelko	2	3.49	braces, suspenders	
+approve		elk	standalone	alk	alk		alko	3	3.49	elk, moose	
+approve		fingerprint	standalone	fingroprem	fingroprem		fingropremo	2	3.49	fingerprint	
+approve	standalone adj (your rule)	hereditary	derived_adj	hered	hered		hereda	2	3.49	hereditary	derived adjective — confirm noun anchor / eo_word
+approve		abolish	standalone	abol	abol,abolici	abol=to abolish, abrogate || abolici=to abolish, abrogate	aboli	2	3.48	to abolish, abrogate	2 roots collapsed: abol, abolici
+approve	standalone adj (your rule)	ballistic	derived_adj	balistik	balistik		balistika	2	3.48	ballistic	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	hysterical	derived_adj	histeri	histeri		histeria	2	3.48	hysterical	derived adjective — confirm noun anchor / eo_word
+approve		kidnap	standalone	infanŝtel	infanŝtel		infanŝteli	2	3.48	to kidnap	
+approve		lama	standalone	lama	lama		lamao	2	3.48	lama	
+approve	standalone adj (your rule)	terrestrial	derived_adj	surter	surter		surtera	2	3.48	terrestrial, earthly	derived adjective — confirm noun anchor / eo_word
+approve		alto	standalone	ald	ald		aldo	2	3.47	alto, contralto (voice); viola	
+approve		gloss	standalone	glos	glos		glosi	3	3.47	to gloss	
+approve		graft	standalone	greft	greft		grefti	3	3.47	to graft, transplant	
+approve		ox	standalone	oks	oks		okso	2	3.47	ox	
+approve		turbulent	standalone	turbul	turbul		turbulo	2	3.47	turbulent	
+approve		discriminatory	standalone	diskriminaci	diskriminaci		diskriminacio	2	3.46	discriminatory	
+approve		humiliating	standalone	humilig	humilig,hontig	humilig=humiliating || hontig=humiliating	humiliga	2	3.46	humiliating	2 roots collapsed: humilig, hontig
+approve		liter	standalone	litr	litr		litro	2	3.46	liter	
+approve		martyr	standalone	martir	martir		martiro	2	3.46	martyr	
+approve		opium	standalone	opi	opi		opio	2	3.46	opium	
+approve		candid	standalone	simplanim	simplanim		simplanimo	3	3.45	candid, artless	
+approve		clamp	standalone	kramp	kramp		krampi	3	3.45	to clamp, staple	
+approve	standalone adj (your rule)	diabetic	derived_adj	diabet	diabet		diabeta	3	3.45	diabetic	derived adjective — confirm noun anchor / eo_word
+approve		marquis	standalone	markiz	markiz		markizo	2	3.45	marquis	
+approve		nipple	standalone	cic	cic		cico	2	3.45	nipple	
+approve		blackmail	standalone	ĉantaĝ	ĉantaĝ		ĉantaĝi	2	3.44	to blackmail, extort	
+approve	standalone adj (your rule)	burglary	derived_adj	rompŝtel	rompŝtel		rompŝtela	2	3.44	burglary	derived adjective — confirm noun anchor / eo_word
+approve		godfather	standalone	baptopatr	baptopatr		baptopatro	2	3.44	godfather	
+approve		indifferent	standalone	duagrad	duagrad		duagrado	2	3.44	indifferent, mediocre	
+approve		jubilee	standalone	jubile	jubile		jubileo	2	3.44	jubilee	
+approve	standalone adj (your rule)	mythical	derived_adj	mit	mit		mita	2	3.44	mythical	derived adjective — confirm noun anchor / eo_word
+approve		roe	standalone	kapreol	kapreol		kapreolo	3	3.44	roe, roebuck	
+approve		seam	standalone	fleb	fleb		flebo	3	3.44	seam, vein	
+approve		solvent	standalone	solvent	solvent		solvento	3	3.44	solvent	
+approve		chlorine	standalone	klor	klor		kloro	3	3.43	chlorine	
+approve	standalone adj (your rule)	expressive	derived_adj	esprimplen	esprimplen		esprimplena	3	3.43	expressive	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	lunatic	derived_adj	lunatik	lunatik		lunatika	2	3.43	lunatic	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	lyrical	derived_adj	lirik	lirik		lirika	2	3.43	lyrical	derived adjective — confirm noun anchor / eo_word
+approve		stereotype	standalone	kliŝ	kliŝ		kliŝi	3	3.43	to stereotype	
+approve		sterile	standalone	steril	steril		sterilo	3	3.43	sterile	
+approve		camouflage	standalone	kamufl	kamufl		kamufli	2	3.42	to camouflage	
+approve		divert	standalone	forkonduk	forkonduk		forkonduki	2	3.42	to divert	
+approve		footwear	standalone	piedvest	piedvest		piedvesto	2	3.42	footwear	
+approve		handbag	standalone	mansak	mansak		mansako	2	3.42	handbag	
+approve		incarnation	standalone	enkarniĝ	enkarniĝ		enkarniĝo	2	3.42	incarnation	
+approve		proton	standalone	proton	proton		protono	3	3.42	proton	
+approve		agile	standalone	facilmov	facilmov		facilmovo	3	3.41	agile	
+approve	standalone adj (your rule)	monstrous	derived_adj	monstr	monstr		monstra	2	3.41	monstrous	derived adjective — confirm noun anchor / eo_word
+approve		novice	standalone	novic	novic		novico	2	3.41	novice	
+approve	standalone adj (your rule)	arithmetic	derived_adj	aritmetik	aritmetik		aritmetika	2	3.4	arithmetic	derived adjective — confirm noun anchor / eo_word
+approve		arson	standalone	brulkrim	brulkrim		brulkrimo	3	3.4	arson	
+approve		bourgeois	standalone	burĝ	burĝ		burĝo	2	3.4	bourgeois, middleclass	
+approve	standalone adj (your rule)	bureaucratic	derived_adj	burokrat	burokrat		burokrata	2	3.4	bureaucratic	derived adjective — confirm noun anchor / eo_word
+approve		tenor	standalone	tenor	tenor		tenoro	3	3.4	tenor	
+approve		conglomerate	standalone	konglomer	konglomer		konglomeri	3	3.39	to conglomerate	
+approve		deacon	standalone	diakon	diakon		diakono	3	3.39	deacon	
+approve	standalone adj (your rule)	heterosexual	derived_adj	aliseksem	aliseksem		aliseksema	2	3.39	heterosexual	derived adjective — confirm noun anchor / eo_word
+approve		snapshot	standalone	ekrankopi	ekrankopi		ekrankopio	3	3.39	snapshot	
+approve	standalone adj (your rule)	tonic	derived_adj	fortigil	fortigil		fortigila	3	3.39	tonic, restorative	derived adjective — confirm noun anchor / eo_word
+approve		abrupt	standalone	abrupt	abrupt,brusk	abrupt=abrupt || brusk=abrupt, blunt, brusque	abrupto	2	3.38	abrupt	2 roots collapsed: abrupt, brusk
+approve		affidavit	standalone	ĵurdeklar	ĵurdeklar		ĵurdeklaro	3	3.38	affidavit	
+approve		divergent	standalone	diverĝ	diverĝ		diverĝo	3	3.38	divergent	
+approve		gland	standalone	aden	aden		adeno	3	3.38	gland, ade-	
+approve	standalone adj (your rule)	incremental	derived_adj	alkrement	alkrement		alkrementa	2	3.38	incremental	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	rhetorical	derived_adj	retorik	retorik		retorika	3	3.38	rhetorical	derived adjective — confirm noun anchor / eo_word
+approve		spawn	standalone	fraj	fraj		fraji	2	3.38	to spawn	
+approve		surrogate	standalone	surogat	surogat		surogato	3	3.38	surrogate	
+approve	standalone adj (your rule)	eclectic	derived_adj	eklektik	eklektik		eklektika	3	3.37	eclectic	derived adjective — confirm noun anchor / eo_word
+approve		illiterate	standalone	analfabet	analfabet		analfabeto	2	3.37	illiterate	
+approve		opaque	standalone	opak	opak		opako	3	3.37	opaque	
+approve	standalone adj (your rule)	rustic	derived_adj	rustik	rustik		rustika	3	3.37	rustic	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	diagonal	derived_adj	diagonal	diagonal		diagonala	2	3.36	diagonal, transverse	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	feudal	derived_adj	feŭd	feŭd,feŭdal	feŭd=feudal || feŭdal=feudal	feŭda	2	3.36	feudal	2 roots collapsed: feŭd, feŭdal; derived adjective — confirm noun anchor / eo_word
+approve		fleece	standalone	preztromp	preztromp		preztrompi	3	3.36	to fleece	
+approve	standalone adj (your rule)	idiotic	derived_adj	idiot	idiot		idiota	2	3.36	idiotic	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	pathological	derived_adj	patologi	patologi		patologia	2	3.36	pathological	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	satirical	derived_adj	satir	satir		satira	2	3.36	satirical	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	clerical	derived_adj	klerik	klerik,klerikal	klerik=clerical || klerikal=clerical, clericalist	klerika	3	3.35	clerical	2 roots collapsed: klerik, klerikal; derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	grammatical	derived_adj	gramatik	gramatik		gramatika	2	3.35	grammatical	derived adjective — confirm noun anchor / eo_word
+approve		inquisition	standalone	inkvizici	inkvizici		inkvizicio	2	3.35	inquisition	
+approve		sikh	standalone	sik	sik		siko	3	3.35	sikh	
+approve		ebony	standalone	ebon	ebon		ebono	3	3.34	ebony	
+approve	standalone adj (your rule)	involuntary	derived_adj	nevol	nevol		nevola	2	3.34	involuntary, unwilling	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	additive	derived_adj	adici	adici		adicia	2	3.33	additive	derived adjective — confirm noun anchor / eo_word
+approve		degenerate	standalone	degener	degener		degeneri	2	3.33	to degenerate, degrade, deteriorate	
+approve		farce	standalone	fars	fars		farso	2	3.33	farce	
+approve		inhabit	standalone	enloĝ	enloĝ		enloĝi	2	3.33	to inhabit, move in (dwelling)	
+approve		optimize	standalone	optimumig	optimumig		optimumigi	3	3.33	to optimize, tweak	
+approve		penetrating	standalone	penetr	penetr		penetra	2	3.33	penetrating	
+approve		pamphlet	standalone	pamflet	pamflet		pamfleto	3	3.32	pamphlet, lampoon, satire	
+approve		ascending	standalone	ascend	ascend		ascenda	3	3.31	ascending	
+approve		hydra	standalone	hidr	hidr		hidro	3	3.31	hydra	
+approve	standalone adj (your rule)	hypocritical	derived_adj	hipokrit	hipokrit		hipokrita	3	3.31	hypocritical	derived adjective — confirm noun anchor / eo_word
+approve		indigo	standalone	indig	indig		indigo	3	3.31	indigo	
+approve		muzzle	standalone	muzel	muzel		muzelo	3	3.31	muzzle, snout	
+approve		overt	standalone	nekaŝ	nekaŝ		nekaŝo	3	3.31	overt	
+approve		soprano	standalone	sopran	sopran		soprano	2	3.31	soprano	
+approve		stagnant	standalone	stagn	stagn		stagno	3	3.31	stagnant	
+approve		epidemiology	standalone	epidemiologi	epidemiologi		epidemiologio	2	3.3	epidemiology	
+approve	standalone adj (your rule)	unequal	derived_adj	neegal	neegal		neegala	2	3.3	unequal	derived adjective — confirm noun anchor / eo_word
+approve		bloodshed	standalone	sangoverŝ	sangoverŝ		sangoverŝa	2	3.29	bloodshed	
+approve		cello	standalone	violonĉel	violonĉel		violonĉelo	2	3.29	cello, violoncello	
+approve		clinch	standalone	vinkt	vinkt		vinkti	3	3.29	to clinch, staple	
+approve		occult	standalone	okult	okult		okulto	3	3.29	occult	
+approve		pediatrics	standalone	pediatri	pediatri		pediatrio	3	3.29	pediatrics	
+approve		ardent	standalone	fervor	fervor		fervoro	3	3.28	ardent, fervent, full of zeal, zealous	
+approve		assay	standalone	titr	titr		titri	3	3.28	to assay, titrate	
+approve		degrade	standalone	degrad	degrad		degradi	2	3.28	to degrade, demote, downgrade	
+approve		diffuse	standalone	difuz	difuz		difuzo	2	3.28	diffuse	
+approve		dignified	standalone	dign	dign		digna	2	3.28	dignified	
+approve		epitome	standalone	epitom	epitom		epitomo	3	3.28	epitome, abridgment	
+approve		grotesque	standalone	grotesk	grotesk		grotesko	3	3.28	grotesque, ludicrous	
+approve		skid	standalone	jor	jor		jori	3	3.28	to skid	
+approve		topography	standalone	topografi	topografi		topografio	3	3.28	topography	
+approve	standalone adj (your rule)	impulsive	derived_adj	impuls	impuls		impulsa	2	3.27	impulsive	derived adjective — confirm noun anchor / eo_word
+approve		incense	standalone	bonodorfum	bonodorfum		bonodorfumo	3	3.27	incense	
+approve		lucid	standalone	lucid	lucid		lucido	3	3.27	lucid	
+approve	standalone adj (your rule)	parasitic	derived_adj	parazit	parazit		parazita	2	3.27	parasitic	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	sectarian	derived_adj	sekt	sekt		sekta	3	3.27	sectarian	derived adjective — confirm noun anchor / eo_word
+approve		apathy	standalone	letargi	letargi		letargio	2	3.26	apathy, drowsiness, inertness, lethargy, stupor, torpidity	
+approve		foreground	standalone	antaŭplan	antaŭplan		antaŭplano	3	3.26	foreground	
+approve		helix	standalone	heliks	heliks		helikso	3	3.26	helix	
+approve		orb	standalone	orb	orb		orbo	3	3.26	orb	
+approve		smallpox	standalone	variol	variol		variolo	3	3.26	smallpox, variola	
+approve	standalone adj (your rule)	sociological	derived_adj	sociologi	sociologi		sociologia	3	3.26	sociological	derived adjective — confirm noun anchor / eo_word
+approve		alkaline	standalone	alkal	alkal		alkalo	3	3.25	alkaline	
+approve		alum	standalone	alun	alun		aluno	3	3.25	alum	
+approve	standalone adj (your rule)	arterial	derived_adj	arteri	arteri		arteria	2	3.25	arterial	derived adjective — confirm noun anchor / eo_word
+approve		balm	standalone	balzam	balzam		balzamo	3	3.25	balm, balsam, balmy, balsamic	
+approve		inhale	standalone	inhal	inhal		inhali	2	3.25	to inhale	
+approve		lament	standalone	vekri	vekri		vekrii	3	3.25	to lament, wail, yammer	
+approve		tabloid	standalone	klaĉgazet	klaĉgazet		klaĉgazeto	3	3.25	tabloid	
+approve		braid	standalone	plekt	plekt		plekti	3	3.24	to braid, plait, twine, wreathe	
+approve	standalone adj (your rule)	conscientious	derived_adj	konscienc	konscienc		konscienca	3	3.24	conscientious, scrupulous, faithful, upright, honorable	derived adjective — confirm noun anchor / eo_word
+approve		hem	standalone	orl	orl		orli	3	3.24	to hem	
+approve	standalone adj (your rule)	insidious	derived_adj	insid	insid		insida	3	3.24	insidious, treacherous	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	patriarchal	derived_adj	patriark	patriark		patriarka	2	3.24	patriarchal	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	semifinal	derived_adj	antaŭfinal	antaŭfinal		antaŭfinala	2	3.24	semifinal	derived adjective — confirm noun anchor / eo_word
+approve		stepfather	standalone	duonpatr	duonpatr		duonpatro	2	3.24	stepfather	
+approve		whirlwind	standalone	turnvent	turnvent,kirlovent	turnvent=whirlwind || kirlovent=whirlwind	turnvento	3	3.24	whirlwind	2 roots collapsed: turnvent, kirlovent
+approve	standalone adj (your rule)	aristocratic	derived_adj	aristokrat	aristokrat		aristokrata	2	3.23	aristocratic	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	arsenic	derived_adj	arsen	arsen		arsena	3	3.23	arsenic, arsenical	derived adjective — confirm noun anchor / eo_word
+approve		converge	standalone	konverg	konverg		konvergi	2	3.23	to converge	
+approve	standalone adj (your rule)	cryptic	derived_adj	kript	kript		kripta	2	3.23	cryptic	derived adjective — confirm noun anchor / eo_word
+approve		eel	standalone	angil	angil		angilo	2	3.23	eel	
+approve		firmware	standalone	mikroprogram	mikroprogram		mikroprogramo	3	3.23	firmware, microprogram	
+approve		imp	standalone	petolemul	petolemul		petolemulo	3	3.23	imp, scamp	
+approve		prefix	standalone	prefiks	prefiks		prefiksi	2	3.23	to prefix	
+approve		sled	standalone	sled	sled		sledi	2	3.23	to sled	
+approve		subtitle	standalone	subtitolig	subtitolig		subtitoligi	2	3.23	to subtitle	
+approve	standalone adj (your rule)	frivolous	derived_adj	frivol	frivol		frivola	3	3.22	frivolous	derived adjective — confirm noun anchor / eo_word
+approve		galley	standalone	remŝip	remŝip		remŝipo	3	3.22	galley	
+approve	standalone adj (your rule)	homogeneous	derived_adj	homogen	homogen		homogena	3	3.22	homogeneous	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	metaphysical	derived_adj	metafizik	metafizik		metafizika	3	3.22	metaphysical	derived adjective — confirm noun anchor / eo_word
+approve		meteorology	standalone	meteologi	meteologi,meteorologi	meteologi=meteorology || meteorologi=meteorology	meteologio	3	3.22	meteorology	2 roots collapsed: meteologi, meteorologi
+approve	standalone adj (your rule)	apostolic	derived_adj	apostol	apostol		apostola	3	3.21	apostolic	derived adjective — confirm noun anchor / eo_word
+approve		backlog	standalone	retroakumul	retroakumul		retroakumuli	3	3.21	to backlog	
+approve	standalone adj (your rule)	biochemical	derived_adj	bioĥemi	bioĥemi		bioĥemia	3	3.21	biochemical	derived adjective — confirm noun anchor / eo_word
+approve		eloquent	standalone	elokvent	elokvent		elokvento	3	3.21	eloquent, fluent, rhetorical	
+approve		hermit	standalone	ermit	ermit		ermito	3	3.21	hermit, recluse	
+approve	standalone adj (your rule)	panoramic	derived_adj	panoram	panoram		panorama	2	3.21	panoramic	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	septic	derived_adj	sept	sept		septa	3	3.21	septic	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	symmetric	derived_adj	simetri	simetri		simetria	2	3.21	symmetric, symmetrical	derived adjective — confirm noun anchor / eo_word
+approve		clockwise	standalone	horloĝdirekt	horloĝdirekt		horloĝdirekto	2	3.2	clockwise	
+approve		correlate	standalone	korelaci	korelaci		korelacii	3	3.2	to correlate	
+approve		distressing	standalone	korprem	korprem		korprema	2	3.2	distressing, oppressing	
+approve	standalone adj (your rule)	equestrian	derived_adj	surĉeval	surĉeval		surĉevala	3	3.2	equestrian	derived adjective — confirm noun anchor / eo_word
+approve		germ	standalone	mikrob	mikrob		mikrobo	2	3.2	germ, microbe	
+approve		oblique	standalone	oblikv	oblikv		oblikvo	3	3.2	oblique, slanting	
+approve	standalone adj (your rule)	aerobic	derived_adj	aerobi	aerobi		aerobia	2	3.19	aerobic, aerobiotic	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	algebraic	derived_adj	algebr	algebr		algebra	3	3.19	algebraic	derived adjective — confirm noun anchor / eo_word
+approve		augment	standalone	aŭgment	aŭgment		aŭgmento	3	3.19	augment	
+approve		iodine	standalone	jod	jod		jodo	3	3.19	iodine	
+approve		perverse	standalone	pervers	pervers		perverso	2	3.19	perverse	
+approve	standalone adj (your rule)	prophetic	derived_adj	profet	profet		profeta	2	3.19	prophetic	derived adjective — confirm noun anchor / eo_word
+approve		radiology	standalone	radiologi	radiologi		radiologio	3	3.19	radiology	
+approve		deport	standalone	deport	deport		deporti	2	3.18	to deport	
+approve		facet	standalone	facet	facet		faceti	3	3.18	to facet	
+approve		horticulture	standalone	hortikultur	hortikultur		hortikulturo	3	3.18	horticulture	
+approve		masturbate	standalone	onan	onan		onani	2	3.18	to masturbate	
+approve		mobilize	standalone	mobiliz	mobiliz		mobilizi	3	3.18	to mobilize	
+approve	standalone adj (your rule)	pornographic	derived_adj	pornografi	pornografi		pornografia	2	3.18	pornographic	derived adjective — confirm noun anchor / eo_word
+approve		sulphur	standalone	sulf	sulf		sulfo	2	3.18	sulphur	
+approve	standalone adj (your rule)	anecdotal	derived_adj	anekdot	anekdot		anekdota	2	3.17	anecdotal	derived adjective — confirm noun anchor / eo_word
+approve		autoimmune	standalone	aŭtoimun	aŭtoimun		aŭtoimuno	3	3.17	autoimmune	
+approve	standalone adj (your rule)	esoteric	derived_adj	esoter	esoter		esotera	3	3.17	esoteric	derived adjective — confirm noun anchor / eo_word
+approve		rectify	standalone	rektif	rektif		rektifi	3	3.17	to rectify	
+approve		dynamo	standalone	dinam	dinam		dinamo	3	3.16	dynamo	
+approve		incision	standalone	inciz	inciz		incizo	3	3.16	incision	
+approve	standalone adj (your rule)	axial	derived_adj	aks	aks		aksa	3	3.15	axial	derived adjective — confirm noun anchor / eo_word
+approve		embankment	standalone	surbord	surbord		surbordo	3	3.15	embankment, quay	
+approve		mulberry	standalone	morus	morus		moruso	3	3.15	mulberry	
+approve		peacekeeping	standalone	pacgard	pacgard		pacgarda	3	3.15	peacekeeping	
+approve		pharmacology	standalone	farmakologi	farmakologi		farmakologio	3	3.15	pharmacology	
+approve		sickle	standalone	serp	serp		serpo	3	3.15	sickle	
+approve	standalone adj (your rule)	utopian	derived_adj	utopi	utopi		utopia	3	3.15	utopian	derived adjective — confirm noun anchor / eo_word
+approve		decipher	standalone	deĉifr	deĉifr		deĉifri	2	3.14	to decipher, decode, decrypt	
+approve		inflamed	standalone	inflam	inflam		inflama	3	3.14	inflamed	
+approve		primate	standalone	primas	primas		primaso	3	3.14	primate	
+approve	standalone adj (your rule)	sedentary	derived_adj	hejmsid	hejmsid		hejmsida	3	3.14	sedentary	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	antisocial	derived_adj	homevit	homevit		homevita	2	3.13	antisocial	derived adjective — confirm noun anchor / eo_word
+approve		blacklist	standalone	barlist	barlist		barlisto	2	3.13	blacklist	
+approve		lenient	standalone	indulg	indulg		indulgo	3	3.13	lenient	
+approve		toxicology	standalone	toksologi	toksologi		toksologio	3	3.13	toxicology	
+approve		adjutant	standalone	adjutant	adjutant		adjutanto	3	3.12	adjutant, aide	
+approve		aggravating	standalone	indignig	indignig		indigniga	3	3.12	aggravating	
+approve		archaeologist	standalone	arkeolog	arkeolog		arkeologo	2	3.12	archaeologist	
+approve		cipher	standalone	ĉifr	ĉifr		ĉifri	3	3.12	to cipher, encipher, encrypt, encode	
+approve		cyst	standalone	cist	cist		cisto	3	3.12	cyst	
+approve		philanthropist	standalone	filantrop	filantrop		filantropo	3	3.12	philanthropist	
+approve		relinquish	standalone	abandon	abandon		abandoni	3	3.12	to relinquish	
+approve	standalone adj (your rule)	corrosive	derived_adj	korod	korod		koroda	3	3.11	corrosive	derived adjective — confirm noun anchor / eo_word
+approve		handball	standalone	handbal	handbal,manpilk	handbal=handball || manpilk=handball	handbalo	3	3.11	handball	2 roots collapsed: handbal, manpilk
+approve		immunology	standalone	imunologi	imunologi		imunologio	3	3.11	immunology	
+approve		mantis	standalone	mant	mant		manto	3	3.11	mantis	
+approve		pug	standalone	mops	mops		mopso	3	3.11	pug	
+approve		smuggle	standalone	kontraband	kontraband		kontrabandi	2	3.11	to smuggle	
+approve		solder	standalone	lut	lut		luti	3	3.11	to solder	
+approve		condescending	standalone	degn	degn		degna	3	3.1	condescending	
+approve	standalone adj (your rule)	monastic	derived_adj	monaĥ	monaĥ		monaĥa	3	3.1	monastic	derived adjective — confirm noun anchor / eo_word
+approve		ogre	standalone	ogr	ogr		ogro	3	3.1	ogre	
+approve		pastime	standalone	tempopasig	tempopasig		tempopasigo	3	3.1	pastime	
+approve		accordion	standalone	akordion	akordion		akordiono	2	3.09	accordion	
+approve		inert	standalone	inert	inert		inerto	3	3.09	inert	
+approve		lumbar	standalone	lumb	lumb		lumbo	3	3.09	lumbar	
+approve		propagate	standalone	propag	propag		propagi	2	3.09	to propagate	
+approve		totem	standalone	totem	totem		totemo	3	3.09	totem	
+approve	standalone adj (your rule)	heterogeneous	derived_adj	heterogen	heterogen		heterogena	3	3.08	heterogeneous	derived adjective — confirm noun anchor / eo_word
+approve		irritate	standalone	irit	irit		iriti	3	3.08	to irritate	
+approve		slipper	standalone	pantofl	pantofl		pantoflo	3	3.08	slipper	
+approve		videotape	standalone	vidbend	vidbend		vidbendo	3	3.08	videotape	
+approve		compress	standalone	kondens	kondens		kondensi	2	3.07	to compress	
+approve		drugstore	standalone	apotek	apotek		apoteko	2	3.07	drugstore, pharmacy, chemist	
+approve	standalone adj (your rule)	pedagogical	derived_adj	pedagogi	pedagogi		pedagogia	2	3.07	pedagogical	derived adjective — confirm noun anchor / eo_word
+approve		polygamy	standalone	poligami	poligami		poligamio	2	3.07	polygamy	
+approve		poplar	standalone	popl	popl		poplo	3	3.07	poplar	
+approve	standalone adj (your rule)	pubic	derived_adj	pub	pub		puba	2	3.07	pubic	derived adjective — confirm noun anchor / eo_word
+approve		purposeful	standalone	celkonform	celkonform		celkonforma	2	3.07	purposeful, intentional	
+approve		aloe	standalone	alo	alo		aloo	3	3.06	aloe	
+approve	standalone adj (your rule)	anesthetic	derived_adj	anestez	anestez		anesteza	2	3.06	anesthetic	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	hepatic	derived_adj	hepat	hepat		hepata	3	3.06	hepatic	derived adjective — confirm noun anchor / eo_word
+approve		incognito	standalone	inkognit	inkognit		inkognito	2	3.06	incognito	
+approve		mime	standalone	mim	mim		mimi	2	3.06	to mime	
+approve	standalone adj (your rule)	mythological	derived_adj	mitologi	mitologi		mitologia	2	3.06	mythological	derived adjective — confirm noun anchor / eo_word
+approve		skirmish	standalone	tiraljor	tiraljor		tiraljori	3	3.06	to skirmish	
+approve		sumo	standalone	sumo	sumo		sumoo	3	3.06	sumo	
+approve	standalone adj (your rule)	tumultuous	derived_adj	tumult	tumult		tumulta	3	3.06	tumultuous, turbulent, riotous	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	unitary	derived_adj	unit	unit		unita	3	3.06	unitary	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	xenophobic	derived_adj	ksenofobi	ksenofobi		ksenofobia	3	3.06	xenophobic	derived adjective — confirm noun anchor / eo_word
+approve		assimilate	standalone	asimil	asimil		asimili	3	3.05	to assimilate, localize	
+approve		beet	standalone	bet	bet		beto	3	3.05	beet, of a beet, of beetroot; beta (β)	
+approve		bigoted	standalone	bigot	bigot		bigota	3	3.05	bigoted, fanatical	
+approve	standalone adj (your rule)	cannibal	derived_adj	kanibal	kanibal		kanibala	2	3.05	cannibal	derived adjective — confirm noun anchor / eo_word
+approve		emir	standalone	emir	emir		emiro	3	3.05	emir	
+approve	standalone adj (your rule)	fractional	derived_adj	frakci	frakci		frakcia	2	3.05	fractional	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	incendiary	derived_adj	incendi	incendi		incendia	3	3.05	incendiary	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	parochial	derived_adj	paroĥ	paroĥ,parok	paroĥ=parochial || parok=parochial	paroĥa	3	3.05	parochial	2 roots collapsed: paroĥ, parok; derived adjective — confirm noun anchor / eo_word
+approve		acupuncture	standalone	akupunktur	akupunktur		akupunkturo	3	3.04	acupuncture	
+approve		coexist	standalone	kunekzist	kunekzist		kunekzisti	2	3.04	to coexist	
+approve		decadent	standalone	dekadenc	dekadenc		dekadenco	3	3.04	decadent	
+approve	standalone adj (your rule)	genealogical	derived_adj	genealogi	genealogi		genealogia	2	3.04	genealogical	derived adjective — confirm noun anchor / eo_word
+approve		hajj	standalone	haĝ	haĝ		haĝo	3	3.04	hajj	
+approve		impotent	standalone	impotent	impotent		impotento	2	3.04	impotent	
+approve		winch	standalone	vinĉ	vinĉ		vinĉi	3	3.04	to winch	
+approve		babysit	standalone	infanvart	infanvart		infanvarti	2	3.03	to babysit	
+approve		configure	standalone	konfigur	konfigur		konfiguro	2	3.03	configure	
+approve		hydrate	standalone	hidrat	hidrat		hidrato	2	3.03	hydrate	
+approve		kebab	standalone	kebab	kebab		kebabo	2	3.03	kebab	
+approve	standalone adj (your rule)	multilingual	derived_adj	multlingv	multlingv,plurlingv	multlingv=multilingual || plurlingv=multilingual	multlingva	2	3.03	multilingual	2 roots collapsed: multlingv, plurlingv; derived adjective — confirm noun anchor / eo_word
+approve		widower	standalone	vidv	vidv		vidvo	3	3.03	widower	
+approve	standalone adj (your rule)	agnostic	derived_adj	agnostik	agnostik		agnostika	3	3.02	agnostic	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	fanatical	derived_adj	fanatik	fanatik		fanatika	2	3.02	fanatical	derived adjective — confirm noun anchor / eo_word
+approve		incandescent	standalone	inkandesk	inkandesk		inkandesko	3	3.02	incandescent	
+approve		infallible	standalone	neerarebl	neerarebl		neerareblo	3	3.02	infallible	
+approve		eyelid	standalone	palpebr	palpebr		palpebro	2	3.01	eyelid	
+approve	standalone adj (your rule)	numeric	derived_adj	numer	numer		numera	2	3.01	numeric, numerical	derived adjective — confirm noun anchor / eo_word
+approve		puritan	standalone	puritan	puritan		puritano	3	3.01	puritan	
+approve		rhapsody	standalone	rapsodi	rapsodi		rapsodio	3	3.01	rhapsody	
+approve		snowboard	standalone	neĝtabul	neĝtabul		neĝtabuli	2	3.01	to snowboard	
+approve		austere	standalone	aŭster	aŭster,severmor	aŭster=austere, Spartan || severmor=austere	aŭstero	3	3.0	austere, Spartan	2 roots collapsed: aŭster, severmor
+approve		blister	standalone	blaz	blaz		blazo	3	3.0	blister	
+approve		chalice	standalone	kalik	kalik		kaliko	3	3.0	chalice, goblet, tankard, grail	
+approve		czar	standalone	car	car		caro	2	3.0	of a czar, of a tsar	
+approve		duchy	standalone	dukland	dukland		duklando	3	3.0	duchy, dukedom	
+approve		instill	standalone	ensem	ensem		ensemi	3	3.0	to instill, sow	
+approve		pantomime	standalone	pantomim	pantomim		pantomimi	3	3.0	to pantomime	
+approve		spore	standalone	spor	spor		sporo	3	3.0	spore	
+approve	standalone adj (your rule)	synchronous	derived_adj	sinkron	sinkron		sinkrona	2	3.0	synchronous	derived adjective — confirm noun anchor / eo_word
+approve	standalone adj (your rule)	theologian	derived_adj	teolog	teolog		teologa	3	3.0	theologian	derived adjective — confirm noun anchor / eo_word
+approve		wicker	standalone	vimen	vimen		vimeno	3	3.0	wicker	
