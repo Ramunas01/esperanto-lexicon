@@ -65,6 +65,9 @@ ARCHAIC_MARKERS = frozenset({"archaic", "obsolete", "dated", "poetic", "dialecta
 _ADJ_SUFFIXES = ("ical", "ic", "ial", "ian", "ary", "ous", "ive", "al", "ary")
 
 
+_LEADING_FUNCTION = ("to", "a", "an", "the", "of", "be", "one's", "someone", "something")
+
+
 def gloss_tokens(gloss: str) -> list[str]:
     """Lowercased alphabetic word tokens of a gloss (for whole-word matching)."""
     out: list[str] = []
@@ -73,6 +76,17 @@ def gloss_tokens(gloss: str) -> list[str]:
         if w.isalpha():
             out.append(w)
     return out
+
+
+def gloss_head(gloss: str) -> str:
+    """First *content* word of a gloss (leading `to`/articles stripped)."""
+    toks = gloss_tokens(gloss)
+    i = 0
+    while i < len(toks) and toks[i] in _LEADING_FUNCTION:
+        i += 1
+    if i < len(toks):
+        return toks[i]
+    return toks[0] if toks else ""
 
 
 def flag_direction(gloss_head: str, gloss: str) -> str:

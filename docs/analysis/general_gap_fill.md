@@ -89,8 +89,49 @@ status/domain assignment, reversible — the sorting is Effort B's job.)
 ## Deliverables
 - `data/analysis/tier3_general/general_gap_worksheet.tsv` — the A1 review worksheet (621 rows).
 - `src/analyzer/consolidate_general_gaps.py` (+ `tests/test_consolidate_general_gaps.py`, 29 tests).
-- `apply_gapfill_merge.py` `--general-gap-triaged` path (+ `tests/test_apply_general_gap.py`, 6 tests).
-- This memo. Full suite: **957 passed.**
+- `apply_gapfill_merge.py` `--general-gap-triaged` path (+ `tests/test_apply_general_gap.py`, 11 tests).
+- This memo. Full suite: **962 passed.**
 
-**Status: STOPPED at the A2 human gate — no DB writes.** The reviewed worksheet drives
-the A3 merge + the post-merge `candidate_gap` re-count.
+---
+
+## A3 — gated merge (COMMITTED 2026-07-14)
+Reviewed worksheet: `general_gap_triaged.xlsx` (621 rows) → `general_gap_triaged.tsv`.
+Decisions: **616 approve · 4 split · 1 hold**. The merge acts on the `decision` column:
+`approve` → 1 concept at its reviewed `eo_word`/tier; `split` → **each root in
+`all_roots`** authored as its own concept (eo_word = root + POS ending from its
+`root_detail` gloss; single root → `eo_root` = decomposition head); `hold` → skipped.
+`review_flag` (incl. `R9-park`) is metadata — the **23 R9-park approves were authored**;
+only the 1 R9-park `hold` (`agricultural`) was skipped.
+
+Backup + single transaction + insert-only + mandatory post-write invariant audit
+(auto-rollback). **Committed:**
+
+| | value |
+| --- | --- |
+| concepts authored | **624** (616 approve + **8** from 4 splits) |
+| by tier | **T2 = 301 · T3 = 323** |
+| source | `general_gap_v1` |
+| row deltas | concept 5101→5725, concept_lang +624, concept_root +624 |
+| **audit** | **PASS** — 0 `eo_root↔head` mismatches (whole DB), 0 dupes, 0 eo_word collisions, 0 degenerate roots |
+
+**Splits → 8 distinct concepts** (one English word, distinct EO roots): `chancellor` →
+`kanceliero`/`rektoro`; `acute` → `akuta`/`sagaca` (ADJ); `accessory` →
+`anekso`/`kunkulpo`; `erect` → `erekti` (VERB)/`vertikala` (ADJ). (Reviewer correction
+applied: the three adjective senses `akut`/`sagac`/`vertikal` use their `-a` form with
+`eo_pos=ADJ`.)
+
+### Post-merge coverage re-run (`root_tier_coverage.py`)
+The placed concepts left `candidate_gap`:
+
+| bucket | before (PR #14) | after |
+| --- | ---: | ---: |
+| `covered_T1_3` | 2,648 | **3,272** (+624) |
+| **`candidate_gap`** | **666** | **3** |
+| `shade_mismatch` | 480 | 451 |
+
+Covered roots by tier now: T1 764 · T2 (any) 2,639 · T3 (any) **770** (was 447). The
+**3 residual `candidate_gap`** are exactly the three roots of the one **held** concept —
+`agrikultur` / `agrokultur` / `agronomi` (`agricultural`, R9-parked for Effort B) —
+correctly not authored. Evidence: `data/analysis/root_coverage/after_general_gap/`.
+
+**Status: A3 COMMITTED, audit clean, candidate_gap 666→3. PR #15 stays open — not merged.**

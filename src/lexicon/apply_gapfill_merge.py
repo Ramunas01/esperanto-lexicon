@@ -589,57 +589,119 @@ def _awl_pos_tagger(spacy: bool):
 GENERAL_GAP_SOURCE = "general_gap_v1"
 
 
+def _parse_root_detail(root_detail: str) -> list[tuple[str, str]]:
+    """Parse ``"root=gloss || root=gloss"`` into ``[(root, gloss), ...]``."""
+    pairs: list[tuple[str, str]] = []
+    for part in (root_detail or "").split("||"):
+        part = part.strip()
+        if "=" in part:
+            root, gloss = part.split("=", 1)
+            root = root.strip()
+            if root:
+                pairs.append((root, gloss.strip()))
+    return pairs
+
+
+# Reviewer correction (2026-07-14): adjective split senses whose shared English
+# head is not `-al/-ic`-marked, so the POS heuristic defaults them to a noun ending.
+# Force the -a (adjective) form; author_concept then sets eo_pos=ADJ from the ending.
+SPLIT_EO_OVERRIDES = {"akut": "akuta", "sagac": "sagaca", "vertikal": "vertikala"}
+
+
+def _split_rows(row: dict) -> list[dict]:
+    """Expand a ``split`` worksheet row into one author-row per constituent root.
+
+    Each root in ``all_roots`` becomes its own concept: eo_word = root + a POS
+    ending derived from that root's per-root gloss (``root_detail``), so a single
+    root means ``eo_root`` = the decomposition head (author_concept enforces the
+    invariant). EN word = that gloss's content head; tier = the row's proposed tier.
+    Reviewer-named adjective senses use :data:`SPLIT_EO_OVERRIDES`.
+    """
+    import sys as _sys
+    _sys.path.insert(0, str(_repo_root() / "src" / "analyzer"))
+    from consolidate_general_gaps import gloss_head, pos_and_ending  # noqa: E402
+
+    tier_raw = (row.get("tier") or row.get("proposed_tier") or "").strip()
+    if not tier_raw.isdigit():
+        return []
+    tier = int(tier_raw)
+    detail = dict(_parse_root_detail(row.get("root_detail", "")))
+    roots = [r.strip() for r in (row.get("all_roots") or "").split(",") if r.strip()]
+    out: list[dict] = []
+    for root in roots:
+        gloss = detail.get(root, row.get("gloss", "") or root)
+        head = gloss_head(gloss) or root
+        if root in SPLIT_EO_OVERRIDES:
+            eo_word = SPLIT_EO_OVERRIDES[root]
+        else:
+            _pos, ending = pos_and_ending(head, gloss)
+            eo_word = root + ending
+        out.append({
+            "en_word": head.lower(), "eo_word": eo_word, "eo_root": root,
+            "tier": tier, "source": GENERAL_GAP_SOURCE,
+        })
+    return out
+
+
 def run_general_gap_merge(
     conn: sqlite3.Connection, worksheet_path: Path, decomposer
 ) -> dict:
-    """Author the approved rows of the reviewed general-gap worksheet (insert-only).
+    """Author the reviewed general-gap worksheet (insert-only) by its decision column.
 
-    Reuses :func:`author_concept` (which sets ``concept.eo_root`` from the eo_word
-    decomposition head — the invariant). One concept per approved row:
-    ``eo_word`` from the worksheet, fallback ``eo_root`` = the anchor root, EN word
-    = ``en_word``, tier = the confirmed tier, ``source='general_gap_v1'``. Rows whose
-    decision is not ``approve`` (hold / reject / blank) are skipped, not authored.
+    Reuses :func:`author_concept` (sets ``concept.eo_root`` from the eo_word
+    decomposition head — the invariant). Decisions:
+      * ``approve`` — author ONE concept (worksheet ``eo_word`` / ``anchor_root`` /
+        ``proposed_tier``);
+      * ``split``   — author EACH root in ``all_roots`` as its own concept (eo_word =
+        root + POS ending from its ``root_detail`` gloss);
+      * anything else (``hold`` / ``reject`` / blank) — skipped, not authored.
+    ``review_flag`` (incl. ``R9-park``) is metadata only — an ``approve`` is authored
+    regardless of its review_flag; ``source='general_gap_v1'`` on every row.
     """
     rows = _load_tsv(worksheet_path)
-    new_cids: set[int] = set()
     decisions: dict[str, int] = {}
-    authored = skipped = 0
+    authored = skipped = held = split_concepts = 0
     by_tier: dict[int, int] = {}
-    held: list[tuple[str, str]] = []
     before_ids = {r[0] for r in conn.execute("SELECT id FROM concept")}
-    for row in rows:
-        decision = (row.get("decision") or "").strip().lower()
-        decisions[decision or "(blank)"] = decisions.get(decision or "(blank)", 0) + 1
-        if decision != "approve":
-            if row.get("flag") and row["flag"] != "common":
-                held.append((row.get("en_word", ""), row["flag"]))
-            continue
-        # tier: a reviewer-added 'tier' column wins, else 'proposed_tier'.
-        tier_raw = (row.get("tier") or row.get("proposed_tier") or "").strip()
-        if not tier_raw.isdigit():
-            skipped += 1
-            continue
-        arow = {
-            "en_word": (row.get("en_word") or "").strip().lower(),
-            "eo_word": (row.get("eo_word") or "").strip(),
-            "eo_root": (row.get("anchor_root") or "").strip(),
-            "tier": int(tier_raw),
-            "source": GENERAL_GAP_SOURCE,
-        }
+
+    def _author(arow: dict) -> None:
+        nonlocal authored, skipped
         if not arow["en_word"] or not arow["eo_word"]:
             skipped += 1
-            continue
+            return
         if author_concept(conn, arow, decomposer):
             authored += 1
             by_tier[arow["tier"]] = by_tier.get(arow["tier"], 0) + 1
         else:
             skipped += 1
+
+    for row in rows:
+        decision = (row.get("decision") or "").strip().lower()
+        decisions[decision or "(blank)"] = decisions.get(decision or "(blank)", 0) + 1
+        if decision == "approve":
+            tier_raw = (row.get("tier") or row.get("proposed_tier") or "").strip()
+            if not tier_raw.isdigit():
+                skipped += 1
+                continue
+            _author({
+                "en_word": (row.get("en_word") or "").strip().lower(),
+                "eo_word": (row.get("eo_word") or "").strip(),
+                "eo_root": (row.get("anchor_root") or "").strip(),
+                "tier": int(tier_raw), "source": GENERAL_GAP_SOURCE,
+            })
+        elif decision == "split":
+            for arow in _split_rows(row):
+                split_concepts += 1
+                _author(arow)
+        else:
+            held += 1
+
     after_ids = {r[0] for r in conn.execute("SELECT id FROM concept")}
     new_cids = after_ids - before_ids
     return {
         "decisions": decisions, "authored": authored, "skipped": skipped,
+        "held": held, "split_concepts": split_concepts,
         "by_tier": dict(sorted(by_tier.items())), "new_cids": new_cids,
-        "held_count": len(held),
     }
 
 
@@ -664,8 +726,9 @@ def _main_general_gap(args, decomposer) -> None:
     print("General-adult gap merge — DRY-RUN" if args.dry_run else "General-adult gap merge")
     print("=" * 66)
     print(f"decisions           : {rep['decisions']}")
-    print(f"authored (NEW)      : {rep['authored']}   skipped: {rep['skipped']}   "
-          f"held (not approved) : {rep['held_count']}")
+    print(f"authored (concepts) : {rep['authored']}   skipped: {rep['skipped']}   "
+          f"held (not approved) : {rep['held']}")
+    print(f"  of which from split: {rep['split_concepts']} split-concepts")
     print(f"by tier             : {rep['by_tier']}   (source={GENERAL_GAP_SOURCE})")
     print(f"row deltas          : " + ", ".join(
         f"{t} {before[t]}->{after[t]} (+{after[t]-before[t]})" for t in before))

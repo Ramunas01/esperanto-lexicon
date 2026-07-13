@@ -55,3 +55,13 @@ Held/archaic roots are parked with reasons, not authored.
     reasons for Effort B. → **[RAMUNAS/ADVISOR] review the worksheet (approve/hold/reject, fix
     anchors incl. the 168 derived adjectives, confirm tiers); then resume A3: run the gated merge,
     audit, re-run `root_tier_coverage.py`, report placed counts + residual candidate_gap.**
+- 2026-07-14 (Programmer): **A3 COMPLETE — gated merge COMMITTED. PR #15 open, not merged.**
+  Reviewed `general_gap_triaged.xlsx` (616 approve / 4 split / 1 hold) → `general_gap_triaged.tsv`.
+  Extended `run_general_gap_merge` to act on `decision`: approve→1 concept; split→each root in
+  all_roots (eo_word=root+POS ending from root_detail; reviewer correction: akut/sagac/vertikal→-a
+  ADJ via SPLIT_EO_OVERRIDES); hold→skip. review_flag=metadata (23 R9-park approves authored; 1
+  R9-park hold `agricultural` skipped). **Committed 624 concepts** (616 approve + 8 split), tiers
+  T2=301/T3=323, source=general_gap_v1; backup+txn+audit **PASS** (0 eo_root↔head mismatches whole
+  DB, 0 dupes/collisions). Re-ran `root_tier_coverage.py`: **candidate_gap 666→3** (covered_T1_3
+  2648→3272); the 3 residuals = the held `agricultural` roots (R9-park, correctly unauthored).
+  11 general_gap tests; full suite 962 passed. Memo updated. **Effort A DONE.**
