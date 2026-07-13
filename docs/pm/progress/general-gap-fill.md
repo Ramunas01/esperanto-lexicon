@@ -5,7 +5,7 @@
 - **Advisor/PM brief:** [`../briefs/666-and-lifecycle.md`](../briefs/666-and-lifecycle.md) (Effort A)
 - **Programmer brief (execute this):** [`../programmer/general-gap-fill.md`](../programmer/general-gap-fill.md)
 - **Branch:** `analysis/general-gap-fill` (off `main`, not stacked). Sibling: `design/vocab-lifecycle` (Effort B).
-- **Status:** 🟡 **SET UP — briefs filed, awaiting Programmer dispatch.**
+- **Status:** 🔧 **IN PROGRESS (Programmer, 2026-07-13) — A1 consolidate + worksheet; STOP at human gate.**
 
 ## The job
 Place the clearly-common subset of the 666 `candidate_gaps` (PR #14) — the missing **general-adult
@@ -40,3 +40,18 @@ Held/archaic roots are parked with reasons, not authored.
 - 2026-07-13 (PM): PR #14 merged to `main` (candidate_gaps.tsv now on main); branch + briefs set
   up. Verified input columns, the reusable insert-only writer (invariant-safe), and the join
   re-run tool. Awaiting Programmer.
+- 2026-07-13 (Programmer): **A1 COMPLETE + A3 writer built & dry-run-validated — STOPPED at the A2
+  human gate; no DB writes. PR open, not merged.**
+  - `src/analyzer/consolidate_general_gaps.py`: **666 raw rows → 621 distinct concepts** (44 heads
+    deduped). R9 flags: common 597 / domain-adjacent 17 / register-marked 6 / archaic 1. common by
+    tier: T2=7 / T3=590. 168 derived-adjective concepts flagged for anchor confirmation. Whole-word
+    flag matching (avoids the `suck`→suckle / `prefix`→"fik" substring traps). Worksheet:
+    `data/analysis/tier3_general/general_gap_worksheet.tsv`. 29 tests.
+  - `apply_gapfill_merge.py --general-gap-triaged`: new `source='general_gap_v1'` path reusing
+    `author_concept` (eo_root from decomposition head — invariant held) + `audit_eo_root_invariant`
+    + backup/txn/auto-rollback. 6 tests. **Dry-run (5 common rows, rolled back): 5 authored, audit
+    PASS (0 mismatches/dupes/collisions), DB untouched.**
+  - Full suite 957 passed. Memo `docs/analysis/general_gap_fill.md`. Held subsets parked with
+    reasons for Effort B. → **[RAMUNAS/ADVISOR] review the worksheet (approve/hold/reject, fix
+    anchors incl. the 168 derived adjectives, confirm tiers); then resume A3: run the gated merge,
+    audit, re-run `root_tier_coverage.py`, report placed counts + residual candidate_gap.**
