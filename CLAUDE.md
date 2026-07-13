@@ -457,3 +457,23 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
   ~89% named entities. Reusable UNKNOWN classifier guards future corpora. Next chapter is the
   names layer (open-world, QID-keyed, tier-relative — a different problem; start with D1
   name-accounting).
+* [x] Inventory-vs-tier root coverage (src/analyzer/root_tier_coverage.py, PR #14) — read-only,
+  corpus-free join of all ~26,439 ESPDIC roots against tier coverage. Found the missing
+  **general-adult layer**: candidate_gap 666 (T3-weighted, Latinate — carbon/democratic/retail/
+  copyright) + shade_mismatch 480 (EO splitting joints English blurs, e.g. leporo hare vs kuniklo
+  rabbit — a resource, not a gap). Gaps concentrate at the top (T1=1, T2=107, T3=558): T3 was
+  AWL-*academic*, which by construction excludes *general* high-frequency vocabulary.
+* [x] General-adult layer placed (src/lexicon/apply_gapfill_merge.py --general-gap-triaged +
+  consolidate_general_gaps.py, PR #15) — the 666 consolidated to 621 concepts (dedupe + derived-
+  adjective flag), human-reviewed, **624 concepts merged insert-only** (source='general_gap_v1',
+  T2=301/T3=323; 4 split rows → 8 concepts; agricultural held for the lifecycle layer). Post-write
+  audit clean (0 eo_root↔head mismatches); candidate_gap 666→3 (the held agricultural's roots).
+* [ ] R9 vocabulary-lifecycle scaffold (design/vocab-lifecycle, PR #16, design+scaffold, awaiting
+  Advisor design review) — `unplaced` staging status (EXCLUDED from the metric) + a philology-T4
+  domain (COUNTED), a no-loss partition test (every root in exactly one state, reconciles to
+  26,439). Full 22k obscure-root sort deferred.
+* Tier-model note (ROADMAP R10): tiers stay **4 bands**; commonness=tier, acquisition-stage
+  (preschool/school/adult) and reference-population (default: generally-educated young adult) are
+  SEPARATE axes. **The metric T4/(T1+T2) is insensitive to the internal T1/T2/T3 boundaries —
+  only the T3/T4 (common-vs-specialist) line carries weight** — so lower-band tiering choices are
+  denominator-neutral.
