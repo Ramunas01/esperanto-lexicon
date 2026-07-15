@@ -64,6 +64,55 @@ def create_common_lexicon_schema(conn: sqlite3.Connection) -> None:
     conn.commit()
 
 
+def create_lifecycle_schema(conn: sqlite3.Connection) -> None:
+    """Create the R9 vocabulary-lifecycle staging table (additive; sibling to concept).
+
+    ``concept_lifecycle`` records the out-of-band lifecycle STATE of a concept
+    that is intentionally *not* placed in a common tier. Currently the only
+    state is ``'unplaced'`` — rising/new vocabulary (coinages, fresh borrowings)
+    whose direction of travel is not yet known. An ``unplaced`` concept is
+    **EXCLUDED from the expertise metric** (it counts as neither the common
+    denominator nor the specialist numerator); the tier-loaders in
+    ``coverage_report`` anti-join this table.
+
+    Design rationale (see docs/design/vocab_lifecycle.md):
+
+    * A **separate table**, not a column on ``concept`` and not a value of
+      ``eo_status`` (which is complete/pending — an orthogonal data-quality
+      axis that must not be overloaded). Per R8 (derived-not-fixed), lifecycle
+      is a reversible, provenance-stamped *assignment*, not part of a concept's
+      identity — so it lives beside ``concept``, never inside it.
+    * One row per concept (``PRIMARY KEY concept_id``). **Absence of a row is
+      the default** — the concept is on the normal placed/derived path and the
+      metric is unchanged. This is what makes the wiring purely additive: with
+      an empty table, every existing analysis is byte-identical.
+    * **Reversible**: delete the row to un-stage; the ``concept`` itself is
+      never deleted (no root ever leaves the inventory).
+    * ``source``/``asof``/``note`` stamp provenance of the assignment.
+
+    The fading/archaic home (**philology-T4**) is deliberately *not* stored
+    here: it is a genuine Tier-4 domain DB
+    (``data/domain_db/philology.db``, built with :func:`create_domain_schema`)
+    so it is **COUNTED** by the existing T4 loader. Keeping ``unplaced`` (a
+    status row, excluded) and philology-T4 (a domain DB, counted) in two
+    different mechanisms enforces R9's rule that they *never merge* — they get
+    opposite scoring treatment and cannot be collapsed by accident.
+    """
+    conn.executescript(
+        """
+        CREATE TABLE IF NOT EXISTS concept_lifecycle (
+            concept_id INTEGER PRIMARY KEY REFERENCES concept(id),
+            state      TEXT NOT NULL DEFAULT 'unplaced'
+                       CHECK (state IN ('unplaced')),
+            source     TEXT,   -- provenance tag, e.g. 'r9_unplaced_v1'
+            asof       TEXT,   -- ISO date the state was assigned
+            note       TEXT
+        );
+        """
+    )
+    conn.commit()
+
+
 def create_named_entity_schema(conn: sqlite3.Connection) -> None:
     """Create the named-entity inventory tables (v0: physically-permanent core).
 
