@@ -1,0 +1,34 @@
+The harness is built, validated, and shipped. Report:
+
+Done — interactive review harness (PR #7, stacked on #6)
+
+I built all four parts against your real workbook (not assumptions — I read gapfill_review.xlsx directly: 2,372 rows, 6 priority bands, and your 293 accept / 18 reject / 1,335 postpone already in column I). Nothing writes the lexicon or the live Excel file.
+
+The scripts (src/analyzer/review/)
+
+- review_context.py <lemma> — one call assembles everything: sense-diverse corpus sentences + match count, the Esperanto anchor round-trip (does the eo_word's ESPDIC gloss actually mean the lemma?), alternatives with their glosses, a name signal, and a one-line ACCEPT / REJECT(name) / ASK recommendation.
+- review_record.py — logs decisions (idempotent, last-write-wins), with optional anchor override.
+- review_merge.py — folds decisions into a fresh view-only gapfill_review.reviewed.xlsx.
+- set_completeness.py — closed-set audit.
+- export_snapshot.py — Part D setup; snapshots + seeds your prior decisions, and refuses to run if Excel has the file open.
+
+What validation showed
+
+- The polysemy guard is the important part. bug→miso is caught as ASK because insekto carries "bug" as its primary sense — the round-trip alone would have false-accepted it. Clean cases (pond, duck) auto-ACCEPT.
+- Auto rate: ~57% of the 726 pending rows (414 ACCEPT) are auto-handleable; ~43% (312) become terse ASK questions. All P3_compound/P4_nomatch correctly route to ASK. That cuts your remaining work to ~312 quick replies.
+- set_gaps.tsv found 51 closed-set holes the frequency queue never surfaced — 19 animals (goat, goose, giraffe…), 10 body parts incl. finger names, 8 weather, 7 family terms.
+
+Two things to know
+
+1. No openpyxl — it won't install under PEP 668, and I didn't want a fragile dependency for a review tool. XLSX read/write is pure-stdlib (zipfile+XML) in xlsx_lite.py; the merge writes a fresh copy, never patching your open file. Confirmed round-trips cleanly (unicode, &/< escaping).
+2. Your 1,646 prior decisions are now committed in review_decisions.tsv as the durable, crash-recoverable work product (the snapshot + Excel files stay gitignored).
+
+To run a session
+
+Close Excel → python3 src/analyzer/review/export_snapshot.py → open a Claude Code review agent, hand it docs/pm/review-session-protocol.md (the standing policy + your terse reply grammar: 1/0/h/k n/free-text/auto N/show autos), and start at the first pending P1/P2 row. Output flows straight into common-gapfill Phase 3 — no re-keying.
+
+19 new tests; full suite 680 passed. PR stack is now #5 → #6 → #7; each rebases onto main as the one below merges.
+
+One judgment call I'll flag: I made the recommender conservative — it ASKs on any secondary-sense or "a more specific alternative exists" case (e.g. hug→brakumi becomes ASK because ĉirkaŭprenegi's primary sense is "hug"). That trades a few extra questions for near-zero wrong auto-accepts. If the spot-checks show it's asking too much, the threshold in _common.recommend is a one-line loosen.
+
+✻ Baked for 17m 38s · 3 shells still running
