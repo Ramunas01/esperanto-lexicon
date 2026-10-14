@@ -57,3 +57,12 @@ data/analysis/gapfill/unknown_tokens_pooled.txt
 # D7 Wikidata names probe — raw/regenerable API cache & manual GUI pulls
 data/analysis/names/_cache/
 data/analysis/names/manual_pulls/
+
+# Root decomposer — regenerable audit/review outputs (eo_root_decomposer.py)
+data/lexicon_db/eo_compounds.jsonl
+data/lexicon_db/eo_root_audit*.jsonl
+data/lexicon_db/eo_unresolved_stems.jsonl
+
+# Office lock files & Windows download metadata
+~$*
+*:Zone.Identifier
