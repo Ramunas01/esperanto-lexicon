@@ -1,0 +1,622 @@
+decision	flag	fold	en_word	anchor_root	all_roots	eo_word	eo_pos	proposed_tier	gloss_zipf	inv_tier	prod	gloss	note
+	common	derived_adj	democratic	demokrati	demokrati,demokrat	demokratia	ADJ	2	4.73	core	4	democratic	2 roots collapsed: demokrati, demokrat; derived adjective — confirm noun anchor / eo_word
+	common	standalone	republican	respublik	respublik	respubliko	NOUN	2	4.7	core	3	republican	
+	common	standalone	carbon	karbon	karbon	karbono	NOUN	2	4.55	extended	2	carbon	
+	common	standalone	retail	detalkomerc	detalkomerc	detalkomerco	NOUN	2	4.55	extended	2	retail	
+	common	derived_adj	presidential	prezident	prezident	prezidenta	ADJ	2	4.52	extended	2	presidential	derived adjective — confirm noun anchor / eo_word
+	common	standalone	aged	profundaĝ	profundaĝ	profundaĝa	ADJ	2	4.5	extended	2	aged	
+	common	standalone	ford	travad	travad	travadi	VERB	2	4.5	core	3	to ford	
+	common	standalone	circuit	cirkvit	cirkvit	cirkvito	NOUN	3	4.47	extended	2	circuit	
+	common	standalone	suck	suĉ	suĉ,mamsuĉ	suĉi	VERB	3	4.42	core	4	to suck	2 roots collapsed: suĉ, mamsuĉ
+	common	standalone	rugby	rugbe	rugbe	rugbeo	NOUN	3	4.4	extended	2	rugby	
+	common	standalone	poll	opinisond	opinisond	opinisondi	VERB	3	4.35	extended	2	to poll	
+	common	standalone	virgin	virg	virg	virgo	NOUN	3	4.35	core	4	virgin, virginal	
+	common	standalone	fleet	flot	flot	floto	NOUN	3	4.33	core	3	fleet	
+	common	derived_adj	mechanical	meĥanik	meĥanik	meĥanika	ADJ	3	4.33	core	3	mechanical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	faculty	fakult	fakult	fakulto	NOUN	3	4.32	extended	2	faculty	
+	common	standalone	footage	filmitaĵ	filmitaĵ	filmitaĵo	NOUN	3	4.31	extended	2	footage	
+	common	derived_adj	collective	kolektiv	kolektiv	kolektiva	ADJ	3	4.3	core	5	collective, joint	derived adjective — confirm noun anchor / eo_word
+	common	standalone	petition	petskrib	petskrib	petskribo	NOUN	3	4.3	extended	2	petition	
+	common	derived_adj	racial	ras	ras	rasa	ADJ	3	4.3	core	3	racial	derived adjective — confirm noun anchor / eo_word
+	common	standalone	disabled	invalid	invalid	invalida	ADJ	3	4.29	extended	2	disabled	
+	common	standalone	dual	dual	dual	dualo	NOUN	3	4.28	core	3	dual	
+	common	standalone	filter	filtr	filtr	filtri	VERB	3	4.28	core	4	to filter	
+	common	standalone	auction	aŭkci	aŭkci	aŭkcio	NOUN	3	4.27	core	3	at auction	
+	common	standalone	segment	segment	segment	segmenti	VERB	3	4.26	extended	2	to segment	
+	common	standalone	alpha	alf	alf	alfo	NOUN	3	4.25	extended	2	alpha	
+	common	standalone	khan	ĥan	ĥan	ĥano	NOUN	3	4.25	core	4	khan	
+	common	standalone	copyright	kopirajt	kopirajt,aŭtorrajt	kopirajto	NOUN	3	4.24	extended	2	copyright	2 roots collapsed: kopirajt, aŭtorrajt
+	common	standalone	noble	nobel	nobel	nobelo	NOUN	3	4.24	core	6	noble	
+	common	derived_adj	toxic	toks	toks	toksa	ADJ	3	4.24	core	3	toxic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	upgrade	promoci	promoci	promocio	NOUN	3	4.24	core	5	upgrade	
+	common	standalone	charter	ĉart	ĉart	ĉarti	VERB	3	4.23	core	4	to charter	
+	common	derived_adj	civilian	nemilit	nemilit	nemilita	ADJ	3	4.23	extended	2	civilian	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	graphic	grafik	grafik	grafika	ADJ	3	4.23	core	5	graphic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	amateur	amator	amator	amatoro	NOUN	3	4.22	core	4	amateur	
+	common	standalone	pension	pensi	pensi	pensii	VERB	3	4.22	core	5	to pension	
+	common	standalone	bronze	bronz	bronz	bronzo	NOUN	3	4.2	core	3	bronze	
+	common	derived_adj	chronic	kronik	kronik	kronika	ADJ	3	4.2	extended	2	chronic, lingering	derived adjective — confirm noun anchor / eo_word
+	common	standalone	distinguished	eminent	eminent	eminenta	ADJ	3	4.2	core	5	distinguished, eminent, prominent	
+	common	standalone	cargo	ŝipŝarĝ	ŝipŝarĝ	ŝipŝarĝo	NOUN	3	4.19	extended	2	ship’s cargo	
+	common	standalone	census	cens	cens	censi	VERB	3	4.19	core	3	to census, inventory	
+	common	standalone	ram	bok	bok	boko	NOUN	3	4.19	core	3	ram, vaulting-horse	
+	common	standalone	tobacco	tabak	tabak	tabako	NOUN	3	4.19	core	5	tobacco	
+	common	standalone	animation	animaci	animaci	animacio	NOUN	3	4.18	extended	2	animation	
+	common	standalone	grid	krad	krad	krado	NOUN	3	4.18	core	3	grid	
+	common	standalone	patent	patent	patent	patento	NOUN	3	4.18	core	3	patent	
+	common	derived_adj	anonymous	anonim	anonim	anonima	ADJ	3	4.17	core	3	anonymous, nameless	derived adjective — confirm noun anchor / eo_word
+	common	standalone	propaganda	propagand	propagand	propagando	NOUN	3	4.17	core	5	propaganda	
+	common	standalone	icon	ikon	ikon	ikono	NOUN	3	4.16	core	3	icon	
+	common	standalone	sheriff	ŝerif	ŝerif	ŝerifo	NOUN	3	4.16	extended	2	sheriff	
+	common	standalone	podcast	podkast	podkast	podkasto	NOUN	3	4.15	extended	2	podcast	
+	common	standalone	corrupt	korupt	korupt	korupto	NOUN	3	4.14	core	5	corrupt	
+	common	standalone	tattoo	tatu	tatu	tatui	VERB	3	4.14	extended	2	to tattoo	
+	common	standalone	breach	breĉ	breĉ	breĉi	VERB	3	4.13	core	4	to breach	
+	common	standalone	chancellor	kancelier	kancelier,rektor	kanceliero	NOUN	3	4.13	core	3	chancellor	2 roots collapsed: kancelier, rektor
+	common	standalone	feminist	feminist	feminist	feministo	NOUN	3	4.12	extended	2	feminist	
+	common	derived_adj	fatal	kapromp	kapromp	kaprompa	ADJ	3	4.1	extended	2	fatal	derived adjective — confirm noun anchor / eo_word
+	common	standalone	fig	fig	fig	figo	NOUN	3	4.1	extended	2	fig	
+	common	standalone	dump	dumping	dumping	dumpingi	VERB	3	4.08	extended	2	to dump	
+	common	derived_adj	fabulous	fabl	fabl	fabla	ADJ	3	4.08	extended	2	fabulous	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	provincial	provinc	provinc,provincial	provinca	ADJ	3	4.08	core	3	provincial	2 roots collapsed: provinc, provincial; derived adjective — confirm noun anchor / eo_word
+	common	standalone	subtle	subtil	subtil	subtilo	NOUN	3	4.08	core	3	subtle	
+	common	derived_adj	tragic	tragedi	tragedi,tragik	tragedia	ADJ	3	4.08	core	3	tragic	2 roots collapsed: tragedi, tragik; derived adjective — confirm noun anchor / eo_word
+	common	standalone	allied	alianc	alianc	alianca	ADJ	3	4.07	core	5	allied	
+	common	standalone	matrix	matric	matric	matrico	NOUN	3	4.07	extended	2	matrix	
+	common	derived_adj	optical	optik	optik	optika	ADJ	3	4.07	extended	2	optical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	quantum	kvantum	kvantum	kvantumo	NOUN	3	4.07	extended	2	quantum	
+	common	standalone	compact	kompakt	kompakt	kompakto	NOUN	3	4.06	core	4	compact, dense	
+	common	standalone	fiber	fibr	fibr	fibro	NOUN	3	4.06	core	3	fiber	
+	common	standalone	graph	grafe	grafe	grafeo	NOUN	3	4.05	core	3	graph	
+	common	standalone	spam	spam	spam	spami	VERB	3	4.05	core	5	to spam	
+	common	derived_adj	static	statik	statik	statika	ADJ	3	4.05	extended	2	static	derived adjective — confirm noun anchor / eo_word
+	common	standalone	withdraw	eliĝ	eliĝ	eliĝi	VERB	3	4.05	extended	2	to withdraw	
+	common	derived_adj	authentic	aŭtent	aŭtent,aŭtentik	aŭtenta	ADJ	3	4.04	core	4	authentic	2 roots collapsed: aŭtent, aŭtentik; derived adjective — confirm noun anchor / eo_word
+	common	standalone	cum	ĉur	ĉur	ĉuri	VERB	3	4.04	extended	2	to cum, ejaculate	
+	common	standalone	chapel	kapel	kapel	kapelo	NOUN	3	4.03	extended	2	chapel	
+	common	derived_adj	tribal	trib	trib	triba	ADJ	3	4.03	core	4	tribal	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	aesthetic	estetik	estetik	estetika	ADJ	3	4.02	extended	2	aesthetic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	ego	ego	ego	egoo	NOUN	3	4.02	core	3	ego	
+	common	standalone	ferry	pram	pram	prami	VERB	3	4.02	core	3	to ferry	
+	common	standalone	mercury	hidrarg	hidrarg	hidrargo	NOUN	3	4.02	extended	2	mercury, quicksilver	
+	common	standalone	orchestra	orkestr	orkestr	orkestro	NOUN	3	4.01	core	5	orchestra	
+	common	standalone	acute	akut	akut,sagac	akuto	NOUN	3	4.0	core	3	acute, penetrating	2 roots collapsed: akut, sagac
+	common	derived_adj	civic	civit	civit	civita	ADJ	3	4.0	extended	2	civic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	escort	eskort	eskort	eskorti	VERB	3	4.0	extended	2	to escort	
+	common	standalone	fossil	fosili	fosili	fosilio	NOUN	3	3.99	extended	2	fossil, fossilized	
+	common	standalone	freight	karg	karg	kargi	VERB	3	3.99	core	3	to freight	
+	common	standalone	negotiate	intertrakt	intertrakt	intertrakti	VERB	3	3.99	core	4	to negotiate	
+	common	standalone	vector	vektor	vektor	vektoro	NOUN	3	3.99	core	3	vector, vectorial	
+	common	standalone	absent	forestant	forestant,forest	forestanto	NOUN	3	3.98	core	4	absent	2 roots collapsed: forestant, forest
+	common	derived_adj	archive	arkiv	arkiv	arkiva	ADJ	3	3.98	core	4	archive, record(s), file(s)	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	tactical	taktik	taktik	taktika	ADJ	3	3.97	extended	2	tactical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	wholesale	pogrand	pogrand	pogrando	NOUN	3	3.97	extended	2	wholesale	
+	common	derived_adj	architectural	arĥitektur	arĥitektur	arĥitektura	ADJ	3	3.96	extended	2	architectural	derived adjective — confirm noun anchor / eo_word
+	common	standalone	curry	kare	kare	kareo	NOUN	3	3.96	extended	2	curry	
+	common	standalone	preview	antaŭrigard	antaŭrigard,antaŭprezent	antaŭrigardo	NOUN	3	3.96	extended	2	preview	2 roots collapsed: antaŭrigard, antaŭprezent
+	common	standalone	tab	tab	tab	tabo	NOUN	3	3.96	core	6	tab, tab-delimited	
+	common	standalone	viable	vivipov	vivipov	vivipovo	NOUN	3	3.96	extended	2	viable	
+	common	standalone	absurd	absurd	absurd	absurdo	NOUN	3	3.95	core	3	absurd	
+	common	standalone	bargain	marĉand	marĉand	marĉandi	VERB	3	3.95	core	3	to bargain, haggle	
+	common	standalone	brake	brems	brems	bremsi	VERB	3	3.95	core	5	to brake	
+	common	standalone	execute	ekzekuci	ekzekuci	ekzekucii	VERB	3	3.95	extended	2	to execute	
+	common	standalone	secular	sekular	sekular	sekularo	NOUN	3	3.95	core	6	secular	
+	common	standalone	sovereign	suveren	suveren	suvereno	NOUN	3	3.95	extended	2	sovereign	
+	common	standalone	vegan	vegan	vegan	vegano	NOUN	3	3.95	extended	2	vegan	
+	common	standalone	anal	anal	anal,anus	analo	NOUN	3	3.94	extended	2	anal	2 roots collapsed: anal, anus
+	common	standalone	idol	idol	idol	idolo	NOUN	3	3.94	core	4	idol	
+	common	standalone	lynch	linĉ	linĉ	linĉi	VERB	3	3.94	extended	2	to lynch	
+	common	standalone	zombie	zombi	zombi	zombio	NOUN	3	3.94	extended	2	zombie	
+	common	standalone	acre	akre	akre	akreo	NOUN	3	3.93	core	3	acre	
+	common	derived_adj	automotive	aŭtomobil	aŭtomobil	aŭtomobila	ADJ	3	3.93	core	4	automotive	derived adjective — confirm noun anchor / eo_word
+	common	standalone	desktop	surtabl	surtabl	surtablo	NOUN	3	3.93	extended	2	desktop	
+	common	standalone	guild	gild	gild	gildo	NOUN	3	3.93	extended	2	guild	
+	common	standalone	incoming	enven	enven	envena	ADJ	3	3.93	extended	2	incoming, inbound	
+	common	standalone	orthodox	ortodoks	ortodoks	ortodokso	NOUN	3	3.93	core	4	orthodox	
+	common	standalone	unclear	neklar	neklar	neklaro	NOUN	3	3.93	core	3	unclear	
+	common	derived_adj	biblical	bibli	bibli	biblia	ADJ	3	3.92	extended	2	biblical	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	demographic	demografi	demografi	demografia	ADJ	3	3.92	extended	2	demographic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	nova	nova	nova	novao	NOUN	3	3.92	extended	2	nova	
+	common	standalone	anthem	himn	himn,antem	himno	NOUN	3	3.91	core	3	anthem, hymn, canticle	2 roots collapsed: himn, antem
+	common	derived_adj	exotic	ekzot	ekzot,ekzotik	ekzota	ADJ	3	3.91	extended	2	exotic	2 roots collapsed: ekzot, ekzotik; derived adjective — confirm noun anchor / eo_word
+	common	standalone	fury	furi	furi	furio	NOUN	3	3.91	extended	2	fury, goddess of vengeance	
+	common	standalone	massacre	masakr	masakr,amasbuĉ	masakri	VERB	3	3.91	extended	2	to massacre	2 roots collapsed: masakr, amasbuĉ
+	common	derived_adj	verbal	verb	verb	verba	ADJ	3	3.91	extended	2	verbal	derived adjective — confirm noun anchor / eo_word
+	common	standalone	champagne	ĉampan	ĉampan	ĉampano	NOUN	3	3.9	extended	2	champagne, of champagne	
+	common	standalone	griffin	grif	grif	grifo	NOUN	3	3.9	extended	2	griffin, vulture	
+	common	standalone	misleading	iluzi	iluzi	iluzia	ADJ	3	3.9	extended	2	misleading	
+	common	standalone	particle	partikl	partikl,partikul	partiklo	NOUN	3	3.9	extended	2	particle	2 roots collapsed: partikl, partikul
+	common	standalone	adverse	advers	advers	adverso	NOUN	3	3.89	extended	2	adverse	
+	common	standalone	cod	moru	moru	moruo	NOUN	3	3.89	extended	2	cod, codfish	
+	common	standalone	karma	karm	karm	karmo	NOUN	3	3.88	extended	2	karma	
+	common	standalone	mapping	mapig	mapig	mapiga	ADJ	3	3.88	extended	2	mapping	
+	common	standalone	militia	milic	milic	milico	NOUN	3	3.88	extended	2	militia	
+	common	derived_adj	abusive	fiag	fiag,fiuz	fiaga	ADJ	3	3.87	extended	2	abusive	2 roots collapsed: fiag, fiuz; derived adjective — confirm noun anchor / eo_word
+	common	standalone	processor	procesor	procesor	procesoro	NOUN	3	3.87	core	3	processor	
+	common	standalone	legion	legi	legi	legio	NOUN	3	3.86	extended	2	legion	
+	common	standalone	uranium	urani	urani	uranio	NOUN	3	3.85	extended	2	uranium	
+	common	standalone	volleyball	volejbal	volejbal	volejbalo	NOUN	3	3.85	extended	2	volleyball	
+	common	standalone	exile	egzil	egzil	egzilo	NOUN	3	3.84	extended	2	exile	
+	common	standalone	monopoly	monopol	monopol	monopolo	NOUN	3	3.84	extended	2	monopoly	
+	common	derived_adj	differential	diferencial	diferencial	diferenciala	ADJ	3	3.83	core	3	differential	derived adjective — confirm noun anchor / eo_word
+	common	standalone	mafia	mafi	mafi	mafio	NOUN	3	3.83	core	3	mafia	
+	common	standalone	prototype	prototip	prototip	prototipo	NOUN	3	3.83	extended	2	prototype	
+	common	derived_adj	vicious	malign	malign	maligna	ADJ	3	3.83	extended	2	vicious	derived adjective — confirm noun anchor / eo_word
+	common	standalone	archbishop	arkiepiskop	arkiepiskop	arkiepiskopo	NOUN	3	3.82	extended	2	archbishop	
+	common	standalone	dye	tinktur	tinktur	tinkturi	VERB	3	3.82	extended	2	to dye, tint	
+	common	derived_adj	geological	geologi	geologi	geologia	ADJ	3	3.82	extended	2	geological	derived adjective — confirm noun anchor / eo_word
+	common	standalone	maiden	debut	debut	debuto	NOUN	3	3.82	extended	2	maiden	
+	common	standalone	absorb	ensorb	ensorb	ensorbi	VERB	3	3.81	core	3	to absorb	
+	common	standalone	boycott	bojkot	bojkot	bojkoti	VERB	3	3.81	extended	2	to boycott	
+	common	standalone	privileged	privilegi	privilegi	privilegia	ADJ	3	3.81	core	4	privileged	
+	common	standalone	shah	ŝah	ŝah	ŝaho	NOUN	3	3.81	extended	2	shah	
+	common	standalone	confront	konfront	konfront	konfronti	VERB	3	3.8	extended	2	to confront	
+	common	standalone	bulletin	bulten	bulten	bulteno	NOUN	3	3.79	extended	2	bulletin, newsletter	
+	common	standalone	gamble	vetlud	vetlud	vetludi	VERB	3	3.79	extended	2	to gamble	
+	common	standalone	probable	probabl	probabl	probablo	NOUN	3	3.79	extended	2	probable	
+	common	derived_adj	subjective	subjektiv	subjektiv,subjekt	subjektiva	ADJ	3	3.79	core	3	subjective	2 roots collapsed: subjektiv, subjekt; derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	aboriginal	aborigen	aborigen	aborigena	ADJ	3	3.78	extended	2	aboriginal	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	allergic	alergi	alergi	alergia	ADJ	3	3.78	core	3	allergic	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	ecological	ekologi	ekologi	ekologia	ADJ	3	3.78	core	3	ecological	derived adjective — confirm noun anchor / eo_word
+	common	standalone	exempt	imun	imun	imuno	NOUN	3	3.78	core	3	exempt, immune	
+	common	standalone	stab	ponard	ponard	ponardi	VERB	3	3.78	extended	2	to stab	
+	common	derived_adj	vegetarian	vegetar	vegetar	vegetara	ADJ	3	3.78	core	4	vegetarian	derived adjective — confirm noun anchor / eo_word
+	common	standalone	flint	silik	silik	siliko	NOUN	3	3.77	extended	2	flint, gravel	
+	common	standalone	herd	greg	greg	grego	NOUN	3	3.77	extended	2	herd	
+	common	standalone	seminar	seminari	seminari	seminario	NOUN	3	3.77	extended	2	seminar	
+	common	derived_adj	theological	teologi	teologi	teologia	ADJ	3	3.77	extended	2	theological	derived adjective — confirm noun anchor / eo_word
+	common	standalone	cedar	cedr	cedr	cedro	NOUN	3	3.76	extended	2	cedar, of a cedar	
+	common	standalone	dispatch	depeŝ	depeŝ	depeŝi	VERB	3	3.76	extended	2	to dispatch	
+	common	standalone	heath	erik	erik	eriko	NOUN	3	3.76	extended	2	heath, heather (plant)	
+	common	derived_adj	neural	neŭr	neŭr	neŭra	ADJ	3	3.76	extended	2	neural	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	photographic	fotograf	fotograf	fotografa	ADJ	3	3.76	core	5	photographic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	ark	arke	arke	arkeo	NOUN	3	3.75	extended	2	ark	
+	common	standalone	dwarf	nan	nan	nano	NOUN	3	3.75	extended	2	dwarf, midget	
+	common	standalone	merge	kunfand	kunfand	kunfando	NOUN	3	3.75	core	4	merge	
+	common	standalone	arrogant	arog	arog	arogo	NOUN	3	3.74	core	4	arrogant	
+	common	derived_adj	ceramic	ceramik	ceramik	ceramika	ADJ	3	3.74	core	3	ceramic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	groove	fold	fold	foldi	VERB	3	3.74	extended	2	to groove, slot	
+	common	standalone	torch	torĉ	torĉ	torĉo	NOUN	3	3.74	extended	2	torch	
+	common	standalone	bankrupt	bankrot	bankrot	bankroto	NOUN	3	3.73	core	4	bankrupt	
+	common	standalone	proxy	prokur	prokur	prokuro	NOUN	3	3.73	core	3	proxy	
+	common	standalone	miniature	miniatur	miniatur	miniaturo	NOUN	3	3.72	extended	2	miniature	
+	common	standalone	motto	mot	mot	moto	NOUN	3	3.72	extended	2	motto	
+	common	derived_adj	radioactive	radioaktiv	radioaktiv	radioaktiva	ADJ	3	3.72	core	3	radioactive	derived adjective — confirm noun anchor / eo_word
+	common	standalone	apex	vertic	vertic	vertico	NOUN	3	3.71	extended	2	apex, node, vertex	
+	common	standalone	boiler	kaldron	kaldron	kaldrono	NOUN	3	3.71	core	4	boiler, cauldron, kettle	
+	common	standalone	digest	digest	digest	digesti	VERB	3	3.71	core	5	to digest	
+	common	derived_adj	linguistic	lingvoscienc	lingvoscienc	lingvoscienca	ADJ	3	3.71	extended	2	linguistic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	macro	makro	makro	makroo	NOUN	3	3.71	extended	2	macro	
+	common	derived_adj	spontaneous	spontan	spontan,spontane	spontana	ADJ	3	3.71	extended	2	spontaneous	2 roots collapsed: spontan, spontane; derived adjective — confirm noun anchor / eo_word
+	common	standalone	apprentice	metilernant	metilernant	metilernanto	NOUN	3	3.7	core	3	apprentice	
+	common	derived_adj	bisexual	ambaŭseks	ambaŭseks	ambaŭseksa	ADJ	3	3.7	core	3	bisexual	derived adjective — confirm noun anchor / eo_word
+	common	standalone	cinnamon	cinam	cinam	cinamo	NOUN	3	3.7	extended	2	cinnamon	
+	common	standalone	compulsory	end	end	endi	VERB	3	3.7	core	3	to be compulsory	
+	common	standalone	confederate	konfederaci	konfederaci	konfederacii	VERB	3	3.7	extended	2	to confederate	
+	common	standalone	delegate	deleg	deleg	delegi	VERB	3	3.7	extended	2	to delegate	
+	common	standalone	monarch	monarĥ	monarĥ	monarĥo	NOUN	3	3.69	core	4	monarch	
+	common	standalone	mustard	mustard	mustard	mustardo	NOUN	3	3.69	extended	2	mustard	
+	common	standalone	tinder	tindr	tindr	tindro	NOUN	3	3.69	extended	2	tinder, punk, touchwood	
+	common	derived_adj	archaeological	arkeologi	arkeologi,arĥeologi	arkeologia	ADJ	3	3.68	extended	2	archaeological, archeological	2 roots collapsed: arkeologi, arĥeologi; derived adjective — confirm noun anchor / eo_word
+	common	standalone	clone	klon	klon	kloni	VERB	3	3.68	core	4	to clone	
+	common	standalone	defect	ekslojaliĝ	ekslojaliĝ	ekslojaliĝi	VERB	3	3.68	extended	2	to defect	
+	common	derived_adj	rehearsal	provlud	provlud	provluda	ADJ	3	3.68	extended	2	rehearsal	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	rigorous	rigor	rigor	rigora	ADJ	3	3.68	extended	2	rigorous, stringent	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	skeptical	skeptik	skeptik	skeptika	ADJ	3	3.68	core	3	skeptical	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	unanimous	unuanim	unuanim	unuanima	ADJ	3	3.68	extended	2	unanimous	derived adjective — confirm noun anchor / eo_word
+	common	standalone	cosmetics	kosmetik	kosmetik	kosmetiko	NOUN	3	3.67	extended	2	cosmetics	
+	common	derived_adj	inaugural	inaŭgur	inaŭgur	inaŭgura	ADJ	3	3.67	extended	2	inaugural	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	proprietary	propriet	propriet	proprieta	ADJ	3	3.67	core	3	proprietary	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	imperative	ordon	ordon	ordona	ADJ	3	3.66	core	3	imperative	derived adjective — confirm noun anchor / eo_word
+	common	standalone	maternity	akuŝ	akuŝ	akuŝo	NOUN	3	3.66	core	7	maternity	
+	common	derived_adj	peripheral	periferi	periferi	periferia	ADJ	3	3.66	extended	2	peripheral	derived adjective — confirm noun anchor / eo_word
+	common	standalone	duel	duel	duel	dueli	VERB	3	3.65	extended	2	to duel	
+	common	standalone	incompetent	nekompetent	nekompetent	nekompetento	NOUN	3	3.65	extended	2	incompetent	
+	common	standalone	zinc	zink	zink	zinko	NOUN	3	3.65	core	3	zinc, zincic	
+	common	standalone	baton	taktbaston	taktbaston	taktbastono	NOUN	3	3.64	extended	2	baton	
+	common	standalone	camel	kamel	kamel	kamelo	NOUN	3	3.64	extended	2	camel	
+	common	standalone	dub	dubl	dubl	dubli	VERB	3	3.64	core	5	to dub	
+	common	standalone	query	informpet	informpet	informpeto	NOUN	3	3.64	extended	2	query	
+	common	standalone	scarlet	skarlat	skarlat	skarlato	NOUN	3	3.64	extended	2	scarlet	
+	common	standalone	vinegar	vinagr	vinagr	vinagro	NOUN	3	3.64	extended	2	vinegar	
+	common	standalone	accessory	aneks	aneks,kunkulp	anekso	NOUN	3	3.63	core	5	accessory	2 roots collapsed: aneks, kunkulp
+	common	standalone	cache	kaŝmemor	kaŝmemor	kaŝmemoro	NOUN	3	3.63	extended	2	cache, caching	
+	common	standalone	endorse	viz	viz	vizi	VERB	3	3.63	core	6	to endorse	
+	common	standalone	fax	faks	faks,telefaks	faksi	VERB	3	3.63	core	4	to fax	2 roots collapsed: faks, telefaks
+	common	standalone	gag	gag	gag	gago	NOUN	3	3.63	extended	2	gag	
+	common	standalone	gill	brank	brank	branko	NOUN	3	3.63	core	3	gill	
+	common	derived_adj	inactive	neaktiv	neaktiv	neaktiva	ADJ	3	3.63	extended	2	inactive	derived adjective — confirm noun anchor / eo_word
+	common	standalone	warp	varp	varp	varpi	VERB	3	3.63	extended	2	to warp	
+	common	standalone	alpine	alp	alp	alpo	NOUN	3	3.62	core	7	alpine	
+	common	standalone	armored	kiras	kiras	kirasa	ADJ	3	3.62	extended	2	armored	
+	common	standalone	atheist	ate	ate	ateo	NOUN	3	3.62	core	4	atheist	
+	common	standalone	caravan	karavan	karavan	karavano	NOUN	3	3.62	extended	2	caravan	
+	common	standalone	compressed	densig	densig	densiga	ADJ	3	3.62	core	3	compressed, compression, condensed (font)	
+	common	standalone	fertile	fekund	fekund,fruktodon	fekundo	NOUN	3	3.62	core	5	fertile	2 roots collapsed: fekund, fruktodon
+	common	standalone	fuse	meĉ	meĉ	meĉo	NOUN	3	3.62	extended	2	fuse, wick	
+	common	standalone	midfield	mezkamp	mezkamp	mezkampo	NOUN	3	3.62	extended	2	midfield	
+	common	standalone	rectangular	rektangul	rektangul	rektangulo	NOUN	3	3.62	extended	2	rectangular	
+	common	standalone	wedge	kojn	kojn	kojni	VERB	3	3.62	extended	2	to wedge	
+	common	standalone	alloy	aloj	aloj	aloji	VERB	3	3.61	extended	2	to alloy	
+	common	standalone	apartheid	rasapartig	rasapartig	rasapartigo	NOUN	3	3.61	extended	2	apartheid, segregation	
+	common	standalone	fraudulent	fraŭd	fraŭd	fraŭdo	NOUN	3	3.61	extended	2	fraudulent	
+	common	standalone	handicap	handikap	handikap	handikapi	VERB	3	3.61	core	4	to handicap	
+	common	standalone	lantern	lantern	lantern	lanterno	NOUN	3	3.61	extended	2	lantern	
+	common	standalone	noun	substantiv	substantiv	substantivo	NOUN	3	3.61	extended	2	noun, substantive	
+	common	standalone	physiology	fiziologi	fiziologi	fiziologio	NOUN	3	3.61	extended	2	physiology	
+	common	standalone	caste	kast	kast	kasto	NOUN	3	3.6	core	4	caste	
+	common	standalone	consul	konsul	konsul	konsulo	NOUN	3	3.6	core	3	consul	
+	common	derived_adj	nominal	nominal	nominal	nominala	ADJ	3	3.6	extended	2	nominal	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	prolific	produktiv	produktiv	produktiva	ADJ	3	3.6	extended	2	prolific	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	prosperous	prosper	prosper	prospera	ADJ	3	3.6	core	6	prosperous	derived adjective — confirm noun anchor / eo_word
+	common	standalone	scholarly	erudici	erudici	erudicio	NOUN	3	3.6	extended	2	scholarly	
+	common	standalone	crusade	krucmilit	krucmilit	krucmilito	NOUN	3	3.59	extended	2	crusade	
+	common	derived_adj	cynical	cinik	cinik	cinika	ADJ	3	3.59	core	5	cynical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	fetish	fetiĉ	fetiĉ	fetiĉo	NOUN	3	3.59	core	3	fetish	
+	common	derived_adj	geometric	geometri	geometri	geometria	ADJ	3	3.59	extended	2	geometric	derived adjective — confirm noun anchor / eo_word
+	common	standalone	redundant	redund	redund	redundo	NOUN	3	3.59	extended	2	redundant	
+	common	derived_adj	unreal	nereal	nereal	nereala	ADJ	3	3.59	extended	2	unreal	derived adjective — confirm noun anchor / eo_word
+	common	standalone	adolescent	adolesk	adolesk	adolesko	NOUN	3	3.58	core	7	adolescent	
+	common	derived_adj	charcoal	braĝ	braĝ,lignokarb	braĝa	ADJ	3	3.58	extended	2	charcoal	2 roots collapsed: braĝ, lignokarb; derived adjective — confirm noun anchor / eo_word
+	common	standalone	dictate	dikt	dikt	dikti	VERB	3	3.58	core	4	to dictate	
+	common	derived_adj	electromagnetic	elektromagnet	elektromagnet	elektromagneta	ADJ	3	3.58	extended	2	electromagnetic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	orphan	orf	orf	orfo	NOUN	3	3.58	core	5	orphan	
+	common	standalone	pineapple	ananas	ananas	ananaso	NOUN	3	3.58	extended	2	pineapple	
+	common	standalone	cartridge	kased	kased	kasedo	NOUN	3	3.57	extended	2	cartridge, cassette	
+	common	standalone	cigar	cigar	cigar	cigaro	NOUN	3	3.57	core	4	cigar	
+	common	standalone	handwriting	manskrib	manskrib	manskriba	ADJ	3	3.57	core	3	handwriting	
+	common	derived_adj	lucrative	lukr	lukr	lukra	ADJ	3	3.56	core	4	lucrative	derived adjective — confirm noun anchor / eo_word
+	common	standalone	multimedia	plurmedi	plurmedi	plurmedio	NOUN	3	3.56	extended	2	multimedia	
+	common	standalone	porcelain	porcelan	porcelan	porcelano	NOUN	3	3.56	extended	2	porcelain	
+	common	standalone	psalm	psalm	psalm	psalmo	NOUN	3	3.56	core	3	psalm	
+	common	standalone	schizophrenia	skizofreni	skizofreni	skizofrenio	NOUN	3	3.56	extended	2	schizophrenia	
+	common	standalone	walnut	jugland	jugland	juglando	NOUN	3	3.56	extended	2	walnut	
+	common	standalone	ambush	embusk	embusk	embuski	VERB	3	3.55	core	3	to ambush	
+	common	standalone	karate	karate	karate	karateo	NOUN	3	3.55	extended	2	karate	
+	common	standalone	messiah	mesi	mesi	mesio	NOUN	3	3.55	extended	2	messiah	
+	common	standalone	onboard	enboat	enboat	enboato	NOUN	3	3.55	extended	2	onboard	
+	common	derived_adj	plural	plural	plural	plurala	ADJ	3	3.55	core	3	plural	derived adjective — confirm noun anchor / eo_word
+	common	standalone	admittedly	konfes	konfes	konfeso	NOUN	3	3.54	core	9	admittedly	
+	common	standalone	articulate	klaresprim	klaresprim	klaresprimo	NOUN	3	3.54	extended	2	articulate	
+	common	standalone	buffet	bufed	bufed	bufedo	NOUN	3	3.54	core	4	buffet	
+	common	derived_adj	neurological	neŭrologi	neŭrologi	neŭrologia	ADJ	3	3.54	extended	2	neurological	derived adjective — confirm noun anchor / eo_word
+	common	standalone	pioneering	vojmontr	vojmontr	vojmontra	ADJ	3	3.54	extended	2	pioneering	
+	common	standalone	stimulating	stimul	stimul	stimula	ADJ	3	3.54	core	3	stimulating, stimulative	
+	common	standalone	evacuate	evaku	evaku	evakui	VERB	3	3.53	extended	2	to evacuate	
+	common	standalone	interfering	interfer	interfer	interfera	ADJ	3	3.53	extended	2	interfering	
+	common	standalone	maneuver	manovr	manovr	manovri	VERB	3	3.53	extended	2	to maneuver	
+	common	standalone	mono	mono	mono	monoo	NOUN	3	3.53	extended	2	mono	
+	common	standalone	semiconductor	duonkonduk	duonkonduk	duonkonduko	NOUN	3	3.53	core	3	semiconductor	
+	common	standalone	ballroom	balsalon	balsalon	balsalono	NOUN	3	3.52	extended	2	ballroom	
+	common	derived_adj	bilingual	dulingv	dulingv	dulingva	ADJ	3	3.52	core	3	bilingual	derived adjective — confirm noun anchor / eo_word
+	common	standalone	civilized	civiliz	civiliz	civiliza	ADJ	3	3.52	core	5	civilized	
+	common	standalone	dew	ros	ros	roso	NOUN	3	3.52	extended	2	dew	
+	common	standalone	erect	erekt	erekt,vertikal	erekti	VERB	3	3.52	extended	2	to erect	2 roots collapsed: erekt, vertikal
+	common	standalone	brandy	brand	brand	brando	NOUN	3	3.51	extended	2	brandy	
+	common	standalone	outlaw	proskripci	proskripci	proskripcii	VERB	3	3.51	extended	2	to outlaw, proscribe	
+	common	derived_adj	speculative	konjekt	konjekt	konjekta	ADJ	3	3.51	extended	2	speculative	derived adjective — confirm noun anchor / eo_word
+	common	standalone	barge	barĝ	barĝ	barĝo	NOUN	3	3.5	core	3	barge	
+	common	derived_adj	bridal	fianĉin	fianĉin	fianĉina	ADJ	3	3.5	core	3	bridal	derived adjective — confirm noun anchor / eo_word
+	common	standalone	correlated	korelativ	korelativ	korelativa	ADJ	3	3.5	core	3	correlated, correlative	
+	common	standalone	crippled	kripl	kripl	kripla	ADJ	3	3.5	core	4	crippled, infirm, handicapped	
+	common	standalone	diocese	eparki	eparki,episkopland	eparkio	NOUN	3	3.5	extended	2	diocese	2 roots collapsed: eparki, episkopland
+	common	derived_adj	preventive	prevent	prevent	preventa	ADJ	3	3.5	core	4	preventive	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	synonymous	sinonim	sinonim	sinonima	ADJ	3	3.5	extended	2	synonymous	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	botanical	botanik	botanik	botanika	ADJ	3	3.49	extended	2	botanical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	braces	ŝelk	ŝelk	ŝelko	NOUN	3	3.49	extended	2	braces, suspenders	
+	common	standalone	elk	alk	alk	alko	NOUN	3	3.49	core	5	elk, moose	
+	common	standalone	fingerprint	fingroprem	fingroprem	fingropremo	NOUN	3	3.49	extended	2	fingerprint	
+	common	derived_adj	hereditary	hered	hered	hereda	ADJ	3	3.49	core	9	hereditary	derived adjective — confirm noun anchor / eo_word
+	common	standalone	abolish	abol	abol,abolici	aboli	VERB	3	3.48	core	5	to abolish, abrogate	2 roots collapsed: abol, abolici
+	common	derived_adj	ballistic	balistik	balistik	balistika	ADJ	3	3.48	extended	2	ballistic	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	hysterical	histeri	histeri	histeria	ADJ	3	3.48	core	3	hysterical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	kidnap	infanŝtel	infanŝtel	infanŝteli	VERB	3	3.48	extended	2	to kidnap	
+	common	standalone	lama	lama	lama	lamao	NOUN	3	3.48	extended	2	lama	
+	common	derived_adj	terrestrial	surter	surter	surtera	ADJ	3	3.48	core	5	terrestrial, earthly	derived adjective — confirm noun anchor / eo_word
+	common	standalone	alto	ald	ald	aldo	NOUN	3	3.47	core	5	alto, contralto (voice); viola	
+	common	standalone	gloss	glos	glos	glosi	VERB	3	3.47	core	3	to gloss	
+	common	standalone	graft	greft	greft	grefti	VERB	3	3.47	core	4	to graft, transplant	
+	common	standalone	ox	oks	oks	okso	NOUN	3	3.47	core	3	ox	
+	common	standalone	turbulent	turbul	turbul	turbulo	NOUN	3	3.47	extended	2	turbulent	
+	common	standalone	discriminatory	diskriminaci	diskriminaci	diskriminacio	NOUN	3	3.46	extended	2	discriminatory	
+	common	standalone	humiliating	humilig	humilig,hontig	humiliga	ADJ	3	3.46	core	3	humiliating	2 roots collapsed: humilig, hontig
+	common	standalone	liter	litr	litr	litro	NOUN	3	3.46	extended	2	liter	
+	common	standalone	martyr	martir	martir	martiro	NOUN	3	3.46	core	4	martyr	
+	common	standalone	opium	opi	opi	opio	NOUN	3	3.46	extended	2	opium	
+	common	standalone	candid	simplanim	simplanim	simplanimo	NOUN	3	3.45	extended	2	candid, artless	
+	common	standalone	clamp	kramp	kramp	krampi	VERB	3	3.45	core	3	to clamp, staple	
+	common	derived_adj	diabetic	diabet	diabet	diabeta	ADJ	3	3.45	extended	2	diabetic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	marquis	markiz	markiz	markizo	NOUN	3	3.45	extended	2	marquis	
+	common	standalone	nipple	cic	cic	cico	NOUN	3	3.45	core	3	nipple	
+	common	standalone	blackmail	ĉantaĝ	ĉantaĝ	ĉantaĝi	VERB	3	3.44	extended	2	to blackmail, extort	
+	common	derived_adj	burglary	rompŝtel	rompŝtel	rompŝtela	ADJ	3	3.44	extended	2	burglary	derived adjective — confirm noun anchor / eo_word
+	common	standalone	godfather	baptopatr	baptopatr	baptopatro	NOUN	3	3.44	extended	2	godfather	
+	common	standalone	indifferent	duagrad	duagrad	duagrado	NOUN	3	3.44	core	3	indifferent, mediocre	
+	common	standalone	jubilee	jubile	jubile	jubileo	NOUN	3	3.44	extended	2	jubilee	
+	common	derived_adj	mythical	mit	mit	mita	ADJ	3	3.44	core	5	mythical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	roe	kapreol	kapreol	kapreolo	NOUN	3	3.44	extended	2	roe, roebuck	
+	common	standalone	seam	fleb	fleb	flebo	NOUN	3	3.44	extended	2	seam, vein	
+	common	standalone	solvent	solvent	solvent	solvento	NOUN	3	3.44	extended	2	solvent	
+	common	standalone	chlorine	klor	klor	kloro	NOUN	3	3.43	extended	2	chlorine	
+	common	derived_adj	expressive	esprimplen	esprimplen	esprimplena	ADJ	3	3.43	extended	2	expressive	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	lunatic	lunatik	lunatik	lunatika	ADJ	3	3.43	core	3	lunatic	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	lyrical	lirik	lirik	lirika	ADJ	3	3.43	core	3	lyrical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	stereotype	kliŝ	kliŝ	kliŝi	VERB	3	3.43	core	3	to stereotype	
+	common	standalone	sterile	steril	steril	sterilo	NOUN	3	3.43	core	3	sterile	
+	common	standalone	camouflage	kamufl	kamufl	kamufli	VERB	3	3.42	core	3	to camouflage	
+	common	standalone	divert	forkonduk	forkonduk	forkonduki	VERB	3	3.42	extended	2	to divert	
+	common	standalone	footwear	piedvest	piedvest	piedvesto	NOUN	3	3.42	extended	2	footwear	
+	common	standalone	handbag	mansak	mansak	mansako	NOUN	3	3.42	extended	2	handbag	
+	common	standalone	incarnation	enkarniĝ	enkarniĝ	enkarniĝo	NOUN	3	3.42	extended	2	incarnation	
+	common	standalone	proton	proton	proton	protono	NOUN	3	3.42	extended	2	proton	
+	common	standalone	agile	facilmov	facilmov	facilmovo	NOUN	3	3.41	extended	2	agile	
+	common	derived_adj	monstrous	monstr	monstr	monstra	ADJ	3	3.41	core	3	monstrous	derived adjective — confirm noun anchor / eo_word
+	common	standalone	novice	novic	novic	novico	NOUN	3	3.41	core	4	novice	
+	common	derived_adj	arithmetic	aritmetik	aritmetik	aritmetika	ADJ	3	3.4	core	3	arithmetic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	arson	brulkrim	brulkrim	brulkrimo	NOUN	3	3.4	extended	2	arson	
+	common	standalone	bourgeois	burĝ	burĝ	burĝo	NOUN	3	3.4	extended	2	bourgeois, middleclass	
+	common	derived_adj	bureaucratic	burokrat	burokrat	burokrata	ADJ	3	3.4	core	4	bureaucratic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	tenor	tenor	tenor	tenoro	NOUN	3	3.4	core	3	tenor	
+	common	standalone	conglomerate	konglomer	konglomer	konglomeri	VERB	3	3.39	core	4	to conglomerate	
+	common	standalone	deacon	diakon	diakon	diakono	NOUN	3	3.39	core	4	deacon	
+	common	derived_adj	heterosexual	aliseksem	aliseksem	aliseksema	ADJ	3	3.39	extended	2	heterosexual	derived adjective — confirm noun anchor / eo_word
+	common	standalone	snapshot	ekrankopi	ekrankopi	ekrankopio	NOUN	3	3.39	extended	2	snapshot	
+	common	derived_adj	tonic	fortigil	fortigil	fortigila	ADJ	3	3.39	extended	2	tonic, restorative	derived adjective — confirm noun anchor / eo_word
+	common	standalone	abrupt	abrupt	abrupt,brusk	abrupto	NOUN	3	3.38	core	4	abrupt	2 roots collapsed: abrupt, brusk
+	common	standalone	affidavit	ĵurdeklar	ĵurdeklar	ĵurdeklaro	NOUN	3	3.38	core	4	affidavit	
+	common	standalone	divergent	diverĝ	diverĝ	diverĝo	NOUN	3	3.38	extended	2	divergent	
+	common	standalone	gland	aden	aden	adeno	NOUN	3	3.38	core	4	gland, ade-	
+	common	derived_adj	incremental	alkrement	alkrement	alkrementa	ADJ	3	3.38	extended	2	incremental	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	rhetorical	retorik	retorik	retorika	ADJ	3	3.38	extended	2	rhetorical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	spawn	fraj	fraj	fraji	VERB	3	3.38	extended	2	to spawn	
+	common	standalone	surrogate	surogat	surogat	surogato	NOUN	3	3.38	extended	2	surrogate	
+	common	derived_adj	eclectic	eklektik	eklektik	eklektika	ADJ	3	3.37	core	3	eclectic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	illiterate	analfabet	analfabet	analfabeto	NOUN	3	3.37	core	4	illiterate	
+	common	standalone	opaque	opak	opak	opako	NOUN	3	3.37	extended	2	opaque	
+	common	derived_adj	rustic	rustik	rustik	rustika	ADJ	3	3.37	extended	2	rustic	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	diagonal	diagonal	diagonal	diagonala	ADJ	3	3.36	core	4	diagonal, transverse	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	feudal	feŭd	feŭd,feŭdal	feŭda	ADJ	3	3.36	core	4	feudal	2 roots collapsed: feŭd, feŭdal; derived adjective — confirm noun anchor / eo_word
+	common	standalone	fleece	preztromp	preztromp	preztrompi	VERB	3	3.36	core	3	to fleece	
+	common	derived_adj	idiotic	idiot	idiot	idiota	ADJ	3	3.36	core	6	idiotic	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	pathological	patologi	patologi	patologia	ADJ	3	3.36	extended	2	pathological	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	satirical	satir	satir	satira	ADJ	3	3.36	extended	2	satirical	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	clerical	klerik	klerik,klerikal	klerika	ADJ	3	3.35	core	3	clerical	2 roots collapsed: klerik, klerikal; derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	grammatical	gramatik	gramatik	gramatika	ADJ	3	3.35	core	3	grammatical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	inquisition	inkvizici	inkvizici	inkvizicio	NOUN	3	3.35	extended	2	inquisition	
+	common	standalone	sikh	sik	sik	siko	NOUN	3	3.35	extended	2	sikh	
+	common	standalone	ebony	ebon	ebon	ebono	NOUN	3	3.34	core	3	ebony	
+	common	derived_adj	involuntary	nevol	nevol	nevola	ADJ	3	3.34	extended	2	involuntary, unwilling	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	additive	adici	adici	adicia	ADJ	3	3.33	core	4	additive	derived adjective — confirm noun anchor / eo_word
+	common	standalone	degenerate	degener	degener	degeneri	VERB	3	3.33	core	5	to degenerate, degrade, deteriorate	
+	common	standalone	farce	fars	fars	farso	NOUN	3	3.33	extended	2	farce	
+	common	standalone	inhabit	enloĝ	enloĝ	enloĝi	VERB	3	3.33	core	8	to inhabit, move in (dwelling)	
+	common	standalone	optimize	optimumig	optimumig	optimumigi	VERB	3	3.33	core	3	to optimize, tweak	
+	common	standalone	penetrating	penetr	penetr	penetra	ADJ	3	3.33	core	3	penetrating	
+	common	standalone	pamphlet	pamflet	pamflet	pamfleto	NOUN	3	3.32	extended	2	pamphlet, lampoon, satire	
+	common	standalone	ascending	ascend	ascend	ascenda	ADJ	3	3.31	extended	2	ascending	
+	common	standalone	hydra	hidr	hidr	hidro	NOUN	3	3.31	core	3	hydra	
+	common	derived_adj	hypocritical	hipokrit	hipokrit	hipokrita	ADJ	3	3.31	core	6	hypocritical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	indigo	indig	indig	indigo	NOUN	3	3.31	extended	2	indigo	
+	common	standalone	muzzle	muzel	muzel	muzelo	NOUN	3	3.31	extended	2	muzzle, snout	
+	common	standalone	overt	nekaŝ	nekaŝ	nekaŝo	NOUN	3	3.31	core	3	overt	
+	common	standalone	soprano	sopran	sopran	soprano	NOUN	3	3.31	core	3	soprano	
+	common	standalone	stagnant	stagn	stagn	stagno	NOUN	3	3.31	extended	2	stagnant	
+	common	standalone	epidemiology	epidemiologi	epidemiologi	epidemiologio	NOUN	3	3.3	extended	2	epidemiology	
+	common	derived_adj	unequal	neegal	neegal	neegala	ADJ	3	3.3	core	3	unequal	derived adjective — confirm noun anchor / eo_word
+	common	standalone	bloodshed	sangoverŝ	sangoverŝ	sangoverŝa	ADJ	3	3.29	extended	2	bloodshed	
+	common	standalone	cello	violonĉel	violonĉel	violonĉelo	NOUN	3	3.29	extended	2	cello, violoncello	
+	common	standalone	clinch	vinkt	vinkt	vinkti	VERB	3	3.29	extended	2	to clinch, staple	
+	common	standalone	occult	okult	okult	okulto	NOUN	3	3.29	core	3	occult	
+	common	standalone	pediatrics	pediatri	pediatri	pediatrio	NOUN	3	3.29	extended	2	pediatrics	
+	common	standalone	ardent	fervor	fervor	fervoro	NOUN	3	3.28	core	6	ardent, fervent, full of zeal, zealous	
+	common	standalone	assay	titr	titr	titri	VERB	3	3.28	extended	2	to assay, titrate	
+	common	standalone	degrade	degrad	degrad	degradi	VERB	3	3.28	core	3	to degrade, demote, downgrade	
+	common	standalone	diffuse	difuz	difuz	difuzo	NOUN	3	3.28	extended	2	diffuse	
+	common	standalone	dignified	dign	dign	digna	ADJ	3	3.28	core	4	dignified	
+	common	standalone	epitome	epitom	epitom	epitomo	NOUN	3	3.28	extended	2	epitome, abridgment	
+	common	standalone	grotesque	grotesk	grotesk	grotesko	NOUN	3	3.28	extended	2	grotesque, ludicrous	
+	common	standalone	skid	jor	jor	jori	VERB	3	3.28	core	3	to skid	
+	common	standalone	topography	topografi	topografi	topografio	NOUN	3	3.28	extended	2	topography	
+	common	derived_adj	impulsive	impuls	impuls	impulsa	ADJ	3	3.27	extended	2	impulsive	derived adjective — confirm noun anchor / eo_word
+	common	standalone	incense	bonodorfum	bonodorfum	bonodorfumo	NOUN	3	3.27	core	4	incense	
+	common	standalone	lucid	lucid	lucid	lucido	NOUN	3	3.27	extended	2	lucid	
+	common	derived_adj	parasitic	parazit	parazit	parazita	ADJ	3	3.27	extended	2	parasitic	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	sectarian	sekt	sekt	sekta	ADJ	3	3.27	core	4	sectarian	derived adjective — confirm noun anchor / eo_word
+	common	standalone	apathy	letargi	letargi	letargio	NOUN	3	3.26	extended	2	apathy, drowsiness, inertness, lethargy, stupor, torpidity	
+	common	standalone	foreground	antaŭplan	antaŭplan	antaŭplano	NOUN	3	3.26	extended	2	foreground	
+	common	standalone	helix	heliks	heliks	helikso	NOUN	3	3.26	extended	2	helix	
+	common	standalone	orb	orb	orb	orbo	NOUN	3	3.26	extended	2	orb	
+	common	standalone	smallpox	variol	variol	variolo	NOUN	3	3.26	extended	2	smallpox, variola	
+	common	derived_adj	sociological	sociologi	sociologi	sociologia	ADJ	3	3.26	extended	2	sociological	derived adjective — confirm noun anchor / eo_word
+	common	standalone	alkaline	alkal	alkal	alkalo	NOUN	3	3.25	extended	2	alkaline	
+	common	standalone	alum	alun	alun	aluno	NOUN	3	3.25	core	3	alum	
+	common	derived_adj	arterial	arteri	arteri	arteria	ADJ	3	3.25	extended	2	arterial	derived adjective — confirm noun anchor / eo_word
+	common	standalone	balm	balzam	balzam	balzamo	NOUN	3	3.25	core	6	balm, balsam, balmy, balsamic	
+	common	standalone	inhale	inhal	inhal	inhali	VERB	3	3.25	core	4	to inhale	
+	common	standalone	lament	vekri	vekri	vekrii	VERB	3	3.25	extended	2	to lament, wail, yammer	
+	common	standalone	sauna	saŭn	saŭn,ŝvitban	saŭno	NOUN	3	3.25	extended	2	sauna	2 roots collapsed: saŭn, ŝvitban
+	common	standalone	tabloid	klaĉgazet	klaĉgazet	klaĉgazeto	NOUN	3	3.25	extended	2	tabloid	
+	common	standalone	braid	plekt	plekt	plekti	VERB	3	3.24	core	5	to braid, plait, twine, wreathe	
+	common	derived_adj	conscientious	konscienc	konscienc	konscienca	ADJ	3	3.24	extended	2	conscientious, scrupulous, faithful, upright, honorable	derived adjective — confirm noun anchor / eo_word
+	common	standalone	hem	orl	orl	orli	VERB	3	3.24	extended	2	to hem	
+	common	derived_adj	insidious	insid	insid	insida	ADJ	3	3.24	core	4	insidious, treacherous	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	patriarchal	patriark	patriark	patriarka	ADJ	3	3.24	core	3	patriarchal	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	semifinal	antaŭfinal	antaŭfinal	antaŭfinala	ADJ	3	3.24	extended	2	semifinal	derived adjective — confirm noun anchor / eo_word
+	common	standalone	stepfather	duonpatr	duonpatr	duonpatro	NOUN	3	3.24	extended	2	stepfather	
+	common	standalone	whirlwind	turnvent	turnvent,kirlovent	turnvento	NOUN	3	3.24	extended	2	whirlwind	2 roots collapsed: turnvent, kirlovent
+	common	derived_adj	aristocratic	aristokrat	aristokrat	aristokrata	ADJ	3	3.23	core	4	aristocratic	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	arsenic	arsen	arsen	arsena	ADJ	3	3.23	core	5	arsenic, arsenical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	converge	konverg	konverg	konvergi	VERB	3	3.23	extended	2	to converge	
+	common	derived_adj	cryptic	kript	kript	kripta	ADJ	3	3.23	core	5	cryptic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	eel	angil	angil	angilo	NOUN	3	3.23	extended	2	eel	
+	common	standalone	firmware	mikroprogram	mikroprogram	mikroprogramo	NOUN	3	3.23	extended	2	firmware, microprogram	
+	common	standalone	imp	petolemul	petolemul	petolemulo	NOUN	3	3.23	extended	2	imp, scamp	
+	common	standalone	prefix	prefiks	prefiks	prefiksi	VERB	3	3.23	extended	2	to prefix	
+	common	standalone	sled	sled	sled	sledi	VERB	3	3.23	core	3	to sled	
+	common	standalone	subtitle	subtitolig	subtitolig	subtitoligi	VERB	3	3.23	extended	2	to subtitle	
+	common	derived_adj	abrasive	abrad	abrad,frotpurig	abrada	ADJ	3	3.22	extended	2	abrasive	2 roots collapsed: abrad, frotpurig; derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	frivolous	frivol	frivol	frivola	ADJ	3	3.22	core	4	frivolous	derived adjective — confirm noun anchor / eo_word
+	common	standalone	galley	remŝip	remŝip	remŝipo	NOUN	3	3.22	extended	2	galley	
+	common	derived_adj	homogeneous	homogen	homogen	homogena	ADJ	3	3.22	core	3	homogeneous	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	metaphysical	metafizik	metafizik	metafizika	ADJ	3	3.22	extended	2	metaphysical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	meteorology	meteologi	meteologi,meteorologi	meteologio	NOUN	3	3.22	extended	2	meteorology	2 roots collapsed: meteologi, meteorologi
+	common	derived_adj	apostolic	apostol	apostol	apostola	ADJ	3	3.21	extended	2	apostolic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	backlog	retroakumul	retroakumul	retroakumuli	VERB	3	3.21	extended	2	to backlog	
+	common	derived_adj	biochemical	bioĥemi	bioĥemi	bioĥemia	ADJ	3	3.21	extended	2	biochemical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	eloquent	elokvent	elokvent	elokvento	NOUN	3	3.21	core	3	eloquent, fluent, rhetorical	
+	common	standalone	hermit	ermit	ermit	ermito	NOUN	3	3.21	extended	2	hermit, recluse	
+	common	derived_adj	panoramic	panoram	panoram	panorama	ADJ	3	3.21	extended	2	panoramic	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	septic	sept	sept	septa	ADJ	3	3.21	extended	2	septic	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	symmetric	simetri	simetri	simetria	ADJ	3	3.21	core	4	symmetric, symmetrical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	clockwise	horloĝdirekt	horloĝdirekt	horloĝdirekto	NOUN	3	3.2	extended	2	clockwise	
+	common	standalone	correlate	korelaci	korelaci	korelacii	VERB	3	3.2	extended	2	to correlate	
+	common	standalone	distressing	korprem	korprem	korprema	ADJ	3	3.2	core	3	distressing, oppressing	
+	common	derived_adj	equestrian	surĉeval	surĉeval	surĉevala	ADJ	3	3.2	extended	2	equestrian	derived adjective — confirm noun anchor / eo_word
+	common	standalone	germ	mikrob	mikrob	mikrobo	NOUN	3	3.2	extended	2	germ, microbe	
+	common	standalone	oblique	oblikv	oblikv	oblikvo	NOUN	3	3.2	core	3	oblique, slanting	
+	common	derived_adj	aerobic	aerobi	aerobi	aerobia	ADJ	3	3.19	extended	2	aerobic, aerobiotic	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	algebraic	algebr	algebr	algebra	ADJ	3	3.19	core	3	algebraic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	augment	aŭgment	aŭgment	aŭgmento	NOUN	3	3.19	extended	2	augment	
+	common	standalone	iodine	jod	jod	jodo	NOUN	3	3.19	extended	2	iodine	
+	common	standalone	perverse	pervers	pervers	perverso	NOUN	3	3.19	extended	2	perverse	
+	common	derived_adj	prophetic	profet	profet	profeta	ADJ	3	3.19	core	4	prophetic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	radiology	radiologi	radiologi	radiologio	NOUN	3	3.19	extended	2	radiology	
+	common	standalone	deport	deport	deport	deporti	VERB	3	3.18	extended	2	to deport	
+	common	standalone	facet	facet	facet	faceti	VERB	3	3.18	extended	2	to facet	
+	common	standalone	horticulture	hortikultur	hortikultur	hortikulturo	NOUN	3	3.18	extended	2	horticulture	
+	common	standalone	masturbate	onan	onan	onani	VERB	3	3.18	core	3	to masturbate	
+	common	standalone	mobilize	mobiliz	mobiliz	mobilizi	VERB	3	3.18	core	5	to mobilize	
+	common	derived_adj	pornographic	pornografi	pornografi	pornografia	ADJ	3	3.18	extended	2	pornographic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	sulphur	sulf	sulf	sulfo	NOUN	3	3.18	extended	2	sulphur	
+	common	derived_adj	anecdotal	anekdot	anekdot	anekdota	ADJ	3	3.17	core	3	anecdotal	derived adjective — confirm noun anchor / eo_word
+	common	standalone	autoimmune	aŭtoimun	aŭtoimun	aŭtoimuno	NOUN	3	3.17	extended	2	autoimmune	
+	common	derived_adj	esoteric	esoter	esoter	esotera	ADJ	3	3.17	core	3	esoteric	derived adjective — confirm noun anchor / eo_word
+	common	standalone	rectify	rektif	rektif	rektifi	VERB	3	3.17	extended	2	to rectify	
+	common	standalone	dynamo	dinam	dinam	dinamo	NOUN	3	3.16	core	3	dynamo	
+	common	standalone	incision	inciz	inciz	incizo	NOUN	3	3.16	core	3	incision	
+	common	derived_adj	axial	aks	aks	aksa	ADJ	3	3.15	core	4	axial	derived adjective — confirm noun anchor / eo_word
+	common	standalone	embankment	surbord	surbord	surbordo	NOUN	3	3.15	core	3	embankment, quay	
+	common	standalone	mulberry	morus	morus	moruso	NOUN	3	3.15	extended	2	mulberry	
+	common	standalone	peacekeeping	pacgard	pacgard	pacgarda	ADJ	3	3.15	core	3	peacekeeping	
+	common	standalone	pharmacology	farmakologi	farmakologi	farmakologio	NOUN	3	3.15	extended	2	pharmacology	
+	common	standalone	sickle	serp	serp	serpo	NOUN	3	3.15	extended	2	sickle	
+	common	derived_adj	utopian	utopi	utopi	utopia	ADJ	3	3.15	core	8	utopian	derived adjective — confirm noun anchor / eo_word
+	common	standalone	decipher	deĉifr	deĉifr	deĉifri	VERB	3	3.14	extended	2	to decipher, decode, decrypt	
+	common	standalone	inflamed	inflam	inflam	inflama	ADJ	3	3.14	core	3	inflamed	
+	common	standalone	primate	primas	primas	primaso	NOUN	3	3.14	core	3	primate	
+	common	derived_adj	sedentary	hejmsid	hejmsid	hejmsida	ADJ	3	3.14	extended	2	sedentary	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	antisocial	homevit	homevit	homevita	ADJ	3	3.13	core	3	antisocial	derived adjective — confirm noun anchor / eo_word
+	common	standalone	blacklist	barlist	barlist	barlisto	NOUN	3	3.13	extended	2	blacklist	
+	common	standalone	lenient	indulg	indulg	indulgo	NOUN	3	3.13	core	6	lenient	
+	common	standalone	toxicology	toksologi	toksologi	toksologio	NOUN	3	3.13	extended	2	toxicology	
+	common	standalone	adjutant	adjutant	adjutant	adjutanto	NOUN	3	3.12	extended	2	adjutant, aide	
+	common	standalone	aggravating	indignig	indignig	indigniga	ADJ	3	3.12	extended	2	aggravating	
+	common	standalone	archaeologist	arkeolog	arkeolog	arkeologo	NOUN	3	3.12	extended	2	archaeologist	
+	common	standalone	cipher	ĉifr	ĉifr	ĉifri	VERB	3	3.12	core	6	to cipher, encipher, encrypt, encode	
+	common	standalone	cyst	cist	cist	cisto	NOUN	3	3.12	extended	2	cyst	
+	common	standalone	philanthropist	filantrop	filantrop	filantropo	NOUN	3	3.12	extended	2	philanthropist	
+	common	standalone	relinquish	abandon	abandon	abandoni	VERB	3	3.12	extended	2	to relinquish	
+	common	derived_adj	corrosive	korod	korod	koroda	ADJ	3	3.11	core	4	corrosive	derived adjective — confirm noun anchor / eo_word
+	common	standalone	handball	handbal	handbal,manpilk	handbalo	NOUN	3	3.11	extended	2	handball	2 roots collapsed: handbal, manpilk
+	common	standalone	immunology	imunologi	imunologi	imunologio	NOUN	3	3.11	extended	2	immunology	
+	common	standalone	mantis	mant	mant	manto	NOUN	3	3.11	extended	2	mantis	
+	common	standalone	pug	mops	mops	mopso	NOUN	3	3.11	extended	2	pug	
+	common	standalone	smuggle	kontraband	kontraband	kontrabandi	VERB	3	3.11	core	4	to smuggle	
+	common	standalone	solder	lut	lut	luti	VERB	3	3.11	core	3	to solder	
+	common	standalone	burlesque	burlesk	burlesk,travesti	burlesko	NOUN	3	3.1	core	3	burlesque	2 roots collapsed: burlesk, travesti
+	common	standalone	condescending	degn	degn	degna	ADJ	3	3.1	extended	2	condescending	
+	common	derived_adj	monastic	monaĥ	monaĥ	monaĥa	ADJ	3	3.1	core	8	monastic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	ogre	ogr	ogr	ogro	NOUN	3	3.1	extended	2	ogre	
+	common	standalone	pastime	tempopasig	tempopasig	tempopasigo	NOUN	3	3.1	extended	2	pastime	
+	common	standalone	accordion	akordion	akordion	akordiono	NOUN	3	3.09	extended	2	accordion	
+	common	standalone	inert	inert	inert	inerto	NOUN	3	3.09	extended	2	inert	
+	common	standalone	lumbar	lumb	lumb	lumbo	NOUN	3	3.09	extended	2	lumbar	
+	common	standalone	propagate	propag	propag	propagi	VERB	3	3.09	extended	2	to propagate	
+	common	standalone	totem	totem	totem	totemo	NOUN	3	3.09	extended	2	totem	
+	common	derived_adj	heterogeneous	heterogen	heterogen	heterogena	ADJ	3	3.08	extended	2	heterogeneous	derived adjective — confirm noun anchor / eo_word
+	common	standalone	irritate	irit	irit	iriti	VERB	3	3.08	extended	2	to irritate	
+	common	standalone	slipper	pantofl	pantofl	pantoflo	NOUN	3	3.08	extended	2	slipper	
+	common	standalone	videotape	vidbend	vidbend	vidbendo	NOUN	3	3.08	extended	2	videotape	
+	common	standalone	compress	kondens	kondens	kondensi	VERB	3	3.07	core	5	to compress	
+	common	standalone	drugstore	apotek	apotek	apoteko	NOUN	3	3.07	extended	2	drugstore, pharmacy, chemist	
+	common	derived_adj	pedagogical	pedagogi	pedagogi	pedagogia	ADJ	3	3.07	extended	2	pedagogical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	polygamy	poligami	poligami	poligamio	NOUN	3	3.07	extended	2	polygamy	
+	common	standalone	poplar	popl	popl	poplo	NOUN	3	3.07	core	3	poplar	
+	common	derived_adj	pubic	pub	pub	puba	ADJ	3	3.07	core	3	pubic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	purposeful	celkonform	celkonform	celkonforma	ADJ	3	3.07	extended	2	purposeful, intentional	
+	common	standalone	aloe	alo	alo	aloo	NOUN	3	3.06	core	3	aloe	
+	common	derived_adj	anesthetic	anestez	anestez	anesteza	ADJ	3	3.06	core	5	anesthetic	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	hepatic	hepat	hepat	hepata	ADJ	3	3.06	core	3	hepatic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	incognito	inkognit	inkognit	inkognito	NOUN	3	3.06	extended	2	incognito	
+	common	standalone	mime	mim	mim	mimi	VERB	3	3.06	extended	2	to mime	
+	common	derived_adj	mythological	mitologi	mitologi	mitologia	ADJ	3	3.06	extended	2	mythological	derived adjective — confirm noun anchor / eo_word
+	common	standalone	skirmish	tiraljor	tiraljor	tiraljori	VERB	3	3.06	extended	2	to skirmish	
+	common	standalone	sumo	sumo	sumo	sumoo	NOUN	3	3.06	extended	2	sumo	
+	common	derived_adj	tumultuous	tumult	tumult	tumulta	ADJ	3	3.06	core	3	tumultuous, turbulent, riotous	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	unitary	unit	unit	unita	ADJ	3	3.06	extended	2	unitary	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	xenophobic	ksenofobi	ksenofobi	ksenofobia	ADJ	3	3.06	extended	2	xenophobic	derived adjective — confirm noun anchor / eo_word
+	common	standalone	assimilate	asimil	asimil	asimili	VERB	3	3.05	core	3	to assimilate, localize	
+	common	standalone	beet	bet	bet	beto	NOUN	3	3.05	core	6	beet, of a beet, of beetroot; beta (β)	
+	common	standalone	bigoted	bigot	bigot	bigota	ADJ	3	3.05	core	4	bigoted, fanatical	
+	common	derived_adj	cannibal	kanibal	kanibal	kanibala	ADJ	3	3.05	extended	2	cannibal	derived adjective — confirm noun anchor / eo_word
+	common	standalone	emir	emir	emir	emiro	NOUN	3	3.05	extended	2	emir	
+	common	derived_adj	fractional	frakci	frakci	frakcia	ADJ	3	3.05	extended	2	fractional	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	incendiary	incendi	incendi	incendia	ADJ	3	3.05	extended	2	incendiary	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	parochial	paroĥ	paroĥ,parok	paroĥa	ADJ	3	3.05	core	7	parochial	2 roots collapsed: paroĥ, parok; derived adjective — confirm noun anchor / eo_word
+	common	standalone	acupuncture	akupunktur	akupunktur	akupunkturo	NOUN	3	3.04	extended	2	acupuncture	
+	common	standalone	coexist	kunekzist	kunekzist	kunekzisti	VERB	3	3.04	extended	2	to coexist	
+	common	standalone	decadent	dekadenc	dekadenc	dekadenco	NOUN	3	3.04	core	3	decadent	
+	common	derived_adj	genealogical	genealogi	genealogi	genealogia	ADJ	3	3.04	extended	2	genealogical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	hajj	haĝ	haĝ	haĝo	NOUN	3	3.04	extended	2	hajj	
+	common	standalone	impotent	impotent	impotent	impotento	NOUN	3	3.04	core	3	impotent	
+	common	standalone	winch	vinĉ	vinĉ	vinĉi	VERB	3	3.04	extended	2	to winch	
+	common	standalone	babysit	infanvart	infanvart	infanvarti	VERB	3	3.03	core	4	to babysit	
+	common	standalone	configure	konfigur	konfigur	konfiguro	NOUN	3	3.03	extended	2	configure	
+	common	standalone	hydrate	hidrat	hidrat	hidrato	NOUN	3	3.03	extended	2	hydrate	
+	common	standalone	kebab	kebab	kebab	kebabo	NOUN	3	3.03	extended	2	kebab	
+	common	derived_adj	multilingual	multlingv	multlingv,plurlingv	multlingva	ADJ	3	3.03	core	3	multilingual	2 roots collapsed: multlingv, plurlingv; derived adjective — confirm noun anchor / eo_word
+	common	standalone	widower	vidv	vidv	vidvo	NOUN	3	3.03	core	5	widower	
+	common	derived_adj	agnostic	agnostik	agnostik	agnostika	ADJ	3	3.02	core	4	agnostic	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	fanatical	fanatik	fanatik	fanatika	ADJ	3	3.02	core	4	fanatical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	incandescent	inkandesk	inkandesk	inkandesko	NOUN	3	3.02	core	3	incandescent	
+	common	standalone	infallible	neerarebl	neerarebl	neerareblo	NOUN	3	3.02	extended	2	infallible	
+	common	standalone	eyelid	palpebr	palpebr	palpebro	NOUN	3	3.01	extended	2	eyelid	
+	common	derived_adj	numeric	numer	numer	numera	ADJ	3	3.01	core	5	numeric, numerical	derived adjective — confirm noun anchor / eo_word
+	common	standalone	puritan	puritan	puritan	puritano	NOUN	3	3.01	extended	2	puritan	
+	common	standalone	rhapsody	rapsodi	rapsodi	rapsodio	NOUN	3	3.01	extended	2	rhapsody	
+	common	standalone	snowboard	neĝtabul	neĝtabul	neĝtabuli	VERB	3	3.01	core	4	to snowboard	
+	common	standalone	austere	aŭster	aŭster,severmor	aŭstero	NOUN	3	3.0	extended	2	austere, Spartan	2 roots collapsed: aŭster, severmor
+	common	standalone	blister	blaz	blaz	blazo	NOUN	3	3.0	extended	2	blister	
+	common	standalone	chalice	kalik	kalik	kaliko	NOUN	3	3.0	extended	2	chalice, goblet, tankard, grail	
+	common	standalone	czar	car	car	caro	NOUN	3	3.0	core	5	of a czar, of a tsar	
+	common	standalone	duchy	dukland	dukland	duklando	NOUN	3	3.0	extended	2	duchy, dukedom	
+	common	standalone	instill	ensem	ensem	ensemi	VERB	3	3.0	extended	2	to instill, sow	
+	common	standalone	pantomime	pantomim	pantomim	pantomimi	VERB	3	3.0	extended	2	to pantomime	
+	common	standalone	spore	spor	spor	sporo	NOUN	3	3.0	extended	2	spore	
+	common	derived_adj	synchronous	sinkron	sinkron	sinkrona	ADJ	3	3.0	core	3	synchronous	derived adjective — confirm noun anchor / eo_word
+	common	derived_adj	theologian	teolog	teolog	teologa	ADJ	3	3.0	extended	2	theologian	derived adjective — confirm noun anchor / eo_word
+	common	standalone	wicker	vimen	vimen	vimeno	NOUN	3	3.0	extended	2	wicker	
+	domain-adjacent	standalone	lieutenant	leŭtenant	leŭtenant	leŭtenanto	NOUN		4.44	core	3	lieutenant	
+	domain-adjacent	standalone	colonel	kolonel	kolonel	kolonelo	NOUN		4.41	extended	2	colonel	
+	domain-adjacent	standalone	agriculture	terkultiv	terkultiv	terkultivo	NOUN		4.37	extended	2	agriculture	
+	domain-adjacent	derived_adj	agricultural	agronomi	agronomi,agrikultur,agrokultur	agronomia	ADJ		4.34	extended	2	agricultural	3 roots collapsed: agronomi, agrikultur, agrokultur; derived adjective — confirm noun anchor / eo_word
+	domain-adjacent	derived_adj	genetic	genetik	genetik	genetika	ADJ		4.34	extended	2	genetic	derived adjective — confirm noun anchor / eo_word
+	domain-adjacent	derived_adj	naval	mararme	mararme	mararmea	ADJ		4.24	extended	2	naval	derived adjective — confirm noun anchor / eo_word
+	domain-adjacent	derived_adj	imperial	imperi	imperi	imperia	ADJ		4.21	core	6	imperial	derived adjective — confirm noun anchor / eo_word
+	domain-adjacent	derived_adj	parliamentary	parlament	parlament	parlamenta	ADJ		4.18	core	3	parliamentary	derived adjective — confirm noun anchor / eo_word
+	domain-adjacent	derived_adj	magnetic	magenet	magenet	mageneta	ADJ		4.17	extended	2	magnetic	derived adjective — confirm noun anchor / eo_word
+	domain-adjacent	derived_adj	diplomatic	diplomat	diplomat,diplomati	diplomata	ADJ		4.11	extended	2	diplomatic	2 roots collapsed: diplomat, diplomati; derived adjective — confirm noun anchor / eo_word
+	domain-adjacent	derived_adj	admiral	admiral	admiral	admirala	ADJ		4.0	core	5	of an admiral, of an admiralty	derived adjective — confirm noun anchor / eo_word
+	domain-adjacent	derived_adj	atomic	atom	atom	atoma	ADJ		3.98	core	8	atomic	derived adjective — confirm noun anchor / eo_word
+	domain-adjacent	standalone	artillery	artileri	artileri	artilerio	NOUN		3.96	core	3	artillery, ordnance	
+	domain-adjacent	standalone	infantry	infanteri	infanteri	infanterio	NOUN		3.96	extended	2	infantry	
+	domain-adjacent	standalone	regiment	regiment	regiment	regimento	NOUN		3.93	extended	2	regiment	
+	domain-adjacent	standalone	cavalry	kavaleri	kavaleri,rajdistar	kavalerio	NOUN		3.8	extended	2	cavalry	2 roots collapsed: kavaleri, rajdistar
+	domain-adjacent	derived_adj	anatomical	anatomi	anatomi	anatomia	ADJ		3.21	extended	2	anatomical	derived adjective — confirm noun anchor / eo_word
+	register-marked	standalone	damn	damn	damn	damno	NOUN		5.09	extended	2	damn	
+	register-marked	standalone	gay	homoseksual	homoseksual	homoseksualo	NOUN		4.9	core	3	gay, homosexual, queer	
+	register-marked	standalone	bastard	bastard	bastard	bastardo	NOUN		3.89	core	3	bastard	
+	register-marked	derived_adj	homosexual	samseksam	samseksam,samseksemul	samseksama	ADJ		3.72	extended	2	homosexual, gay, queer	2 roots collapsed: samseksam, samseksemul; derived adjective — confirm noun anchor / eo_word
+	register-marked	standalone	fart	furz	furz	furzi	VERB		3.59	extended	2	to fart	
+	register-marked	standalone	prostitute	prostitu	prostitu,amovendist	prostitui	VERB		3.58	core	6	to prostitute	2 roots collapsed: prostitu, amovendist
+	archaic	derived_adj	archaic	arkaik	arkaik	arkaika	ADJ		3.36	core	4	archaic, obsolete	derived adjective — confirm noun anchor / eo_word

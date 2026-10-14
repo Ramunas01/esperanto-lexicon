@@ -217,6 +217,38 @@ common → philology-T4 if civilization forgets it); R8's derived-not-fixed tier
 move without the schema fighting. Intake question is therefore **"which way is it heading?"** —
 and for a brand-new word the honest answer is "unknown," which is exactly what `unplaced` is for.
 
+### R10 — Three axes, not more tiers (commonness · acquisition-stage · reference-population)
+The pull toward finer tiers (0-6 / 6-18 / 18+) is really three *different* facts being forced
+onto one number. Keep them separate; do **not** add tiers.
+
+- **Commonness = the tier (1–4).** The expertise / distance-from-common scale. **Stays four
+  bands; not re-cut by age.** Age/education is the *mechanism* by which words become common;
+  the tier is the *result*. More tiers would encode false precision the corpus can't support —
+  and the ratio metric `T4/(T1+T2)` is insensitive to the internal T1/T2/T3 boundaries anyway;
+  only the **T3/T4 (common-vs-specialist) line carries real weight**. So lower-band fuzziness
+  is low-stakes and may be documented *as* fuzziness rather than resolved.
+- **Acquisition stage = optional metadata, not a tier.** Where/when a word is "installed",
+  anchored to education, deliberately coarse and fuzzy: `preschool (~0–7)` · `school (~7–~18)`
+  · `adult (~18+)`. Captures cases the tier can't (street-acquired-early yet not generally
+  common; late-acquired). Most words need no tag; the interesting ones do. This is where the
+  kindergarten/secondary/university insight lives — as provenance, not scale.
+- **Reference population = explicit (the R8 socket).** The tier is *derived against a named
+  group*. Current default: **generally-educated young adult** — a *population* (~post-secondary),
+  **not a precise age gate**. Other groups (`rural-remote`, `urban-educated`, per-jurisdiction)
+  derive *different* tiers for the same word — this is where "in rural areas Tier 3 is a
+  lifetime achievement" lives, and where `homosexual`/`erection` being common teen vocabulary is
+  a fact about *that* population.
+
+**On the "adult" boundary specifically:** it is fuzzy *by nature*, not by sloppiness — "adult"
+is a bundle of institution- and jurisdiction-specific thresholds that disagree (sexual maturity
+~14, emancipation ~16, legal majority 17–18, drinking 21, full maturity ~25). No single number
+is correct, so the school→adult boundary is stored as a **range (~16–21), never a line**, and
+tagged as jurisdiction/purpose-relative. The metric doesn't need the sharpness; acknowledged
+fuzziness beats unsupportable precision.
+
+**Guardrail:** don't let anatomical-tidy numbers (5/10/20) drive the model — they're mnemonics.
+Education (and jurisdiction) is the real mechanism; anchor bands there and keep the numbers soft.
+
 ### Guardrails
 - **G1 — No document state in the lexicon.** *Which* Jupiter (resolution) and `Peter = he =
   the boy` (coreference) are **per-document** operations. The lexicon/name layer stores the

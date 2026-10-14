@@ -582,6 +582,183 @@ def _awl_pos_tagger(spacy: bool):
     return make_pos_tagger(None)
 
 
+# ===========================================================================
+# General-adult gap fill (Effort A) — place the reviewed candidate_gaps into T1-3
+# ===========================================================================
+
+GENERAL_GAP_SOURCE = "general_gap_v1"
+
+
+def _parse_root_detail(root_detail: str) -> list[tuple[str, str]]:
+    """Parse ``"root=gloss || root=gloss"`` into ``[(root, gloss), ...]``."""
+    pairs: list[tuple[str, str]] = []
+    for part in (root_detail or "").split("||"):
+        part = part.strip()
+        if "=" in part:
+            root, gloss = part.split("=", 1)
+            root = root.strip()
+            if root:
+                pairs.append((root, gloss.strip()))
+    return pairs
+
+
+# Reviewer correction (2026-07-14): adjective split senses whose shared English
+# head is not `-al/-ic`-marked, so the POS heuristic defaults them to a noun ending.
+# Force the -a (adjective) form; author_concept then sets eo_pos=ADJ from the ending.
+SPLIT_EO_OVERRIDES = {"akut": "akuta", "sagac": "sagaca", "vertikal": "vertikala"}
+
+
+def _split_rows(row: dict) -> list[dict]:
+    """Expand a ``split`` worksheet row into one author-row per constituent root.
+
+    Each root in ``all_roots`` becomes its own concept: eo_word = root + a POS
+    ending derived from that root's per-root gloss (``root_detail``), so a single
+    root means ``eo_root`` = the decomposition head (author_concept enforces the
+    invariant). EN word = that gloss's content head; tier = the row's proposed tier.
+    Reviewer-named adjective senses use :data:`SPLIT_EO_OVERRIDES`.
+    """
+    import sys as _sys
+    _sys.path.insert(0, str(_repo_root() / "src" / "analyzer"))
+    from consolidate_general_gaps import gloss_head, pos_and_ending  # noqa: E402
+
+    tier_raw = (row.get("tier") or row.get("proposed_tier") or "").strip()
+    if not tier_raw.isdigit():
+        return []
+    tier = int(tier_raw)
+    detail = dict(_parse_root_detail(row.get("root_detail", "")))
+    roots = [r.strip() for r in (row.get("all_roots") or "").split(",") if r.strip()]
+    out: list[dict] = []
+    for root in roots:
+        gloss = detail.get(root, row.get("gloss", "") or root)
+        head = gloss_head(gloss) or root
+        if root in SPLIT_EO_OVERRIDES:
+            eo_word = SPLIT_EO_OVERRIDES[root]
+        else:
+            _pos, ending = pos_and_ending(head, gloss)
+            eo_word = root + ending
+        out.append({
+            "en_word": head.lower(), "eo_word": eo_word, "eo_root": root,
+            "tier": tier, "source": GENERAL_GAP_SOURCE,
+        })
+    return out
+
+
+def run_general_gap_merge(
+    conn: sqlite3.Connection, worksheet_path: Path, decomposer
+) -> dict:
+    """Author the reviewed general-gap worksheet (insert-only) by its decision column.
+
+    Reuses :func:`author_concept` (sets ``concept.eo_root`` from the eo_word
+    decomposition head — the invariant). Decisions:
+      * ``approve`` — author ONE concept (worksheet ``eo_word`` / ``anchor_root`` /
+        ``proposed_tier``);
+      * ``split``   — author EACH root in ``all_roots`` as its own concept (eo_word =
+        root + POS ending from its ``root_detail`` gloss);
+      * anything else (``hold`` / ``reject`` / blank) — skipped, not authored.
+    ``review_flag`` (incl. ``R9-park``) is metadata only — an ``approve`` is authored
+    regardless of its review_flag; ``source='general_gap_v1'`` on every row.
+    """
+    rows = _load_tsv(worksheet_path)
+    decisions: dict[str, int] = {}
+    authored = skipped = held = split_concepts = 0
+    by_tier: dict[int, int] = {}
+    before_ids = {r[0] for r in conn.execute("SELECT id FROM concept")}
+
+    def _author(arow: dict) -> None:
+        nonlocal authored, skipped
+        if not arow["en_word"] or not arow["eo_word"]:
+            skipped += 1
+            return
+        if author_concept(conn, arow, decomposer):
+            authored += 1
+            by_tier[arow["tier"]] = by_tier.get(arow["tier"], 0) + 1
+        else:
+            skipped += 1
+
+    for row in rows:
+        decision = (row.get("decision") or "").strip().lower()
+        decisions[decision or "(blank)"] = decisions.get(decision or "(blank)", 0) + 1
+        if decision == "approve":
+            tier_raw = (row.get("tier") or row.get("proposed_tier") or "").strip()
+            if not tier_raw.isdigit():
+                skipped += 1
+                continue
+            _author({
+                "en_word": (row.get("en_word") or "").strip().lower(),
+                "eo_word": (row.get("eo_word") or "").strip(),
+                "eo_root": (row.get("anchor_root") or "").strip(),
+                "tier": int(tier_raw), "source": GENERAL_GAP_SOURCE,
+            })
+        elif decision == "split":
+            for arow in _split_rows(row):
+                split_concepts += 1
+                _author(arow)
+        else:
+            held += 1
+
+    after_ids = {r[0] for r in conn.execute("SELECT id FROM concept")}
+    new_cids = after_ids - before_ids
+    return {
+        "decisions": decisions, "authored": authored, "skipped": skipped,
+        "held": held, "split_concepts": split_concepts,
+        "by_tier": dict(sorted(by_tier.items())), "new_cids": new_cids,
+    }
+
+
+def _main_general_gap(args, decomposer) -> None:
+    """General-adult gap merge: backup + single txn + invariant audit; --dry-run rolls back."""
+    conn = sqlite3.connect(args.lexicon)
+    if not args.dry_run:
+        stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        backup = args.lexicon.with_suffix(f".db.bak-gengap-{stamp}")
+        shutil.copy2(args.lexicon, backup)
+        print(f"backup: {backup}")
+
+    before = {t: conn.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
+              for t in ("concept", "concept_lang", "concept_root")}
+    conn.execute("BEGIN")
+    rep = run_general_gap_merge(conn, args.general_gap_triaged, decomposer)
+    audit = audit_eo_root_invariant(conn, rep["new_cids"])
+    after = {t: conn.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
+             for t in ("concept", "concept_lang", "concept_root")}
+
+    print("=" * 66)
+    print("General-adult gap merge — DRY-RUN" if args.dry_run else "General-adult gap merge")
+    print("=" * 66)
+    print(f"decisions           : {rep['decisions']}")
+    print(f"authored (concepts) : {rep['authored']}   skipped: {rep['skipped']}   "
+          f"held (not approved) : {rep['held']}")
+    print(f"  of which from split: {rep['split_concepts']} split-concepts")
+    print(f"by tier             : {rep['by_tier']}   (source={GENERAL_GAP_SOURCE})")
+    print(f"row deltas          : " + ", ".join(
+        f"{t} {before[t]}->{after[t]} (+{after[t]-before[t]})" for t in before))
+    print("-" * 66)
+    print("POST-WRITE AUDIT (eo_root_decomposer invariant):")
+    print(f"  eo_root↔head mismatches (new): {audit['head_mismatches_new']}  "
+          f"(total in DB: {audit['head_mismatches_total']})")
+    print(f"  new missing head root        : {len(audit['new_without_head_root'])}")
+    print(f"  degenerate head roots (new)  : {len(audit['degenerate_head_roots_new'])}")
+    print(f"  concept_lang duplicate rows  : {audit['concept_lang_dupe_rows']}")
+    print(f"  NEW eo_word collisions       : {audit['new_eo_word_collisions']}")
+    ok = (audit["head_mismatches_new"] == 0
+          and not audit["new_without_head_root"]
+          and not audit["degenerate_head_roots_new"]
+          and audit["concept_lang_dupe_rows"] == 0
+          and audit["new_eo_word_collisions"] == 0)
+    print(f"  AUDIT: {'PASS ✓' if ok else 'FAIL ✗'}")
+
+    if args.dry_run:
+        conn.execute("ROLLBACK")
+        print("\nDRY-RUN — rolled back, no changes written.")
+    elif not ok:
+        conn.execute("ROLLBACK")
+        print("\nAUDIT FAILED — rolled back, nothing written.")
+    else:
+        conn.commit()
+        print("\nCOMMITTED.")
+    conn.close()
+
+
 def main(argv: list[str] | None = None) -> None:
     root = _repo_root()
     gf = root / "data" / "analysis" / "gapfill"
@@ -596,6 +773,8 @@ def main(argv: list[str] | None = None) -> None:
                     default=root / "data" / "awl" / "awl_coxhead.json")
     ap.add_argument("--no-spacy", action="store_true",
                     help="AWL: morphology-only POS (skip spaCy fallback)")
+    ap.add_argument("--general-gap-triaged", type=Path, default=None,
+                    help="run the general-adult gap merge from this reviewed worksheet")
     args = ap.parse_args(argv)
 
     sys.path.insert(0, str(root / "src" / "lexicon"))
@@ -605,6 +784,8 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.awl_triaged is not None:
         return _main_awl(args, decomposer)
+    if args.general_gap_triaged is not None:
+        return _main_general_gap(args, decomposer)
     accepts = _load_tsv(args.gapfill / "accepts_clean.tsv")
     rare = _load_tsv(args.gapfill / "tier_triage_rare_triaged.tsv")
     set_gaps = _load_tsv(args.gapfill / "set_gaps_triaged.tsv")
