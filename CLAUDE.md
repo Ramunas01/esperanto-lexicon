@@ -483,8 +483,18 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
     root-level unplaced∩covered is informational. Full 22k obscure-root sort still deferred.
 * [x] Working-tree hygiene (PR #17) — gitignore for root-decomposer outputs, Office lock files,
   Zone.Identifier; analysis worksheets/review notes committed as provenance.
-* [ ] **Next:** dedup pass over the ~693 pre-existing duplicate concepts (ROADMAP data-quality
-  debt), with the mandatory post-write audit gate.
+* [~] Concept dedup (src/lexicon/dedup_concepts.py, branch analysis/concept-dedup) — **decision
+  2026-10-14: concept identity = the Esperanto word** (EN synonyms Esperanto joins are ONE
+  concept). The old "~693 duplicates" were multi-POS rows inside one concept (not duplicates).
+  None of this moves the metric; it is concept-identity quality for the knowledge graph.
+  - `merge-synonyms`: 179 safe groups → retire 207 concepts (5,725 → 5,518), reversible via
+    the new `concept_merge` ledger; audit = (lang, word, tier) triples unchanged.
+  - `fold-inflections`: 1,225 same-concept inflected EN rows (98% AWL family) →
+    `inflected_forms` (form_description='concept_row_fold'), tier kept.
+  - Both writes PENDING (user runs `--commit`; auto-mode blocks Claude from row deletions).
+  - Human review pending: `data/analysis/concept_dedup/concept_dedup_review.xlsx` — 120
+    suspect + 5 no-ESPDIC groups (wrong anchors, e.g. shin→brili) and 377 cross-concept
+    inflections.
 * Tier-model note (ROADMAP R10): tiers stay **4 bands**; commonness=tier, acquisition-stage
   (preschool/school/adult) and reference-population (default: generally-educated young adult) are
   SEPARATE axes. **The metric T4/(T1+T2) is insensitive to the internal T1/T2/T3 boundaries —
