@@ -1,0 +1,433 @@
+"""Tests for the R9 vocabulary lifecycle (Effort B).
+
+Three concerns:
+
+* **B3 no-loss invariant** — every inventory root in exactly one state; counts
+  reconcile to the full inventory before and after a relabel; nothing deleted.
+* **Metric exclusion** — an ``unplaced`` concept counts on neither the common
+  nor the specialist side, and the wiring is a strict no-op on pre-migration
+  DBs and while the table is empty.
+* **Routing rule** — conservative direction-of-travel routing, incl. a
+  regression guard for the ``app``/``apple`` substring false-positive.
+"""
+
+from __future__ import annotations
+
+import sqlite3
+import sys
+from pathlib import Path
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
+from analyzer.coverage_report import load_tier3_words, load_tier_words  # noqa: E402
+from lexicon.schema import (  # noqa: E402
+    create_common_lexicon_schema,
+    create_domain_schema,
+    create_lifecycle_schema,
+)
+from lexicon.migrate_vocab_lifecycle import migrate_lexicon  # noqa: E402
+from lexicon.vocab_lifecycle import (  # noqa: E402
+    STATES,
+    check_disjointness,
+    covered_en_words,
+    covered_roots,
+    domain_roots,
+    load_inventory_roots,
+    partition_roots,
+    reconcile,
+    route_obscure_root,
+    tiered_unplaced_concepts,
+    unplaced_roots,
+)
+
+REPO = Path(__file__).resolve().parent.parent
+LEXICON = REPO / "data" / "lexicon_db" / "lexicon_v2.db"
+INVENTORY = REPO / "data" / "lexicon_db" / "eo_inventory.json"
+DOMAIN_DIR = REPO / "data" / "domain_db"
+
+
+# --------------------------------------------------------------------------- #
+# B3 — the no-loss partition (pure, hermetic)
+# --------------------------------------------------------------------------- #
+class TestNoLossPartition:
+    def _inv(self) -> set[str]:
+        return {f"root{i}" for i in range(100)}
+
+    def test_partition_is_total_and_single_valued(self) -> None:
+        inv = self._inv()
+        covered = {"root0", "root1"}
+        unplaced = {"root2"}
+        t4 = {"root3", "root4"}
+        label = partition_roots(inv, covered, unplaced, t4)
+        # every inventory root labelled exactly once, with a known state
+        assert set(label) == inv
+        assert all(v in STATES for v in label.values())
+
+    def test_counts_reconcile_to_inventory(self) -> None:
+        inv = self._inv()
+        label = partition_roots(inv, {"root0"}, {"root1"}, {"root2"})
+        counts = reconcile(label)
+        assert counts["total"] == len(inv) == 100
+        assert counts["covered_tier"] == 1
+        assert counts["unplaced"] == 1
+        assert counts["t4_domain"] == 1
+        assert counts["unclassified_obscure"] == 97
+
+    def test_relabel_only_conserves_the_inventory(self) -> None:
+        """Moving a root obscure→unplaced conserves the total and loses nothing."""
+        inv = self._inv()
+        before = partition_roots(inv, set(), set(), set())
+        assert reconcile(before)["total"] == 100
+        assert before["root7"] == "unclassified_obscure"
+
+        # A move is a relabel: stage root7 as unplaced. Nothing is deleted.
+        after = partition_roots(inv, set(), {"root7"}, set())
+        assert reconcile(after)["total"] == 100
+        assert set(after) == set(before)  # identical root set — no loss
+        assert after["root7"] == "unplaced"  # only this root's label changed
+        changed = {r for r in inv if before[r] != after[r]}
+        assert changed == {"root7"}
+
+    def test_precedence_covered_outranks_t4(self) -> None:
+        # a promoted root (both covered and in a domain) labels as covered_tier
+        inv = {"volt"}
+        label = partition_roots(inv, {"volt"}, set(), {"volt"})
+        assert label["volt"] == "covered_tier"
+
+    def test_roots_outside_inventory_are_ignored_not_lost(self) -> None:
+        inv = {"a", "b"}
+        # a covered root not in inventory must not appear (it is not an ESPDIC root)
+        label = partition_roots(inv, {"a", "ghost"}, set(), set())
+        assert set(label) == {"a", "b"}
+
+    def test_disjointness_flags_the_ampermetro_trap(self) -> None:
+        # unplaced must never intersect t4 (opposite scoring) — a hard check
+        clean = check_disjointness({"a"}, {"b"}, {"c"})
+        assert clean["unplaced_and_t4"] == set()
+        assert clean["shared_root_unplaced_covered"] == set()
+
+        violation = check_disjointness(covered={"a"}, unplaced={"a", "b"}, t4={"b"})
+        assert violation["unplaced_and_t4"] == {"b"}
+
+    def test_shared_root_with_covered_is_informational(self) -> None:
+        # a staged rival coinage (komputor) on a covered root (komput) is legit:
+        # reported for review, but under an informational key, not a violation
+        report = check_disjointness(covered={"komput"}, unplaced={"komput"}, t4=set())
+        assert report["shared_root_unplaced_covered"] == {"komput"}
+        assert report["unplaced_and_t4"] == set()
+
+
+# --------------------------------------------------------------------------- #
+# B3 — real-data reconciliation (skips if the regenerable data is absent)
+# --------------------------------------------------------------------------- #
+class TestRealInventoryReconciles:
+    @pytest.mark.skipif(not INVENTORY.exists(), reason="eo_inventory.json absent")
+    def test_partition_of_real_inventory_sums_to_total(self) -> None:
+        inv = load_inventory_roots(INVENTORY)
+        assert inv  # the regenerable inventory is present and non-empty
+
+        covered = covered_roots(LEXICON) if LEXICON.exists() else set()
+        unplaced = unplaced_roots(LEXICON) if LEXICON.exists() else set()
+        t4 = domain_roots(sorted(DOMAIN_DIR.glob("*.db"))) if DOMAIN_DIR.exists() else set()
+
+        label = partition_roots(inv, covered, unplaced, t4)
+        counts = reconcile(label)
+        # The whole point: the partition conserves the full inventory exactly.
+        # Compared to the inventory read at runtime, not a constant, so the
+        # test survives an ESPDIC rebuild.
+        assert counts["total"] == len(inv)
+        # And the R9 "never merge" guarantee holds on real data.
+        viol = check_disjointness(covered, unplaced, t4)
+        # the hard concept-level invariant: no concept both tiered and unplaced
+        assert tiered_unplaced_concepts(LEXICON) == set()
+        assert viol["unplaced_and_t4"] == set()
+
+
+# --------------------------------------------------------------------------- #
+# Metric exclusion — an unplaced concept counts on neither side
+# --------------------------------------------------------------------------- #
+class TestMetricExclusion:
+    def _lexicon(self, tmp_path: Path, *, with_lifecycle: bool) -> Path:
+        db = tmp_path / "lex.db"
+        conn = sqlite3.connect(db)
+        create_common_lexicon_schema(conn)
+        if with_lifecycle:
+            create_lifecycle_schema(conn)
+        # two concepts: one normal (placed), one we will stage unplaced
+        conn.execute(
+            "INSERT INTO concept (id, eo_root, eo_word) VALUES (1, 'dom', 'domo')"
+        )
+        conn.execute(
+            "INSERT INTO concept (id, eo_root, eo_word) VALUES (2, 'blog', 'blogo')"
+        )
+        conn.executemany(
+            "INSERT INTO concept_lang (concept_id, lang, word, tier) VALUES (?,?,?,?)",
+            [
+                (1, "en", "house", 1),
+                (1, "en", "home", 2),
+                (2, "en", "blog", 1),  # a rising word, tier-1 word row present
+                (2, "en", "weblog", 3),
+            ],
+        )
+        conn.commit()
+        conn.close()
+        return db
+
+    def test_unplaced_concept_excluded_from_common_side(self, tmp_path: Path) -> None:
+        db = self._lexicon(tmp_path, with_lifecycle=True)
+        # before staging: blog is visible on the common side
+        t1, t2 = load_tier_words(db, "en")
+        assert "blog" in t1 and "house" in t1
+        assert "weblog" in load_tier3_words(db, "en")
+
+        # stage concept 2 (blog) as unplaced
+        conn = sqlite3.connect(db)
+        conn.execute(
+            "INSERT INTO concept_lifecycle (concept_id, state, source, asof) "
+            "VALUES (2, 'unplaced', 'test', '2026-07-13')"
+        )
+        conn.commit()
+        conn.close()
+
+        # after: blog/weblog vanish from BOTH common loaders; house/home stay
+        t1, t2 = load_tier_words(db, "en")
+        assert "blog" not in t1 and "blog" not in t2
+        assert "house" in t1 and "home" in t2  # untouched — no default shift
+        assert "weblog" not in load_tier3_words(db, "en")
+
+    def test_unplaced_absent_from_specialist_side_by_construction(
+        self, tmp_path: Path
+    ) -> None:
+        # An unplaced concept lives only in the common lexicon; it is never an
+        # mwe in a domain DB, so it cannot count on the specialist (T4) side.
+        from src.analyzer.coverage_report import load_mwe_phrases
+
+        domain = tmp_path / "philology.db"
+        conn = sqlite3.connect(domain)
+        create_domain_schema(conn)
+        conn.commit()
+        conn.close()
+        assert load_mwe_phrases(domain, "en") == set()  # empty domain → no T4
+
+    def test_noop_on_pre_migration_db(self, tmp_path: Path) -> None:
+        # A DB with no concept_lifecycle table must behave exactly as before.
+        db = self._lexicon(tmp_path, with_lifecycle=False)
+        t1, t2 = load_tier_words(db, "en")
+        assert "blog" in t1 and "house" in t1  # no error, no exclusion
+        assert "weblog" in load_tier3_words(db, "en")
+
+    def test_empty_lifecycle_table_is_a_noop(self, tmp_path: Path) -> None:
+        db = self._lexicon(tmp_path, with_lifecycle=True)  # table present, empty
+        t1, _ = load_tier_words(db, "en")
+        assert {"blog", "house"} <= t1  # identical to pre-migration behaviour
+
+
+# --------------------------------------------------------------------------- #
+# Routing rule — conservative direction of travel
+# --------------------------------------------------------------------------- #
+class TestRoutingRule:
+    def test_parenthesised_usage_label_routes_to_philology(self) -> None:
+        route, signal = route_obscure_root("(archaic) a short sword", 3.3)
+        assert route == "philology_t4"
+        assert signal == "usage-label:archaic"
+
+    def test_prefix_usage_label_routes_to_philology(self) -> None:
+        route, _ = route_obscure_root("obsolete: a silver coin", 1.2)
+        assert route == "philology_t4"
+
+    def test_mixed_label_group_with_neutral_label(self) -> None:
+        route, signal = route_obscure_root("(obsolete, dialectal) a barn", 1.0)
+        assert route == "philology_t4"
+        assert signal == "usage-label:obsolete"
+
+    def test_neutral_label_alone_is_not_philology(self) -> None:
+        # a poetic or dialectal word is alive in its register
+        for gloss in ("(poetic) a star", "(dialectal) a barn", "(rare) curious"):
+            route, _ = route_obscure_root(gloss, 2.0)
+            assert route == "unclassified", f"false positive on {gloss!r}"
+
+    @pytest.mark.parametrize(
+        "root, gloss",
+        [
+            # Real ESPDIC glosses that the keyword rule wrongly sent to philology
+            # (obscure_route_sample.tsv, PR #16 review). Each is a LIVING word.
+            ("arĥaik", "archaic"),  # the word MEANS "archaic"
+            ("arkaj", "antiquated, archaic, obsolete"),
+            ("neaktual", "obsolete"),
+            ("troantikv", "obsolete"),
+            ("dialekt", "dialect"),
+            ("parnas", "poetic, Parnassian"),
+            ("pra", "ancient, primal, primeval, primitive, primordial"),  # live prefix
+            ("malnovegipt", "ancient Egyptian"),  # ancient referent = history
+            ("lokri", "Locrian (of ancient Greece)"),
+            ("antaŭdiluv", "antediluvian, very ancient"),
+            # living EO names of obsolete referents
+            ("arŝin", "arshin (аршин – an obsolete Russian unit of length)"),
+            ("spesmil", "spesmilo (obsolete decimal international currency)"),
+        ],
+    )
+    def test_marker_as_meaning_or_referent_is_not_philology(
+        self, root: str, gloss: str
+    ) -> None:
+        route, _ = route_obscure_root(gloss, 3.0)
+        assert route == "unclassified", f"{root}: false positive on {gloss!r}"
+
+    def test_external_usage_label_socket(self) -> None:
+        # a register-labelled source (e.g. ReVo stylistic codes) plugs in here
+        for label in ("ARK", "archaic"):
+            route, _ = route_obscure_root("cat", 4.0, usage_label=label)
+            assert route == "philology_t4", label
+        assert route_obscure_root("thing", 1.0, usage_label="NEO") == (
+            "unplaced",
+            "usage-label:neologism",
+        )
+        # an unknown or neutral label changes nothing
+        assert route_obscure_root("cat", 4.0, usage_label="POE")[0] == "unclassified"
+
+    def test_zero_zipf_alone_is_not_philology(self) -> None:
+        # frequency-absence without an archaic marker stays unclassified
+        route, _ = route_obscure_root("a rare technical chemistry term", 0.0)
+        assert route == "unclassified"
+
+    def test_modern_referent_routes_to_unplaced(self) -> None:
+        route, signal = route_obscure_root("software, computer program", 4.5)
+        assert route == "unplaced"
+        assert "software" in signal
+
+    def test_modern_referent_below_zipf_gate_stays_unclassified(self) -> None:
+        # a modern keyword but no modern frequency → not confidently rising
+        route, _ = route_obscure_root("obscure software-ish sense", 1.0)
+        assert route == "unclassified"
+
+    def test_app_substring_false_positive_regression(self) -> None:
+        # "approach"/"apple"/"appeal" must NOT trigger the modern-referent rule
+        for gloss in ("to approach, deal with", "Adam's apple", "to appeal"):
+            route, _ = route_obscure_root(gloss, 4.8)
+            assert route == "unclassified", f"false positive on {gloss!r}"
+
+    def test_default_is_unclassified(self) -> None:
+        route, signal = route_obscure_root("a squirrel", 4.0)
+        assert route == "unclassified"
+        assert "no-directional-signal" in signal
+
+
+# --------------------------------------------------------------------------- #
+# Migration audit — REFERENCES is not enforced by SQLite, so orphans are counted
+# --------------------------------------------------------------------------- #
+class TestMigrationOrphanAudit:
+    def test_orphan_lifecycle_rows_are_reported(self, tmp_path: Path) -> None:
+        db = tmp_path / "lexicon.db"
+        conn = sqlite3.connect(db)
+        create_common_lexicon_schema(conn)
+        create_lifecycle_schema(conn)
+        conn.execute("INSERT INTO concept (id, eo_root) VALUES (1, 'blog')")
+        conn.execute("INSERT INTO concept_lifecycle (concept_id) VALUES (1)")
+        conn.execute("INSERT INTO concept_lifecycle (concept_id) VALUES (999)")
+        conn.commit()
+        conn.close()
+
+        stats = migrate_lexicon(db, dry_run=True)
+        assert stats["unplaced_rows"] == 2
+        assert stats["orphan_rows"] == 1
+
+
+# --------------------------------------------------------------------------- #
+# B5 — the hard lifecycle invariant is concept-level
+# --------------------------------------------------------------------------- #
+class TestConceptLevelInvariant:
+    def _db(self, tmp_path: Path) -> Path:
+        db = tmp_path / "lex.db"
+        conn = sqlite3.connect(db)
+        create_common_lexicon_schema(conn)
+        create_lifecycle_schema(conn)
+        conn.executemany(
+            "INSERT INTO concept (id, eo_root, eo_word) VALUES (?,?,?)",
+            [(1, "komput", "komputilo"), (2, "komput", "komputoro")],
+        )
+        # concept 1 is tiered; concept 2 (rival coinage) has no tier row
+        conn.execute(
+            "INSERT INTO concept_lang (concept_id, lang, word, tier) "
+            "VALUES (1, 'en', 'computer', 2)"
+        )
+        conn.execute(
+            "INSERT INTO concept_lang (concept_id, lang, word, tier) "
+            "VALUES (2, 'en', 'computer', NULL)"
+        )
+        conn.commit()
+        conn.close()
+        return db
+
+    def test_shared_root_staging_is_not_a_violation(self, tmp_path: Path) -> None:
+        db = self._db(tmp_path)
+        conn = sqlite3.connect(db)
+        conn.execute("INSERT INTO concept_lifecycle (concept_id) VALUES (2)")
+        conn.commit()
+        conn.close()
+        assert tiered_unplaced_concepts(db) == set()
+
+    def test_staging_a_tiered_concept_is_a_violation(self, tmp_path: Path) -> None:
+        db = self._db(tmp_path)
+        conn = sqlite3.connect(db)
+        conn.execute("INSERT INTO concept_lifecycle (concept_id) VALUES (1)")
+        conn.commit()
+        conn.close()
+        assert tiered_unplaced_concepts(db) == {1}
+
+    def test_no_lifecycle_table_means_no_violation(self, tmp_path: Path) -> None:
+        db = tmp_path / "old.db"
+        conn = sqlite3.connect(db)
+        create_common_lexicon_schema(conn)
+        conn.close()
+        assert tiered_unplaced_concepts(db) == set()
+
+
+# --------------------------------------------------------------------------- #
+# B4 — rival forms of already-covered concepts are flagged, not re-routed
+# --------------------------------------------------------------------------- #
+class TestRivalFormSignal:
+    def test_rival_form_flagged_on_unplaced_route(self) -> None:
+        route, signal = route_obscure_root(
+            "computer", 4.97, covered_en={"computer", "house"}
+        )
+        assert route == "unplaced"  # route unchanged; the signal carries the case
+        assert signal.startswith("rival-form:computer;")
+
+    def test_to_prefix_and_parens_are_ignored(self) -> None:
+        _, signal = route_obscure_root(
+            "to download (from a server)", 4.7, covered_en={"download"}
+        )
+        assert signal.startswith("rival-form:download;")
+
+    def test_genuinely_new_concept_has_no_rival_prefix(self) -> None:
+        _, signal = route_obscure_root("cellphone", 3.65, covered_en={"computer"})
+        assert not signal.startswith("rival-form")
+
+    def test_without_covered_set_signal_is_unchanged(self) -> None:
+        _, signal = route_obscure_root("computer", 4.97)
+        assert signal.startswith("modern-referent:computer")
+
+    def test_unclassified_is_never_flagged(self) -> None:
+        # rival-form is a reviewer hint on unplaced only, not a route of its own
+        route, signal = route_obscure_root("house", 5.0, covered_en={"house"})
+        assert route == "unclassified"
+        assert "rival-form" not in signal
+
+    def test_covered_en_words_excludes_unplaced(self, tmp_path: Path) -> None:
+        db = tmp_path / "lex.db"
+        conn = sqlite3.connect(db)
+        create_common_lexicon_schema(conn)
+        create_lifecycle_schema(conn)
+        conn.executemany(
+            "INSERT INTO concept (id, eo_root, eo_word) VALUES (?,?,?)",
+            [(1, "dom", "domo"), (2, "blog", "blogo")],
+        )
+        conn.executemany(
+            "INSERT INTO concept_lang (concept_id, lang, word, tier) VALUES (?,?,?,?)",
+            [(1, "en", "House", 1), (2, "en", "blog", 1)],
+        )
+        conn.execute("INSERT INTO concept_lifecycle (concept_id) VALUES (2)")
+        conn.commit()
+        conn.close()
+        assert covered_en_words(db) == {"house"}

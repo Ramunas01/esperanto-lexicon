@@ -1,0 +1,446 @@
+#!/usr/bin/env python3
+"""R9 vocabulary lifecycle — the no-loss partition + the conservative routing rule.
+
+Two jobs, both *design + scaffold* (the full 22k sort is explicitly deferred):
+
+1. **No-loss partition (B3).** Every ESPDIC root is always in exactly one
+   lifecycle STATE. The states are derived from ground truth — never stored as a
+   second source — so nothing can drift:
+
+       covered_tier          root is a content root of a concept placed in T1-T3
+       unplaced              root belongs to a concept staged `unplaced`
+                             (rising/new; EXCLUDED from the metric)
+       t4_domain             root is canonical in some domain DB, incl. philology
+                             (fading/archaic philology-T4 is COUNTED like any T4)
+       unclassified_obscure  everything else in the inventory (the honest default)
+
+   :func:`partition_roots` is a *total* function over the inventory set, so the
+   four state counts always sum to the full inventory size — before and
+   after any move. Movement is a relabel (a status/domain assignment), never a
+   delete: no root leaves the inventory.
+
+2. **Routing rule (B2).** :func:`route_obscure_root` scores an obscure root by
+   *direction of travel* — fading (→ philology-T4), rising (→ unplaced), or
+   unknown (→ leave unclassified). It is deliberately **conservative**: fading
+   needs an explicit usage label (ESPDIC has none), and static ESPDIC + wordfreq
+   cannot reliably detect "rising", so the honest default is `unclassified`.
+   Used to generate the ~200-root validation sample; the full sort is NOT run
+   here.
+"""
+
+from __future__ import annotations
+
+import json
+import re
+import sqlite3
+from pathlib import Path
+
+STATES = ("covered_tier", "unplaced", "t4_domain", "unclassified_obscure")
+
+
+# --------------------------------------------------------------------------- #
+# Ground-truth readers (thin; each tolerates absent DBs/tables)
+# --------------------------------------------------------------------------- #
+def load_inventory_roots(inventory_json: Path) -> set[str]:
+    """Return the full set of ESPDIC roots from ``eo_inventory.json``."""
+    if not inventory_json.exists():
+        return set()
+    data = json.loads(inventory_json.read_text(encoding="utf-8"))
+    return {r for r in data.get("roots", [])}
+
+
+def _table_exists(conn: sqlite3.Connection, name: str) -> bool:
+    return (
+        conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (name,)
+        ).fetchone()
+        is not None
+    )
+
+
+def covered_roots(lexicon_db: Path) -> set[str]:
+    """Roots of concepts placed in a common tier (T1-T3), excluding ``unplaced``.
+
+    A concept is "placed" if it has any ``concept_lang.tier IN (1,2,3)`` row.
+    Its roots come from ``concept_root`` (the decomposed content roots).
+    """
+    if not lexicon_db.exists():
+        return set()
+    conn = sqlite3.connect(lexicon_db)
+    try:
+        if not (_table_exists(conn, "concept_root") and _table_exists(conn, "concept_lang")):
+            return set()
+        unplaced = _unplaced_concept_ids(conn)
+        placed = {
+            cid
+            for (cid,) in conn.execute(
+                "SELECT DISTINCT concept_id FROM concept_lang WHERE tier IN (1,2,3)"
+            )
+        } - unplaced
+        if not placed:
+            return set()
+        qmarks = ",".join("?" * len(placed))
+        return {
+            root
+            for (root,) in conn.execute(
+                f"SELECT DISTINCT root FROM concept_root WHERE concept_id IN ({qmarks})",
+                tuple(placed),
+            )
+        }
+    finally:
+        conn.close()
+
+
+def _unplaced_concept_ids(conn: sqlite3.Connection) -> set[int]:
+    if not _table_exists(conn, "concept_lifecycle"):
+        return set()
+    return {
+        cid
+        for (cid,) in conn.execute(
+            "SELECT concept_id FROM concept_lifecycle WHERE state = 'unplaced'"
+        )
+    }
+
+
+def tiered_unplaced_concepts(lexicon_db: Path) -> set[int]:
+    """Concept ids that are staged ``unplaced`` AND carry a T1-T3 tier row.
+
+    This is the HARD lifecycle invariant, checked at concept level because tiers
+    belong to concepts, not roots. Such a concept is a contradiction (a staged
+    word has no tier) and is silently dropped from the common side by the
+    tier-loaders' anti-join — so any id returned here must be fixed by a human.
+    """
+    if not lexicon_db.exists():
+        return set()
+    conn = sqlite3.connect(lexicon_db)
+    try:
+        ids = _unplaced_concept_ids(conn)
+        if not ids or not _table_exists(conn, "concept_lang"):
+            return set()
+        qmarks = ",".join("?" * len(ids))
+        return {
+            cid
+            for (cid,) in conn.execute(
+                "SELECT DISTINCT concept_id FROM concept_lang "
+                f"WHERE tier IN (1,2,3) AND concept_id IN ({qmarks})",
+                tuple(ids),
+            )
+        }
+    finally:
+        conn.close()
+
+
+def covered_en_words(lexicon_db: Path) -> set[str]:
+    """Lowercased English words of concepts placed in T1-T3 (excl. ``unplaced``).
+
+    Used by the routing rule to recognise a *rival form*: an obscure EO root
+    whose English gloss names a concept the lexicon already covers.
+    """
+    if not lexicon_db.exists():
+        return set()
+    conn = sqlite3.connect(lexicon_db)
+    try:
+        if not _table_exists(conn, "concept_lang"):
+            return set()
+        unplaced = _unplaced_concept_ids(conn)
+        return {
+            word
+            for word, cid in conn.execute(
+                "SELECT LOWER(word), concept_id FROM concept_lang "
+                "WHERE lang = 'en' AND tier IN (1,2,3)"
+            )
+            if cid not in unplaced
+        }
+    finally:
+        conn.close()
+
+
+def unplaced_roots(lexicon_db: Path) -> set[str]:
+    """Roots belonging to concepts staged ``unplaced`` (rising/new; excluded)."""
+    if not lexicon_db.exists():
+        return set()
+    conn = sqlite3.connect(lexicon_db)
+    try:
+        ids = _unplaced_concept_ids(conn)
+        if not ids:
+            return set()
+        roots: set[str] = set()
+        qmarks = ",".join("?" * len(ids))
+        if _table_exists(conn, "concept_root"):
+            roots |= {
+                root
+                for (root,) in conn.execute(
+                    f"SELECT DISTINCT root FROM concept_root WHERE concept_id IN ({qmarks})",
+                    tuple(ids),
+                )
+            }
+        # Fall back to concept.eo_root for un-decomposed staged concepts.
+        roots |= {
+            r
+            for (r,) in conn.execute(
+                f"SELECT eo_root FROM concept WHERE id IN ({qmarks}) AND eo_root IS NOT NULL",
+                tuple(ids),
+            )
+        }
+        return {r for r in roots if r}
+    finally:
+        conn.close()
+
+
+def domain_roots(domain_dbs: list[Path]) -> set[str]:
+    """Canonical roots of every domain DB (incl. philology-T4). Counted as T4."""
+    roots: set[str] = set()
+    for db in domain_dbs:
+        if not db.exists():
+            continue
+        conn = sqlite3.connect(db)
+        try:
+            if _table_exists(conn, "mwe"):
+                roots |= {
+                    r
+                    for (r,) in conn.execute(
+                        "SELECT eo_canonical FROM mwe WHERE eo_canonical IS NOT NULL"
+                    )
+                    if r
+                }
+        finally:
+            conn.close()
+    return roots
+
+
+# --------------------------------------------------------------------------- #
+# The no-loss partition (pure — operates on sets, so tests are hermetic)
+# --------------------------------------------------------------------------- #
+def partition_roots(
+    inventory: set[str],
+    covered: set[str],
+    unplaced: set[str],
+    t4: set[str],
+) -> dict[str, str]:
+    """Map every inventory root to exactly one lifecycle state.
+
+    Precedence resolves *legitimate* overlaps: covered_tier > t4_domain >
+    unplaced > unclassified_obscure. A root common today (covered) outranks a
+    stale domain listing (promotion in progress). Only inventory roots are
+    labelled — anything outside the inventory is ignored (it is not lost; it
+    was never an ESPDIC root).
+
+    Returns ``{root: state}``. Use :func:`reconcile` for counts and
+    :func:`check_disjointness` for the R9 "never merge" guarantees.
+    """
+    label: dict[str, str] = {}
+    for root in inventory:
+        if root in covered:
+            label[root] = "covered_tier"
+        elif root in t4:
+            label[root] = "t4_domain"
+        elif root in unplaced:
+            label[root] = "unplaced"
+        else:
+            label[root] = "unclassified_obscure"
+    return label
+
+
+def reconcile(label: dict[str, str]) -> dict[str, int]:
+    """Return per-state counts plus a ``total``. The whole point of no-loss."""
+    counts = {s: 0 for s in STATES}
+    for state in label.values():
+        counts[state] += 1
+    counts["total"] = sum(counts[s] for s in STATES)
+    return counts
+
+
+def check_disjointness(
+    covered: set[str], unplaced: set[str], t4: set[str]
+) -> dict[str, set[str]]:
+    """Return the R9 root-level overlaps between the lifecycle homes.
+
+    * ``unplaced_and_t4`` — a HARD violation (should be empty): the
+      ``ampermetro`` trap, rising vocabulary counted as specialist. Both sides
+      are root-keyed (philology-T4 stores single roots), so root level is right.
+    * ``shared_root_unplaced_covered`` — INFORMATIONAL, may be non-empty. Roots
+      are productive: one root anchors many concepts (1,116 of 3,276 lexicon
+      roots are shared, e.g. ``san`` → health T1, illness T2), and tiers belong
+      to concepts. A staged rival coinage (``komputor``) built on a covered root
+      is legitimate. The hard check for this pair is concept-level:
+      :func:`tiered_unplaced_concepts`.
+
+    ``covered ∩ t4`` is *allowed* (a promotion in flight) and is resolved by
+    precedence, so it is not reported here.
+    """
+    return {
+        "unplaced_and_t4": unplaced & t4,
+        "shared_root_unplaced_covered": unplaced & covered,
+    }
+
+
+# --------------------------------------------------------------------------- #
+# The conservative routing rule (B2) — direction of travel
+# --------------------------------------------------------------------------- #
+# Fading / backward-facing. A static dictionary can only signal "this WORD is
+# fading" through an explicit USAGE LABEL. A marker word appearing in the gloss
+# as its MEANING is not such a label: `arĥaik` "archaic" and `dialekt` "dialect"
+# are living words; `malnovegipt` "ancient Egyptian" names an ancient referent
+# (history, not philology); `arŝin` "arshin (an obsolete Russian unit…)" is the
+# living EO name of an obsolete referent. A survey of all 22,653 ESPDIC obscure
+# roots found zero genuine usage labels (docs/design/vocab_lifecycle.md §3), so
+# from ESPDIC alone this rule (correctly) routes nothing to philology. The
+# ``usage_label`` input is the socket for a register-labelled source.
+FADING_LABELS = ("archaic", "archaism", "obsolete", "dated", "old-fashioned")
+RISING_LABELS = ("neologism",)
+# Register labels that are recognised as labels but imply NO direction of
+# travel (a poetic or dialectal word is alive in its register).
+NEUTRAL_LABELS = (
+    "dialectal",
+    "poetic",
+    "literary",
+    "rare",
+    "colloquial",
+    "slang",
+    "vulgar",
+    "figurative",
+)
+
+# Short register codes, as used by labelled EO dictionaries (e.g. ReVo's
+# stylistic marks ARK = arĥaismo, NEO = neologismo). Normalised to lowercase.
+LABEL_CODES = {"ark": "archaic", "arĥ": "archaic", "neo": "neologism"}
+
+# A label written INTO a gloss: a parenthesised label standing alone, e.g.
+# "(archaic)" / "(obsolete, dialectal)", or a leading "archaic:" prefix.
+_GLOSS_LABEL_RE = re.compile(
+    r"\(\s*(?P<paren>[a-z\- ,]+?)\s*\)|^(?P<prefix>[a-z\-]+)\s*:"
+)
+
+# Rising / forward-facing: a clear modern-technology/culture referent whose
+# root is not yet tiered. Kept SMALL and SPECIFIC and matched on **word
+# boundaries** — over-routing to `unplaced` would let rising everyday words
+# masquerade as inventory noise. (An earlier draft used the substring "app",
+# which false-matched approach/apple/appeal/appreciate — hence word boundaries
+# and multi-character terms only.)
+MODERN_SIGNAL_KEYWORDS = (
+    "internet",
+    "online",
+    "website",
+    "software",
+    "hardware",
+    "computer",
+    "smartphone",
+    "cellphone",
+    "digital",
+    "download",
+    "upload",
+    "email",
+    "e-mail",
+    "blog",
+    "weblog",
+    "podcast",
+    "streaming",
+    "wifi",
+    "wi-fi",
+    "bluetooth",
+    "webcam",
+    "cyber",
+)
+
+
+def _has_word(gloss: str, phrase: str) -> bool:
+    """True if *phrase* occurs in *gloss* on word boundaries (case-insensitive)."""
+    return re.search(rf"(?<![a-z]){re.escape(phrase)}(?![a-z])", gloss) is not None
+
+
+def _normalise_label(label: str) -> str:
+    """Map a register code or label word to its canonical lowercase label."""
+    lab = label.strip().lower().rstrip(".")
+    return LABEL_CODES.get(lab, lab)
+
+
+def _gloss_usage_labels(gloss: str) -> set[str]:
+    """Return usage labels written into *gloss* as standalone labels.
+
+    Only a parenthesised group made entirely of label words, or a leading
+    ``label:`` prefix, counts. A marker word used as the gloss's meaning
+    (``"archaic"``) or as a qualifier of a referent (``"(an obsolete unit of
+    length)"``) is NOT a usage label.
+    """
+    known = set(FADING_LABELS) | set(RISING_LABELS) | set(NEUTRAL_LABELS)
+    labels: set[str] = set()
+    for m in _GLOSS_LABEL_RE.finditer(gloss):
+        if m.group("paren"):
+            parts = {p.strip() for p in m.group("paren").split(",") if p.strip()}
+            if parts and parts <= known:
+                labels |= parts
+        elif m.group("prefix") in known and m.start() == 0:
+            labels.add(m.group("prefix"))
+    return labels
+
+
+def _gloss_senses(gloss: str) -> list[str]:
+    """Split a gloss into its comma/semicolon senses, minus ``to`` and parens."""
+    senses = []
+    for part in re.split(r"[,;]", re.sub(r"\([^)]*\)", "", gloss)):
+        sense = re.sub(r"^to\s+", "", part.strip())
+        if sense:
+            senses.append(sense)
+    return senses
+
+
+def _rival_prefix(gloss: str, covered_en: set[str] | None) -> str:
+    """Return ``'rival-form:<word>;'`` if a gloss sense is a covered EN word."""
+    if not covered_en:
+        return ""
+    for sense in _gloss_senses(gloss):
+        if sense in covered_en:
+            return f"rival-form:{sense};"
+    return ""
+
+
+def route_obscure_root(
+    gloss: str,
+    gloss_zipf: float,
+    *,
+    inv_tier: str = "",
+    usage_label: str | None = None,
+    covered_en: set[str] | None = None,
+) -> tuple[str, str]:
+    """Route one obscure root by direction of travel. Returns ``(route, signal)``.
+
+    Conservative by design (see docs/design/vocab_lifecycle.md §3):
+
+    * **philology_t4** — an explicit *usage label* marks the WORD as fading:
+      either ``usage_label`` from a register-labelled source (``ARK``,
+      ``archaic``, ``obsolete``…), or a standalone label written into the gloss
+      (``"(archaic)"``, ``"obsolete: …"``). A marker word that is the gloss's
+      meaning, or that qualifies an obsolete *referent*, does not fire.
+    * **unplaced** — a ``neologism``/``NEO`` usage label, or a clear modern
+      tech/culture referent (keyword hit) whose English gloss is in modern use
+      (``gloss_zipf >= 3``) yet the root is untiered: plausibly rising.
+    * **unclassified** — the honest default for everything else. Not a failure:
+      R9 says for most words the direction is genuinely unknown.
+
+    When ``covered_en`` (see :func:`covered_en_words`) is given, an ``unplaced``
+    route whose gloss names an already-covered concept gets the signal prefix
+    ``rival-form:<word>`` — the EO form is a competitor for a concept the
+    lexicon already has (``komputor`` vs ``komputilo``), not a new concept. The
+    route is unchanged; the signal tells the human reviewer which case it is.
+
+    Frequency-absence alone (``gloss_zipf == 0``) is never a fading signal: most
+    zero-zipf roots are technical/rare, not archaic.
+    """
+    g = (gloss or "").lower()
+    labels = _gloss_usage_labels(g)
+    if usage_label:
+        labels.add(_normalise_label(usage_label))
+    fading = sorted(labels & set(FADING_LABELS))
+    if fading:
+        return "philology_t4", f"usage-label:{fading[0]}"
+    rising = sorted(labels & set(RISING_LABELS))
+    if rising:
+        return "unplaced", _rival_prefix(g, covered_en) + f"usage-label:{rising[0]}"
+    if gloss_zipf >= 3.0:
+        for kw in MODERN_SIGNAL_KEYWORDS:
+            if _has_word(g, kw):
+                return "unplaced", (
+                    _rival_prefix(g, covered_en)
+                    + f"modern-referent:{kw};zipf={gloss_zipf:.2f}"
+                )
+    return "unclassified", f"no-directional-signal;zipf={gloss_zipf:.2f}"

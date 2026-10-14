@@ -56,19 +56,53 @@ class TokenResult:
 # ---------------------------------------------------------------------------
 
 
+def _unplaced_exclusion(conn: sqlite3.Connection) -> str:
+    """Return a SQL fragment excluding R9 ``unplaced`` concepts, or '' if N/A.
+
+    Additive R9 wiring (Effort B): a concept marked ``unplaced``
+    (``concept_lifecycle.state = 'unplaced'``) is rising/new *staging*
+    vocabulary that must **not** count on the common side of the metric (nor,
+    being absent from every domain DB, on the specialist side). This anti-join
+    removes it from the tier-loaders.
+
+    It is deliberately a strict **no-op** for existing data:
+
+    * On a DB predating the lifecycle migration (no ``concept_lifecycle``
+      table) it returns ``''`` — the query is byte-identical to before.
+    * While the table is empty, the anti-join matches nothing, so results are
+      unchanged.
+
+    So no existing analysis shifts; the exclusion only bites once a concept is
+    explicitly staged ``unplaced``.
+    """
+    has_table = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='concept_lifecycle'"
+    ).fetchone()
+    if not has_table:
+        return ""
+    return (
+        " AND concept_id NOT IN "
+        "(SELECT concept_id FROM concept_lifecycle WHERE state = 'unplaced')"
+    )
+
+
 def load_tier_words(lexicon_db: Path, lang: str) -> tuple[set[str], set[str]]:
     """Return (tier1_words, tier2_words) — lowercased from concept_lang.
 
     Only tiers 1 and 2 are loaded. Tier 3 and above are intentionally
     excluded so they can be classified separately by classify_tokens.
+    R9 ``unplaced`` concepts are additively excluded (see
+    :func:`_unplaced_exclusion`) — a no-op until a concept is staged.
     """
     if not lexicon_db.exists():
         return set(), set()
     conn = sqlite3.connect(lexicon_db)
+    excl = _unplaced_exclusion(conn)
     tier1: set[str] = set()
     tier2: set[str] = set()
     for word, tier in conn.execute(
-        "SELECT LOWER(word), tier FROM concept_lang WHERE lang = ? AND tier IN (1, 2)",
+        "SELECT LOWER(word), tier FROM concept_lang "
+        "WHERE lang = ? AND tier IN (1, 2)" + excl,
         (lang,)
     ):
         (tier1 if tier == 1 else tier2).add(word)
@@ -77,14 +111,20 @@ def load_tier_words(lexicon_db: Path, lang: str) -> tuple[set[str], set[str]]:
 
 
 def load_tier3_words(lexicon_db: Path, lang: str) -> set[str]:
-    """Return lowercased Tier 3 words from concept_lang for *lang*."""
+    """Return lowercased Tier 3 words from concept_lang for *lang*.
+
+    R9 ``unplaced`` concepts are additively excluded (see
+    :func:`_unplaced_exclusion`) — a no-op until a concept is staged.
+    """
     if not lexicon_db.exists():
         return set()
     conn = sqlite3.connect(lexicon_db)
+    excl = _unplaced_exclusion(conn)
     words = {
         row[0]
         for row in conn.execute(
-            "SELECT LOWER(word) FROM concept_lang WHERE lang = ? AND tier = 3", (lang,)
+            "SELECT LOWER(word) FROM concept_lang WHERE lang = ? AND tier = 3" + excl,
+            (lang,),
         )
     }
     conn.close()
