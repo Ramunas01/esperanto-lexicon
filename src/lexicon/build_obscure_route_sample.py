@@ -23,7 +23,10 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from lexicon.vocab_lifecycle import route_obscure_root  # noqa: E402
+from lexicon.vocab_lifecycle import (  # noqa: E402
+    covered_en_words,
+    route_obscure_root,
+)
 
 OUT_HEADER = [
     "root",
@@ -44,11 +47,14 @@ def _zipf(row: dict[str, str]) -> float:
         return 0.0
 
 
-def build_sample(coverage_tsv: Path, n: int = 200) -> list[dict]:
+def build_sample(
+    coverage_tsv: Path, n: int = 200, covered_en: set[str] | None = None
+) -> list[dict]:
     """Route every obscure root and return a deterministic ~*n*-root sample.
 
     All positively-routed roots (philology_t4 / unplaced) are included; the
     remainder is an even stride over the zipf-sorted unclassified roots.
+    *covered_en* enables the ``rival-form`` signal (see ``route_obscure_root``).
     """
     rows = [
         r
@@ -58,7 +64,10 @@ def build_sample(coverage_tsv: Path, n: int = 200) -> list[dict]:
     routed = []
     for r in rows:
         route, signal = route_obscure_root(
-            r.get("gloss", ""), _zipf(r), inv_tier=r.get("inv_tier", "")
+            r.get("gloss", ""),
+            _zipf(r),
+            inv_tier=r.get("inv_tier", ""),
+            covered_en=covered_en,
         )
         routed.append({**r, "_route": route, "_signal": signal, "_zipf": _zipf(r)})
 
@@ -95,13 +104,19 @@ def main(argv: list[str] | None = None) -> None:
         default=Path("data/analysis/lifecycle/obscure_route_sample.tsv"),
     )
     ap.add_argument("--n", type=int, default=200)
+    ap.add_argument(
+        "--lexicon",
+        type=Path,
+        default=Path("data/lexicon_db/lexicon_v2.db"),
+        help="Common lexicon, for the rival-form signal (skipped if absent).",
+    )
     args = ap.parse_args(argv)
 
     if not args.coverage.exists():
         print(f"Error: {args.coverage} not found.", file=sys.stderr)
         sys.exit(1)
 
-    sample = build_sample(args.coverage, args.n)
+    sample = build_sample(args.coverage, args.n, covered_en_words(args.lexicon))
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open("w", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh, delimiter="\t")

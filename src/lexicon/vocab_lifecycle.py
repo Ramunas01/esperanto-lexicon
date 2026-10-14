@@ -102,6 +102,59 @@ def _unplaced_concept_ids(conn: sqlite3.Connection) -> set[int]:
     }
 
 
+def tiered_unplaced_concepts(lexicon_db: Path) -> set[int]:
+    """Concept ids that are staged ``unplaced`` AND carry a T1-T3 tier row.
+
+    This is the HARD lifecycle invariant, checked at concept level because tiers
+    belong to concepts, not roots. Such a concept is a contradiction (a staged
+    word has no tier) and is silently dropped from the common side by the
+    tier-loaders' anti-join — so any id returned here must be fixed by a human.
+    """
+    if not lexicon_db.exists():
+        return set()
+    conn = sqlite3.connect(lexicon_db)
+    try:
+        ids = _unplaced_concept_ids(conn)
+        if not ids or not _table_exists(conn, "concept_lang"):
+            return set()
+        qmarks = ",".join("?" * len(ids))
+        return {
+            cid
+            for (cid,) in conn.execute(
+                "SELECT DISTINCT concept_id FROM concept_lang "
+                f"WHERE tier IN (1,2,3) AND concept_id IN ({qmarks})",
+                tuple(ids),
+            )
+        }
+    finally:
+        conn.close()
+
+
+def covered_en_words(lexicon_db: Path) -> set[str]:
+    """Lowercased English words of concepts placed in T1-T3 (excl. ``unplaced``).
+
+    Used by the routing rule to recognise a *rival form*: an obscure EO root
+    whose English gloss names a concept the lexicon already covers.
+    """
+    if not lexicon_db.exists():
+        return set()
+    conn = sqlite3.connect(lexicon_db)
+    try:
+        if not _table_exists(conn, "concept_lang"):
+            return set()
+        unplaced = _unplaced_concept_ids(conn)
+        return {
+            word
+            for word, cid in conn.execute(
+                "SELECT LOWER(word), concept_id FROM concept_lang "
+                "WHERE lang = 'en' AND tier IN (1,2,3)"
+            )
+            if cid not in unplaced
+        }
+    finally:
+        conn.close()
+
+
 def unplaced_roots(lexicon_db: Path) -> set[str]:
     """Roots belonging to concepts staged ``unplaced`` (rising/new; excluded)."""
     if not lexicon_db.exists():
@@ -200,16 +253,24 @@ def reconcile(label: dict[str, str]) -> dict[str, int]:
 def check_disjointness(
     covered: set[str], unplaced: set[str], t4: set[str]
 ) -> dict[str, set[str]]:
-    """Return the R9 forbidden overlaps (should all be empty).
+    """Return the R9 root-level overlaps between the lifecycle homes.
 
-    ``unplaced`` (rising, excluded) must never intersect ``covered`` (a staged
-    word has no tier) nor ``t4`` (the ``ampermetro`` trap — rising must not be
-    counted as specialist). ``covered ∩ t4`` is *allowed* (a promotion in
-    flight) and is resolved by precedence, so it is not reported here.
+    * ``unplaced_and_t4`` — a HARD violation (should be empty): the
+      ``ampermetro`` trap, rising vocabulary counted as specialist. Both sides
+      are root-keyed (philology-T4 stores single roots), so root level is right.
+    * ``shared_root_unplaced_covered`` — INFORMATIONAL, may be non-empty. Roots
+      are productive: one root anchors many concepts (1,116 of 3,276 lexicon
+      roots are shared, e.g. ``san`` → health T1, illness T2), and tiers belong
+      to concepts. A staged rival coinage (``komputor``) built on a covered root
+      is legitimate. The hard check for this pair is concept-level:
+      :func:`tiered_unplaced_concepts`.
+
+    ``covered ∩ t4`` is *allowed* (a promotion in flight) and is resolved by
+    precedence, so it is not reported here.
     """
     return {
-        "unplaced_and_covered": unplaced & covered,
         "unplaced_and_t4": unplaced & t4,
+        "shared_root_unplaced_covered": unplaced & covered,
     }
 
 
@@ -313,12 +374,33 @@ def _gloss_usage_labels(gloss: str) -> set[str]:
     return labels
 
 
+def _gloss_senses(gloss: str) -> list[str]:
+    """Split a gloss into its comma/semicolon senses, minus ``to`` and parens."""
+    senses = []
+    for part in re.split(r"[,;]", re.sub(r"\([^)]*\)", "", gloss)):
+        sense = re.sub(r"^to\s+", "", part.strip())
+        if sense:
+            senses.append(sense)
+    return senses
+
+
+def _rival_prefix(gloss: str, covered_en: set[str] | None) -> str:
+    """Return ``'rival-form:<word>;'`` if a gloss sense is a covered EN word."""
+    if not covered_en:
+        return ""
+    for sense in _gloss_senses(gloss):
+        if sense in covered_en:
+            return f"rival-form:{sense};"
+    return ""
+
+
 def route_obscure_root(
     gloss: str,
     gloss_zipf: float,
     *,
     inv_tier: str = "",
     usage_label: str | None = None,
+    covered_en: set[str] | None = None,
 ) -> tuple[str, str]:
     """Route one obscure root by direction of travel. Returns ``(route, signal)``.
 
@@ -335,6 +417,12 @@ def route_obscure_root(
     * **unclassified** — the honest default for everything else. Not a failure:
       R9 says for most words the direction is genuinely unknown.
 
+    When ``covered_en`` (see :func:`covered_en_words`) is given, an ``unplaced``
+    route whose gloss names an already-covered concept gets the signal prefix
+    ``rival-form:<word>`` — the EO form is a competitor for a concept the
+    lexicon already has (``komputor`` vs ``komputilo``), not a new concept. The
+    route is unchanged; the signal tells the human reviewer which case it is.
+
     Frequency-absence alone (``gloss_zipf == 0``) is never a fading signal: most
     zero-zipf roots are technical/rare, not archaic.
     """
@@ -347,9 +435,12 @@ def route_obscure_root(
         return "philology_t4", f"usage-label:{fading[0]}"
     rising = sorted(labels & set(RISING_LABELS))
     if rising:
-        return "unplaced", f"usage-label:{rising[0]}"
+        return "unplaced", _rival_prefix(g, covered_en) + f"usage-label:{rising[0]}"
     if gloss_zipf >= 3.0:
         for kw in MODERN_SIGNAL_KEYWORDS:
             if _has_word(g, kw):
-                return "unplaced", f"modern-referent:{kw};zipf={gloss_zipf:.2f}"
+                return "unplaced", (
+                    _rival_prefix(g, covered_en)
+                    + f"modern-referent:{kw};zipf={gloss_zipf:.2f}"
+                )
     return "unclassified", f"no-directional-signal;zipf={gloss_zipf:.2f}"

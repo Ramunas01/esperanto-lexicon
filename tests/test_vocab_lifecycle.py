@@ -31,12 +31,14 @@ from lexicon.migrate_vocab_lifecycle import migrate_lexicon  # noqa: E402
 from lexicon.vocab_lifecycle import (  # noqa: E402
     STATES,
     check_disjointness,
+    covered_en_words,
     covered_roots,
     domain_roots,
     load_inventory_roots,
     partition_roots,
     reconcile,
     route_obscure_root,
+    tiered_unplaced_concepts,
     unplaced_roots,
 )
 
@@ -101,14 +103,20 @@ class TestNoLossPartition:
         assert set(label) == {"a", "b"}
 
     def test_disjointness_flags_the_ampermetro_trap(self) -> None:
-        # unplaced must never intersect covered or t4 (opposite scoring)
+        # unplaced must never intersect t4 (opposite scoring) — a hard check
         clean = check_disjointness({"a"}, {"b"}, {"c"})
-        assert clean["unplaced_and_covered"] == set()
         assert clean["unplaced_and_t4"] == set()
+        assert clean["shared_root_unplaced_covered"] == set()
 
         violation = check_disjointness(covered={"a"}, unplaced={"a", "b"}, t4={"b"})
-        assert violation["unplaced_and_covered"] == {"a"}
         assert violation["unplaced_and_t4"] == {"b"}
+
+    def test_shared_root_with_covered_is_informational(self) -> None:
+        # a staged rival coinage (komputor) on a covered root (komput) is legit:
+        # reported for review, but under an informational key, not a violation
+        report = check_disjointness(covered={"komput"}, unplaced={"komput"}, t4=set())
+        assert report["shared_root_unplaced_covered"] == {"komput"}
+        assert report["unplaced_and_t4"] == set()
 
 
 # --------------------------------------------------------------------------- #
@@ -132,7 +140,8 @@ class TestRealInventoryReconciles:
         assert counts["total"] == len(inv)
         # And the R9 "never merge" guarantee holds on real data.
         viol = check_disjointness(covered, unplaced, t4)
-        assert viol["unplaced_and_covered"] == set()
+        # the hard concept-level invariant: no concept both tiered and unplaced
+        assert tiered_unplaced_concepts(LEXICON) == set()
         assert viol["unplaced_and_t4"] == set()
 
 
@@ -322,3 +331,103 @@ class TestMigrationOrphanAudit:
         stats = migrate_lexicon(db, dry_run=True)
         assert stats["unplaced_rows"] == 2
         assert stats["orphan_rows"] == 1
+
+
+# --------------------------------------------------------------------------- #
+# B5 — the hard lifecycle invariant is concept-level
+# --------------------------------------------------------------------------- #
+class TestConceptLevelInvariant:
+    def _db(self, tmp_path: Path) -> Path:
+        db = tmp_path / "lex.db"
+        conn = sqlite3.connect(db)
+        create_common_lexicon_schema(conn)
+        create_lifecycle_schema(conn)
+        conn.executemany(
+            "INSERT INTO concept (id, eo_root, eo_word) VALUES (?,?,?)",
+            [(1, "komput", "komputilo"), (2, "komput", "komputoro")],
+        )
+        # concept 1 is tiered; concept 2 (rival coinage) has no tier row
+        conn.execute(
+            "INSERT INTO concept_lang (concept_id, lang, word, tier) "
+            "VALUES (1, 'en', 'computer', 2)"
+        )
+        conn.execute(
+            "INSERT INTO concept_lang (concept_id, lang, word, tier) "
+            "VALUES (2, 'en', 'computer', NULL)"
+        )
+        conn.commit()
+        conn.close()
+        return db
+
+    def test_shared_root_staging_is_not_a_violation(self, tmp_path: Path) -> None:
+        db = self._db(tmp_path)
+        conn = sqlite3.connect(db)
+        conn.execute("INSERT INTO concept_lifecycle (concept_id) VALUES (2)")
+        conn.commit()
+        conn.close()
+        assert tiered_unplaced_concepts(db) == set()
+
+    def test_staging_a_tiered_concept_is_a_violation(self, tmp_path: Path) -> None:
+        db = self._db(tmp_path)
+        conn = sqlite3.connect(db)
+        conn.execute("INSERT INTO concept_lifecycle (concept_id) VALUES (1)")
+        conn.commit()
+        conn.close()
+        assert tiered_unplaced_concepts(db) == {1}
+
+    def test_no_lifecycle_table_means_no_violation(self, tmp_path: Path) -> None:
+        db = tmp_path / "old.db"
+        conn = sqlite3.connect(db)
+        create_common_lexicon_schema(conn)
+        conn.close()
+        assert tiered_unplaced_concepts(db) == set()
+
+
+# --------------------------------------------------------------------------- #
+# B4 — rival forms of already-covered concepts are flagged, not re-routed
+# --------------------------------------------------------------------------- #
+class TestRivalFormSignal:
+    def test_rival_form_flagged_on_unplaced_route(self) -> None:
+        route, signal = route_obscure_root(
+            "computer", 4.97, covered_en={"computer", "house"}
+        )
+        assert route == "unplaced"  # route unchanged; the signal carries the case
+        assert signal.startswith("rival-form:computer;")
+
+    def test_to_prefix_and_parens_are_ignored(self) -> None:
+        _, signal = route_obscure_root(
+            "to download (from a server)", 4.7, covered_en={"download"}
+        )
+        assert signal.startswith("rival-form:download;")
+
+    def test_genuinely_new_concept_has_no_rival_prefix(self) -> None:
+        _, signal = route_obscure_root("cellphone", 3.65, covered_en={"computer"})
+        assert not signal.startswith("rival-form")
+
+    def test_without_covered_set_signal_is_unchanged(self) -> None:
+        _, signal = route_obscure_root("computer", 4.97)
+        assert signal.startswith("modern-referent:computer")
+
+    def test_unclassified_is_never_flagged(self) -> None:
+        # rival-form is a reviewer hint on unplaced only, not a route of its own
+        route, signal = route_obscure_root("house", 5.0, covered_en={"house"})
+        assert route == "unclassified"
+        assert "rival-form" not in signal
+
+    def test_covered_en_words_excludes_unplaced(self, tmp_path: Path) -> None:
+        db = tmp_path / "lex.db"
+        conn = sqlite3.connect(db)
+        create_common_lexicon_schema(conn)
+        create_lifecycle_schema(conn)
+        conn.executemany(
+            "INSERT INTO concept (id, eo_root, eo_word) VALUES (?,?,?)",
+            [(1, "dom", "domo"), (2, "blog", "blogo")],
+        )
+        conn.executemany(
+            "INSERT INTO concept_lang (concept_id, lang, word, tier) VALUES (?,?,?,?)",
+            [(1, "en", "House", 1), (2, "en", "blog", 1)],
+        )
+        conn.execute("INSERT INTO concept_lifecycle (concept_id) VALUES (2)")
+        conn.commit()
+        conn.close()
+        assert covered_en_words(db) == {"house"}
