@@ -65,9 +65,23 @@ tail/modern`; ESPDIC productivity) are a *build-quality* signal, not expertise.
   carving joints English blurs — a resource for the-essence semantic work, not a coverage gap.
 
 ### Open data-quality debts (logged, not yet actioned)
-- **~693 pre-existing duplicate concepts** in the base lexicon (e.g. `about`/`pri` doubled,
-  oxford_3000). Predate the merge; left untouched under insert-only. A dedicated dedup pass
-  is worth scheduling.
+- **"~693 duplicate concepts" — re-diagnosed 2026-10-14 (`src/lexicon/dedup_concepts.py`).**
+  The figure was 689 EN words with several POS rows *inside one concept* (`about` ADP+ADV, as
+  Oxford lists them) — not duplicates; harmless (143 differ in tier by POS; the lower wins).
+  None of the issues below moves the expertise metric (loaders are word-sets; T1/T2 are
+  checked by text and lemma before T3) — they are **concept-identity** quality for the
+  knowledge-graph layer. **Decision: concept identity = the Esperanto word ("option a").**
+  - *304 eo_words carried by >1 concept* (353 extra concepts, mostly TinyStories gap-fill):
+    179 safe synonym groups (every EN word is in the ESPDIC gloss; `goodbye`/`farewell` →
+    `adiaŭo`) → merged by `merge-synonyms` into one survivor, reversible via the
+    `concept_merge` ledger; 120 suspect + 5 no-ESPDIC groups → human review
+    (`data/analysis/concept_dedup/concept_dedup_review.xlsx`; wrong anchors like `shin` →
+    `brili`). Side effect of (a): a polysemous EO word unites its senses (`disvolvi`
+    develop/unwind).
+  - *1,602 EN rows that are inflected surface forms* (98% AWL word-family import:
+    `methodologies`, `achieving`): 1,225 on the same concept as their lemma →
+    `fold-inflections` moves them to `inflected_forms`, tier kept; 377 on another concept →
+    review sheet (some are genuine separate lexemes: `advanced`, `armed`).
 - **Write-invariant discipline.** The merge's first write silently broke the
   `eo_root == concept_root head` invariant in 692 rows; caught only by the post-write audit,
   then restored-and-rewritten to 0 mismatches. Lesson: the post-write audit gate is
