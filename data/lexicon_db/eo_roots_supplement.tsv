@@ -1,0 +1,32 @@
+# Modern Esperanto root supplement — curated, human-authored.
+#
+# Genuine modern borrowings (acronyms, recent technology terms, internet-era
+# vocabulary) are absent from ESPDIC and would otherwise show up as
+# unresolved by the decomposer. This file is the project's curated intake
+# path: every entry is human-vetted, NOT auto-mined.
+#
+# Loaded by src/lexicon/build_eo_inventory.py and merged into the inventory
+# under tier "modern" (treated like "extended" by the decomposer for the
+# keep-whole / selection rules). A supplement entry NEVER overwrites an
+# existing ESPDIC root of the same key — duplicate entries are silently
+# ignored.
+#
+# Format (tab-separated): root <TAB> gloss <TAB> note (provenance / date /
+# rationale for the addition). Blank lines and lines starting with "#" are
+# ignored.
+#
+# Do NOT add ambiguous truncations like `klim` (for klimato) or `apar` (for
+# aparato) — those are upstream extraction bugs, not modern borrowings.
+# Reduction-class false merges (e.g. prezid being collapsed into prez) go
+# into eo_reduce_exceptions.txt, not here.
+#
+# License of this file: project data, human-authored. The glosses are short
+# factual definitions; no third-party license entanglement.
+#
+kampus	campus	2026-06; common modern borrowing; absent from ESPDIC
+dvd	DVD (digital video disc)	2026-06; contemporary tech acronym
+kd	CD (compact disc)	2026-06; contemporary tech abbreviation
+blog	blog (internet diary)	2026-06; documented; ESPDIC already has this as core/prod=5 — supplement entry is a no-op (do-not-overwrite rule)
+bus	bus (motor coach)	2026-06; documented; ESPDIC already has this as extended/prod=2 — supplement entry is a no-op
+evalu	to evaluate	2026-06; modern academic/professional borrowing; absent from ESPDIC
+stres	stress (psychological)	2026-06; modern borrowing; absent from ESPDIC (eo_word: streso)
