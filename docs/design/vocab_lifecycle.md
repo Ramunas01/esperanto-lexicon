@@ -147,10 +147,16 @@ Three deliberate non-rules, learned from the data:
 
 - **unplaced** catches mostly genuine modern coinages — and the tell that they are
   *unsettled* is visible in the sample itself: `subenŝarg`/`subenŝarĝ` and competing
-  "upload" forms (`suprenŝarg`/`suprenŝarĝ`/`surinterretig`). Known noise: rival
-  forms of already-covered concepts (`komputor`, `ĉekomputil` vs `komputilo`), an
-  established standard term (`alŝut` "upload"), and an old word (`legosign`
-  "bookmark"). See §7, open question B4.
+  "upload" forms (`suprenŝarg`/`suprenŝarĝ`/`surinterretig`).
+- **Rival forms are flagged (B4, decided).** When the gloss names a concept the
+  lexicon already covers, the signal gets a `rival-form:<word>;` prefix — the EO
+  form competes for an existing concept rather than naming a new one. The route
+  stays `unplaced` (which form wins is genuinely unknown); the prefix tells the
+  reviewer which case it is. 14 of the 21 sample routes carry it (`komputor`,
+  `softvar`, `retdepeŝ`, `subenŝarg`, `legosign`…). Limitation: the match is on the
+  English word, so a sense clash can slip through (`retnod` "host, node" matches the
+  covered *host* of a party). Not flagged: `ĉekomputil` (gloss "at the computer"),
+  `alŝut` (*upload* is not yet a covered concept).
 - The rule is a **proposer, not the gate**: a human confirms every real assignment.
 
 **The full 22k sort is not run here** — the rule + the sample validate the method;
@@ -174,9 +180,11 @@ unclassified_obscure  everything else in the inventory (the default)
 - **Precedence** resolves legitimate overlaps: `covered_tier > t4_domain > unplaced >
   unclassified`. A root common *today* (covered) outranks a stale domain listing — a
   promotion in flight.
-- **Disjointness guarantees** (`check_disjointness`): `unplaced` must never intersect
-  `covered` (a staged word has no tier) nor `t4` (the `ampermetro` trap).
-  `covered ∩ t4` is *allowed* (promotion) and resolved by precedence.
+- **Disjointness guarantees:** a staged concept has no tier (concept-level,
+  `tiered_unplaced_concepts`), and `unplaced` roots never intersect `t4` (the
+  `ampermetro` trap, `check_disjointness`). See "The hard lifecycle invariant is
+  concept-level" below. `covered ∩ t4` is *allowed* (promotion) and resolved by
+  precedence.
 - **Conservation.** Because `partition_roots` is a *total function* over the
   inventory set, the four state counts always sum to the full inventory. Verified on
   the real data: the partition total equals `len(roots)` read at runtime (26,447
@@ -194,10 +202,22 @@ domains contribute nothing to this state. Real partition at review time:
 (total 26,447). Only philology-T4 writes a single root into `eo_canonical`. Whether
 domain MWEs should be decomposed into roots is open question B3 (§7).
 
-**Disjointness is checked at root level.** A root shared by a placed concept and an
-`unplaced` concept (e.g. a rival coinage built on a covered root) is reported as an
-`unplaced_and_covered` overlap even though it is legitimate. Treat a non-empty
-result as "needs a look", not as a hard failure, until open question B5 is settled.
+**The hard lifecycle invariant is concept-level (B5, decided).** One might expect
+roots never to overlap, since each Esperanto root is a unique string with one core
+meaning (true homonyms are rare by design). But roots are **productive**: one root
+anchors many concepts, and **tiers belong to concepts, not roots**. In the lexicon,
+1,116 of 3,276 roots are shared by more than one concept (`san` → health/sick T1,
+illness/heal T2; `lern` → learn/school T1, learner/pupil T2). So a staged rival
+coinage (`komputor`) legitimately shares its root with a covered concept
+(`komputilo`). Hence two levels:
+
+- **Hard, concept-level:** `tiered_unplaced_concepts()` must return nothing — no
+  concept may be both staged `unplaced` and carry a T1–T3 tier row. (If it did, the
+  tier-loaders' anti-join would silently drop a tiered word from the denominator.)
+- **Hard, root-level:** `check_disjointness()["unplaced_and_t4"]` must be empty (the
+  `ampermetro` trap). Philology-T4 is root-keyed, so root level is right here.
+- **Informational, root-level:** `check_disjointness()["shared_root_unplaced_covered"]`
+  lists roots shared by a staged and a covered concept — a review aid, not a failure.
 
 Inventory reconciliation (the numbers the invariant reconciles to):
 
@@ -237,20 +257,17 @@ Inventory reconciliation (the numbers the invariant reconciles to):
 - `src/lexicon/build_obscure_route_sample.py` +
   `data/analysis/lifecycle/obscure_route_sample.tsv` — the ~200-root sample.
 - `tests/test_vocab_lifecycle.py` — no-loss invariant + metric-exclusion + routing
-  + migration orphan audit.
+  + rival-form signal + concept-level invariant + migration orphan audit.
 
-## 7. Open questions (from the PR #16 review)
+## 7. Decisions from the PR #16 review (2026-10-14)
 
-- **B2 — the fading-signal source.** ESPDIC has no register labels, so philology-T4
-  stays empty until a labelled source is chosen. The `usage_label` argument is the
-  socket. Candidates: Reta Vortaro (ReVo) stylistic marks (`ARK` archaism, `NEO`
-  neologism, `EVI` to-be-avoided, `POE` poetic); diachronic frequency from the
-  Tekstaro corpus (a word whose use declines over time). Licence and fit to be
-  decided.
-- **B3 — domain MWEs vs roots.** Should domain-DB phrases be decomposed into roots so
-  existing Tier-4 domains populate `t4_domain`, or does that state stay philology-only?
-- **B4 — rival forms vs rising words.** Add a check for "a rival form of an
-  already-covered concept" to the unplaced route, or accept the noise because a
-  human confirms each route?
-- **B5 — granularity of disjointness.** Move `check_disjointness` to concept level,
-  or keep root level and treat overlaps as review items?
+- **B2 — fading-signal source: parked.** ESPDIC has no register labels, so
+  philology-T4 stays empty for now. The `usage_label` argument is the socket for a
+  later source; candidates on record: Reta Vortaro (ReVo) stylistic marks (`ARK`,
+  `NEO`, `EVI`, `POE`; GPL — licence to be weighed) and Tekstaro diachronic
+  frequency.
+- **B3 — domain MWEs are not decomposed into roots yet.** `t4_domain` stays
+  philology-only. Revisit when the knowledge-graph layer is designed.
+- **B4 — rival forms flagged** via the `rival-form:` signal prefix (§3).
+- **B5 — the hard invariant is concept-level**, root-level overlap with covered roots
+  is informational (§4).
