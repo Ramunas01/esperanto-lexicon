@@ -113,6 +113,36 @@ def create_lifecycle_schema(conn: sqlite3.Connection) -> None:
     conn.commit()
 
 
+def create_concept_merge_schema(conn: sqlite3.Connection) -> None:
+    """Create the concept-merge ledger (additive; sibling to concept).
+
+    Concept identity is the Esperanto word (decided 2026-10-14): several
+    concepts anchored to one ``eo_word`` are merged into a single survivor and
+    their language rows re-pointed (``dedup_concepts.py merge-synonyms``). Each
+    retired concept gets one row here, so a merge is auditable and reversible:
+
+    * ``retired_id`` / ``survivor_id`` — the merge edge. A retired id never
+      reappears in ``concept``; look it up here to find where it went.
+    * ``snapshot`` — JSON of everything removed or moved: the ``concept`` row,
+      its ``concept_root`` rows, the ids of re-pointed ``concept_lang`` rows and
+      any identical duplicate ``concept_lang`` rows that were dropped.
+    * ``source``/``asof`` — provenance of the merge pass.
+    """
+    conn.executescript(
+        """
+        CREATE TABLE IF NOT EXISTS concept_merge (
+            retired_id  INTEGER PRIMARY KEY,
+            survivor_id INTEGER NOT NULL REFERENCES concept(id),
+            eo_word     TEXT NOT NULL,
+            source      TEXT NOT NULL,   -- e.g. 'concept_dedup_v1'
+            asof        TEXT NOT NULL,   -- ISO date of the merge
+            snapshot    TEXT NOT NULL    -- JSON: removed/moved rows (reversal)
+        );
+        """
+    )
+    conn.commit()
+
+
 def create_named_entity_schema(conn: sqlite3.Connection) -> None:
     """Create the named-entity inventory tables (v0: physically-permanent core).
 
