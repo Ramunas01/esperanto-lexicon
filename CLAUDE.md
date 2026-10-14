@@ -483,15 +483,20 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
     root-level unplaced∩covered is informational. Full 22k obscure-root sort still deferred.
 * [x] Working-tree hygiene (PR #17) — gitignore for root-decomposer outputs, Office lock files,
   Zone.Identifier; analysis worksheets/review notes committed as provenance.
-* [~] Concept dedup (src/lexicon/dedup_concepts.py, branch analysis/concept-dedup) — **decision
+* [~] Concept dedup (src/lexicon/dedup_concepts.py, PR #18) — **decision
   2026-10-14: concept identity = the Esperanto word** (EN synonyms Esperanto joins are ONE
   concept). The old "~693 duplicates" were multi-POS rows inside one concept (not duplicates).
   None of this moves the metric; it is concept-identity quality for the knowledge graph.
-  - `merge-synonyms`: 179 safe groups → retire 207 concepts (5,725 → 5,518), reversible via
-    the new `concept_merge` ledger; audit = (lang, word, tier) triples unchanged.
-  - `fold-inflections`: 1,225 same-concept inflected EN rows (98% AWL family) →
-    `inflected_forms` (form_description='concept_row_fold'), tier kept.
-  - Both writes PENDING (user runs `--commit`; auto-mode blocks Claude from row deletions).
+  - `merge-synonyms` APPLIED 2026-10-14 (backup lexicon_v2.db.bak-dedup-merge-20261014-210719):
+    179 safe groups, 207 concepts retired (5,725 → 5,518), 211 concept_lang rows re-pointed;
+    reversible via the new `concept_merge` ledger. All audits PASS ((lang, word, tier) triples
+    unchanged, no orphans, 0 head mismatches).
+  - `fold-inflections` APPLIED 2026-10-14 (backup ...bak-dedup-fold-20261014-211943): 1,229
+    same-concept inflected EN rows (98% AWL family) → `inflected_forms`
+    (form_description='concept_row_fold'), tier kept; concept_lang 10,207 → 8,978. Audits PASS
+    (every folded word resolves to the same tier). 4 more than the dry-run's 1,225:
+    assembled/assembles/assembling and marking became same-concept via the merge.
+  - User runs `--commit` for row-deleting writes (auto-mode blocks Claude).
   - Human review pending: `data/analysis/concept_dedup/concept_dedup_review.xlsx` — 120
     suspect + 5 no-ESPDIC groups (wrong anchors, e.g. shin→brili) and 377 cross-concept
     inflections.
