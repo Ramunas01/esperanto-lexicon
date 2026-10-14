@@ -468,10 +468,23 @@ where they match the schema (e.g. `eo\_root`, `concept\_lang`)
   adjective flag), human-reviewed, **624 concepts merged insert-only** (source='general_gap_v1',
   T2=301/T3=323; 4 split rows → 8 concepts; agricultural held for the lifecycle layer). Post-write
   audit clean (0 eo_root↔head mismatches); candidate_gap 666→3 (the held agricultural's roots).
-* [ ] R9 vocabulary-lifecycle scaffold (design/vocab-lifecycle, PR #16, design+scaffold, awaiting
-  Advisor design review) — `unplaced` staging status (EXCLUDED from the metric) + a philology-T4
-  domain (COUNTED), a no-loss partition test (every root in exactly one state, reconciles to
-  26,439). Full 22k obscure-root sort deferred.
+* [x] R9 vocabulary-lifecycle scaffold (PR #16, merged after Advisor review; migration APPLIED
+  2026-10-14, backup lexicon_v2.db.bak-lifecycle-20261014) — `concept_lifecycle` table in
+  lexicon_v2.db (`unplaced` staging, EXCLUDED from the metric; 0 rows) + empty
+  data/domain_db/philology.db (philology-T4, COUNTED); no-loss partition reconciles to the
+  runtime inventory size (26,447). Review decisions (docs/design/vocab_lifecycle.md §7):
+  - Routing fires philology ONLY on an explicit usage label — ESPDIC has none (0 of 22,653
+    obscure glosses), so philology-T4 stays empty. `usage_label=` is the socket for a future
+    labelled source (ReVo ARK/NEO, Tekstaro diachronic frequency) — **B2 parked**.
+  - **B3:** domain MWEs NOT decomposed into roots yet; `t4_domain` is philology-only.
+  - **B4:** `rival-form:<word>;` signal on unplaced routes whose gloss names a covered concept.
+  - **B5:** roots are productive (1,116 of 3,276 anchor >1 concept; tiers belong to concepts),
+    so the hard invariant is concept-level (`tiered_unplaced_concepts` must be empty);
+    root-level unplaced∩covered is informational. Full 22k obscure-root sort still deferred.
+* [x] Working-tree hygiene (PR #17) — gitignore for root-decomposer outputs, Office lock files,
+  Zone.Identifier; analysis worksheets/review notes committed as provenance.
+* [ ] **Next:** dedup pass over the ~693 pre-existing duplicate concepts (ROADMAP data-quality
+  debt), with the mandatory post-write audit gate.
 * Tier-model note (ROADMAP R10): tiers stay **4 bands**; commonness=tier, acquisition-stage
   (preschool/school/adult) and reference-population (default: generally-educated young adult) are
   SEPARATE axes. **The metric T4/(T1+T2) is insensitive to the internal T1/T2/T3 boundaries —
