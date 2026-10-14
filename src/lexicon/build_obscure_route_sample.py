@@ -36,7 +36,8 @@ OUT_HEADER = [
 ]
 
 
-def _zipf(row: dict) -> float:
+def _zipf(row: dict[str, str]) -> float:
+    """Return the row's ``gloss_zipf`` as a float (0.0 when missing or invalid)."""
     try:
         return float(row.get("gloss_zipf") or 0)
     except ValueError:
@@ -44,6 +45,11 @@ def _zipf(row: dict) -> float:
 
 
 def build_sample(coverage_tsv: Path, n: int = 200) -> list[dict]:
+    """Route every obscure root and return a deterministic ~*n*-root sample.
+
+    All positively-routed roots (philology_t4 / unplaced) are included; the
+    remainder is an even stride over the zipf-sorted unclassified roots.
+    """
     rows = [
         r
         for r in csv.DictReader(coverage_tsv.open(encoding="utf-8"), delimiter="\t")
@@ -76,6 +82,7 @@ def build_sample(coverage_tsv: Path, n: int = 200) -> list[dict]:
 
 
 def main(argv: list[str] | None = None) -> None:
+    """CLI entry point: write the validation sample TSV and print its routes."""
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument(
         "--coverage",

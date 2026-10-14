@@ -15,16 +15,17 @@ Two jobs, both *design + scaffold* (the full 22k sort is explicitly deferred):
        unclassified_obscure  everything else in the inventory (the honest default)
 
    :func:`partition_roots` is a *total* function over the inventory set, so the
-   four state counts always sum to the full inventory (26,447) — before and
+   four state counts always sum to the full inventory size — before and
    after any move. Movement is a relabel (a status/domain assignment), never a
    delete: no root leaves the inventory.
 
 2. **Routing rule (B2).** :func:`route_obscure_root` scores an obscure root by
    *direction of travel* — fading (→ philology-T4), rising (→ unplaced), or
-   unknown (→ leave unclassified). It is deliberately **conservative**: static
-   ESPDIC + wordfreq cannot reliably detect "rising", so the honest default is
-   `unclassified`. Used to generate the ~200-root validation sample; the full
-   sort is NOT run here.
+   unknown (→ leave unclassified). It is deliberately **conservative**: fading
+   needs an explicit usage label (ESPDIC has none), and static ESPDIC + wordfreq
+   cannot reliably detect "rising", so the honest default is `unclassified`.
+   Used to generate the ~200-root validation sample; the full sort is NOT run
+   here.
 """
 
 from __future__ import annotations
@@ -33,11 +34,6 @@ import json
 import re
 import sqlite3
 from pathlib import Path
-
-# Canonical full-inventory count (eo_inventory.json `roots`), for reference in
-# docs/tests. The code derives the real number from the file at runtime; this
-# constant is the value the no-loss invariant is expected to reconcile to.
-INVENTORY_TOTAL = 26_447
 
 STATES = ("covered_tier", "unplaced", "t4_domain", "unclassified_obscure")
 
@@ -220,19 +216,38 @@ def check_disjointness(
 # --------------------------------------------------------------------------- #
 # The conservative routing rule (B2) — direction of travel
 # --------------------------------------------------------------------------- #
-# Fading / backward-facing: an explicit historical-linguistic marker in the
-# gloss is strong evidence of philology-T4 (a dead word scholars still study).
-ARCHAIC_MARKERS = (
-    "archaic",
-    "obsolete",
-    "poetic",
-    "dialect",
+# Fading / backward-facing. A static dictionary can only signal "this WORD is
+# fading" through an explicit USAGE LABEL. A marker word appearing in the gloss
+# as its MEANING is not such a label: `arĥaik` "archaic" and `dialekt` "dialect"
+# are living words; `malnovegipt` "ancient Egyptian" names an ancient referent
+# (history, not philology); `arŝin` "arshin (an obsolete Russian unit…)" is the
+# living EO name of an obsolete referent. A survey of all 22,653 ESPDIC obscure
+# roots found zero genuine usage labels (docs/design/vocab_lifecycle.md §3), so
+# from ESPDIC alone this rule (correctly) routes nothing to philology. The
+# ``usage_label`` input is the socket for a register-labelled source.
+FADING_LABELS = ("archaic", "archaism", "obsolete", "dated", "old-fashioned")
+RISING_LABELS = ("neologism",)
+# Register labels that are recognised as labels but imply NO direction of
+# travel (a poetic or dialectal word is alive in its register).
+NEUTRAL_LABELS = (
     "dialectal",
-    "ancient",
-    "historical",
-    "dated",
-    "old-fashioned",
-    "medieval",
+    "poetic",
+    "literary",
+    "rare",
+    "colloquial",
+    "slang",
+    "vulgar",
+    "figurative",
+)
+
+# Short register codes, as used by labelled EO dictionaries (e.g. ReVo's
+# stylistic marks ARK = arĥaismo, NEO = neologismo). Normalised to lowercase.
+LABEL_CODES = {"ark": "archaic", "arĥ": "archaic", "neo": "neologism"}
+
+# A label written INTO a gloss: a parenthesised label standing alone, e.g.
+# "(archaic)" / "(obsolete, dialectal)", or a leading "archaic:" prefix.
+_GLOSS_LABEL_RE = re.compile(
+    r"\(\s*(?P<paren>[a-z\- ,]+?)\s*\)|^(?P<prefix>[a-z\-]+)\s*:"
 )
 
 # Rising / forward-facing: a clear modern-technology/culture referent whose
@@ -272,30 +287,67 @@ def _has_word(gloss: str, phrase: str) -> bool:
     return re.search(rf"(?<![a-z]){re.escape(phrase)}(?![a-z])", gloss) is not None
 
 
+def _normalise_label(label: str) -> str:
+    """Map a register code or label word to its canonical lowercase label."""
+    lab = label.strip().lower().rstrip(".")
+    return LABEL_CODES.get(lab, lab)
+
+
+def _gloss_usage_labels(gloss: str) -> set[str]:
+    """Return usage labels written into *gloss* as standalone labels.
+
+    Only a parenthesised group made entirely of label words, or a leading
+    ``label:`` prefix, counts. A marker word used as the gloss's meaning
+    (``"archaic"``) or as a qualifier of a referent (``"(an obsolete unit of
+    length)"``) is NOT a usage label.
+    """
+    known = set(FADING_LABELS) | set(RISING_LABELS) | set(NEUTRAL_LABELS)
+    labels: set[str] = set()
+    for m in _GLOSS_LABEL_RE.finditer(gloss):
+        if m.group("paren"):
+            parts = {p.strip() for p in m.group("paren").split(",") if p.strip()}
+            if parts and parts <= known:
+                labels |= parts
+        elif m.group("prefix") in known and m.start() == 0:
+            labels.add(m.group("prefix"))
+    return labels
+
+
 def route_obscure_root(
     gloss: str,
     gloss_zipf: float,
     *,
     inv_tier: str = "",
+    usage_label: str | None = None,
 ) -> tuple[str, str]:
     """Route one obscure root by direction of travel. Returns ``(route, signal)``.
 
-    Conservative by design (see docs/design/vocab_lifecycle.md §B2):
+    Conservative by design (see docs/design/vocab_lifecycle.md §3):
 
-    * **philology_t4** — an explicit archaic/historical marker in the gloss.
-      That is the only *positive* fading signal reliable from static ESPDIC;
-      frequency-absence alone (``gloss_zipf == 0``) is NOT enough, because most
-      zero-zipf roots are merely technical/rare, not archaic.
-    * **unplaced** — a clear modern-tech/culture referent (keyword hit) whose
-      English gloss is actually in modern use (``gloss_zipf >= 3``) yet the root
-      is untiered: plausibly rising, direction-unknown → stage it.
+    * **philology_t4** — an explicit *usage label* marks the WORD as fading:
+      either ``usage_label`` from a register-labelled source (``ARK``,
+      ``archaic``, ``obsolete``…), or a standalone label written into the gloss
+      (``"(archaic)"``, ``"obsolete: …"``). A marker word that is the gloss's
+      meaning, or that qualifies an obsolete *referent*, does not fire.
+    * **unplaced** — a ``neologism``/``NEO`` usage label, or a clear modern
+      tech/culture referent (keyword hit) whose English gloss is in modern use
+      (``gloss_zipf >= 3``) yet the root is untiered: plausibly rising.
     * **unclassified** — the honest default for everything else. Not a failure:
       R9 says for most words the direction is genuinely unknown.
+
+    Frequency-absence alone (``gloss_zipf == 0``) is never a fading signal: most
+    zero-zipf roots are technical/rare, not archaic.
     """
     g = (gloss or "").lower()
-    for marker in ARCHAIC_MARKERS:
-        if _has_word(g, marker):
-            return "philology_t4", f"archaic-marker:{marker}"
+    labels = _gloss_usage_labels(g)
+    if usage_label:
+        labels.add(_normalise_label(usage_label))
+    fading = sorted(labels & set(FADING_LABELS))
+    if fading:
+        return "philology_t4", f"usage-label:{fading[0]}"
+    rising = sorted(labels & set(RISING_LABELS))
+    if rising:
+        return "unplaced", f"usage-label:{rising[0]}"
     if gloss_zipf >= 3.0:
         for kw in MODERN_SIGNAL_KEYWORDS:
             if _has_word(g, kw):

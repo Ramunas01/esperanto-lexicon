@@ -58,20 +58,32 @@ def _table_exists(conn: sqlite3.Connection, name: str) -> bool:
 
 
 def migrate_lexicon(lexicon_db: Path, *, dry_run: bool = False) -> dict:
-    """Add ``concept_lifecycle`` to the common lexicon DB. Returns a stats dict."""
+    """Add ``concept_lifecycle`` to the common lexicon DB. Returns a stats dict.
+
+    Also reports ``orphan_rows``: lifecycle rows whose ``concept_id`` has no
+    ``concept``. SQLite does not enforce ``REFERENCES`` unless
+    ``PRAGMA foreign_keys`` is on, so this count is the audit gate instead.
+    """
     conn = sqlite3.connect(lexicon_db)
     try:
         existed = _table_exists(conn, "concept_lifecycle")
         if not dry_run:
             create_lifecycle_schema(conn)
-        rows = (
-            conn.execute("SELECT COUNT(*) FROM concept_lifecycle").fetchone()[0]
-            if _table_exists(conn, "concept_lifecycle")
-            else 0
-        )
+        rows = orphans = 0
+        if _table_exists(conn, "concept_lifecycle"):
+            rows = conn.execute("SELECT COUNT(*) FROM concept_lifecycle").fetchone()[0]
+            orphans = conn.execute(
+                "SELECT COUNT(*) FROM concept_lifecycle "
+                "WHERE concept_id NOT IN (SELECT id FROM concept)"
+            ).fetchone()[0]
     finally:
         conn.close()
-    return {"path": lexicon_db, "table_existed": existed, "unplaced_rows": rows}
+    return {
+        "path": lexicon_db,
+        "table_existed": existed,
+        "unplaced_rows": rows,
+        "orphan_rows": orphans,
+    }
 
 
 def scaffold_philology_domain(philology_db: Path, *, dry_run: bool = False) -> dict:
@@ -120,6 +132,12 @@ def main(argv: list[str] | None = None) -> None:
     )
     print(f"{tag}{args.lexicon.name}")
     print(f"  concept_lifecycle table : {verb} ({lex['unplaced_rows']} unplaced rows)")
+    if lex["orphan_rows"]:
+        print(
+            f"  WARNING: {lex['orphan_rows']} concept_lifecycle rows reference "
+            "no concept (orphans)",
+            file=sys.stderr,
+        )
 
     phil = scaffold_philology_domain(args.philology_db, dry_run=args.dry_run)
     verb = "already present" if phil["db_existed"] else (

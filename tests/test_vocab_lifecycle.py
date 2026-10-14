@@ -27,8 +27,8 @@ from lexicon.schema import (  # noqa: E402
     create_domain_schema,
     create_lifecycle_schema,
 )
+from lexicon.migrate_vocab_lifecycle import migrate_lexicon  # noqa: E402
 from lexicon.vocab_lifecycle import (  # noqa: E402
-    INVENTORY_TOTAL,
     STATES,
     check_disjointness,
     covered_roots,
@@ -118,7 +118,7 @@ class TestRealInventoryReconciles:
     @pytest.mark.skipif(not INVENTORY.exists(), reason="eo_inventory.json absent")
     def test_partition_of_real_inventory_sums_to_total(self) -> None:
         inv = load_inventory_roots(INVENTORY)
-        assert len(inv) == INVENTORY_TOTAL  # 26,447
+        assert inv  # the regenerable inventory is present and non-empty
 
         covered = covered_roots(LEXICON) if LEXICON.exists() else set()
         unplaced = unplaced_roots(LEXICON) if LEXICON.exists() else set()
@@ -127,7 +127,9 @@ class TestRealInventoryReconciles:
         label = partition_roots(inv, covered, unplaced, t4)
         counts = reconcile(label)
         # The whole point: the partition conserves the full inventory exactly.
-        assert counts["total"] == INVENTORY_TOTAL
+        # Compared to the inventory read at runtime, not a constant, so the
+        # test survives an ESPDIC rebuild.
+        assert counts["total"] == len(inv)
         # And the R9 "never merge" guarantee holds on real data.
         viol = check_disjointness(covered, unplaced, t4)
         assert viol["unplaced_and_covered"] == set()
@@ -217,10 +219,63 @@ class TestMetricExclusion:
 # Routing rule — conservative direction of travel
 # --------------------------------------------------------------------------- #
 class TestRoutingRule:
-    def test_archaic_marker_routes_to_philology(self) -> None:
-        route, signal = route_obscure_root("archaic, obsolete form", 3.3)
+    def test_parenthesised_usage_label_routes_to_philology(self) -> None:
+        route, signal = route_obscure_root("(archaic) a short sword", 3.3)
         assert route == "philology_t4"
-        assert "archaic" in signal
+        assert signal == "usage-label:archaic"
+
+    def test_prefix_usage_label_routes_to_philology(self) -> None:
+        route, _ = route_obscure_root("obsolete: a silver coin", 1.2)
+        assert route == "philology_t4"
+
+    def test_mixed_label_group_with_neutral_label(self) -> None:
+        route, signal = route_obscure_root("(obsolete, dialectal) a barn", 1.0)
+        assert route == "philology_t4"
+        assert signal == "usage-label:obsolete"
+
+    def test_neutral_label_alone_is_not_philology(self) -> None:
+        # a poetic or dialectal word is alive in its register
+        for gloss in ("(poetic) a star", "(dialectal) a barn", "(rare) curious"):
+            route, _ = route_obscure_root(gloss, 2.0)
+            assert route == "unclassified", f"false positive on {gloss!r}"
+
+    @pytest.mark.parametrize(
+        "root, gloss",
+        [
+            # Real ESPDIC glosses that the keyword rule wrongly sent to philology
+            # (obscure_route_sample.tsv, PR #16 review). Each is a LIVING word.
+            ("arĥaik", "archaic"),  # the word MEANS "archaic"
+            ("arkaj", "antiquated, archaic, obsolete"),
+            ("neaktual", "obsolete"),
+            ("troantikv", "obsolete"),
+            ("dialekt", "dialect"),
+            ("parnas", "poetic, Parnassian"),
+            ("pra", "ancient, primal, primeval, primitive, primordial"),  # live prefix
+            ("malnovegipt", "ancient Egyptian"),  # ancient referent = history
+            ("lokri", "Locrian (of ancient Greece)"),
+            ("antaŭdiluv", "antediluvian, very ancient"),
+            # living EO names of obsolete referents
+            ("arŝin", "arshin (аршин – an obsolete Russian unit of length)"),
+            ("spesmil", "spesmilo (obsolete decimal international currency)"),
+        ],
+    )
+    def test_marker_as_meaning_or_referent_is_not_philology(
+        self, root: str, gloss: str
+    ) -> None:
+        route, _ = route_obscure_root(gloss, 3.0)
+        assert route == "unclassified", f"{root}: false positive on {gloss!r}"
+
+    def test_external_usage_label_socket(self) -> None:
+        # a register-labelled source (e.g. ReVo stylistic codes) plugs in here
+        for label in ("ARK", "archaic"):
+            route, _ = route_obscure_root("cat", 4.0, usage_label=label)
+            assert route == "philology_t4", label
+        assert route_obscure_root("thing", 1.0, usage_label="NEO") == (
+            "unplaced",
+            "usage-label:neologism",
+        )
+        # an unknown or neutral label changes nothing
+        assert route_obscure_root("cat", 4.0, usage_label="POE")[0] == "unclassified"
 
     def test_zero_zipf_alone_is_not_philology(self) -> None:
         # frequency-absence without an archaic marker stays unclassified
@@ -247,3 +302,23 @@ class TestRoutingRule:
         route, signal = route_obscure_root("a squirrel", 4.0)
         assert route == "unclassified"
         assert "no-directional-signal" in signal
+
+
+# --------------------------------------------------------------------------- #
+# Migration audit — REFERENCES is not enforced by SQLite, so orphans are counted
+# --------------------------------------------------------------------------- #
+class TestMigrationOrphanAudit:
+    def test_orphan_lifecycle_rows_are_reported(self, tmp_path: Path) -> None:
+        db = tmp_path / "lexicon.db"
+        conn = sqlite3.connect(db)
+        create_common_lexicon_schema(conn)
+        create_lifecycle_schema(conn)
+        conn.execute("INSERT INTO concept (id, eo_root) VALUES (1, 'blog')")
+        conn.execute("INSERT INTO concept_lifecycle (concept_id) VALUES (1)")
+        conn.execute("INSERT INTO concept_lifecycle (concept_id) VALUES (999)")
+        conn.commit()
+        conn.close()
+
+        stats = migrate_lexicon(db, dry_run=True)
+        assert stats["unplaced_rows"] == 2
+        assert stats["orphan_rows"] == 1
